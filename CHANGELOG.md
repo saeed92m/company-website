@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-02 — Phase 3 frontend completion
+
+- Added the localized activity-fields index route for all eight supported locales.
+- Aligned global navigation with dedicated Company and Fields routes.
+- Strengthened home-page project and CEO navigation paths.
+- Corrected non-source locale capability translations to remain within the approved company-profile/resume content baseline.
+- Recorded implementation evidence in `docs/handbook/phase-3-evidence.md`.
+
 All notable changes to this project will be documented here.
 
 ## [Unreleased]
