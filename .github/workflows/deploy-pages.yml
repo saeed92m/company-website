@@ -51,3 +51,39 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Smoke-test deployed Pages routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://saeed92m.github.io/company-website"
+          routes=(
+            "/"
+            "/fa/"
+            "/en/"
+            "/ar/"
+            "/ru/"
+            "/de/"
+            "/zh/"
+            "/fr/"
+            "/es/"
+            "/fa/company/"
+            "/fa/company/ceo/"
+            "/fa/fields/"
+            "/fa/projects/"
+            "/fa/contact/"
+            "/sitemap-index.xml"
+            "/robots.txt"
+          )
+          for route in "${routes[@]}"; do
+            code="$(curl -L -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 2 "${base}${route}")"
+            if [ "$code" != "200" ]; then
+              echo "FAIL ${route}: HTTP ${code}"
+              exit 1
+            fi
+            echo "PASS ${route}: HTTP 200"
+          done
