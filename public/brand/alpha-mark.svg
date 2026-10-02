@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 360" role="img" aria-labelledby="title desc">
+<title id="title">Alpha Team mark</title><desc id="desc">Geometric blue A-shaped mark with a grey orbital ring and sphere.</desc>
+<defs><linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d73e6"/><stop offset="1" stop-color="#003c91"/></linearGradient><linearGradient id="grey" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bdbdbd"/><stop offset="1" stop-color="#8d8d8d"/></linearGradient></defs>
+<path fill="url(#blue)" d="M54 310 185 54l35 55-92 201z"/>
+<path fill="url(#blue)" d="M208 121l45-55 113 244h-66z"/>
+<path fill="url(#blue)" d="M160 190l42-60 92 180h-67z"/>
+<ellipse cx="236" cy="214" rx="137" ry="49" transform="rotate(-34 236 214)" fill="none" stroke="url(#grey)" stroke-width="13"/>
+<circle cx="334" cy="93" r="23" fill="url(#grey)"/>
+</svg>
