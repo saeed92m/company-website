@@ -26,3 +26,12 @@ The repository documentation is the engineering source for implementation detail
 - Architecture decisions recorded.
 - Baseline evidence recorded in docs/handbook/phase-0-evidence.md.
 - CI workflow is present and the Astro frontend foundation has passed CI on main.
+
+
+## Phase 1 implementation evidence
+
+The current implementation now includes localized Company, CEO and Contact route contracts for all eight locales. Shared navigation, skip-link labels, CEO section labels, metadata and the Contact publication state are localized. Alpha Linux and ZTF Classifier remain descriptive only and expose no repository URLs.
+
+Content review also removed capability wording that was not directly supported by the current supplied company profile/resume. The website retains the six project-defined activity areas while preserving the source-backed wording for capabilities.
+
+CI evidence is required on PR #6 before merge.
