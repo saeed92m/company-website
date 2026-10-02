@@ -32,10 +32,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "22.12.0"
+          node-version: "22.19.0"
           
       - name: Install dependencies
-        run: npm install
+        run: npm install --no-audit --no-fund
 
       - name: Astro type and project check
         run: npm run check

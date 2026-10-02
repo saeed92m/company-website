@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+
+export function getStaticPaths() {
+  return locales.flatMap((locale) => content[locale].fields.map((field) => ({
+    params: { locale, slug: field.slug }, props: { locale, field }
+  })));
+}
+const { locale, field } = Astro.props as { locale: Locale; field: (typeof content.en.fields)[number] };
+const site = content[locale];
+---
+<SiteLayout locale={locale} title={field.title + " — " + site.companyName} description={field.summary}>
+  <div class="site-shell">
+    <section class="hero" aria-labelledby="field-title">
+      <p class="eyebrow">{site.navigation.fields}</p><h1 id="field-title">{field.title}</h1><p class="lede">{field.summary}</p>
+    </section>
+    <section aria-labelledby="capabilities-title">
+      <div class="section-heading"><h2 id="capabilities-title">{field.title}</h2></div>
+      <ul class="capability-list">{field.capabilities.map((item) => <li>{item}</li>)}</ul>
+    </section>
+  </div>
+</SiteLayout>
