@@ -17,6 +17,8 @@ const path = Astro.url.pathname;
 const base = path.replace(/^.*?\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
 const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 const pageTitle = title ?? site.companyName;
+const isLocalizedPage = /\\/(fa|en|ar|ru|de|zh|fr|es)(?:\\/|$)/.test(path);
+const isNotFoundPage = path.endsWith("/404.html") || path.endsWith("/404/");
 const structuredData = origin ? JSON.stringify({
   "@context":"https://schema.org",
   "@graph":[
@@ -35,15 +37,15 @@ const structuredData = origin ? JSON.stringify({
     <meta name="theme-color" content="#003C91" />
     <link rel="icon" type="image/svg+xml" href={assetBase + "favicon.svg"} />
     <meta name="description" content={description ?? site.intro} />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
     <meta property="og:title" content={title ?? "ALPHA TEAM"} />
     <meta property="og:description" content={description ?? site.intro} />
     <meta property="og:type" content="website" />
-    {origin && <link rel="canonical" href={new URL(path, origin)} />}
-    {origin && <meta property="og:url" content={new URL(path, origin)} />}
+    {origin && !isNotFoundPage && <link rel="canonical" href={new URL(path, origin)} />}
+    {origin && !isNotFoundPage && <meta property="og:url" content={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
-    {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
-    {origin && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
+    {origin && isLocalizedPage && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
+    {origin && isLocalizedPage && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
   </head>
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
