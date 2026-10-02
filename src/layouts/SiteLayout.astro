@@ -1,0 +1,46 @@
+---
+import type { Locale } from "../data/locales";
+import { localeMeta, locales } from "../data/locales";
+import { content } from "../content/site";
+
+interface Props { locale: Locale; title?: string; description?: string; }
+const { locale, title, description } = Astro.props;
+const site = content[locale];
+const meta = localeMeta[locale];
+const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
+const path = Astro.url.pathname;
+const base = path.replace(/^\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
+---
+<!doctype html>
+<html lang={locale} dir={meta.dir}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description ?? site.intro} />
+    <title>{title ?? site.companyName}</title>
+    <meta name="robots" content="index,follow" />
+    {origin && <link rel="canonical" href={new URL(path, origin)} />}
+    {locales.map((code) => <link rel="alternate" hreflang={code} href={new URL("/" + code + base, origin || Astro.url)} />)}
+    <link rel="alternate" hreflang="x-default" href={new URL("/en" + base, origin || Astro.url)} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header site-shell">
+      <a class="brand" href={"/" + locale + "/"} aria-label={site.companyName}>PNFK</a>
+      <nav aria-label={site.navigation.company}>
+        <a href={"/" + locale + "/#company"}>{site.navigation.company}</a>
+        <a href={"/" + locale + "/#fields"}>{site.navigation.fields}</a>
+        <a href={"/" + locale + "/#projects"}>{site.navigation.projects}</a>
+        <a href={"/" + locale + "/#contact"}>{site.navigation.contact}</a>
+      </nav>
+      <nav class="language-nav" aria-label="Language">
+        {locales.map((code) => <a href={"/" + code + base} lang={code} aria-current={code === locale ? "page" : undefined}>{localeMeta[code].label}</a>)}
+      </nav>
+    </header>
+    <main id="main-content"><slot /></main>
+    <footer class="site-footer site-shell">
+      <p>{site.companyName}</p>
+      <p>{site.location} · {site.founded}</p>
+    </footer>
+  </body>
+</html>
