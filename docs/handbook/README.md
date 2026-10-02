@@ -12,9 +12,9 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 0 — Project Foundation**
+**Phase 2 — Visual System / Implementation Preparation**
 
-## Phase 0 Definition of Done
+## Phase 0 Definition of Done / Evidence
 
 - Repository created and private.
 - Main branch established as the production branch.
@@ -24,4 +24,5 @@ The repository documentation is the engineering source for implementation detail
 - Security baseline documented.
 - Initial CI skeleton prepared.
 - Architecture decisions recorded.
-- Baseline commit and validation evidence recorded.
+- Baseline evidence recorded in docs/handbook/phase-0-evidence.md.
+- CI workflow is present; latest CI PASS remains unverified through the available repository integration.
