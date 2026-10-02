@@ -2,12 +2,14 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../data/locales";
 import { content } from "../../content/site";
+import { ui } from "../../content/ui";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
 }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
+const labels = ui[locale];
 ---
 <SiteLayout locale={locale} title={site.companyName} description={site.intro}>
   <div class="site-shell">
@@ -35,7 +37,7 @@ const site = content[locale];
     </section>
     <section id="contact" class="contact" aria-labelledby="contact-title">
       <p class="eyebrow">{site.navigation.contact}</p><h2 id="contact-title">{site.navigation.contact}</h2>
-      <p>Contact details and collaboration workflows will be published after their content and privacy review.</p>
+      <p>{labels.contactPending}</p>
     </section>
   </div>
 </SiteLayout>
