@@ -6,7 +6,7 @@ Working baseline — derived from the approved logo asset and subject to contras
 ## Brand colors
 The supplied logo asset contains a dominant corporate blue and neutral gray.
 
-- Brand Blue: #003C92 — RGB 0,60,146
+- Brand Blue: #003C91 — RGB 0,60,145
 - Brand Gray: #A8A8A8 — RGB 168,168,168
 
 These values are source brand colors, not a complete UI palette.
