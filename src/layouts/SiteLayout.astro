@@ -17,9 +17,9 @@ const base = path.replace(/^\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
 const structuredData = origin ? JSON.stringify({
   "@context":"https://schema.org",
   "@graph":[
-    {"@type":"Organization","@id":origin+"/#organization","name":site.companyName,"url":origin,"founder":{"@id":origin+"/#person"}},
+    {"@type":"Organization","@id":origin+"/#organization","name":site.companyName,"url":origin,"brand":{"@type":"Brand","name":"ALPHA TEAM"},"founder":{"@id":origin+"/#person"}},
     {"@type":"Person","@id":origin+"/#person","name":profile.name,"jobTitle":profile.role,"url":origin+"/"+locale+"/company/ceo/"},
-    {"@type":"WebSite","@id":origin+"/#website","name":site.companyName,"url":origin,"inLanguage":locale}
+    {"@type":"WebSite","@id":origin+"/#website","name":"ALPHA TEAM","url":origin,"inLanguage":locale}
   ]
 }) : "";
 ---
@@ -28,11 +28,13 @@ const structuredData = origin ? JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#003C91" />
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content="index,follow" />
-    <meta property="og:title" content={title ?? site.companyName} />
+    <meta property="og:title" content={title ?? "ALPHA TEAM"} />
     <meta property="og:description" content={description ?? site.intro} />
     <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     {origin && <link rel="canonical" href={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
     {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL("/" + code + base, origin)} />)}
@@ -41,7 +43,10 @@ const structuredData = origin ? JSON.stringify({
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
-      <a class="brand" href={"/" + locale + "/"} aria-label={site.companyName}>PNFK</a>
+      <a class="brand" href={"/" + locale + "/"} aria-label={"ALPHA TEAM — " + site.companyName}>
+        <img class="brand-mark" src="/brand/alpha-mark.svg" width="42" height="36" alt="" aria-hidden="true" />
+        <img class="brand-wordmark" src="/brand/alpha-wordmark.svg" width="164" height="28" alt="ALPHA TEAM" />
+      </a>
       <nav aria-label={site.navigation.company}>
         <a href={"/" + locale + "/company/"}>{site.navigation.company}</a>
         <a href={"/" + locale + "/fields/"}>{site.navigation.fields}</a>
@@ -55,6 +60,10 @@ const structuredData = origin ? JSON.stringify({
     </header>
     <main id="main-content"><slot /></main>
     <footer class="site-footer site-shell">
+      <div class="footer-brand">
+        <img src="/brand/alpha-mark.svg" width="34" height="30" alt="" aria-hidden="true" />
+        <strong>ALPHA TEAM</strong>
+      </div>
       <p>{site.companyName}</p>
       <p>{site.location} · {site.founded}</p>
     </footer>
