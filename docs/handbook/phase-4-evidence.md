@@ -7,7 +7,7 @@ In Progress
 ## Completed
 
 - Added a formal brand architecture decision for **ALPHA TEAM** plus the legal company identity.
-- Applied the approved brand colors `#003C92` and `#A8A8A8` to the frontend system.
+- Applied the approved brand colors `#003C91` and `#A8A8A8` to the frontend system.
 - Reworked the header, hero, CTA, cards and footer hierarchy around the brand system.
 - Added responsive brand/hero behavior and stronger focus states.
 - Added Pages-safe route generation so the same site can run under `/company-website/` now and a root custom domain later.
@@ -33,6 +33,7 @@ The repository is private. GitHub documents that GitHub Pages is available from 
 ## Remaining
 
 - Import exact binary Logo/Wordmark files into the repository asset package.
+- Harden shared navigation and root redirect for the configured GitHub Pages base path.
 - Run CI for the Phase 4 branch.
 - Merge only after CI passes.
 - Activate GitHub Pages if the account plan permits it; otherwise decide whether to use a public mirror/site repository or upgrade the GitHub plan.

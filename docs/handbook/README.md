@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 3 — Content Architecture / Multilingual Implementation**
+**Phase 4 — Brand Integration / Static Deployment Readiness**
 
 ## Phase 0 Definition of Done / Evidence
 
@@ -40,3 +40,13 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 ## Projects & SEO implementation evidence
 - Added `/<locale>/projects/` for all eight locales; Alpha Linux and ZTF Classifier remain descriptive only with no external/repository links.
 - Added Organization, Person and WebSite JSON-LD to the shared layout when `PUBLIC_SITE_URL` is configured. Astro's deployment `site` URL is also the prerequisite for canonical/sitemap generation. 
+
+
+## Phase 4 route and deployment evidence
+
+- Shared navigation uses the centralized locale route helper so GitHub Pages base paths are preserved.
+- Root redirect uses the same route helper; it no longer assumes a domain-root deployment.
+- Canonical and Open Graph URLs are derived from the current request path and configured site origin.
+- Locale alternate links preserve the active content path and deployment base path.
+- GitHub Pages deployment remains manually dispatched until repository Pages availability is confirmed; the production custom domain is intentionally deferred until the .ir domain is purchased and DNS is configured.
+- Brand integration uses the ALPHA TEAM presentation layer while retaining the legal company identity in content.
