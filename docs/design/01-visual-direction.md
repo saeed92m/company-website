@@ -84,6 +84,19 @@ Avoid:
 - excessive 3D decoration;
 - imagery that implies hardware, facilities, clients, or capabilities not supported by evidence.
 
+## Approved domain imagery
+
+The six-domain wallpaper set in Dropbox `/company website/wallpapers/BEST` is an approved visual reference set for the corporate website. It contains one reference wallpaper for each activity domain:
+
+- Astronomy — `alpha-wallpaper-16-astronomy-transit.png`
+- Aerospace — `alpha-wallpaper-17-aerospace-ascent.png`
+- Energy — `alpha-wallpaper-18-energy-field.png`
+- Artificial Intelligence — `alpha-wallpaper-19-ai-neural.png`
+- Motorsport — `alpha-wallpaper-20-motorsport-circuit.png`
+- Remote Sensing — `alpha-wallpaper-21-remote-sensing-swath.png`
+
+These assets are design references/source assets; their use in a specific page or component remains subject to composition, readability, accessibility, performance, licensing/provenance, and responsive QA. They must not be treated as permission to imply unsupported capabilities or project claims.
+
 ## Motion
 Motion should be purposeful and progressive-enhancement friendly.
 Allowed:
