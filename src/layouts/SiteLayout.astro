@@ -38,8 +38,8 @@ const structuredData = origin ? JSON.stringify({
     {origin && <link rel="canonical" href={new URL(path, origin)} />}
     {origin && <meta property="og:url" content={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
-    {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(origin + route(code, base))} />)}
-    {origin && <link rel="alternate" hreflang="x-default" href={new URL(origin + route("en", base))} />}
+    {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
+    {origin && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
   </head>
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
