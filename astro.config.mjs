@@ -2,6 +2,6 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   output: "static",
-  site: "https://example.invalid",
+  site: process.env.PUBLIC_SITE_URL || undefined,
   build: { format: "directory" }
 });
