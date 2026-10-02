@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 4 — Brand Integration / Static Deployment Readiness**
+**Phase 4 — Brand Integration / Static Deployment — deployed preview; final live QA pending**
 
 ## Phase 0 Definition of Done / Evidence
 
@@ -48,7 +48,7 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - Root redirect uses the same route helper; it no longer assumes a domain-root deployment.
 - Canonical and Open Graph URLs are derived from the current request path and configured site origin.
 - Locale alternate links preserve the active content path and deployment base path.
-- GitHub Pages deployment remains manually dispatched until repository Pages availability is confirmed; the production custom domain is intentionally deferred until the .ir domain is purchased and DNS is configured.
+- GitHub Pages deployment is now operational on `main`; the latest production deployment completed successfully. The production custom domain remains intentionally deferred until the .ir domain is purchased and DNS is configured.
 - Brand integration uses the ALPHA TEAM presentation layer while retaining the legal company identity in content.
 
 
@@ -56,7 +56,8 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 
 - PR #15 (base-path routing and SEO URL hardening) merged to `main` as `bec682f0c71ede5d854fcb582b504e74b12ba364`.
 - PR #15 CI run `37002030730` completed successfully.
-- The deployment workflow is present at `.github/workflows/deploy-pages.yml` and is intentionally manual until GitHub Pages availability/activation is confirmed for this private repository.
+- The deployment workflow is present at `.github/workflows/deploy-pages.yml` and has successfully deployed from `main`.
+- Deployment run `37047685171` completed successfully on 2026-10-02; both build and deploy jobs passed.
 - The deployment workflow is configured for `https://saeed92m.github.io/company-website` with `/company-website` base-path handling.
 - Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets.
-- Next gate: activate/confirm GitHub Pages, perform live deployment, then run browser/device/locale/RTL/SEO/accessibility/performance smoke validation.
+- Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
