@@ -1,0 +1,28 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../data/locales";
+import { content } from "../../content/site";
+import { ui } from "../../content/ui";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const labels = ui[locale];
+---
+<SiteLayout locale={locale} title={site.navigation.projects + " — " + site.companyName} description={site.projects.map((project) => project.summary).join(" ")}>
+  <div class="site-shell">
+    <section class="hero" aria-labelledby="projects-title">
+      <p class="eyebrow">{site.navigation.projects}</p>
+      <h1 id="projects-title">{site.navigation.projects}</h1>
+      <p class="lede">{labels.projectsNote}</p>
+    </section>
+    <section aria-labelledby="project-list-title">
+      <div class="section-heading"><h2 id="project-list-title">{site.navigation.projects}</h2></div>
+      <div class="project-grid">
+        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p></article>)}
+      </div>
+    </section>
+  </div>
+</SiteLayout>
