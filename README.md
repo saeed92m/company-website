@@ -27,8 +27,8 @@ The authoritative project handbook is maintained in the project documentation an
 
 ## Repository policy
 
-This repository is private. Source code, company materials, brand assets, and internal documentation are proprietary unless explicitly marked otherwise.
+This repository is **public by project decision**. The repository contains only material approved for public source visibility; secrets, credentials, private keys, and other sensitive material must never be committed.
 
 ## Status
 
-Phase 4 — brand/UI integration and GitHub Pages readiness.
+Phase 4 — brand/UI integration and GitHub Pages production deployment validation.
