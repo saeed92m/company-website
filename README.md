@@ -31,4 +31,4 @@ This repository is private. Source code, company materials, brand assets, and in
 
 ## Status
 
-Phase 3 — content architecture and multilingual implementation.
+Phase 4 — brand/UI integration and GitHub Pages readiness.
