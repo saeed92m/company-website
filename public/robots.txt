@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://saeed92m.github.io/company-website/sitemap.xml
