@@ -2,51 +2,45 @@
 
 ## Status
 
-In Progress — deployment is operational; final live validation remains open
+In Progress — deployment and engineering gates are operational; final live browser/device and visual QA remains open.
 
 ## Completed
 
-- Added a formal brand architecture decision for **ALPHA TEAM** plus the legal company identity.
-- Applied the approved brand colors `#003C91` and `#A8A8A8` to the frontend system.
-- Reworked the header, hero, CTA, cards and footer hierarchy around the brand system.
-- Added responsive brand/hero behavior and stronger focus states.
-- Added Pages-safe route generation so the same site can run under `/company-website/` now and a root custom domain later.
-- Added a GitHub Pages deployment workflow using the official Pages artifact/deploy actions.
+- Added the ALPHA TEAM brand/UI direction and applied the approved brand colors `#003C91` and `#A8A8A8`.
+- Implemented the responsive header, hero, CTA, cards and footer hierarchy.
 - Preserved the six-domain corporate content baseline and eight-locale architecture.
+- Preserved RTL handling for Persian and Arabic.
 - Kept Alpha Linux and ZTF Classifier repository links unpublished.
+- Added Pages-safe route generation for `/company-website/` and future root custom-domain deployment.
+- Added the GitHub Pages deployment workflow.
+- Added a generated multilingual XML sitemap covering the public localized routes.
+- Added a branded static 404 page.
+- Added repository favicon and robots.txt derivatives.
+
+## Validation evidence — 2026-10-02
+
+- PR #28 merged after validation.
+- PR CI run `37055592046`: passed repository baseline, dependency installation, Astro check and production build.
+- PR CodeQL run `37055592097`: passed JavaScript/TypeScript analysis.
+- GitHub Pages run `37055705802`: passed build, Pages artifact upload and deployment.
+- Main deployment commit: `2d91b00033ca401fed13a6894a3e1b104e7cecad`.
+- Follow-up changelog evidence commit: `d190ff0ad00074ee239bc55189ca4a4dbe6dad8e`.
 
 ## Source assets
 
-Brand source of truth:
-`/company website/` in Dropbox.
-
-Approved assets:
-- `Logo.png`
-- `wordmark.png`
-- `Color Code.JPEG`
-- optional wallpapers under `wallpapers/`
-
-## Current deployment constraint
-
-GitHub Pages activation is now confirmed by a successful production deployment from `main`. The repository's current GitHub visibility is public, which differs from the project's documented target of a private source repository and must be reconciled separately.
+Approved project assets include the supplied logo and color-code references. The current frontend uses an inline/vector logo derivative; exact supplied binary logo/wordmark assets have not yet been committed.
 
 ## Remaining
 
-- Exact supplied binary Logo/Wordmark files are still not committed; the implementation retains a lightweight inline/vector derivative and now includes a repository favicon derivative.
-- Hardened shared navigation and root redirect for the configured GitHub Pages base path in PR #15; merged to `main` as `bec682f0c71ede5d854fcb582b504e74b12ba364`.
-- PR #15 CI run `37002030730` passed: repository baseline, dependency install, Astro check, and production build.
-- Reconcile repository visibility with the project security requirement: the repository is currently public although the project documentation specifies private source control.
-- Validate the deployed site at the real GitHub Pages URL using browser/device/locale/RTL/SEO/accessibility/performance smoke checks.
-- Select and optimize one or two wallpapers only if they improve the final visual hierarchy.
-- Complete final SEO/OG/sitemap configuration after the public site URL is confirmed.
-- Phase 4 polish branch adds `public/favicon.svg` and `public/robots.txt`, and aligns the CSS brand-blue token to the approved `#003C91` reference.
+- Perform live browser/device smoke QA across the eight locales and both RTL/LTR modes.
+- Validate navigation, direct routes, refresh behavior, sitemap, robots.txt, canonical/hreflang, JSON-LD and social metadata on the deployed site.
+- Complete accessibility and responsive visual QA.
+- Add/validate OG/social preview assets after final visual identity treatment.
+- Decide whether the optional wallpaper/background assets materially improve the visual hierarchy; they are not a blocker.
+- Custom `.ir` domain remains deferred.
+- Corporate email remains separate from website hosting and is not yet published.
+- Project repository links remain unpublished until release readiness.
 
+## Repository visibility note
 
-## Deployment evidence — 2026-10-02
-
-- `main` commit `17164de26bfd331cda95dce6c9787e17348e0b0f` triggered CI and Pages deployment.
-- CI run `37047685094` completed successfully.
-- Pages run `37047685171` completed successfully.
-- Pages build job `110973050426` completed successfully; Astro production build and artifact upload passed.
-- Pages deploy job `110973237673` completed successfully.
-- The deployment workflow therefore reached the actual GitHub Pages deployment stage; the former activation gate is no longer blocking deployment.
+The repository is currently public. Earlier project documentation described the source repository as private, while a later repository decision explicitly established public visibility. This is an unresolved governance decision and should be reconciled in the Master Handbook before treating the repository-security baseline as final.
