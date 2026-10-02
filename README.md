@@ -31,4 +31,4 @@ This repository is private. Source code, company materials, brand assets, and in
 
 ## Status
 
-Phase 0 — project foundation and engineering baseline.
+Phase 3 — content architecture and multilingual implementation.
