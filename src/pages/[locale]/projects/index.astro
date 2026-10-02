@@ -1,8 +1,8 @@
 ---
-import SiteLayout from "../../layouts/SiteLayout.astro";
-import { locales, type Locale } from "../../data/locales";
-import { content } from "../../content/site";
-import { ui } from "../../content/ui";
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { ui } from "../../../content/ui";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
