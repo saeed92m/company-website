@@ -16,7 +16,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Phase 0 Definition of Done / Evidence
 
-- Repository created and private.
+- Repository created and public by project decision.
 - Main branch established as the production branch.
 - Core repository documentation created.
 - Handbook index created.
@@ -48,7 +48,7 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - Root redirect uses the same route helper; it no longer assumes a domain-root deployment.
 - Canonical and Open Graph URLs are derived from the current request path and configured site origin.
 - Locale alternate links preserve the active content path and deployment base path.
-- GitHub Pages deployment is now operational on `main`; the latest production deployment completed successfully. The production custom domain remains intentionally deferred until the .ir domain is purchased and DNS is configured.
+- GitHub Pages deployment is operational on `main`; the latest production deployment completed successfully. The production custom domain remains intentionally deferred until the .ir domain is purchased and DNS is configured.
 - Brand integration uses the ALPHA TEAM presentation layer while retaining the legal company identity in content.
 
 
@@ -61,3 +61,9 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - The deployment workflow is configured for `https://saeed92m.github.io/company-website` with `/company-website` base-path handling.
 - Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets.
 - Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
+
+## Repository visibility decision
+
+The repository is intentionally **public**. This is compatible with the project's public corporate website role and removes the GitHub Free/private-repository constraint for GitHub Pages. Public repository visibility does not change the security rule: secrets, credentials, private keys, unpublished sensitive company information, and other restricted material must remain outside the repository.
+
+The repository's public status must be treated as a current project fact in future handbook updates unless an explicit architecture/governance decision changes it.
