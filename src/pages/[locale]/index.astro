@@ -20,7 +20,7 @@ const labels = ui[locale];
       <p>{site.founder}</p>
     </section>
     <section id="fields" aria-labelledby="fields-title">
-      <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
+      <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
       <div class="domain-grid">
         {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span>{field.title}</span><span aria-hidden="true">↗</span></a>)}
       </div>
@@ -28,7 +28,7 @@ const labels = ui[locale];
     <section id="projects" aria-labelledby="projects-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
       <div class="project-grid">
-        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p></article>)}
+        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><a href={"/" + locale + "/projects/"}>{site.navigation.projects}</a></article>)}
       </div>
     </section>
     <section id="company" class="split" aria-labelledby="company-title">
