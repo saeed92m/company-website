@@ -1,0 +1,41 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../data/locales";
+import { content } from "../../content/site";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+---
+<SiteLayout locale={locale} title={site.companyName} description={site.intro}>
+  <div class="site-shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">{site.founded} · {site.location}</p>
+      <h1 id="hero-title">{site.tagline}</h1>
+      <p class="lede">{site.intro}</p>
+      <p>{site.founder}</p>
+    </section>
+    <section id="fields" aria-labelledby="fields-title">
+      <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
+      <div class="domain-grid">
+        {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span>{field.title}</span><span aria-hidden="true">↗</span></a>)}
+      </div>
+    </section>
+    <section id="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><p class="eyebrow">{site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
+      <div class="project-grid">
+        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p></article>)}
+      </div>
+    </section>
+    <section id="company" class="split" aria-labelledby="company-title">
+      <div><p class="eyebrow">{site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
+      <p>{site.intro}</p>
+    </section>
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <p class="eyebrow">{site.navigation.contact}</p><h2 id="contact-title">{site.navigation.contact}</h2>
+      <p>Contact details and collaboration workflows will be published after their content and privacy review.</p>
+    </section>
+  </div>
+</SiteLayout>
