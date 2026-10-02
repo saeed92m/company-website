@@ -19,13 +19,13 @@ GitHub Issue #1 tracks the original Phase 0 foundation scope.
 
 The repository contains a GitHub Actions baseline workflow at .github/workflows/ci.yml that validates required repository baseline files on pushes to main and pull requests targeting main.
 
-The available repository integration did not expose a workflow-run result for the latest main commit, so this document does not claim a CI PASS without evidence.
+PR #3 CI run #21 (`36984688002`) passed repository structure validation, dependency installation, Astro project/type checks, and production build on the validated PR head. A post-merge main-branch run is being forced by this closeout change so Phase 0 can be closed with direct main evidence.
 
 ## Phase transition
 
 The project has progressed beyond the original Phase 0 scope into UX/IA and visual-system work.
 
-Phase 0 is operationally complete except for explicit CI-run evidence, which remains a verification item rather than an architectural blocker.
+Phase 0 is operationally complete; this closeout change exists solely to record direct main-branch CI evidence before the issue is closed.
 
 ## Next execution phase
 
