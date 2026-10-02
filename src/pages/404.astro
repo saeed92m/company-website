@@ -1,0 +1,14 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { content } from "../content/site";
+---
+<SiteLayout locale="en" title="Page not found" description="The requested page could not be found.">
+  <div class="site-shell">
+    <section class="hero" aria-labelledby="not-found-title">
+      <p class="eyebrow">404</p>
+      <h1 id="not-found-title">Page not found</h1>
+      <p class="lede">The requested page does not exist or has moved.</p>
+      <a class="button button-primary" href={import.meta.env.BASE_URL}>Return to the website</a>
+    </section>
+  </div>
+</SiteLayout>
