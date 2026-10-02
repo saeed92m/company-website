@@ -76,7 +76,7 @@ jobs:
             "/fa/fields/"
             "/fa/projects/"
             "/fa/contact/"
-            "/sitemap-index.xml"
+            "/sitemap.xml"
             "/robots.txt"
           )
           for route in "${routes[@]}"; do
