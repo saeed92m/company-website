@@ -32,7 +32,7 @@ The supplied company profile is the corporate source for identity and registrati
 
 ## Validation
 
-- PR #6: CI required before merge.
+- PR #6 was merged after successful CI validation.
 - Existing main baseline CI passed before PR #6.
 - Build-time route generation is covered by the Astro production build.
 

@@ -34,7 +34,7 @@ The current implementation now includes localized Company, CEO and Contact route
 
 Content review also removed capability wording that was not directly supported by the current supplied company profile/resume. The website retains the six project-defined activity areas while preserving the source-backed wording for capabilities.
 
-CI evidence is required on PR #6 before merge.
+PR #6 was merged after CI validation; Phase 3 implementation is now recorded in `docs/handbook/phase-3-evidence.md`.
 
 
 ## Projects & SEO implementation evidence
