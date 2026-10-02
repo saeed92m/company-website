@@ -1,0 +1,33 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { ui } from "../../../content/ui";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const labels = ui[locale];
+---
+<SiteLayout locale={locale} title={site.companyName} description={site.intro}>
+  <div class="site-shell">
+    <section class="hero" aria-labelledby="company-title">
+      <p class="eyebrow">{site.navigation.company}</p>
+      <h1 id="company-title">{site.companyName}</h1>
+      <p class="lede">{site.intro}</p>
+      <p>{site.founder}</p>
+    </section>
+    <section aria-labelledby="fields-title">
+      <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
+      <div class="domain-grid">
+        {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span>{field.title}</span><span aria-hidden="true">↗</span></a>)}
+      </div>
+    </section>
+    <section class="split" aria-labelledby="ceo-title">
+      <div><p class="eyebrow">{labels.ceo}</p><h2 id="ceo-title">{site.founder}</h2></div>
+      <p>{site.intro}</p>
+    </section>
+  </div>
+</SiteLayout>

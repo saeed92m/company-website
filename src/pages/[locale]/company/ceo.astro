@@ -3,6 +3,7 @@ import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { ceo } from "../../../content/ceo";
 import { content as siteContent } from "../../../content/site";
+import { ui } from "../../../content/ui";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -10,6 +11,7 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: Locale };
 const profile = ceo[locale];
 const site = siteContent[locale];
+const labels = ui[locale];
 ---
 <SiteLayout locale={locale} title={profile.name + " — " + site.companyName} description={profile.summary}>
   <div class="site-shell">
@@ -20,23 +22,23 @@ const site = siteContent[locale];
       <p>{profile.summary}</p>
     </section>
     <section aria-labelledby="education-title">
-      <div class="section-heading"><h2 id="education-title">Education</h2></div>
+      <div class="section-heading"><h2 id="education-title">{labels.education}</h2></div>
       <div class="project-grid">
         {profile.education.map((item) => <article class="project-card"><h3>{item.degree}</h3><p>{item.field}</p><p>{item.institution} · {item.years}</p></article>)}
       </div>
     </section>
     <section aria-labelledby="expertise-title">
-      <div class="section-heading"><h2 id="expertise-title">Expertise</h2></div>
+      <div class="section-heading"><h2 id="expertise-title">{labels.expertise}</h2></div>
       <ul class="capability-list">{profile.expertise.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section aria-labelledby="experience-title">
-      <div class="section-heading"><h2 id="experience-title">Professional experience</h2></div>
+      <div class="section-heading"><h2 id="experience-title">{labels.experience}</h2></div>
       <div class="project-grid">
         {profile.experience.map((item) => <article class="project-card"><h3>{item.role}</h3><p><strong>{item.organization}</strong> · {item.period}</p><p>{item.summary}</p></article>)}
       </div>
     </section>
     <section aria-labelledby="projects-title">
-      <div class="section-heading"><h2 id="projects-title">Selected project experience</h2></div>
+      <div class="section-heading"><h2 id="projects-title">{labels.selectedProjects}</h2></div>
       <div class="project-grid">
         {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{item.period}</p><p>{item.summary}</p></article>)}
       </div>

@@ -22,7 +22,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {role:"عضو هیئت‌مدیره و مدیر تولید محتوا",organization:"شرکت رهپویان اطلس آسمان",period:"۱۳۹۷–۱۳۹۸",summary:"تولید محتوا، آموزش و ارائه راهکارهای نوآورانه در راستای تحقیق و توسعه و توسعه شبکه ارتباطی."}
     ],
     selectedProjects:[
-      {name:"CanSat",period:"۱۴۰۳–۱۴۰۴",summary:"مشارکت تیم Alpha Team در طراحی و ساخت ماهواره دانشجویی/آموزشی با مأموریت سنجشی-ارتباطی."},
+      {name:"CanSat",period:"۱۴۰۳",summary:"مشارکت تیم Alpha Team در پروژه طراحی و ساخت CanSat با مأموریت سنجشی-ارتباطی."},
       {name:"CubeSat",period:"۱۴۰۲",summary:"مشارکت تیم Alpha Team در طراحی و ساخت CubeSat نوع 1U برای مأموریت سنجشی-ارتباطی."},
       {name:"CBS",period:"۲۰۲۰",summary:"هدایت تحلیل و زمان‌سنجی ستارگان دوتایی که به انتشار مقاله بین‌المللی انجامید."},
       {name:"Remote Sensing Projects",period:"۱۳۹۸",summary:"اجرای پروژه‌های تحلیلی با تصاویر ماهواره‌ای Landsat 8 و Sentinel-1/2."}
@@ -34,7 +34,7 @@ export const ceo: Record<Locale, CEOContent> = {
     education:[{degree:"B.Sc. Mechanical Engineering",field:"Thermal & Fluids",institution:"University of Tabriz",years:"2012–2017"},{degree:"M.Sc. Aerospace Engineering",field:"Space Engineering",institution:"University of Tabriz",years:"2018–2020"}],
     expertise:["Research & development","Aerospace and space systems","Astronomy","Remote sensing","Artificial intelligence and programming","Solar power engineering","Motorsport and performance components","Project management and entrepreneurship"],
     experience:[{role:"Founder & CEO",organization:"Pishgaman Novandish Fannavargostar Keyhan",period:"Aug 2023–present",summary:"R&D strategy, team leadership, networking and delivery of technology-focused projects."},{role:"Board Member & Content Director",organization:"Rahpouyan Atlas Aseman",period:"2018–2019",summary:"Science communication, training, R&D strategy and industry networking."}],
-    selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"Alpha Team participation in a sensing-communications CanSat project."},{name:"CubeSat",period:"2023",summary:"Alpha Team participation in a 1U CubeSat sensing-communications project."},{name:"CBS",period:"2020",summary:"Leadership of a binary-star timing and analysis project resulting in an international publication."},{name:"Remote Sensing Projects",period:"2019",summary:"Analytical projects using Landsat 8 and Sentinel-1/2 satellite imagery."}]
+    selectedProjects:[{name:"CanSat",period:"2024",summary:"Alpha Team participation in a CanSat project with a sensing-communications mission."},{name:"CubeSat",period:"2023",summary:"Alpha Team participation in a 1U CubeSat sensing-communications project."},{name:"CBS",period:"2020",summary:"Leadership of a binary-star timing and analysis project resulting in an international publication."},{name:"Remote Sensing Projects",period:"2019",summary:"Analytical projects using Landsat 8 and Sentinel-1/2 satellite imagery."}]
   },
   ar:{
     name:"سعيد معمارزاده",role:"المؤسس والرئيس التنفيذي",summary:"رائد أعمال ومهندس بخلفية في الهندسة الميكانيكية وهندسة الفضاء، يركز على البحث والتطوير والابتكار وتحويل المعرفة العلمية إلى حلول هندسية عملية.",
