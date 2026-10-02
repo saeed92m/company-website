@@ -6,7 +6,7 @@ GitHub Issue #1 tracks the original Phase 0 foundation scope.
 
 ## Evidence
 
-- Repository: private GitHub repository, production branch is main.
+- Repository: public GitHub repository, production branch is main.
 - Repository documentation baseline exists.
 - Architecture principles and ADR exist.
 - UX research, IA, page contracts, and wireframes are present.
