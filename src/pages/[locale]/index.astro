@@ -11,10 +11,10 @@ const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
 ---
-<SiteLayout locale={locale} title={site.companyName} description={site.intro}>
+<SiteLayout locale={locale} title="ALPHA TEAM" description={site.intro}>
   <div class="site-shell">
     <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">{site.founded} · {site.location}</p>
+      <p class="eyebrow">ALPHA TEAM · {site.founded} · {site.location}</p>
       <h1 id="hero-title">{site.tagline}</h1>
       <p class="lede">{site.intro}</p>
       <p>{site.founder}</p>
@@ -22,7 +22,7 @@ const labels = ui[locale];
     <section id="fields" aria-labelledby="fields-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
       <div class="domain-grid">
-        {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span>{field.title}</span><span aria-hidden="true">↗</span></a>)}
+        {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}
       </div>
     </section>
     <section id="projects" aria-labelledby="projects-title">
