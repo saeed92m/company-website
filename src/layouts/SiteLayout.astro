@@ -3,12 +3,14 @@ import type { Locale } from "../data/locales";
 import { localeMeta, locales } from "../data/locales";
 import { content } from "../content/site";
 import { ui } from "../content/ui";
+import { ceo } from "../content/ceo";
 
 interface Props { locale: Locale; title?: string; description?: string; }
 const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
+const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
 const base = path.replace(/^\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
@@ -16,7 +18,7 @@ const structuredData = origin ? JSON.stringify({
   "@context":"https://schema.org",
   "@graph":[
     {"@type":"Organization","@id":origin+"/#organization","name":site.companyName,"url":origin,"founder":{"@id":origin+"/#person"}},
-    {"@type":"Person","@id":origin+"/#person","name":site.founder.replace(/^.*:\s*/, ""), "jobTitle":locale === "fa" ? "بنیانگذار و مدیرعامل" : "Founder & CEO","url":origin+"/"+locale+"/company/ceo/"},
+    {"@type":"Person","@id":origin+"/#person","name":profile.name,"jobTitle":profile.role,"url":origin+"/"+locale+"/company/ceo/"},
     {"@type":"WebSite","@id":origin+"/#website","name":site.companyName,"url":origin,"inLanguage":locale}
   ]
 }) : "";
@@ -31,7 +33,8 @@ const structuredData = origin ? JSON.stringify({
     <meta property="og:title" content={title ?? site.companyName} />
     <meta property="og:description" content={description ?? site.intro} />
     <meta property="og:type" content="website" />
-    {origin && <link rel="canonical" href={new URL(path, origin)} />}\n    {structuredData && <script type="application/ld+json" set:html={structuredData} />}
+    {origin && <link rel="canonical" href={new URL(path, origin)} />}
+    {structuredData && <script type="application/ld+json" set:html={structuredData} />}
     {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL("/" + code + base, origin)} />)}
     {origin && <link rel="alternate" hreflang="x-default" href={new URL("/en" + base, origin)} />}
   </head>
