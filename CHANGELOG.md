@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-02 — Production baseline QA
+
+- Added a generated multilingual XML sitemap covering all supported locales and public routes.
+- Added a branded 404 page for GitHub Pages.
+- Validated Astro type checking and production build through CI.
+- Validated CodeQL analysis successfully.
+- Deployed the resulting main commit to GitHub Pages successfully.
+
 ## 2026-10-02 — Phase 3 frontend completion
 
 - Added the localized activity-fields index route for all eight supported locales.
@@ -15,7 +23,6 @@ All notable changes to this project will be documented here.
 - Repository foundation created.
 - Initial engineering and documentation baseline established.
 - Corporate website Handbook v0.1.0 established in Notion.
-
 
 ## 2026-10-02
 
