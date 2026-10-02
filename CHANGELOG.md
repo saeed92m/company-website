@@ -14,3 +14,8 @@ All notable changes to this project will be documented here.
 - Phase 1 frontend contracts expanded with localized Company, CEO and Contact routes.
 - Shared navigation, skip-link labels, metadata and contact-state messaging are localized across all eight supported locales.
 - Public activity copy was aligned with the supplied company profile/resume source hierarchy; unsupported capability claims were removed.
+
+## 2026-10-02
+
+- Added a dedicated localized Projects route while keeping project repository links unpublished.
+- Added Organization, Person and WebSite JSON-LD metadata to the shared layout when the production site URL is configured.

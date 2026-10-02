@@ -35,3 +35,8 @@ The current implementation now includes localized Company, CEO and Contact route
 Content review also removed capability wording that was not directly supported by the current supplied company profile/resume. The website retains the six project-defined activity areas while preserving the source-backed wording for capabilities.
 
 CI evidence is required on PR #6 before merge.
+
+
+## Projects & SEO implementation evidence
+- Added `/<locale>/projects/` for all eight locales; Alpha Linux and ZTF Classifier remain descriptive only with no external/repository links.
+- Added Organization, Person and WebSite JSON-LD to the shared layout when `PUBLIC_SITE_URL` is configured. Astro's deployment `site` URL is also the prerequisite for canonical/sitemap generation. 
