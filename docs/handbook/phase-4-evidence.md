@@ -37,7 +37,7 @@ Approved project assets include the supplied logo and color-code references. The
 - Validate navigation, direct routes, refresh behavior, sitemap, robots.txt, canonical/hreflang, JSON-LD and social metadata on the deployed site.
 - Complete accessibility and responsive visual QA.
 - Add/validate OG/social preview assets after final visual identity treatment.
-- Decide whether the optional wallpaper/background assets materially improve the visual hierarchy; they are not a blocker.
+- The six-domain wallpaper set in Dropbox `/company website/wallpapers/BEST` is now an approved visual reference/source set; final page-level usage remains subject to visual, accessibility, performance, and provenance QA.
 - Custom `.ir` domain remains deferred.
 - Corporate email remains separate from website hosting and is not yet published.
 - Project repository links remain unpublished until release readiness.
