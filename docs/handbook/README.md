@@ -57,9 +57,9 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - PR #15 (base-path routing and SEO URL hardening) merged to `main` as `bec682f0c71ede5d854fcb582b504e74b12ba364`.
 - PR #15 CI run `37002030730` completed successfully.
 - The deployment workflow is present at `.github/workflows/deploy-pages.yml` and has successfully deployed from `main`.
-- Deployment run `37047685171` completed successfully on 2026-10-02; both build and deploy jobs passed.
+- Deployment run `37055705802` completed successfully on 2026-10-02; both build and deploy jobs passed.
 - The deployment workflow is configured for `https://saeed92m.github.io/company-website` with `/company-website` base-path handling.
-- Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets.
+- Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets because the current GitHub connector write path supports UTF-8 text files, not local binary uploads.
 - Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
 
 ## Repository visibility decision

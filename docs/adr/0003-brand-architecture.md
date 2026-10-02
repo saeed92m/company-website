@@ -16,24 +16,20 @@ The website must make the relationship between the public brand and legal entity
 
 ## Visual source of truth
 
-The approved brand source is the user's Dropbox folder:
+The approved brand sources for this project are the supplied project assets:
 
-`/company website/`
-
-with:
-- `Logo.png`
-- `wordmark.png`
-- `Color Code.JPEG`
+- `Logo-1 (1).png` — supplied logo artwork
+- `Logo - Color Code.JPEG` — supplied color/wordmark reference
 
 The supplied color reference defines:
-- Brand Blue: `#003C92`
+- Brand Blue: `#003C91`
 - Brand Gray: `#A8A8A8`
 
-The `wallpapers/` folder is an approved visual-asset library. Wallpapers are optional presentation assets, not required UI chrome.
+Wallpapers are optional presentation assets, not required UI chrome.
 
 ## Implementation note
 
-The current frontend uses the approved colors and a lightweight inline mark/wordmark treatment so the site can progress without blocking on binary asset transfer. The exact Dropbox `wordmark.png` remains the preferred asset for the final asset package.
+The current frontend uses the approved colors and a lightweight inline mark/wordmark treatment so the site can progress without blocking on binary asset transfer. The supplied binary assets remain the preferred source package for final visual QA; they must not be recreated, recolored, stretched, or otherwise altered.
 
 ## Consequences
 

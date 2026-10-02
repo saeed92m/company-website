@@ -22,9 +22,10 @@ In Progress — deployment and engineering gates are operational; final live bro
 - PR #28 merged after validation.
 - PR CI run `37055592046`: passed repository baseline, dependency installation, Astro check and production build.
 - PR CodeQL run `37055592097`: passed JavaScript/TypeScript analysis.
-- GitHub Pages run `37055705802`: passed build, Pages artifact upload and deployment.
+- GitHub Pages run `37055705802`: completed successfully; build and deploy jobs passed.
 - Main deployment commit: `2d91b00033ca401fed13a6894a3e1b104e7cecad`.
-- Follow-up changelog evidence commit: `d190ff0ad00074ee239bc55189ca4a4dbe6dad8e`.
+- The repository is public by explicit project decision.
+- The live URL is configured as `https://saeed92m.github.io/company-website/`; this environment could verify the GitHub Actions deployment result but could not independently fetch the public Pages URL, so reachability is not claimed as externally verified here.
 
 ## Source assets
 
@@ -43,4 +44,4 @@ Approved project assets include the supplied logo and color-code references. The
 
 ## Repository visibility note
 
-The repository is currently public. Earlier project documentation described the source repository as private, while a later repository decision explicitly established public visibility. This is an unresolved governance decision and should be reconciled in the Master Handbook before treating the repository-security baseline as final.
+The repository is intentionally public by project decision. The earlier private-repository wording is historical and no longer governs the project. Public visibility does not relax the security baseline: secrets, credentials, private keys, and restricted company information remain prohibited from Git.
