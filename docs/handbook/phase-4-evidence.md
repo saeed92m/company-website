@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress
+In Progress — deployment activation and final validation remain open
 
 ## Completed
 
@@ -32,11 +32,11 @@ The repository is private. GitHub documents that GitHub Pages is available from 
 
 ## Remaining
 
-- Import exact binary Logo/Wordmark files into the repository asset package.
-- Harden shared navigation and root redirect for the configured GitHub Pages base path.
-- Run CI for the Phase 4 branch.
-- Merge only after CI passes.
+- Exact supplied binary Logo/Wordmark files are still not committed; the implementation retains a lightweight inline/vector derivative and now includes a repository favicon derivative.
+- Hardened shared navigation and root redirect for the configured GitHub Pages base path in PR #15; merged to `main` as `bec682f0c71ede5d854fcb582b504e74b12ba364`.
+- PR #15 CI run `37002030730` passed: repository baseline, dependency install, Astro check, and production build.
 - Activate GitHub Pages if the account plan permits it; otherwise decide whether to use a public mirror/site repository or upgrade the GitHub plan.
-- Validate the deployed site at the real GitHub Pages URL.
+- Validate the deployed site at the real GitHub Pages URL after activation.
 - Select and optimize one or two wallpapers only if they improve the final visual hierarchy.
 - Complete final SEO/OG/sitemap configuration after the public site URL is confirmed.
+- Phase 4 polish branch adds `public/favicon.svg` and `public/robots.txt`, and aligns the CSS brand-blue token to the approved `#003C91` reference.
