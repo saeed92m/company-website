@@ -1,4 +1,5 @@
 import type { Locale } from "../data/locales";
+import { localizedFields } from "./localized-fields";
 
 export type Field = {
   slug:string;
@@ -77,3 +78,8 @@ export const content: Record<Locale, SiteContent> = {
     companyName:"Pishgaman Novandish Fannavargostar Keyhan (Ltd.)",founded:"Fundada en 1402",location:"Tabriz",founder:"Fundador y CEO: Saeed Memarzadeh",tagline:"Crear el futuro mediante la innovación, la investigación y el desarrollo",intro:"Una empresa tecnológica orientada a I+D que trabaja en astronomía, aeroespacial, teledetección, energía, inteligencia artificial y motorsport.",fields:[],projects:[{title:"Alpha Linux",summary:"Plataforma de estación de trabajo AI-native en desarrollo."},{title:"ZTF Classifier",summary:"Plataforma de análisis y descubrimiento de datos astronómicos en desarrollo."}],navigation:{company:"Empresa",fields:"Áreas",projects:"Proyectos",contact:"Contacto"}
   }
 };
+
+
+for (const [locale, fields] of Object.entries(localizedFields)) {
+  if (fields && locale in content) content[locale as Locale].fields = fields;
+}
