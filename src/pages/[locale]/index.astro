@@ -3,41 +3,49 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../data/locales";
 import { content } from "../../content/site";
 import { ui } from "../../content/ui";
-
-export function getStaticPaths() {
-  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
-}
+import { route } from "../../data/routes";
+export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
-const site = content[locale];
-const labels = ui[locale];
+const site = content[locale]; const labels = ui[locale];
 ---
 <SiteLayout locale={locale} title={site.companyName} description={site.intro}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">{site.founded} · {site.location}</p>
-      <h1 id="hero-title">{site.tagline}</h1>
-      <p class="lede">{site.intro}</p>
-      <p>{site.founder}</p>
+    <section class="hero hero-brand" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">ALPHA TEAM · {site.founded}</p>
+        <h1 id="hero-title">{site.tagline}</h1>
+        <p class="lede">{site.intro}</p>
+        <p class="hero-identity">{site.founder}</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href={route(locale,"fields")}>{site.navigation.fields}</a>
+          <a class="button button-secondary" href={route(locale,"company")}>{site.navigation.company}</a>
+        </div>
+      </div>
+      <div class="hero-mark" aria-hidden="true">
+        <svg viewBox="0 0 320 270">
+          <path d="M35 234 145 38l26 45-83 151H35Zm105-47 36-63 62 110h-51l-47-47Zm43-77 27-47 90 161h-51l-66-114Z" fill="currentColor"/>
+          <path d="M118 207c61 28 145-7 165-61 12-31-9-58-43-67" fill="none" stroke="#A8A8A8" stroke-width="16" stroke-linecap="round"/>
+          <circle cx="238" cy="78" r="19" fill="#A8A8A8"/>
+        </svg>
+      </div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
-      <div class="domain-grid">
-        {site.fields.map((field) => <a class="domain-card" href={"/" + locale + "/fields/" + field.slug + "/"}><span>{field.title}</span><span aria-hidden="true">↗</span></a>)}
-      </div>
+      <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
     <section id="projects" aria-labelledby="projects-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
-      <div class="project-grid">
-        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><a href={"/" + locale + "/projects/"}>{site.navigation.projects}</a></article>)}
-      </div>
+      <div class="project-grid">{site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><a href={route(locale,"projects")}>{site.navigation.projects}</a></article>)}</div>
     </section>
     <section id="company" class="split" aria-labelledby="company-title">
-      <div><p class="eyebrow">{site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
-      <p>{site.intro}</p>
+      <div><p class="eyebrow">{site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div><p>{site.intro}</p>
+    </section>
+    <section id="ceo" class="split" aria-labelledby="ceo-title">
+      <div><p class="eyebrow">{site.navigation.ceo}</p><h2 id="ceo-title">{site.founder}</h2></div><p><a href={route(locale,"company/ceo")}>{site.navigation.ceo}</a></p>
     </section>
     <section id="contact" class="contact" aria-labelledby="contact-title">
-      <p class="eyebrow">{site.navigation.contact}</p><h2 id="contact-title">{site.navigation.contact}</h2>
-      <p>{labels.contactPending}</p>
+      <p class="eyebrow">{site.navigation.contact}</p><h2 id="contact-title">{site.navigation.contact}</h2><p>{labels.contactPending}</p>
+      <a class="button button-on-blue" href={route(locale,"contact")}>{site.navigation.contact}</a>
     </section>
   </div>
 </SiteLayout>
