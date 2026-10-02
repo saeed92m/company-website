@@ -4,6 +4,7 @@ import { localeMeta, locales } from "../data/locales";
 import { content } from "../content/site";
 import { ui } from "../content/ui";
 import { ceo } from "../content/ceo";
+import { route } from "../data/routes";
 
 interface Props { locale: Locale; title?: string; description?: string; }
 const { locale, title, description } = Astro.props;
@@ -13,12 +14,12 @@ const labels = ui[locale];
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
-const base = path.replace(/^\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
+const base = path.replace(/^.*?\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
 const structuredData = origin ? JSON.stringify({
   "@context":"https://schema.org",
   "@graph":[
     {"@type":"Organization","@id":origin+"/#organization","name":site.companyName,"url":origin,"founder":{"@id":origin+"/#person"}},
-    {"@type":"Person","@id":origin+"/#person","name":profile.name,"jobTitle":profile.role,"url":origin+"/"+locale+"/company/ceo/"},
+    {"@type":"Person","@id":origin+"/#person","name":profile.name,"jobTitle":profile.role,"url":origin+route(locale,"company/ceo")},
     {"@type":"WebSite","@id":origin+"/#website","name":site.companyName,"url":origin,"inLanguage":locale}
   ]
 }) : "";
@@ -28,33 +29,45 @@ const structuredData = origin ? JSON.stringify({
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#003C92" />
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content="index,follow" />
     <meta property="og:title" content={title ?? site.companyName} />
     <meta property="og:description" content={description ?? site.intro} />
     <meta property="og:type" content="website" />
     {origin && <link rel="canonical" href={new URL(path, origin)} />}
+    {origin && <meta property="og:url" content={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
-    {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL("/" + code + base, origin)} />)}
-    {origin && <link rel="alternate" hreflang="x-default" href={new URL("/en" + base, origin)} />}
+    {origin && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(origin+"/"+code+base.replace(/^\//,""))} />)}
+    {origin && <link rel="alternate" hreflang="x-default" href={new URL(origin+"/en"+base)} />}
   </head>
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
-      <a class="brand" href={"/" + locale + "/"} aria-label={site.companyName}>PNFK</a>
+      <a class="brand" href={route(locale)} aria-label={site.companyName}>
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 96 80" focusable="false">
+            <path d="M10 69 43 11l8 14-25 44H10Zm32-14 11-19 19 33H56L42 55Zm13-23 8-14 27 47H74L55 32Z" fill="currentColor"/>
+            <path d="M36 61c18 8 43-2 48-18 3-10-3-18-13-21" fill="none" stroke="#A8A8A8" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="71" cy="22" r="6" fill="#A8A8A8"/>
+          </svg>
+        </span>
+        <span class="brand-wordmark">ALPHA TEAM</span>
+      </a>
       <nav aria-label={site.navigation.company}>
-        <a href={"/" + locale + "/company/"}>{site.navigation.company}</a>
-        <a href={"/" + locale + "/fields/"}>{site.navigation.fields}</a>
-        <a href={"/" + locale + "/projects/"}>{site.navigation.projects}</a>
-        <a href={"/" + locale + "/company/ceo/"}>{site.navigation.ceo}</a>
-        <a href={"/" + locale + "/contact/"}>{site.navigation.contact}</a>
+        <a href={route(locale,"company")}>{site.navigation.company}</a>
+        <a href={route(locale,"fields")}>{site.navigation.fields}</a>
+        <a href={route(locale,"projects")}>{site.navigation.projects}</a>
+        <a href={route(locale,"company/ceo")}>{site.navigation.ceo}</a>
+        <a href={route(locale,"contact")}>{site.navigation.contact}</a>
       </nav>
       <nav class="language-nav" aria-label={labels.language}>
-        {locales.map((code) => <a href={"/" + code + base} lang={code} aria-current={code === locale ? "page" : undefined}>{localeMeta[code].label}</a>)}
+        {locales.map((code) => <a href={route(code, base)} lang={code} aria-current={code === locale ? "page" : undefined}>{localeMeta[code].label}</a>)}
       </nav>
     </header>
     <main id="main-content"><slot /></main>
     <footer class="site-footer site-shell">
+      <p class="footer-brand">ALPHA TEAM</p>
       <p>{site.companyName}</p>
       <p>{site.location} · {site.founded}</p>
     </footer>
