@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+
+const domains = [
+  ["Astronomy", "/fields/astronomy/"],
+  ["Aerospace", "/fields/aerospace/"],
+  ["Remote Sensing", "/fields/remote-sensing/"],
+  ["Energy", "/fields/energy/"],
+  ["Artificial Intelligence", "/fields/artificial-intelligence/"],
+  ["Motorsport", "/fields/motorsport/"]
+];
+---
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Corporate technology platform for Pishgaman Novandish Fannavargostar Keyhan." />
+    <title>Pishgaman Novandish Fannavargostar Keyhan</title>
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Pishgaman Novandish Fannavargostar Keyhan">PNFK</a>
+        <nav aria-label="Primary navigation">
+          <a href="#company">Company</a><a href="#fields">Fields</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+        </nav>
+      </header>
+      <section class="hero" aria-labelledby="hero-title">
+        <p class="eyebrow">Research · Engineering · Technology</p>
+        <h1 id="hero-title">Creating the future through innovation, research and development.</h1>
+        <p class="lede">A science- and engineering-driven technology company working across astronomy, aerospace, remote sensing, energy, artificial intelligence and motorsport.</p>
+      </section>
+      <section id="fields" aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">Fields</p><h2 id="fields-title">Six interconnected domains</h2></div><div class="domain-grid">
+        {domains.map(([name, href]) => <a class="domain-card" href={href}><span>{name}</span><span aria-hidden="true">↗</span></a>)}
+      </div></section>
+      <section id="projects" aria-labelledby="projects-title"><div class="section-heading"><p class="eyebrow">Projects</p><h2 id="projects-title">Technology in development</h2></div><div class="project-grid">
+        <article class="project-card"><h3>Alpha Linux</h3><p>AI-native universal workstation platform.</p></article>
+        <article class="project-card"><h3>ZTF Classifier</h3><p>Astronomical data analysis and discovery platform.</p></article>
+      </div></section>
+      <section id="company" class="split" aria-labelledby="company-title"><div><p class="eyebrow">Company</p><h2 id="company-title">Science-led, engineering-focused.</h2></div><p>The public website is being developed as a multilingual corporate technology platform, with architecture prepared for future APIs, CMS, CRM and portal capabilities.</p></section>
+      <section id="contact" class="contact" aria-labelledby="contact-title"><p class="eyebrow">Contact</p><h2 id="contact-title">Start a conversation.</h2><p>Contact details and collaboration workflows will be published after content and privacy review.</p></section>
+    </main>
+  </body>
+</html>
