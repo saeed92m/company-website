@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress — production deployment is operational and automated smoke validation passes; independent visual/browser/device QA remains open.
+Implementation and deployment are operational; automated production QA passes. Independent visual/browser/device QA remains the final release gate.
 
 ## Completed
 
