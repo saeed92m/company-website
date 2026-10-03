@@ -1,4 +1,4 @@
-# ADR-003: Use the supplied ALPHA TEAM mark as the canonical website asset
+# ADR-003: Use the exact supplied IMG_6104.PNG as the canonical website logo
 
 - Status: Accepted
 - Date: 2026-10-03
@@ -6,19 +6,14 @@
 
 ## Decision
 
-The website uses the supplied ALPHA TEAM master artwork as the source of truth for the visible brand mark. The previous hand-recreated geometry is not authoritative and must not be used.
+The website uses the exact IMG_6104.PNG supplied by the project owner as the canonical visible logo asset. The website must not redraw, approximate, recolor, crop, simplify, or substitute another logo geometry.
 
-The repository asset `public/brand/alpha-team-mark.svg` preserves the supplied brand colors:
-
-- Blue: `#003C91`
-- Gray: `#A8A8A8`
-
-The mark is rendered with its intrinsic aspect ratio and must not be stretched or independently translated at responsive breakpoints.
+The source-of-truth file is the owner-supplied PNG in Dropbox. Its artwork is consumed directly so the visible geometry remains identical to the supplied source.
 
 ## Responsive requirement
 
-The hero mark is centered inside its circular visual frame at desktop and mobile widths. Mobile layout must not use start/end alignment for the hero mark; the mark and its circular frame remain co-located.
+The image must preserve its intrinsic aspect ratio at every viewport. CSS must not stretch, distort, rotate, mask, or reconstruct the artwork. The same supplied PNG is used for the site header/logo and favicon reference where supported.
 
 ## Validation requirement
 
-Any future logo change must be visually compared against the supplied master artwork before release, including a narrow mobile viewport.
+Any future logo change must be visually compared against the owner-supplied IMG_6104.PNG before release, including desktop and narrow mobile viewports. A different hand-recreated SVG or previously supplied logo file is not an acceptable substitute.
