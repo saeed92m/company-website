@@ -31,4 +31,4 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-Phase 4 — implementation and deployment operational; automated production QA passed. Independent visual/browser/device QA remains the final release gate.
+Phase 6 — brand/content integration and deployment operational; the supplied logo and canonical HAL publication links are live, and automated production QA passed. Independent visual/browser/device QA remains the final release gate.
