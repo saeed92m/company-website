@@ -7,6 +7,7 @@ import { ceo } from "../content/ceo";
 import { route } from "../data/routes";
 import { webLogoUrl } from "../data/brand";
 import { formatFounded } from "../utils/date-format";
+import BrandMark from "../components/BrandMark.astro";
 import "../styles/global.css";
 
 interface Props { locale: Locale; title?: string; description?: string; }
@@ -53,9 +54,7 @@ const structuredData = origin ? JSON.stringify({
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
       <a class="brand" href={route(locale)} aria-label={"ALPHA TEAM — " + site.companyName}>
-        <span class="brand-mark" aria-hidden="true">
-          <img src={webLogoUrl} alt="" width="279" height="257" decoding="async" />
-        </span>
+        <span class="brand-mark" aria-hidden="true"><BrandMark label="ALPHA TEAM" /></span>
         <span class="brand-wordmark">ALPHA TEAM</span>
       </a>
       <nav class="primary-nav" aria-label={site.navigation.company}>
