@@ -5,8 +5,7 @@ import { content } from "../../content/site";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageBySlug } from "../../data/domain-assets";
-import { suppliedLogoUrl } from "../../data/brand";
-const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
+import { webLogoUrl } from "../../data/brand";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
@@ -25,12 +24,7 @@ const site = content[locale]; const labels = ui[locale];
         </div>
       </div>
       <div class="hero-mark" aria-hidden="true">
-        <img
-          src={suppliedLogoUrl}
-          alt=""
-          width="282"
-          decoding="async"
-        />
+        <img src={webLogoUrl} alt="" width="279" height="257" decoding="async" />
       </div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
