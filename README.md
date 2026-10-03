@@ -1,6 +1,6 @@
 # Pishgaman Novandish Fannavargostar Keyhan
 
-Corporate website project for **Pishgaman Novandish Fannavargostar Keyhan (Ltd.)**, an R&D-driven technology company founded in Tabriz in 1402.
+Corporate website project for **Pishgaman Novandish Fannavargostar Keyhan (Ltd.)**, an R&D-driven technology company founded in Tabriz in 2023 (Solar Hijri 1402).
 
 ## Company focus
 
@@ -31,4 +31,4 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-Phase 6 — brand/content integration and deployment operational; the supplied logo and canonical HAL publication links are live, and automated production QA passed. Independent visual/browser/device QA remains the final release gate.
+Phase 7 — production QA and release closeout complete; the supplied logo, multilingual content, responsive browser QA, deployment smoke tests, CI, and CodeQL are passing on main. The current static corporate scope is production-ready.
