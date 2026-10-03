@@ -17,6 +17,7 @@ type UiLabels = {
   contactPending:string;
   contactLocationNote:string;
   ceo:string;
+  ceoResume:string;
   projectsNote:string;
   theme:string;
   night:string;
