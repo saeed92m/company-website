@@ -68,7 +68,7 @@ section{padding:clamp(4rem,8vw,7rem) 0}
 .section-heading{display:grid;grid-template-columns:minmax(180px,.32fr) minmax(0,1fr);gap:2rem;align-items:end;margin-bottom:2.5rem}
 .section-heading .lede{margin:0}
 .domain-grid,.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.domain-card,.project-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,var(--surface-2),var(--surface));text-decoration:none}
+.domain-card,.project-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background-image:linear-gradient(145deg,rgba(5,11,19,.78),rgba(5,11,19,.96)),var(--domain-image),linear-gradient(145deg,var(--surface-2),var(--surface));background-size:cover;background-position:center;text-decoration:none}
 .domain-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,60,145,.55),transparent 55%);opacity:.5;transition:opacity .3s ease}
 .domain-card:after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(transparent,var(--surface));pointer-events:none}
 .domain-card>*{position:relative;z-index:1}
