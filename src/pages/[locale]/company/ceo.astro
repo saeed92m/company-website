@@ -6,7 +6,7 @@ import { content as siteContent } from "../../../content/site";
 import { ui } from "../../../content/ui";
 import { publications } from "../../../content/publications";
 import { ceoAdditional } from "../../../content/ceo-additional";
-import { webLogoUrl } from "../../../data/brand";
+import BrandMark from "../../../components/BrandMark.astro";
 const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 
 export function getStaticPaths() {
@@ -29,7 +29,7 @@ const additional = ceoAdditional[locale];
         <p>{profile.summary}</p>
       </div>
       <div class="hero-mark" aria-hidden="true">
-        <img src={webLogoUrl} alt="" width="279" height="257" decoding="async" />
+        <BrandMark label="ALPHA TEAM" />
       </div>
     </section>
     <section aria-labelledby="education-title">
