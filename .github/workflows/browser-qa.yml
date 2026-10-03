@@ -69,6 +69,9 @@ jobs:
                   lang: document.documentElement.lang,
                   title: document.title,
                   horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+                  scrollWidth: document.documentElement.scrollWidth,
+                  viewportWidth: window.innerWidth,
+                  widest: [...document.querySelectorAll("*")].map(el => ({tag:el.tagName, cls:el.className?.toString?.()||"", width:el.getBoundingClientRect().width, right:el.getBoundingClientRect().right, text:(el.textContent||"").trim().slice(0,100)})).filter(x => x.right > window.innerWidth + 1).sort((a,b)=>b.right-a.right).slice(0,5),
                   hasMain: Boolean(document.querySelector("main#main-content")),
                   hasHeader: Boolean(document.querySelector("header.site-header")),
                   hasBrand: Boolean(document.querySelector("header .brand svg")),
@@ -80,7 +83,7 @@ jobs:
                   throw new Error(`${url} [${viewport.name}]: structural check failed: ${JSON.stringify(checks)}`);
                 }
                 if (checks.horizontalOverflow) {
-                  throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
+                  throw new Error(`${url} [${viewport.name}]: horizontal overflow detected: ${JSON.stringify(checks)}`);
                 }
                 if (checks.lang !== locale) throw new Error(`${url}: expected lang=${locale}, got ${checks.lang}`);
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
