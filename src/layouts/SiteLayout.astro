@@ -5,7 +5,7 @@ import { content } from "../content/site";
 import { ui } from "../content/ui";
 import { ceo } from "../content/ceo";
 import { route } from "../data/routes";
-import { suppliedLogoUrl } from "../data/brand";
+import { webLogoUrl } from "../data/brand";
 import "../styles/global.css";
 
 interface Props { locale: Locale; title?: string; description?: string; }
@@ -17,8 +17,6 @@ const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
 const base = path.replace(/^.*?\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
-const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
-const pageTitle = title ?? site.companyName;
 const isLocalizedPage = /\/(fa|en|ar|ru|de|zh|fr|es)(?:\/|$)/.test(path);
 const isNotFoundPage = path.endsWith("/404.html") || path.endsWith("/404/");
 const localePath = isLocalizedPage ? base : "";
@@ -35,10 +33,10 @@ const structuredData = origin ? JSON.stringify({
 <html lang={locale} dir={meta.dir} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title ?? site.companyName}</title>
     <meta name="theme-color" content="#07111f" />
-    <link rel="icon" type="image/png" href={suppliedLogoUrl} />
+    <link rel="icon" type="image/svg+xml" href={webLogoUrl} />
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
     <meta property="og:title" content={title ?? "ALPHA TEAM"} />
@@ -55,7 +53,7 @@ const structuredData = origin ? JSON.stringify({
     <header class="site-header site-shell">
       <a class="brand" href={route(locale)} aria-label={"ALPHA TEAM — " + site.companyName}>
         <span class="brand-mark" aria-hidden="true">
-          <img src={suppliedLogoUrl} alt="" width="279" height="auto" decoding="async" />
+          <img src={webLogoUrl} alt="" width="279" height="257" decoding="async" />
         </span>
         <span class="brand-wordmark">ALPHA TEAM</span>
       </a>
