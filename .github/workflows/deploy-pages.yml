@@ -118,15 +118,22 @@ jobs:
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
-            if ! printf '%s' "$html" | grep -Fq '/brand/alpha-team-mark.svg'; then
-              echo "FAIL ${route}: canonical brand asset reference missing"
+            if ! printf '%s' "$html" | grep -Fq 'Logo.jpg'; then
+              echo "FAIL ${route}: exact supplied Logo.jpg reference missing"
               exit 1
             fi
-            echo "PASS ${route}: canonical brand asset reference present"
+            echo "PASS ${route}: exact supplied Logo.jpg reference present"
           done
 
+          logo_url="https://www.dropbox.com/scl/fi/3n6jv3itc9ic2e93qvwej/Logo.jpg?rlkey=aecxw5k34s9q0vkye5nwhf4cq&st=56e0rten&raw=1"
+          logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
+          if [ "$logo_code" != "200" ] || ! file /tmp/site-logo | grep -Eqi "jpeg|jpg"; then
+            echo "FAIL supplied Logo.jpg: HTTP $logo_code or non-JPEG payload"
+            exit 1
+          fi
+          echo "PASS supplied Logo.jpg: HTTP 200 + JPEG payload"
+
           for asset in \
-            "/brand/alpha-team-mark.svg" \
             "/assets/domains/astronomy.svg" \
             "/assets/domains/aerospace.svg" \
             "/assets/domains/remote-sensing.svg" \
