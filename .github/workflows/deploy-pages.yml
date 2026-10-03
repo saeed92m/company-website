@@ -127,7 +127,7 @@ jobs:
 
           logo_url="${base}/brand/alpha-team-mark.svg"
           logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
-          if [ "$logo_code" != "200" ] || ! python3 -c 'import sys; d=open("/tmp/site-logo","rb").read(8); sys.exit(0 if d==b"\x89PNG\r\n\x1a\n" else 1)'; then
+          if [ "$logo_code" != "200" ] || ! grep -q "<svg" /tmp/site-logo; then
             echo "FAIL local brand asset: HTTP $logo_code or invalid SVG payload"
             exit 1
           fi
