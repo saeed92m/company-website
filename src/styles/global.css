@@ -96,3 +96,11 @@ html[data-theme="light"] .domain-card{background:linear-gradient(145deg,rgba(248
 html[data-theme="light"] .domain-card:before{opacity:.16}
 html[data-theme="light"] .domain-card:after{background:linear-gradient(145deg,rgba(43,115,214,.10),transparent 52%),linear-gradient(transparent 30%,rgba(248,250,252,.94))}
 @media (prefers-reduced-motion: reduce){.domain-card{transition:none}.domain-card:hover{box-shadow:none}}
+
+
+.publication-dialog{width:min(720px,calc(100vw - 2rem));max-width:none;border:1px solid var(--line);border-radius:24px;padding:0;background:transparent;color:inherit;}
+.publication-dialog::backdrop{background:rgb(8 12 20 / .58);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.publication-dialog__panel{position:relative;padding:2rem;background:color-mix(in srgb,var(--surface) 94%,transparent);border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 80px rgb(0 0 0 / .28);}
+.publication-dialog__close{position:absolute;inset-inline-end:1rem;top:1rem;width:2.25rem;height:2.25rem;border:1px solid var(--line);border-radius:50%;background:transparent;color:inherit;font-size:1.5rem;line-height:1;cursor:pointer;}
+.publication-dialog__label{font-weight:700;opacity:.72;}
+@media (max-width:640px){.publication-dialog__panel{padding:1.5rem}.publication-dialog{margin:auto}}
