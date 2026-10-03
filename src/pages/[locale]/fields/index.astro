@@ -3,6 +3,7 @@ import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { route } from "../../../data/routes";
+import { domainImageBySlug } from "../../../data/domain-assets";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale }; const site = content[locale];
 ---
@@ -10,7 +11,7 @@ const { locale } = Astro.props as { locale: Locale }; const site = content[local
   <div class="site-shell">
     <section class="hero" aria-labelledby="fields-title"><p class="eyebrow">{site.navigation.fields}</p><h1 id="fields-title">{site.navigation.fields}</h1><p class="lede">{site.intro}</p></section>
     <section aria-labelledby="field-list-title"><div class="section-heading"><p class="eyebrow">{site.companyName}</p><h2 id="field-list-title">{site.navigation.fields}</h2></div>
-      <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
+      <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)} style={`--domain-image: url(${import.meta.env.BASE_URL + domainImageBySlug[field.slug]})`}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
   </div>
 </SiteLayout>
