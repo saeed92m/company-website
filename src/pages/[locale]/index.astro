@@ -5,7 +5,7 @@ import { content } from "../../content/site";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageBySlug } from "../../data/domain-assets";
-import { webLogoUrl } from "../../data/brand";
+import BrandMark from "../../components/BrandMark.astro";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
@@ -24,7 +24,7 @@ const site = content[locale]; const labels = ui[locale];
         </div>
       </div>
       <div class="hero-mark" aria-hidden="true">
-        <img src={webLogoUrl} alt="" width="279" height="257" decoding="async" />
+        <BrandMark label="ALPHA TEAM" />
       </div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
