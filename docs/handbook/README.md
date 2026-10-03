@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 4 — Brand Integration / Static Deployment — deployed preview; final live QA pending**
+**Phase 4 — Brand Integration / Static Deployment — implementation, CI/CD and automated production QA complete; independent visual/browser/device QA pending**
 
 ## Phase 0 Definition of Done / Evidence
 
