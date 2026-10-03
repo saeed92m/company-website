@@ -62,6 +62,14 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets because the current GitHub connector write path supports UTF-8 text files, not local binary uploads.
 - Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
 
+## Latest visual-system implementation evidence — 2026-10-03
+
+- Premium scientific/engineering visual-system implementation has been applied to the shared layout and global CSS.
+- Night/Day theme switching is implemented with persisted user preference; Day imagery remains an intentionally deferred asset set.
+- Persian is the default locale; the existing eight-locale route architecture remains selectable from the shared header.
+- The approved BEST Dropbox set was re-verified as six domain-specific source assets: Astronomy, Aerospace, Energy, AI, Motorsport, and Remote Sensing. Production must not use expiring Dropbox download URLs.
+- A repository domain-asset manifest now maps each domain slug to its future committed asset path.
+
 ## Latest validated deployment evidence — 2026-10-03
 
 - No open GitHub issues or pull requests remain at this checkpoint.
