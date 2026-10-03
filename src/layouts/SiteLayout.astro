@@ -30,12 +30,12 @@ const structuredData = origin ? JSON.stringify({
 }) : "";
 ---
 <!doctype html>
-<html lang={locale} dir={meta.dir}>
+<html lang={locale} dir={meta.dir} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>{pageTitle}</title>
-    <meta name="theme-color" content="#003C91" />
+    <meta name="theme-color" content="#07111f" />
     <link rel="icon" type="image/svg+xml" href={assetBase + "brand/alpha-team-mark.svg"} />
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
@@ -57,22 +57,76 @@ const structuredData = origin ? JSON.stringify({
         </span>
         <span class="brand-wordmark">ALPHA TEAM</span>
       </a>
-      <nav aria-label={site.navigation.company}>
+      <nav class="primary-nav" aria-label={site.navigation.company}>
         <a href={route(locale,"company")}>{site.navigation.company}</a>
         <a href={route(locale,"fields")}>{site.navigation.fields}</a>
         <a href={route(locale,"projects")}>{site.navigation.projects}</a>
         <a href={route(locale,"company/ceo")}>{site.navigation.ceo}</a>
         <a href={route(locale,"contact")}>{site.navigation.contact}</a>
       </nav>
-      <nav class="language-nav" aria-label={labels.language}>
-        {locales.map((code) => <a href={route(code, localePath)} lang={code} aria-current={code === locale ? "page" : undefined}>{localeMeta[code].label}</a>)}
-      </nav>
+      <div class="header-tools">
+        <label class="language-select">
+          <span class="sr-only">{labels.language}</span>
+          <select aria-label={labels.language}>
+            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+          <span aria-hidden="true">☾</span>
+          <span data-theme-label>{labels.night}</span>
+        </button>
+      </div>
     </header>
     <main id="main-content"><slot /></main>
-    <footer class="site-footer site-shell">
-      <p class="footer-brand">ALPHA TEAM</p>
-      <p>{site.companyName}</p>
-      <p>{site.location} · {site.founded}</p>
+    <footer class="site-footer">
+      <div class="site-shell footer-grid">
+        <div>
+          <p class="footer-brand">ALPHA TEAM</p>
+          <p>{site.companyName}</p>
+        </div>
+        <div>
+          <p class="footer-kicker">{site.navigation.fields}</p>
+          <p>{site.fields.map((field) => field.title).join(" · ")}</p>
+        </div>
+        <div>
+          <p class="footer-kicker">{site.navigation.contact}</p>
+          <p>{site.location} · {site.founded}</p>
+        </div>
+      </div>
     </footer>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const stored = localStorage.getItem("site-theme");
+        if (stored === "light" || stored === "dark") root.dataset.theme = stored;
+        const toggle = document.querySelector("[data-theme-toggle]");
+        const label = document.querySelector("[data-theme-label]");
+        const select = document.querySelector(".language-select select");
+        const labels = {
+          fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
+          ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
+          de: { night: "Nacht", day: "Tag" }, zh: { night: "夜间", day: "日间" },
+          fr: { night: "Nuit", day: "Jour" }, es: { night: "Noche", day: "Día" }
+        };
+        const currentLocale = document.documentElement.lang || "fa";
+        const updateThemeUi = () => {
+          const isDark = root.dataset.theme !== "light";
+          if (toggle) toggle.setAttribute("aria-pressed", String(isDark));
+          if (label) label.textContent = isDark ? labels[currentLocale].night : labels[currentLocale].day;
+          const icon = toggle?.querySelector("span[aria-hidden]");
+          if (icon) icon.textContent = isDark ? "☾" : "☀";
+        };
+        updateThemeUi();
+        toggle?.addEventListener("click", () => {
+          root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+          localStorage.setItem("site-theme", root.dataset.theme);
+          updateThemeUi();
+        });
+        select?.addEventListener("change", (event) => {
+          const target = event.currentTarget;
+          if (target instanceof HTMLSelectElement && target.value) window.location.href = target.value;
+        });
+      })();
+    </script>
   </body>
 </html>
