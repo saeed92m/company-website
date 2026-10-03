@@ -72,7 +72,7 @@ const additional = ceoAdditional[locale];
     <section aria-labelledby="publications-title">
       <div class="section-heading"><h2 id="publications-title">{labels.publications}</h2></div>
       <div class="project-grid">
-        {profilePublications.map((item) => <article class="project-card"><h3>{item.title}</h3><p>{item.venue} · {item.period}</p><p>{item.authors}</p></article>)}
+        {profilePublications.map((item) => <article class="project-card"><h3>{item.title}</h3><p>{item.venue} · {item.period}</p><p>{item.authors}</p><div class="card-actions"><a class="button button-secondary" href={item.url} target="_blank" rel="noopener noreferrer">{labels.viewPublication}</a><a class="button button-primary" href={item.downloadUrl} target="_blank" rel="noopener noreferrer">{labels.downloadPublication}</a></div></article>)}
       </div>
     </section>
   </div>
