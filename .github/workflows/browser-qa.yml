@@ -35,7 +35,7 @@ jobs:
         env:
           BASE_URL: https://saeed92m.github.io/company-website
         run: |
-          cat > /tmp/browser-qa.mjs <<'EOF'
+          cat > browser-qa.mjs <<'EOF'
           import { chromium } from "playwright";
 
           const base = process.env.BASE_URL;
@@ -103,4 +103,4 @@ jobs:
           await browser.close();
           console.log(`PASS: ${results.length} production route/viewport checks`);
           EOF
-          node /tmp/browser-qa.mjs
+          node browser-qa.mjs
