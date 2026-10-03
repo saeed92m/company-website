@@ -100,5 +100,5 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"Análisis de CME y estrategias de protección de satélites en estudios de radiación espacial y blindaje terrestre."},
       {name:"APTO",period:"2019",summary:"Colaboración con el Observatorio Khajeh Nasireddin Tusi de la Universidad de Tabriz en el análisis de ocultaciones lunares."}
     ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh y colaboradores"}]
+  }
 };
