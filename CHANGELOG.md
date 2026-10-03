@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-03 — Production styling regression fix and QA hardening
+
+- Identified a real production regression from supplied screenshots: shared SiteLayout did not import src/styles/global.css, so deployed pages could return valid HTML while rendering without the intended UI styling.
+- Fixed the root cause in PR #38 and merged commit 488aebdfc6c92a54eb9f8e93cb651ca0dac65ad9.
+- Added production smoke assertions in PR #39 and merged commit 92f6314e1ad451a43537c15b318f664b404dbf56.
+- The deployed smoke test now verifies the production stylesheet link, expected UI CSS selectors, the brand SVG, and all six domain SVG assets in addition to route HTTP 200 checks.
+- Automated checks for PR #39 passed: CI run 37119257384 and CodeQL run 37119257379.
+- Final release acceptance still requires live browser/device visual confirmation after the post-merge Pages deployment.
+
+
 ## 2026-10-03 — Phase 4 automated production QA closeout
 
 - Confirmed no open GitHub issues or pull requests remain.
