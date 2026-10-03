@@ -61,24 +61,30 @@ jobs:
         run: |
           set -euo pipefail
           base="https://saeed92m.github.io/company-website"
+          locales=(fa en ar ru de zh fr es)
           routes=(
             "/"
-            "/fa/"
-            "/en/"
-            "/ar/"
-            "/ru/"
-            "/de/"
-            "/zh/"
-            "/fr/"
-            "/es/"
-            "/fa/company/"
-            "/fa/company/ceo/"
-            "/fa/fields/"
-            "/fa/projects/"
-            "/fa/contact/"
             "/sitemap.xml"
             "/robots.txt"
           )
+
+          for locale in "${locales[@]}"; do
+            routes+=(
+              "/${locale}/"
+              "/${locale}/company/"
+              "/${locale}/company/ceo/"
+              "/${locale}/fields/"
+              "/${locale}/projects/"
+              "/${locale}/contact/"
+              "/${locale}/fields/astronomy/"
+              "/${locale}/fields/aerospace/"
+              "/${locale}/fields/remote-sensing/"
+              "/${locale}/fields/energy/"
+              "/${locale}/fields/artificial-intelligence/"
+              "/${locale}/fields/motorsport/"
+            )
+          done
+
           for route in "${routes[@]}"; do
             code="$(curl -L -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 2 "${base}${route}")"
             if [ "$code" != "200" ]; then
