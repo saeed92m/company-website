@@ -5,6 +5,8 @@ export type Publication = {
   venue:string;
   period:string;
   authors:string;
+  url:string;
+  downloadUrl:string;
 };
 
 export const publications: Record<Locale, Publication[]> = {
