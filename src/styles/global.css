@@ -37,7 +37,7 @@ button,select{font:inherit}
 .site-shell{width:min(1240px,100% - 3rem);margin-inline:auto}
 .site-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--page) 84%,transparent);backdrop-filter:blur(18px)}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--ink);text-decoration:none;flex:0 0 auto}
-.brand-mark{display:inline-flex;width:2.65rem;height:auto;align-items:center;justify-content:center;line-height:0}.brand-mark img{width:100%;height:auto;display:block;object-fit:contain}
+.brand-mark{display:inline-flex;width:2.65rem;height:auto;align-items:center;justify-content:center;line-height:0}.brand-mark img,.brand-mark svg{width:100%;height:auto;display:block;object-fit:contain}
 .brand-wordmark{font-weight:800;letter-spacing:.08em;font-size:.88rem}
 .primary-nav{display:flex;flex:1;justify-content:center;gap:1.4rem;flex-wrap:wrap}
 .primary-nav a,.language-select select,.theme-toggle{font-size:.82rem;font-weight:650}
@@ -63,7 +63,7 @@ h1,h2,h3{line-height:1.08;letter-spacing:-.025em}h1{font-size:clamp(3rem,6.2vw,6
 .button:hover{transform:translateY(-2px);text-decoration:none}
 .hero-mark{position:relative;display:grid;place-items:center;min-height:clamp(300px,38vw,480px);aspect-ratio:1;max-width:480px;width:100%;justify-self:center}
 .hero-mark:before{content:"";position:absolute;width:min(100%,430px);aspect-ratio:1;border:1px solid rgba(111,174,255,.18);border-radius:50%;box-shadow:0 0 0 38px rgba(111,174,255,.025),0 0 0 76px rgba(111,174,255,.018)}
-.hero-mark img{position:relative;width:min(72%,380px);max-width:380px;height:auto;filter:drop-shadow(0 25px 50px rgba(0,60,145,.30))}
+.hero-mark img,.hero-mark svg{position:relative;width:min(72%,380px);max-width:380px;height:auto;display:block;filter:drop-shadow(0 25px 50px rgba(0,60,145,.30))}
 section{padding:clamp(4rem,8vw,7rem) 0}
 .section-heading{display:grid;grid-template-columns:minmax(180px,.32fr) minmax(0,1fr);gap:2rem;align-items:end;margin-bottom:2.5rem}
 .section-heading .lede{margin:0}
