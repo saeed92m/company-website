@@ -6,6 +6,7 @@ import { ui } from "../content/ui";
 import { ceo } from "../content/ceo";
 import { route } from "../data/routes";
 import { webLogoUrl } from "../data/brand";
+import { formatFounded } from "../utils/date-format";
 import "../styles/global.css";
 
 interface Props { locale: Locale; title?: string; description?: string; }
@@ -90,7 +91,7 @@ const structuredData = origin ? JSON.stringify({
         </div>
         <div>
           <p class="footer-kicker">{site.navigation.contact}</p>
-          <p>{site.location} · {site.founded}</p>
+          <p>{site.location} · {formatFounded(locale)}</p>
         </div>
       </div>
     </footer>
