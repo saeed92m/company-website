@@ -133,14 +133,6 @@ jobs:
           fi
           echo "PASS local brand asset: HTTP 200 + SVG"
 
-          logo_url="https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&raw=1"
-          logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
-          if [ "$logo_code" != "200" ]; then
-            echo "FAIL supplied IMG_6104.PNG: HTTP $logo_code"
-            exit 1
-          fi
-          echo "PASS supplied IMG_6104.PNG: HTTP 200"
-
           for asset in \
             "/assets/domains/astronomy.svg" \
             "/assets/domains/aerospace.svg" \
