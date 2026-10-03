@@ -1,3 +1,12 @@
+## 2026-10-04 — Phase 7 production release closeout
+
+- Removed the homepage CEO Resume CTA after Test 2 review.
+- Replaced the Company-page CEO text link with a localized View button after Test 3 review.
+- Renamed the CEO navigation item to Management across all eight locales.
+- Corrected the English founding-year source to Gregorian 2023.
+- Added automated Chromium production QA for mobile and desktop route validation across all eight locales.
+- Recorded final release evidence in `docs/handbook/phase-7-evidence.md`.
+
 ## 2026-10-03 — Phase 5 content and visual refinements
 
 - Added source/article and PDF/full-text actions to the CEO scientific-publications section.
