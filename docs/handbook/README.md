@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 4 — Brand Integration / Static Deployment — implementation, CI/CD and automated production QA complete; independent visual/browser/device QA pending**
+**Phase 6 — Brand & Content Integration — logo replacement, canonical publication sources, multilingual routes, CI/CD and deployed smoke QA complete; independent browser/device visual QA remains the final manual gate**
 
 ## Phase 0 Definition of Done / Evidence
 
@@ -59,8 +59,8 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - The deployment workflow is present at `.github/workflows/deploy-pages.yml` and has successfully deployed from `main`.
 - Deployment run `37055705802` completed successfully on 2026-10-02; both build and deploy jobs passed.
 - The deployment workflow is configured for `https://saeed92m.github.io/company-website` with `/company-website` base-path handling.
-- Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets because the current GitHub connector write path supports UTF-8 text files, not local binary uploads.
-- Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
+- The supplied logo integration is now complete through the canonical SVG web asset; the source raster remains project input rather than a repository runtime dependency.
+- Next gate: perform independent browser/device/locale/RTL/SEO/accessibility/performance visual validation against the deployed site, then close the remaining manual release gate.
 
 ## Latest visual-system implementation evidence — 2026-10-03
 
@@ -73,9 +73,11 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 ## Latest validated deployment evidence — 2026-10-03
 
 - No open GitHub issues or pull requests remain at this checkpoint.
-- PR #33 (brand visual consistency) was merged as `8b620de2613f44052fe226d8b734d731cee05268`.
-- GitHub Pages run `37082876063` passed build, deploy, and the expanded deployed-route smoke test.
-- The smoke test covers all eight locales, core pages, six field-detail routes per locale, sitemap, and robots.txt.
+- PR #46 (`feat: apply supplied logo and canonical HAL publication links`) was merged to `main` as `70a7b2f970b26c416aa965e701f8b07e1554504c`.
+- GitHub Pages run `37124874329` for that exact commit completed successfully with build, deploy, and deployed-route smoke checks.
+- The smoke test covers all eight locales, core pages, six field-detail routes per locale, sitemap, robots.txt, the global stylesheet, canonical brand asset references, and all six domain SVG assets.
+- The supplied logo is now the canonical `public/brand/alpha-team-mark.svg` used by the header, home hero, and favicon.
+- Both scientific-publication actions now point to the exact owner-supplied HAL records; no repository copy of the publications is maintained.
 - Remaining release gate is independent browser/device visual QA; no unverified public visual claim is promoted to “complete”.
 
 ## Repository visibility decision
