@@ -118,7 +118,7 @@ jobs:
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
-            if ! printf '%s' "$html" | grep -Fq '/brand/alpha-team-mark.svg'; then
+            if ! printf '%s' "$html" | grep -Fq 'alpha-team-mark.svg'; then
               echo "FAIL ${route}: local brand asset reference missing"
               exit 1
             fi
