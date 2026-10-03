@@ -116,6 +116,14 @@ jobs:
             fi
           done
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
+          for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
+            html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
+            if ! printf '%s' "$html" | grep -Fq '/brand/alpha-team-mark.svg'; then
+              echo "FAIL ${route}: canonical brand asset reference missing"
+              exit 1
+            fi
+            echo "PASS ${route}: canonical brand asset reference present"
+          done
 
           for asset in \
             "/brand/alpha-team-mark.svg" \
