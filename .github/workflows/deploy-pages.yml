@@ -27,27 +27,6 @@ jobs:
         with:
           node-version: "22.19.0"
 
-      - name: Fetch canonical supplied logo
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p public/brand
-          curl -fL --retry 3 --retry-delay 2 \
-            "https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&raw=1" \
-            -o public/brand/IMG_6104.PNG
-          python3 - <<'PY'
-          import struct
-          from pathlib import Path
-          p = Path("public/brand/IMG_6104.PNG")
-          data = p.read_bytes()
-          if data[:8] != b"\x89PNG\r\n\x1a\n":
-              raise SystemExit("FAIL canonical logo is not a PNG")
-          width, height = struct.unpack(">II", data[16:24])
-          if (width, height) != (1254, 1254):
-              raise SystemExit(f"FAIL canonical logo dimensions: {width}x{height}")
-          print(f"PASS canonical logo: PNG {width}x{height}")
-          PY
-
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
@@ -139,20 +118,20 @@ jobs:
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
-            if ! printf '%s' "$html" | grep -Fq 'IMG_6104.PNG'; then
+            if ! printf '%s' "$html" | grep -Fq 'alpha-team-mark.svg'; then
               echo "FAIL ${route}: local brand asset reference missing"
               exit 1
             fi
             echo "PASS ${route}: local brand asset reference present"
           done
 
-          logo_url="${base}/brand/IMG_6104.PNG"
+          logo_url="${base}/brand/alpha-team-mark.svg"
           logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
           if [ "$logo_code" != "200" ] || ! python3 -c 'import sys; d=open("/tmp/site-logo","rb").read(8); sys.exit(0 if d==b"\x89PNG\r\n\x1a\n" else 1)'; then
-            echo "FAIL local brand asset: HTTP $logo_code or invalid PNG payload"
+            echo "FAIL local brand asset: HTTP $logo_code or invalid SVG payload"
             exit 1
           fi
-          echo "PASS local brand asset: HTTP 200 + PNG"
+          echo "PASS local brand asset: HTTP 200 + SVG"
 
           for asset in \
             "/assets/domains/astronomy.svg" \
