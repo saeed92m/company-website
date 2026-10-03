@@ -1,0 +1,102 @@
+name: Browser QA
+
+on:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-qa
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22.19.0"
+
+      - name: Install Playwright
+        run: |
+          npm exec --yes playwright@1.55.0 install --with-deps chromium
+
+      - name: Run production browser checks
+        env:
+          BASE_URL: https://saeed92m.github.io/company-website
+        run: |
+          cat > /tmp/browser-qa.mjs <<'EOF'
+          import { chromium } from "playwright";
+
+          const base = process.env.BASE_URL;
+          const locales = ["fa","en","ar","ru","de","zh","fr","es"];
+          const routes = [
+            "",
+            "company/",
+            "company/ceo/",
+            "fields/",
+            "projects/",
+            "contact/",
+          ];
+
+          const browser = await chromium.launch({headless:true});
+          const results = [];
+
+          for (const viewport of [
+            { width: 390, height: 844, name: "mobile" },
+            { width: 1440, height: 900, name: "desktop" },
+          ]) {
+            const context = await browser.newContext({ viewport });
+            for (const locale of locales) {
+              for (const suffix of routes) {
+                const url = `${base}/${locale}/${suffix}`;
+                const page = await context.newPage();
+                const response = await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
+                if (!response || !response.ok()) throw new Error(`${url}: HTTP ${response?.status()}`);
+
+                const checks = await page.evaluate(() => ({
+                  dir: document.documentElement.dir,
+                  lang: document.documentElement.lang,
+                  title: document.title,
+                  horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
+                  hasMain: Boolean(document.querySelector("main#main-content")),
+                  hasHeader: Boolean(document.querySelector("header.site-header")),
+                  hasBrand: Boolean(document.querySelector("header .brand svg")),
+                  hasStyles: [...document.styleSheets].length > 0,
+                  visibleText: (document.body.innerText || "").trim().length > 0,
+                }));
+
+                if (!checks.title || !checks.hasMain || !checks.hasHeader || !checks.hasBrand || !checks.hasStyles || !checks.visibleText) {
+                  throw new Error(`${url} [${viewport.name}]: structural check failed: ${JSON.stringify(checks)}`);
+                }
+                if (checks.horizontalOverflow) {
+                  throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
+                }
+                if (checks.lang !== locale) throw new Error(`${url}: expected lang=${locale}, got ${checks.lang}`);
+                const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
+                if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
+
+                if (suffix === "company/") {
+                  const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
+                  if (locale === "fa" || locale === "en") {
+                    if (await viewButton.count() !== 1) throw new Error(`${url}: CEO View button missing`);
+                  }
+                }
+
+                results.push({viewport: viewport.name, locale, route: suffix || "/"});
+                await page.close();
+              }
+            }
+            await context.close();
+          }
+
+          await browser.close();
+          console.log(`PASS: ${results.length} production route/viewport checks`);
+          EOF
+          node /tmp/browser-qa.mjs
