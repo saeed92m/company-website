@@ -6,6 +6,7 @@ import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageBySlug } from "../../data/domain-assets";
 import { formatFounded } from "../../utils/date-format";
+import BrandMark from "../../components/BrandMark.astro";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
@@ -23,9 +24,7 @@ const site = content[locale]; const labels = ui[locale];
           <a class="button button-secondary" href={route(locale,"company")}>{site.navigation.company}</a>
         </div>
       </div>
-      <div class="hero-mark" aria-hidden="true">
-        <img src={import.meta.env.BASE_URL + "brand/alpha-team-mark.svg"} alt="" width="1254" height="1254" decoding="async" />
-      </div>
+      <div class="hero-mark" aria-hidden="true"><BrandMark label="ALPHA TEAM" /></div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
