@@ -1,8 +1,8 @@
 /**
  * Canonical supplied logo source.
  *
- * This is the exact Logo.jpg supplied by the project owner in Dropbox.
- * Do not redraw, approximate, recolor, or substitute another mark.
+ * This is the exact IMG_6104.PNG supplied by the project owner.
+ * Do not redraw, approximate, recolor, crop, or substitute another mark.
  */
 export const suppliedLogoUrl =
-  "https://www.dropbox.com/scl/fi/3n6jv3itc9ic2e93qvwej/Logo.jpg?rlkey=aecxw5k34s9q0vkye5nwhf4cq&st=56e0rten&raw=1";
+  "https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&raw=1";
