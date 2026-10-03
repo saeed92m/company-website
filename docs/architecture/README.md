@@ -12,7 +12,7 @@
 
 ## Proposed implementation direction
 
-A modern static/hybrid frontend is planned. Astro is the current preferred candidate, subject to Phase 1/2 validation and final technology decision.
+A modern static/hybrid frontend is implemented with Astro and static output. Astro is the confirmed implementation choice for the current website baseline; future CMS/API/CRM integrations remain intentionally decoupled from the public information architecture.
 
 ## Environments
 
