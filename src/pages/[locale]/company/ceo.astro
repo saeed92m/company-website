@@ -5,6 +5,7 @@ import { ceo } from "../../../content/ceo";
 import { content as siteContent } from "../../../content/site";
 import { ui } from "../../../content/ui";
 import { publications } from "../../../content/publications";
+import { ceoAdditional } from "../../../content/ceo-additional";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -14,6 +15,7 @@ const profile = ceo[locale];
 const site = siteContent[locale];
 const labels = ui[locale];
 const profilePublications = publications[locale];
+const additional = ceoAdditional[locale];
 ---
 <SiteLayout locale={locale} title={profile.name + " — " + site.companyName} description={profile.summary}>
   <div class="site-shell">
@@ -44,6 +46,22 @@ const profilePublications = publications[locale];
       <div class="project-grid">
         {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{item.period}</p><p>{item.summary}</p></article>)}
       </div>
+    </section>
+    <section aria-labelledby="skills-title">
+      <div class="section-heading"><h2 id="skills-title">{labels.skills}</h2></div>
+      <ul class="capability-list">{additional.skills.map((item) => <li>{item}</li>)}</ul>
+    </section>
+    <section aria-labelledby="languages-title">
+      <div class="section-heading"><h2 id="languages-title">{labels.languages}</h2></div>
+      <ul class="capability-list">{additional.languages.map((item) => <li>{item}</li>)}</ul>
+    </section>
+    <section aria-labelledby="memberships-title">
+      <div class="section-heading"><h2 id="memberships-title">{labels.memberships}</h2></div>
+      <ul class="capability-list">{additional.memberships.map((item) => <li>{item}</li>)}</ul>
+    </section>
+    <section aria-labelledby="courses-title">
+      <div class="section-heading"><h2 id="courses-title">{labels.courses}</h2></div>
+      <ul class="capability-list">{additional.courses.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section aria-labelledby="publications-title">
       <div class="section-heading"><h2 id="publications-title">{labels.publications}</h2></div>
