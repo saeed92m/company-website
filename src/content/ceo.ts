@@ -31,6 +31,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"۲۰۱۹",summary:"همکاری با رصدخانه خواجه نصیرالدین طوسی دانشگاه تبریز در تحلیل داده‌های کلیدی اختفاهای قمری (Occultation)."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"۲۰۲۰",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"} ,{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"۲۰۱۹",authors:"A. Poro, S. Memarzadeh و همکاران"}],
+  },
   en:{
     name:"Saeed Memarzadeh",role:"Founder & CEO",
     summary:"An entrepreneur and engineer with academic backgrounds in mechanical and aerospace engineering, focused on R&D, innovation and translating scientific knowledge into practical engineering solutions.",
@@ -42,6 +43,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"Collaboration with Khajeh Nasireddin Tusi Observatory, University of Tabriz, on lunar occultation analysis."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh and collaborators"}],
+  },
   ar:{
     name:"سعيد معمارزاده",role:"المؤسس والرئيس التنفيذي",summary:"رائد أعمال ومهندس بخلفية في الهندسة الميكانيكية وهندسة الفضاء، يركز على البحث والتطوير والابتكار وتحويل المعرفة العلمية إلى حلول هندسية عملية.",
     education:[{degree:"بكالوريوس هندسة ميكانيكية",field:"الحرارة والموائع",institution:"جامعة تبريز",years:"2012–2017"},{degree:"ماجستير هندسة الطيران والفضاء",field:"هندسة الفضاء",institution:"جامعة تبريز",years:"2018–2020"}],
@@ -52,6 +54,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"التعاون مع مرصد خواجه نصير الدين الطوسي بجامعة تبريز في تحليل احتجابات القمر."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh و همکاران"}],
+  },
   ru:{
     name:"Саид Мемарзаде",role:"Основатель и генеральный директор",summary:"Предприниматель и инженер с образованием в области механики и аэрокосмической техники, ориентированный на исследования, разработки и практическую инженерную реализацию.",
     education:[{degree:"Бакалавр машиностроения",field:"Тепло- и гидродинамика",institution:"Тебризский университет",years:"2012–2017"},{degree:"Магистр аэрокосмической инженерии",field:"Космическая инженерия",institution:"Тебризский университет",years:"2018–2020"}],
@@ -62,6 +65,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"Сотрудничество с обсерваторией Ходжа Насир ад-Дин Туси Университета Тебриза по анализу лунных покрытий."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh и соавторы"}],
+  },
   de:{
     name:"Saeed Memarzadeh",role:"Gründer und CEO",summary:"Unternehmer und Ingenieur mit Ausbildung in Maschinenbau und Luft- und Raumfahrttechnik, mit Fokus auf F&E, Innovation und praktische technische Lösungen.",
     education:[{degree:"B.Sc. Maschinenbau",field:"Thermo- und Fluidtechnik",institution:"Universität Täbris",years:"2012–2017"},{degree:"M.Sc. Luft- und Raumfahrttechnik",field:"Raumfahrttechnik",institution:"Universität Täbris",years:"2018–2020"}],
@@ -72,6 +76,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"Zusammenarbeit mit dem Khajeh-Nasireddin-Tusi-Observatorium der Universität Täbris zur Analyse von Mondbedeckungen."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh und Mitautoren"}],
+  },
   zh:{
     name:"Saeed Memarzadeh",role:"创始人兼首席执行官",summary:"具有机械工程和航空航天工程背景的企业家与工程师，专注于研发、创新以及将科学知识转化为工程解决方案。",
     education:[{degree:"机械工程学士",field:"热能与流体",institution:"大不里士大学",years:"2012–2017"},{degree:"航空航天工程硕士",field:"空间工程",institution:"大不里士大学",years:"2018–2020"}],
@@ -82,6 +87,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"与大不里士大学 Khajeh Nasireddin Tusi 天文台合作开展月掩星分析。" }
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh 等"}],
+  },
   fr:{
     name:"Saeed Memarzadeh",role:"Fondateur et PDG",summary:"Entrepreneur et ingénieur formé en génie mécanique et aérospatial, spécialisé dans la R&D, l'innovation et la mise en œuvre de solutions d'ingénierie.",
     education:[{degree:"Licence en génie mécanique",field:"Thermique et fluides",institution:"Université de Tabriz",years:"2012–2017"},{degree:"Master en génie aérospatial",field:"Ingénierie spatiale",institution:"Université de Tabriz",years:"2018–2020"}],
@@ -92,6 +98,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"APTO",period:"2019",summary:"Collaboration avec l’Observatoire Khajeh Nasireddin Tusi de l’Université de Tabriz pour l’analyse des occultations lunaires."}
     ],
     publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh et collaborateurs"}],
+  },
   es:{
     name:"Saeed Memarzadeh",role:"Fundador y CEO",summary:"Emprendedor e ingeniero con formación en ingeniería mecánica y aeroespacial, centrado en I+D, innovación y soluciones de ingeniería aplicadas.",
     education:[{degree:"Grado en Ingeniería Mecánica",field:"Térmica y Fluidos",institution:"Universidad de Tabriz",years:"2012–2017"},{degree:"Máster en Ingeniería Aeroespacial",field:"Ingeniería Espacial",institution:"Universidad de Tabriz",years:"2018–2020"}],
