@@ -1,3 +1,11 @@
+## 2026-10-03 — Phase 5 content and visual refinements
+
+- Added source/article and PDF/full-text actions to the CEO scientific-publications section.
+- Added localized labels for publication actions across all eight locales.
+- Refined the six domain cards and field-detail heroes to use their domain-specific artwork as restrained blurred background layers.
+- Added the East Azerbaijan Science & Technology Park location note to the localized Contact card.
+- Recorded implementation evidence in `docs/handbook/phase-5-evidence.md`.
+
 # Changelog
 
 ## 2026-10-03 — Production styling regression fix and QA hardening
