@@ -22,11 +22,13 @@ const site = content[locale]; const labels = ui[locale];
         </div>
       </div>
       <div class="hero-mark" aria-hidden="true">
-        <svg viewBox="0 0 320 270">
-          <path d="M35 234 145 38l26 45-83 151H35Zm105-47 36-63 62 110h-51l-47-47Zm43-77 27-47 90 161h-51l-66-114Z" fill="currentColor"/>
-          <path d="M118 207c61 28 145-7 165-61 12-31-9-58-43-67" fill="none" stroke="#A8A8A8" stroke-width="16" stroke-linecap="round"/>
-          <circle cx="238" cy="78" r="19" fill="#A8A8A8"/>
-        </svg>
+        <img
+          src={import.meta.env.BASE_URL + "brand/alpha-team-mark.svg"}
+          alt=""
+          width="320"
+          height="270"
+          decoding="async"
+        />
       </div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
