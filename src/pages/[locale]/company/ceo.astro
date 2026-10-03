@@ -4,6 +4,7 @@ import { locales, type Locale } from "../../../data/locales";
 import { ceo } from "../../../content/ceo";
 import { content as siteContent } from "../../../content/site";
 import { ui } from "../../../content/ui";
+import { publications } from "../../../content/publications";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -12,6 +13,7 @@ const { locale } = Astro.props as { locale: Locale };
 const profile = ceo[locale];
 const site = siteContent[locale];
 const labels = ui[locale];
+const profilePublications = publications[locale];
 ---
 <SiteLayout locale={locale} title={profile.name + " — " + site.companyName} description={profile.summary}>
   <div class="site-shell">
@@ -41,6 +43,12 @@ const labels = ui[locale];
       <div class="section-heading"><h2 id="projects-title">{labels.selectedProjects}</h2></div>
       <div class="project-grid">
         {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{item.period}</p><p>{item.summary}</p></article>)}
+      </div>
+    </section>
+    <section aria-labelledby="publications-title">
+      <div class="section-heading"><h2 id="publications-title">{labels.publications}</h2></div>
+      <div class="project-grid">
+        {profilePublications.map((item) => <article class="project-card"><h3>{item.title}</h3><p>{item.venue} · {item.period}</p><p>{item.authors}</p></article>)}
       </div>
     </section>
   </div>
