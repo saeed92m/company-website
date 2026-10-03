@@ -31,4 +31,4 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-Phase 4 — brand/UI integration and GitHub Pages production deployment validation.
+Phase 4 — implementation and deployment operational; automated production QA passed. Independent visual/browser/device QA remains the final release gate.
