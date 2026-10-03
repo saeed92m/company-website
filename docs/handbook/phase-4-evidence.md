@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress — production deployment is operational and automated smoke validation passes; independent visual/browser/device QA remains open.
+Implementation and deployment are operational; automated production QA passes. Independent visual/browser/device QA remains the final release gate.
 
 ## Completed
 
@@ -27,6 +27,14 @@ In Progress — production deployment is operational and automated smoke validat
 - GitHub Pages run `37082876063`: **passed** build, deployment and the expanded deployed-route smoke test.
 - The smoke job exercised the deployed `https://saeed92m.github.io/company-website` endpoint and returned HTTP 200 for every configured route.
 - GitHub Actions therefore provides current deployment/reachability evidence; independent visual browser/device QA is still intentionally tracked separately.
+
+## Latest validated deployment — 2026-10-03
+
+- GitHub Pages run `37082876063` completed successfully for `main`.
+- Build job `111087006023`, deploy job `111087096385`, and deployed-route smoke job `111087141108` all completed with **success**.
+- The deployed smoke test returned HTTP 200 for the root, sitemap, robots.txt, all eight locale roots, Company, CEO, Fields, Projects, Contact, and all six field-detail routes for every locale.
+- The Pages artifact was independently downloaded and inspected from the successful deployment; the repository's previously recorded artifact QA reports 98 HTML pages, 96 sitemap URLs, valid favicon/robots/404 assets, correct locale direction metadata, and zero broken local links.
+- This confirms deployment and static-output integrity. It does not replace manual browser/device visual QA.
 
 ## Source assets
 

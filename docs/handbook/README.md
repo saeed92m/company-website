@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 4 — Brand Integration / Static Deployment — deployed preview; final live QA pending**
+**Phase 4 — Brand Integration / Static Deployment — implementation, CI/CD and automated production QA complete; independent visual/browser/device QA pending**
 
 ## Phase 0 Definition of Done / Evidence
 
@@ -61,6 +61,14 @@ PR #6 was merged after CI validation; Phase 3 implementation is now recorded in 
 - The deployment workflow is configured for `https://saeed92m.github.io/company-website` with `/company-website` base-path handling.
 - Final binary logo/wordmark integration remains open; the supplied visual assets are available as project inputs but have not yet been committed as repository assets because the current GitHub connector write path supports UTF-8 text files, not local binary uploads.
 - Next gate: perform browser/device/locale/RTL/SEO/accessibility/performance smoke validation against the deployed preview, then close Phase 4.
+
+## Latest validated deployment evidence — 2026-10-03
+
+- No open GitHub issues or pull requests remain at this checkpoint.
+- PR #33 (brand visual consistency) was merged as `8b620de2613f44052fe226d8b734d731cee05268`.
+- GitHub Pages run `37082876063` passed build, deploy, and the expanded deployed-route smoke test.
+- The smoke test covers all eight locales, core pages, six field-detail routes per locale, sitemap, and robots.txt.
+- Remaining release gate is independent browser/device visual QA; no unverified public visual claim is promoted to “complete”.
 
 ## Repository visibility decision
 
