@@ -14,6 +14,6 @@ const site = content[locale]; const labels = ui[locale];
     <section aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
-    <section class="split" aria-labelledby="ceo-title"><div><p class="eyebrow">{labels.ceo}</p><h2 id="ceo-title">{site.founder}</h2></div><p><a href={route(locale,"company/ceo")}>{site.navigation.ceo}</a></p></section>
+    <section class="split" aria-labelledby="ceo-title"><div><p class="eyebrow">{labels.ceo}</p><h2 id="ceo-title">{site.founder}</h2></div><a class="button button-secondary" href={route(locale,"company/ceo")}>مشاهده</a></section>
   </div>
 </SiteLayout>
