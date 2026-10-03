@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation and deployment are operational; automated production QA passes. Independent visual/browser/device QA remains the final release gate.
+Implementation is operational and the production styling regression found during visual QA has been fixed. Automated production QA has been strengthened; the post-merge Pages deployment and live browser/device visual confirmation remain release gates.
 
 ## Completed
 
@@ -19,16 +19,16 @@ Implementation and deployment are operational; automated production QA passes. I
 - Added repository favicon and robots.txt derivatives.
 - Confirmed the public repository decision is documented separately.
 
-## Validation evidence — 2026-10-03
+## Validation evidence — 2026-10-03 (updated)
 
 - Main validation commit: `88f0ff00468ccadf7956fa675514e5fd7b1ea48a` (`test: expand GitHub Pages locale smoke coverage`).
 - CI run `37082875999`: **passed** repository baseline, dependency installation, Astro check and production build.
 - CodeQL run `37082876006`: **passed** JavaScript/TypeScript analysis.
 - GitHub Pages run `37082876063`: **passed** build, deployment and the expanded deployed-route smoke test.
 - The smoke job exercised the deployed `https://saeed92m.github.io/company-website` endpoint and returned HTTP 200 for every configured route.
-- GitHub Actions therefore provides current deployment/reachability evidence; independent visual browser/device QA is still intentionally tracked separately.
+- GitHub Actions provides route/deployment evidence, but HTTP 200 alone was insufficient to catch the styling regression. PR #39 therefore added deployed CSS/asset assertions; the post-merge Pages run must pass those checks before release acceptance.
 
-## Latest validated deployment — 2026-10-03
+## Previous validated deployment baseline — 2026-10-03
 
 - GitHub Pages run `37082876063` completed successfully for `main`.
 - Build job `111087006023`, deploy job `111087096385`, and deployed-route smoke job `111087141108` all completed with **success**.
