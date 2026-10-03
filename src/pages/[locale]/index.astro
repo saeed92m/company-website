@@ -5,6 +5,7 @@ import { content } from "../../content/site";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageBySlug } from "../../data/domain-assets";
+import { formatFounded } from "../../utils/date-format";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
@@ -13,7 +14,7 @@ const site = content[locale]; const labels = ui[locale];
   <div class="site-shell">
     <section class="hero hero-brand" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">ALPHA TEAM · {site.founded}</p>
+        <p class="eyebrow">ALPHA TEAM · {formatFounded(locale)}</p>
         <h1 id="hero-title">{site.tagline}</h1>
         <p class="lede">{site.intro}</p>
         <p class="hero-identity">{site.founder}</p>
