@@ -6,6 +6,7 @@ import { content as siteContent } from "../../../content/site";
 import { ui } from "../../../content/ui";
 import { publications } from "../../../content/publications";
 import { ceoAdditional } from "../../../content/ceo-additional";
+const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -19,11 +20,16 @@ const additional = ceoAdditional[locale];
 ---
 <SiteLayout locale={locale} title={profile.name + " — " + site.companyName} description={profile.summary}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="ceo-title">
-      <p class="eyebrow">{site.navigation.company}</p>
-      <h1 id="ceo-title">{profile.name}</h1>
-      <p class="lede">{profile.role}</p>
-      <p>{profile.summary}</p>
+    <section class="hero hero-brand hero-profile" aria-labelledby="ceo-title">
+      <div class="hero-copy">
+        <p class="eyebrow">{site.navigation.company}</p>
+        <h1 id="ceo-title">{profile.name}</h1>
+        <p class="lede">{profile.role}</p>
+        <p>{profile.summary}</p>
+      </div>
+      <div class="hero-mark" aria-hidden="true">
+        <img src={assetBase + "brand/alpha-team-mark.svg"} alt="" width="320" height="270" decoding="async" />
+      </div>
     </section>
     <section aria-labelledby="education-title">
       <div class="section-heading"><h2 id="education-title">{labels.education}</h2></div>
