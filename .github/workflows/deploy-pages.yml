@@ -88,8 +88,47 @@ jobs:
           for route in "${routes[@]}"; do
             code="$(curl -L -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 2 "${base}${route}")"
             if [ "$code" != "200" ]; then
-              echo "FAIL ${route}: HTTP ${code}"
+              echo "FAIL ${route}: HTTP $code"
               exit 1
             fi
             echo "PASS ${route}: HTTP 200"
+          done
+
+          # HTTP 200 alone is not sufficient for production QA: a page can be
+          # reachable while its stylesheet or critical brand assets are missing.
+          html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
+          stylesheet="$(printf '%s' "$html" | grep -oE 'href="[^"]+\.css"' | head -n 1 | sed -E 's/^href="|"$//g')"
+          if [ -z "$stylesheet" ]; then
+            echo "FAIL /en/: no stylesheet link found"
+            exit 1
+          fi
+          css_url="$stylesheet"
+          case "$css_url" in
+            http://*|https://*) ;;
+            /*) css_url="https://saeed92m.github.io$css_url" ;;
+            *) css_url="${base%/}/${css_url#./}" ;;
+          esac
+          css="$(curl -L -sS --retry 3 --retry-delay 2 "$css_url")"
+          for marker in ".site-header" ".hero-brand" ".domain-card"; do
+            if ! printf '%s' "$css" | grep -Fq "$marker"; then
+              echo "FAIL CSS: expected marker $marker not found in $css_url"
+              exit 1
+            fi
+          done
+          echo "PASS /en/: production stylesheet loaded with expected UI markers"
+
+          for asset in \
+            "/brand/alpha-team-mark.svg" \
+            "/assets/domains/astronomy.svg" \
+            "/assets/domains/aerospace.svg" \
+            "/assets/domains/remote-sensing.svg" \
+            "/assets/domains/energy.svg" \
+            "/assets/domains/artificial-intelligence.svg" \
+            "/assets/domains/motorsport.svg"; do
+            code="$(curl -L -sS -o /tmp/site-asset -w "%{http_code}" --retry 3 --retry-delay 2 "${base}${asset}")"
+            if [ "$code" != "200" ] || ! grep -q "<svg" /tmp/site-asset; then
+              echo "FAIL asset ${asset}: HTTP $code or invalid SVG payload"
+              exit 1
+            fi
+            echo "PASS asset ${asset}: HTTP 200 + SVG"
           done
