@@ -33,7 +33,7 @@ jobs:
           set -euo pipefail
           mkdir -p public/brand
           curl -fL --retry 3 --retry-delay 2 \
-            "https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&dl=1" \
+            "https://dl.dropboxusercontent.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&dl=1" \
             -o public/brand/IMG_6104.PNG
           python3 - <<'PY'
           import struct, hashlib
