@@ -25,7 +25,8 @@ jobs:
 
       - name: Install Playwright
         run: |
-          npm exec --yes playwright@1.55.0 install --with-deps chromium
+          npm install --no-save --no-package-lock playwright@1.55.0
+          npx playwright install --with-deps chromium
 
       - name: Run production browser checks
         env:
