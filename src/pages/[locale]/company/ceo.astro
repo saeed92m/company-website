@@ -6,6 +6,7 @@ import { content as siteContent } from "../../../content/site";
 import { ui } from "../../../content/ui";
 import { publications } from "../../../content/publications";
 import { ceoAdditional } from "../../../content/ceo-additional";
+import { formatPeriod } from "../../../utils/date-format";
 const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 
 export function getStaticPaths() {
@@ -34,7 +35,7 @@ const additional = ceoAdditional[locale];
     <section aria-labelledby="education-title">
       <div class="section-heading"><h2 id="education-title">{labels.education}</h2></div>
       <div class="project-grid">
-        {profile.education.map((item) => <article class="project-card"><h3>{item.degree}</h3><p>{item.field}</p><p>{item.institution} · {item.years}</p></article>)}
+        {profile.education.map((item) => <article class="project-card"><h3>{item.degree}</h3><p>{item.field}</p><p>{item.institution} · {formatPeriod(item.years, locale)}</p></article>)}
       </div>
     </section>
     <section aria-labelledby="expertise-title">
@@ -50,7 +51,7 @@ const additional = ceoAdditional[locale];
     <section aria-labelledby="projects-title">
       <div class="section-heading"><h2 id="projects-title">{labels.selectedProjects}</h2></div>
       <div class="project-grid">
-        {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{item.period}</p><p>{item.summary}</p></article>)}
+        {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{formatPeriod(item.period, locale)}</p><p>{item.summary}</p></article>)}
       </div>
     </section>
     <section aria-labelledby="skills-title">
@@ -63,7 +64,7 @@ const additional = ceoAdditional[locale];
     </section>
     <section aria-labelledby="memberships-title">
       <div class="section-heading"><h2 id="memberships-title">{labels.memberships}</h2></div>
-      <ul class="capability-list">{additional.memberships.map((item) => <li>{item}</li>)}</ul>
+      <ul class="capability-list">{additional.memberships.map((item) => <li>{formatPeriod(item, locale)}</li>)}</ul>
     </section>
     <section aria-labelledby="courses-title">
       <div class="section-heading"><h2 id="courses-title">{labels.courses}</h2></div>
