@@ -118,12 +118,20 @@ jobs:
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
-            if ! printf '%s' "$html" | grep -Fq 'IMG_6104.PNG'; then
-              echo "FAIL ${route}: exact supplied Logo.jpg reference missing"
+            if ! printf '%s' "$html" | grep -Fq '/brand/alpha-team-mark.svg'; then
+              echo "FAIL ${route}: local brand asset reference missing"
               exit 1
             fi
-            echo "PASS ${route}: exact supplied IMG_6104.PNG reference present"
+            echo "PASS ${route}: local brand asset reference present"
           done
+
+          logo_url="${base}/brand/alpha-team-mark.svg"
+          logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
+          if [ "$logo_code" != "200" ] || ! grep -q "<svg" /tmp/site-logo; then
+            echo "FAIL local brand asset: HTTP $logo_code or invalid SVG payload"
+            exit 1
+          fi
+          echo "PASS local brand asset: HTTP 200 + SVG"
 
           logo_url="https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&raw=1"
           logo_code="$(curl -L -sS -o /tmp/site-logo -w "%{http_code}" --retry 3 --retry-delay 2 "$logo_url")"
