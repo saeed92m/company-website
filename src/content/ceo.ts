@@ -6,7 +6,6 @@ export type CEOContent = {
   expertise:string[];
   experience:{role:string;organization:string;period:string;summary:string}[];
   selectedProjects:{name:string;period:string;summary:string}[];
-  publications:{title:string;venue:string;period:string;authors:string}[];
 };
 
 export const ceo: Record<Locale, CEOContent> = {
@@ -29,8 +28,7 @@ export const ceo: Record<Locale, CEOContent> = {
       {name:"Remote Sensing Projects",period:"۱۳۹۸",summary:"اجرای پروژه‌های تحلیلی با تصاویر ماهواره‌ای Landsat 8 و Sentinel-1/2."},
       {name:"Space Radiation & Earth Shielding Study",period:"۱۴۰۰–۱۳۹۹",summary:"تحلیل فوران‌های جرم تاجی خورشیدی (CME) و راهکارهای حفاظت از ماهواره‌ها و زیرساخت‌های فضایی."},
       {name:"APTO",period:"۲۰۱۹",summary:"همکاری با رصدخانه خواجه نصیرالدین طوسی دانشگاه تبریز در تحلیل داده‌های کلیدی اختفاهای قمری (Occultation)."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"۲۰۲۰",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"} ,{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"۲۰۱۹",authors:"A. Poro, S. Memarzadeh و همکاران"}],
+    ]
   },
   en:{
     name:"Saeed Memarzadeh",role:"Founder & CEO",
@@ -41,8 +39,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024",summary:"Alpha Team participation in a CanSat project with a sensing-communications mission."},{name:"CubeSat",period:"2023",summary:"Alpha Team participation in a 1U CubeSat sensing-communications project."},{name:"CBS",period:"2020",summary:"Leadership of a binary-star timing and analysis project resulting in an international publication."},{name:"Remote Sensing Projects",period:"2019",summary:"Analytical projects using Landsat 8 and Sentinel-1/2 satellite imagery."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"CME analysis and satellite-protection strategies for space-radiation and Earth-shielding research."},
       {name:"APTO",period:"2019",summary:"Collaboration with Khajeh Nasireddin Tusi Observatory, University of Tabriz, on lunar occultation analysis."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh and collaborators"}],
+    ]
   },
   ar:{
     name:"سعيد معمارزاده",role:"المؤسس والرئيس التنفيذي",summary:"رائد أعمال ومهندس بخلفية في الهندسة الميكانيكية وهندسة الفضاء، يركز على البحث والتطوير والابتكار وتحويل المعرفة العلمية إلى حلول هندسية عملية.",
@@ -52,8 +49,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"مشاركة فريق Alpha Team في مشروع CanSat لمهام الاستشعار والاتصالات."},{name:"CubeSat",period:"2023",summary:"مشاركة فريق Alpha Team في مشروع CubeSat من نوع 1U."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"تحليل CME واستراتيجيات حماية الأقمار الصناعية في أبحاث إشعاعات الفضاء وحماية الأرض."},
       {name:"APTO",period:"2019",summary:"التعاون مع مرصد خواجه نصير الدين الطوسي بجامعة تبريز في تحليل احتجابات القمر."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh و همکاران"}],
+    ]
   },
   ru:{
     name:"Саид Мемарзаде",role:"Основатель и генеральный директор",summary:"Предприниматель и инженер с образованием в области механики и аэрокосмической техники, ориентированный на исследования, разработки и практическую инженерную реализацию.",
@@ -63,8 +59,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"Участие Alpha Team в проекте CanSat для задач дистанционного зондирования и связи."},{name:"CubeSat",period:"2023",summary:"Участие Alpha Team в проекте CubeSat 1U."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"Анализ CME и стратегий защиты спутников в исследованиях космической радиации и экранирования Земли."},
       {name:"APTO",period:"2019",summary:"Сотрудничество с обсерваторией Ходжа Насир ад-Дин Туси Университета Тебриза по анализу лунных покрытий."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh и соавторы"}],
+    ]
   },
   de:{
     name:"Saeed Memarzadeh",role:"Gründer und CEO",summary:"Unternehmer und Ingenieur mit Ausbildung in Maschinenbau und Luft- und Raumfahrttechnik, mit Fokus auf F&E, Innovation und praktische technische Lösungen.",
@@ -74,8 +69,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"Beteiligung des Alpha Teams an einem CanSat-Projekt für Fernerkundung und Kommunikation."},{name:"CubeSat",period:"2023",summary:"Beteiligung des Alpha Teams an einem 1U-CubeSat-Projekt."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"CME-Analyse und Strategien zum Satellitenschutz im Rahmen der Forschung zu Weltraumstrahlung und Erdabschirmung."},
       {name:"APTO",period:"2019",summary:"Zusammenarbeit mit dem Khajeh-Nasireddin-Tusi-Observatorium der Universität Täbris zur Analyse von Mondbedeckungen."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh und Mitautoren"}],
+    ]
   },
   zh:{
     name:"Saeed Memarzadeh",role:"创始人兼首席执行官",summary:"具有机械工程和航空航天工程背景的企业家与工程师，专注于研发、创新以及将科学知识转化为工程解决方案。",
@@ -85,8 +79,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"Alpha Team 参与面向遥感与通信任务的 CanSat 项目。"},{name:"CubeSat",period:"2023",summary:"Alpha Team 参与 1U CubeSat 遥感通信项目。"},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"开展CME分析及卫星防护策略研究，聚焦空间辐射与地球屏蔽。" },
       {name:"APTO",period:"2019",summary:"与大不里士大学 Khajeh Nasireddin Tusi 天文台合作开展月掩星分析。" }
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh 等"}],
+    ]
   },
   fr:{
     name:"Saeed Memarzadeh",role:"Fondateur et PDG",summary:"Entrepreneur et ingénieur formé en génie mécanique et aérospatial, spécialisé dans la R&D, l'innovation et la mise en œuvre de solutions d'ingénierie.",
@@ -96,8 +89,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[{name:"CanSat",period:"2024–2025",summary:"Participation de l'Alpha Team à un projet CanSat de télédétection et communication."},{name:"CubeSat",period:"2023",summary:"Participation de l'Alpha Team à un projet CubeSat 1U."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"Analyse des CME et stratégies de protection des satellites dans le cadre de recherches sur les rayonnements spatiaux."},
       {name:"APTO",period:"2019",summary:"Collaboration avec l’Observatoire Khajeh Nasireddin Tusi de l’Université de Tabriz pour l’analyse des occultations lunaires."}
-    ],
-    publications:[{title:"New Ephemeris of BZ Leo, V2545 Cyg and V0402 Gem",venue:"Journal of Occultation and Eclipse (JOE), No. 7",period:"2020",authors:"A. Poro, L. Shirzadi, A. Safary, S. Memarzadeh"},{title:"O-C Study on 545 Lunar Occultation Events of 13 Binary Stars",venue:"Journal of Occultation and Eclipse (JOE), No. 6",period:"2019",authors:"A. Poro, S. Memarzadeh et collaborateurs"}],
+    ]
   },
   es:{
     name:"Saeed Memarzadeh",role:"Fundador y CEO",summary:"Emprendedor e ingeniero con formación en ingeniería mecánica y aeroespacial, centrado en I+D, innovación y soluciones de ingeniería aplicadas.",
