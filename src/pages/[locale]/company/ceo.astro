@@ -43,11 +43,5 @@ const labels = ui[locale];
         {profile.selectedProjects.map((item) => <article class="project-card"><h3>{item.name}</h3><p>{item.period}</p><p>{item.summary}</p></article>)}
       </div>
     </section>
-    <section aria-labelledby="publications-title">
-      <div class="section-heading"><h2 id="publications-title">{labels.publications}</h2></div>
-      <div class="project-grid">
-        {profile.publications.map((item) => <article class="project-card"><h3>{item.title}</h3><p>{item.venue} · {item.period}</p><p>{item.authors}</p></article>)}
-      </div>
-    </section>
   </div>
 </SiteLayout>
