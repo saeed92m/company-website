@@ -96,3 +96,20 @@ The repository's public status must be treated as a current project fact in futu
 - Added `.github/workflows/browser-qa.yml` for deployed Chromium checks at mobile and desktop viewports across all eight locales and core routes.
 - Phase evidence is recorded in `docs/handbook/phase-7-evidence.md`.
 - Custom `.ir` domain, corporate email, CMS/API/CRM/Portal remain future integrations and are not blockers for the current static release.
+
+## Final Phase 7 closeout evidence — 2026-10-04
+- Release `v0.1.0` is published and remains the immutable initial production baseline.
+- PR #48 added production Browser QA accessibility contract checks.
+- Browser QA run `37189378543` correctly exposed two unlabeled publication-summary controls on the CEO page.
+- PR #49 fixed those controls and corrected the Browser QA accessible-name assertion.
+- PR #49 merged to `main` as `90e4cd3e696e27b423a05789c2d4824a9ec31706`.
+- Final CI `37198896329`: PASS; CodeQL `37198896316`: PASS; GitHub Pages deployment `37198896307`: PASS; production Browser QA `37198959825`: PASS.
+- Final production validation therefore passed on the exact hardened `main` commit above.
+- No new release/tag is required for this closeout; `v0.1.0` remains the immutable release baseline.
+
+## Recovery baseline
+- Hardened production `main`: `90e4cd3e696e27b423a05789c2d4824a9ec31706`.
+- Immutable initial production baseline: `v0.1.0`.
+- Engineering evidence: `docs/handbook/` and `CHANGELOG.md`.
+- Project-level knowledge/decisions: Notion **Corporate Website — Master Handbook v0.1.0**.
+- Never back up or commit secrets, credentials, private keys, or unpublished sensitive material.
