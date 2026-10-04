@@ -79,7 +79,7 @@ jobs:
                   hasPrimaryNavLabel: Boolean(document.querySelector("nav.primary-nav[aria-label]")),
                   unnamedLinks: [...document.querySelectorAll("a")].filter((a) => !(a.textContent || "").trim() && !a.getAttribute("aria-label") && !a.querySelector("img[alt]")).length,
                   unlabeledImages: [...document.querySelectorAll("img")].filter((img) => !img.hasAttribute("alt")).length,
-                  unlabeledControls: [...document.querySelectorAll("button, select")].filter((el) => !el.getAttribute("aria-label") && !el.closest("label")).length,
+                  unlabeledControls: [...document.querySelectorAll("button")].filter((el) => !(el.textContent || "").trim() && !el.getAttribute("aria-label")).length + [...document.querySelectorAll("select")].filter((el) => !el.getAttribute("aria-label") && !el.closest("label")).length,
                 }));
 
                 if (!checks.title || !checks.hasMain || !checks.hasHeader || !checks.hasBrand || !checks.hasStyles || !checks.visibleText || checks.h1Count !== 1 || !checks.hasSkipLink || !checks.hasPrimaryNavLabel || checks.unnamedLinks || checks.unlabeledImages || checks.unlabeledControls) {
