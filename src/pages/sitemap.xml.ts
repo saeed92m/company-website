@@ -5,25 +5,41 @@ import { route } from "../data/routes";
 
 const siteUrl = (import.meta.env.PUBLIC_SITE_URL || "https://saeed92m.github.io/company-website").replace(/\/$/, "");
 
+const xmlEscape = (value: string) =>
+  value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&apos;");
+
 export const GET: APIRoute = () => {
-  const urls = new Set<string>();
+  const paths = new Set<string>();
 
   for (const locale of locales) {
-    urls.add(new URL(route(locale), siteUrl).toString());
-    urls.add(new URL(route(locale, "company"), siteUrl).toString());
-    urls.add(new URL(route(locale, "company/ceo"), siteUrl).toString());
-    urls.add(new URL(route(locale, "fields"), siteUrl).toString());
-    urls.add(new URL(route(locale, "projects"), siteUrl).toString());
-    urls.add(new URL(route(locale, "contact"), siteUrl).toString());
+    paths.add(route(locale));
+    paths.add(route(locale, "company"));
+    paths.add(route(locale, "company/ceo"));
+    paths.add(route(locale, "fields"));
+    paths.add(route(locale, "projects"));
+    paths.add(route(locale, "contact"));
 
     for (const field of content[locale].fields) {
-      urls.add(new URL(route(locale, "fields/" + field.slug), siteUrl).toString());
+      paths.add(route(locale, "fields/" + field.slug));
     }
   }
 
+  const urls = [...paths].sort();
   const body = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[...urls].sort().map((url) => `  <url><loc>${url}</loc></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${urls.map((path) => {
+    const loc = new URL(path, siteUrl).toString();
+    const localeMatch = path.match(/^.*\/(fa|en|ar|ru|de|zh|fr|es)\/(.*)$/);
+    const locale = localeMatch?.[1];
+    const localizedPath = locale ? localeMatch[2] : "";
+    const alternates = locale
+      ? locales.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${xmlEscape(new URL(route(code, localizedPath), siteUrl).toString())}" />`).join("\n")
+      : "";
+    return `  <url>
+    <loc>${xmlEscape(loc)}</loc>
+${alternates}
+  </url>`;
+  }).join("\n")}
 </urlset>
 `;
 
