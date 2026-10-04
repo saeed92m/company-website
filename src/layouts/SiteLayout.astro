@@ -35,6 +35,7 @@ const localeForOg: Record<Locale, string> = {
 };
 
 const logoUrl = origin ? new URL(webLogoUrl, origin).toString() : "";
+const legalCompanyName = "شرکت پیشگامان نواندیش فناورگستر کیهان (مسئولیت محدود)";
 const personSameAs = [
   "https://linkedin.com/in/saeed-memarzadeh-12559146",
   "https://github.com/saeed92m",
@@ -46,7 +47,7 @@ const organization = {
   "@type": "Organization",
   "@id": origin + "/#organization",
   "name": site.companyName,
-  "legalName": site.companyName,
+  "legalName": legalCompanyName,
   "alternateName": "Pishgaman Novandish Fannavargostar Keyhan",
   "url": origin,
   ...(logoUrl ? { "logo": logoUrl } : {}),
