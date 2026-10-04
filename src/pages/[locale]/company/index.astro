@@ -8,7 +8,7 @@ export function getStaticPaths() { return locales.map((locale) => ({ params: { l
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
 ---
-<SiteLayout locale={locale} title={site.companyName} description={site.intro}>
+<SiteLayout locale={locale} title={site.navigation.company + " — " + site.companyName} description={site.intro}>
   <div class="site-shell">
     <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p>{site.founder}</p></section>
     <section aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
