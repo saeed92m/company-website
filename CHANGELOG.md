@@ -71,3 +71,12 @@ All notable changes to this project will be documented here.
 
 - Added a dedicated localized Projects route while keeping project repository links unpublished.
 - Added Organization, Person and WebSite JSON-LD metadata to the shared layout when the production site URL is configured.
+
+## 2026-10-04 — v0.1.0 closeout and accessibility hardening
+- Preserved immutable release baseline `v0.1.0`.
+- PR #48 added production Browser QA accessibility contract checks.
+- Browser QA `37189378543` exposed two unlabeled CEO publication-summary controls.
+- PR #49 fixed the defect and corrected the QA accessible-name assertion.
+- PR #49 merged as `90e4cd3e696e27b423a05789c2d4824a9ec31706`.
+- Final CI `37198896329`, CodeQL `37198896316`, Pages deployment `37198896307`, and Browser QA `37198959825` all passed.
+- Current static corporate scope is production-ready.
