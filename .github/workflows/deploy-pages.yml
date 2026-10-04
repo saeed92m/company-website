@@ -94,6 +94,32 @@ jobs:
             echo "PASS ${route}: HTTP 200"
           done
 
+          robots="$(curl -L -sS --retry 3 --retry-delay 2 "$base/robots.txt")"
+          printf '%s' "$robots" | grep -Fq "User-agent: *"
+          printf '%s' "$robots" | grep -Fq "Sitemap: ${base}/sitemap.xml"
+          echo "PASS robots.txt: crawler policy and sitemap reference present"
+
+          sitemap="$(curl -L -sS --retry 3 --retry-delay 2 "$base/sitemap.xml")"
+          printf '%s' "$sitemap" | grep -Fq "<urlset"
+          printf '%s' "$sitemap" | grep -Fq "<xhtml:link"
+          printf '%s' "$sitemap" | grep -Fq "${base}/fa/"
+          printf '%s' "$sitemap" | grep -Fq "${base}/en/"
+          echo "PASS sitemap.xml: localized URLs and hreflang alternates present"
+
+          for route in "/fa/" "/en/" "/fa/company/ceo/" "/en/company/ceo/"; do
+            html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
+            for marker in '<meta name="description"' '<meta name="robots" content="index,follow"' 'rel="canonical"' 'hreflang="en"' 'hreflang="fa"' 'application/ld+json' 'og:image' 'twitter:card'; do
+              if ! printf '%s' "$html" | grep -Fq "$marker"; then
+                echo "FAIL ${route}: SEO marker missing: $marker"
+                exit 1
+              fi
+            done
+            if [[ "$route" == */company/ceo/ ]] && ! printf '%s' "$html" | grep -Fq '"ProfilePage"'; then
+              echo "FAIL ${route}: ProfilePage JSON-LD missing"
+              exit 1
+            fi
+            echo "PASS ${route}: canonical/hreflang/JSON-LD/social SEO markers present"
+          done
           # HTTP 200 alone is not sufficient for production QA: a page can be
           # reachable while its stylesheet or critical brand assets are missing.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
