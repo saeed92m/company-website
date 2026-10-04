@@ -74,11 +74,21 @@ jobs:
                   hasBrand: Boolean(document.querySelector("header .brand svg")),
                   hasStyles: [...document.styleSheets].length > 0,
                   visibleText: (document.body.innerText || "").trim().length > 0,
+                  h1Count: document.querySelectorAll("h1").length,
+                  hasSkipLink: Boolean(document.querySelector('a.skip-link[href="#main-content"]')),
+                  hasPrimaryNavLabel: Boolean(document.querySelector("nav.primary-nav[aria-label]")),
+                  unnamedLinks: [...document.querySelectorAll("a")].filter((a) => !(a.textContent || "").trim() && !a.getAttribute("aria-label") && !a.querySelector("img[alt]")).length,
+                  unlabeledImages: [...document.querySelectorAll("img")].filter((img) => !img.hasAttribute("alt")).length,
+                  unlabeledControls: [...document.querySelectorAll("button, select")].filter((el) => !el.getAttribute("aria-label") && !el.closest("label")).length,
                 }));
 
-                if (!checks.title || !checks.hasMain || !checks.hasHeader || !checks.hasBrand || !checks.hasStyles || !checks.visibleText) {
+                if (!checks.title || !checks.hasMain || !checks.hasHeader || !checks.hasBrand || !checks.hasStyles || !checks.visibleText || checks.h1Count !== 1 || !checks.hasSkipLink || !checks.hasPrimaryNavLabel || checks.unnamedLinks || checks.unlabeledImages || checks.unlabeledControls) {
                   throw new Error(`${url} [${viewport.name}]: structural check failed: ${JSON.stringify(checks)}`);
                 }
+                await page.keyboard.press("Tab");
+                const focused = await page.evaluate(() => document.activeElement?.matches('a.skip-link'));
+                if (!focused) throw new Error(`${url} [${viewport.name}]: skip link is not keyboard-focusable`);
+                
                 if (checks.horizontalOverflow) {
                   throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
                 }
