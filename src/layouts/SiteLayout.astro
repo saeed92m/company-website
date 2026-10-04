@@ -10,7 +10,12 @@ import { formatFounded } from "../utils/date-format";
 import BrandMark from "../components/BrandMark.astro";
 import "../styles/global.css";
 
-interface Props { locale: Locale; title?: string; description?: string; }
+interface Props {
+  locale: Locale;
+  title?: string;
+  description?: string;
+}
+
 const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
@@ -21,15 +26,77 @@ const path = Astro.url.pathname;
 const base = path.replace(/^.*?\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
 const isLocalizedPage = /\/(fa|en|ar|ru|de|zh|fr|es)(?:\/|$)/.test(path);
 const isNotFoundPage = path.endsWith("/404.html") || path.endsWith("/404/");
+const isCeoProfilePage = /\/(fa|en|ar|ru|de|zh|fr|es)\/company\/ceo\/?$/.test(path);
 const localePath = isLocalizedPage ? base : "";
-const structuredData = origin ? JSON.stringify({
-  "@context":"https://schema.org",
-  "@graph":[
-    {"@type":"Organization","@id":origin+"/#organization","name":site.companyName,"url":origin,"brand":{"@type":"Brand","name":"ALPHA TEAM"},"founder":{"@id":origin+"/#person"}},
-    {"@type":"Person","@id":origin+"/#person","name":profile.name,"jobTitle":profile.role,"url":origin+route(locale,"company/ceo")},
-    {"@type":"WebSite","@id":origin+"/#website","name":"ALPHA TEAM","url":origin,"inLanguage":locale}
-  ]
-}) : "";
+
+const localeForOg: Record<Locale, string> = {
+  fa: "fa_IR", en: "en_US", ar: "ar_AR", ru: "ru_RU",
+  de: "de_DE", zh: "zh_CN", fr: "fr_FR", es: "es_ES"
+};
+
+const logoUrl = origin ? new URL(webLogoUrl, origin).toString() : "";
+const personSameAs = [
+  "https://linkedin.com/in/saeed-memarzadeh-12559146",
+  "https://github.com/saeed92m",
+  "https://instagram.com/saeed92m",
+  "https://scholar.google.com/citations?user=Agge5hoAAAAJ"
+];
+
+const organization = {
+  "@type": "Organization",
+  "@id": origin + "/#organization",
+  "name": site.companyName,
+  "legalName": site.companyName,
+  "alternateName": "Pishgaman Novandish Fannavargostar Keyhan",
+  "url": origin,
+  ...(logoUrl ? { "logo": logoUrl } : {}),
+  "foundingDate": "2023-07-29",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Tabriz",
+    "addressRegion": "East Azerbaijan",
+    "addressCountry": "IR"
+  },
+  "brand": { "@type": "Brand", "name": "ALPHA TEAM" },
+  "founder": { "@id": origin + "/#person" }
+};
+
+const person = {
+  "@type": "Person",
+  "@id": origin + "/#person",
+  "name": profile.name,
+  "jobTitle": profile.role,
+  "url": origin + route(locale, "company/ceo"),
+  "sameAs": personSameAs,
+  "worksFor": { "@id": origin + "/#organization" },
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Tabriz" }
+};
+
+const graph: Record<string, unknown>[] = [
+  organization,
+  person,
+  {
+    "@type": "WebSite",
+    "@id": origin + "/#website",
+    "name": "ALPHA TEAM",
+    "url": origin,
+    "inLanguage": locale,
+    "publisher": { "@id": origin + "/#organization" }
+  }
+];
+
+if (isCeoProfilePage) {
+  graph.push({
+    "@type": "ProfilePage",
+    "@id": origin + path + "#profile",
+    "url": origin + path,
+    "mainEntity": { "@id": origin + "/#person" }
+  });
+}
+
+const structuredData = origin
+  ? JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
+  : "";
 ---
 <!doctype html>
 <html lang={locale} dir={meta.dir} data-theme="dark">
@@ -38,14 +105,23 @@ const structuredData = origin ? JSON.stringify({
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title ?? site.companyName}</title>
     <meta name="theme-color" content="#07111f" />
+    <meta name="author" content={profile.name} />
     <link rel="icon" type="image/svg+xml" href={webLogoUrl} />
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
-    <meta property="og:title" content={title ?? "ALPHA TEAM"} />
+    <meta property="og:site_name" content="ALPHA TEAM" />
+    <meta property="og:locale" content={localeForOg[locale]} />
+    <meta property="og:title" content={title ?? site.companyName} />
     <meta property="og:description" content={description ?? site.intro} />
-    <meta property="og:type" content="website" />
-    {origin && !isNotFoundPage && <link rel="canonical" href={new URL(path, origin)} />}
+    <meta property="og:type" content={isCeoProfilePage ? "profile" : "website"} />
     {origin && !isNotFoundPage && <meta property="og:url" content={new URL(path, origin)} />}
+    {logoUrl && !isNotFoundPage && <meta property="og:image" content={logoUrl} />}
+    {logoUrl && !isNotFoundPage && <meta property="og:image:alt" content="ALPHA TEAM — Pishgaman Novandish Fannavargostar Keyhan" />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title ?? site.companyName} />
+    <meta name="twitter:description" content={description ?? site.intro} />
+    {logoUrl && !isNotFoundPage && <meta name="twitter:image" content={logoUrl} />}
+    {origin && !isNotFoundPage && <link rel="canonical" href={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
     {origin && isLocalizedPage && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
     {origin && isLocalizedPage && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
