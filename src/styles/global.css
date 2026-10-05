@@ -41,7 +41,7 @@ button,select{font:inherit}
 .brand-wordmark{font-weight:800;letter-spacing:.08em;font-size:.88rem}
 .primary-nav{display:flex;flex:1;min-width:0;justify-content:center;gap:1.4rem;flex-wrap:wrap}
 .primary-nav a,.language-select select,.theme-toggle{font-size:.82rem;font-weight:650}
-.primary-nav a{text-decoration:none;color:var(--muted);transition:color .2s ease}.primary-nav a:hover,.primary-nav a:focus-visible{color:var(--ink)}
+.primary-nav a{text-decoration:none;color:var(--muted);transition:color .2s ease}.primary-nav a:hover,.primary-nav a:focus-visible,.primary-nav a[aria-current="page"]{color:var(--ink)}.primary-nav a[aria-current="page"]{font-weight:800}
 .header-tools{display:flex;min-width:0;align-items:center;gap:.55rem}
 .language-select select,.theme-toggle{min-height:2.45rem;border:1px solid var(--border);border-radius:999px;background:var(--surface-2);color:var(--ink);padding:.45rem .75rem}
 .theme-toggle{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}.theme-toggle:hover{border-color:var(--border-strong)}
