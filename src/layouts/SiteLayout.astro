@@ -106,6 +106,8 @@ const structuredData = origin
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title ?? site.companyName}</title>
     <meta name="theme-color" content="#07111f" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="author" content={profile.name} />
     <link rel="icon" type="image/svg+xml" href={webLogoUrl} />
     <meta name="description" content={description ?? site.intro} />
@@ -135,11 +137,11 @@ const structuredData = origin
         <span class="brand-wordmark">ALPHA TEAM</span>
       </a>
       <nav class="primary-nav" aria-label={site.navigation.company}>
-        <a href={route(locale,"company")}>{site.navigation.company}</a>
-        <a href={route(locale,"fields")}>{site.navigation.fields}</a>
-        <a href={route(locale,"projects")}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")}>{site.navigation.ceo}</a>
-        <a href={route(locale,"contact")}>{site.navigation.contact}</a>
+        <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
+        <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
+        <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
+        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{site.navigation.ceo}</a>
+        <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">
         <label class="language-select">
