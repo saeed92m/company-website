@@ -33,7 +33,7 @@ ${urls.map((path) => {
     const locale = localeMatch?.[1];
     const localizedPath = locale ? localeMatch[2] : "";
     const alternates = locale
-      ? locales.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${xmlEscape(new URL(route(code, localizedPath), siteUrl).toString())}" />`).join("\n")
+      ? locales.map((code) => `    <xhtml:link rel="alternate" hreflang="${code}" href="${xmlEscape(new URL(route(code, localizedPath), siteUrl).toString())}" />`).concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${xmlEscape(new URL(route("en", localizedPath), siteUrl).toString())}" />`).join("\n")
       : "";
     return `  <url>
     <loc>${xmlEscape(loc)}</loc>
