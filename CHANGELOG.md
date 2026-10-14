@@ -1,3 +1,11 @@
+## 2026-10-14 — Repository and Supabase alignment audit
+
+- Audited the current `main` repository structure, package scripts, static Astro architecture, localization/content organization, CI, CodeQL, Browser QA, and GitHub Pages deployment workflow.
+- Inspected the connected `company-website` Supabase project. It is healthy but has no public application tables, views, or policies and is not integrated into the static frontend.
+- Updated `docs/decisions/SUPABASE-ASSESSMENT.md` to remove the stale claim that no Supabase projects exist and to document the current verified state and integration gate.
+- Added `docs/audits/repository-supabase-alignment-2026-10-14.md` with the inventory, evidence, limitations, and follow-up checklist.
+- No database schema, application data, secrets, production settings, or website runtime code were changed. Supabase integration remains deferred until a concrete backend requirement is approved.
+
 ## 2026-10-04 — Phase 7 production release closeout
 
 - Removed the homepage CEO Resume CTA after Test 2 review.
