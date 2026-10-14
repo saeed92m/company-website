@@ -22,6 +22,8 @@ A Supabase project named `company-website` is now present in the connected accou
 - Public policies: 0
 - Public functions: 1 — `public.rls_auto_enable()`, a SECURITY DEFINER event-trigger function with `search_path=pg_catalog`
 - Recorded database migration: `20261014120423_revoke_public_execution_on_rls_auto_enable`
+- The repository tree currently has no `supabase/` directory or matching checked-in migration file; remote migration/source-control parity is therefore unverified and must be reconciled before any future schema changes.
+- GitHub's Supabase Preview check is skipped because preview branches are disabled in the project's integration settings. This is currently non-blocking because the website has no database migrations to preview; enabling preview branches is deferred pending a real backend workflow and cost review.
 - Supabase Edge Functions: 0
 - Development branches: only the default `main` branch
 - Supabase Security Advisor: no findings returned at audit time
