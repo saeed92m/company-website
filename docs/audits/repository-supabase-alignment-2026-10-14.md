@@ -41,7 +41,7 @@
 | Security Advisor | No findings returned |
 | Performance Advisor | No findings returned |
 
-The public function is a SECURITY DEFINER event-trigger function and has `search_path=pg_catalog`. No public application tables currently exist, so there are no application-table RLS policies to validate. Advisor results are not a substitute for authorization tests once tables are introduced.
+The public function is a SECURITY DEFINER event-trigger function and has `search_path=pg_catalog`. A read-only privilege check confirmed `anon` and `authenticated` cannot execute it; its recorded ACL grants execution to `postgres` and `service_role`. No public application tables currently exist, so there are no application-table RLS policies to validate. Advisor results are not a substitute for authorization tests once tables are introduced.
 
 ## Cross-system alignment
 
@@ -49,7 +49,7 @@ The public function is a SECURITY DEFINER event-trigger function and has `search
 - **Deployment:** GitHub Pages remains the configured production host; the Supabase project does not deploy or serve the website.
 - **Secrets:** No Supabase keys are needed in the current frontend. Never place service-role credentials in public code, Git history, or client-side environment variables.
 - **Schema management:** If a backend feature is approved later, introduce reviewed migrations and RLS tests in Git before changing production.
-- **Notion:** The repository handbook states that Notion's Corporate Website Master Handbook is the project-level decision record. This audit does not claim the Notion page was updated; it must be synchronized after the repository PR is accepted if the connected Notion page is accessible.
+- **Notion:** The canonical Corporate Website Master Handbook was accessible and updated with the audited Supabase status. Its prior claim that the connected account listed no projects was replaced with current evidence. The repository handbook and this audit remain the detailed technical record.
 - **Release evidence:** Keep audit evidence in version control and retain CI/deployment checks as the gate for merging.
 
 ## Follow-up checklist
@@ -61,8 +61,8 @@ The public function is a SECURITY DEFINER event-trigger function and has `search
 - [x] Keep database unchanged because no approved backend feature requires schema changes.
 - [ ] Reconcile remote migration history with version-controlled migrations before any future database schema changes; do not invent a migration from the migration name alone.
 - [ ] Decide whether Supabase Preview branches are useful only when a backend/migration workflow exists; do not enable them by default without cost/operational review.
-- [ ] Merge the documentation PR only after its required CI/CodeQL checks pass.
-- [ ] Synchronize the Notion Master Handbook after confirming access to the canonical page.
+- [x] Required PR CI and CodeQL checks passed on commit `92d2ed40663a4f613574734ab18ac5b73a291698` (run IDs `38561554374` and `38561554474`); final checks must be revalidated if this audit file changes.
+- [x] Synchronize the Notion Master Handbook and verify the stale project-inventory statement was removed.
 - [ ] Revisit Supabase only when a specific form, CMS, authenticated portal, or other persistent-data requirement is approved.
 
 ## Limitations
