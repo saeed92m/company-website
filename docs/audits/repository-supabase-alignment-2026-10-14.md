@@ -59,6 +59,8 @@ The public function is a SECURITY DEFINER event-trigger function and has `search
 - [x] Inspect Supabase project status, public schema inventory, migrations, extensions, Edge Functions, branches, and Security/Performance Advisors.
 - [x] Confirm no application tables or public RLS policies exist.
 - [x] Keep database unchanged because no approved backend feature requires schema changes.
+- [ ] Reconcile remote migration history with version-controlled migrations before any future database schema changes; do not invent a migration from the migration name alone.
+- [ ] Decide whether Supabase Preview branches are useful only when a backend/migration workflow exists; do not enable them by default without cost/operational review.
 - [ ] Merge the documentation PR only after its required CI/CodeQL checks pass.
 - [ ] Synchronize the Notion Master Handbook after confirming access to the canonical page.
 - [ ] Revisit Supabase only when a specific form, CMS, authenticated portal, or other persistent-data requirement is approved.
