@@ -22,14 +22,14 @@ A Supabase project named `company-website` is now present in the connected accou
 - Public policies: 0
 - Public functions: 1 — `public.rls_auto_enable()`, a SECURITY DEFINER event-trigger function with `search_path=pg_catalog`
 - Recorded database migration: `20261014120423_revoke_public_execution_on_rls_auto_enable`
-- The repository tree currently has no `supabase/` directory or matching checked-in migration file; remote migration/source-control parity is therefore unverified and must be reconciled before any future schema changes.
+- The repository tree currently has no `supabase/` directory or checked-in migration file for the remote migration. Read-only inspection recovered the exact remote statement: `REVOKE EXECUTE ON FUNCTION public.rls_auto_enable() FROM PUBLIC, anon, authenticated;`. The live ACL is `{postgres=X/postgres,service_role=X/postgres}`, matching that statement; event trigger `ensure_rls` remains enabled and calls the function for public-table creation DDL. This confirms the remote migration's effect is present, but not why its source was omitted from this website repository. Because the accepted architecture decision is not to integrate Supabase into the current static site, no migration file is being invented or added here. If Supabase is adopted later, decide ownership of the existing remote project and establish a canonical, tested migration baseline before schema changes.
 - GitHub's Supabase Preview check is skipped because preview branches are disabled in the project's integration settings. This is currently non-blocking because the website has no database migrations to preview; enabling preview branches is deferred pending a real backend workflow and cost review.
 - Supabase Edge Functions: 0
 - Development branches: only the default `main` branch
 - Supabase Security Advisor: no findings returned at audit time
 - Supabase Performance Advisor: no findings returned at audit time
 
-The advisors are point-in-time checks, not a guarantee of production security. The public-schema inventory was read-only. No schema, data, policy, function, key, or project setting was changed during this audit.
+The advisors are point-in-time checks, not a guarantee of production security. Read-only inspection retrieved the live function definition, event-trigger binding, migration statement, and function ACL. No schema, data, policy, function, grant, key, or project setting was changed during this audit.
 
 ## Integration boundary
 
@@ -55,4 +55,5 @@ A named feature requirement, cost/architecture comparison, security and privacy 
 ## Changelog
 
 - 2026-10-14: Replaced the stale “no projects” statement with the observed connected project state. Confirmed the project is provisioned but intentionally not integrated; read-only schema inventory and both Supabase advisor checks completed.
+- 2026-10-14: Verified the remote migration SQL and current function ACL match. Documented the repository provenance gap without adding an unreviewed migration or changing the database.
 - 2026-10-12: Added initial assessment; no website code or hosting changes.
