@@ -1,3 +1,11 @@
+## 2026-10-15 — Supabase migration provenance verification
+
+- Retrieved the exact remote SQL for migration `20261014120423_revoke_public_execution_on_rls_auto_enable`.
+- Confirmed the live function ACL matches the intended revocation of EXECUTE from `PUBLIC`, `anon`, and `authenticated`; inspected the `ensure_rls` event-trigger binding.
+- Added `docs/audits/supabase-migration-provenance-2026-10-14.md` and updated `docs/decisions/SUPABASE-ASSESSMENT.md`.
+- Merged documentation PR #58 as `a1370840bd9e720c99a56aa746b5e628e04368e3`.
+- No production database/schema/grant/settings changes were made. The original migration file is still absent from the website repository; Supabase integration remains deferred until a concrete backend requirement is approved.
+
 ## 2026-10-14 — Repository and Supabase alignment audit
 
 - Audited the current `main` repository structure, package scripts, static Astro architecture, localization/content organization, CI, CodeQL, Browser QA, and GitHub Pages deployment workflow.
