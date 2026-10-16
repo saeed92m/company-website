@@ -120,6 +120,21 @@ jobs:
             fi
             echo "PASS ${route}: canonical/hreflang/JSON-LD/social SEO markers present"
           done
+
+          # Validate that the Open Graph/Twitter logo URL respects the project base path.
+          html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
+          og_image="$(printf '%s' "$html" | grep -oE '<meta property="og:image" content="[^"]+"' | head -n 1 | sed -E 's/.*content="([^"]+)".*/\1/')"
+          expected_og_image="${base}/brand/alpha-team-mark.svg"
+          if [ "$og_image" != "$expected_og_image" ]; then
+            echo "FAIL Open Graph image URL: expected $expected_og_image, got ${og_image:-<missing>}"
+            exit 1
+          fi
+          image_code="$(curl -L -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 2 "$og_image")"
+          if [ "$image_code" != "200" ]; then
+            echo "FAIL Open Graph image asset: HTTP $image_code ($og_image)"
+            exit 1
+          fi
+          echo "PASS Open Graph image URL respects base path and returns HTTP 200"
           # HTTP 200 alone is not sufficient for production QA: a page can be
           # reachable while its stylesheet or critical brand assets are missing.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
