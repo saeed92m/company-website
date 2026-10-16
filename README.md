@@ -31,4 +31,6 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-Phase 7 — production QA and release closeout complete; the supplied logo, multilingual content, responsive browser QA, deployment smoke tests, CI, and CodeQL are passing on main. The current static corporate scope is production-ready.
+Phase 7 — automated release gates are passing on `main`: Astro check/build, CodeQL, GitHub Pages deployment smoke tests, and Playwright Chromium Browser QA across eight locales at mobile and desktop viewport sizes.
+
+**Operational acceptance is not fully closed yet.** Independent visual/device-browser acceptance, custom-domain/DNS verification (if a custom domain is configured), and a documented backup/restore or rollback drill remain tracked follow-ups. The Supabase migration provenance issue also remains open; Supabase is not part of the current static-site runtime. Do not interpret passing automated checks as proof that every production-readiness item has been independently verified.
