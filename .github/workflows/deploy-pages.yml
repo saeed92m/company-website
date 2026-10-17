@@ -120,6 +120,21 @@ jobs:
             fi
             echo "PASS ${route}: canonical/hreflang/JSON-LD/social SEO markers present"
           done
+
+          # Validate that the Open Graph/Twitter logo URL respects the project base path.
+          html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
+          og_image="$(printf '%s' "$html" | grep -oE '<meta property="og:image" content="[^"]+"' | head -n 1 | sed -E 's/.*content="([^"]+)".*/\1/')"
+          expected_og_image="${base}/brand/alpha-team-mark.svg"
+          if [ "$og_image" != "$expected_og_image" ]; then
+            echo "FAIL Open Graph image URL: expected $expected_og_image, got ${og_image:-<missing>}"
+            exit 1
+          fi
+          image_code="$(curl -L -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 2 "$og_image")"
+          if [ "$image_code" != "200" ]; then
+            echo "FAIL Open Graph image asset: HTTP $image_code ($og_image)"
+            exit 1
+          fi
+          echo "PASS Open Graph image URL respects base path and returns HTTP 200"
           # HTTP 200 alone is not sufficient for production QA: a page can be
           # reachable while its stylesheet or critical brand assets are missing.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
@@ -142,6 +157,34 @@ jobs:
             fi
           done
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
+
+          # Validate every homepage domain-card image URL, not just that the raw SVG files exist.
+          html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
+          for asset in \
+            "/assets/domains/astronomy.svg" \
+            "/assets/domains/aerospace.svg" \
+            "/assets/domains/remote-sensing.svg" \
+            "/assets/domains/energy.svg" \
+            "/assets/domains/artificial-intelligence.svg" \
+            "/assets/domains/motorsport.svg"; do
+            expected="url(/company-website${asset})"
+            if ! grep -Fq "${expected}" <<< "$html"; then
+              echo "FAIL /en/: domain image URL missing or malformed: ${expected}"
+              exit 1
+            fi
+            echo "PASS /en/: domain image URL ${expected}"
+          done
+          if grep -Fq "company-websiteassets/" <<< "$html"; then
+            echo "FAIL /en/: malformed domain image URL without base-path separator"
+            exit 1
+          fi
+
+          field_html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/fields/astronomy/")"
+          if ! grep -Fq 'url(/company-website/assets/domains/astronomy.svg)' <<< "$field_html"; then
+            echo "FAIL /en/fields/astronomy/: domain hero image URL missing or malformed"
+            exit 1
+          fi
+          echo "PASS /en/fields/astronomy/: domain hero image URL respects project base path"
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
             if ! grep -Fq '<svg' <<< "$html"; then
