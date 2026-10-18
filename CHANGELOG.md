@@ -1,3 +1,10 @@
+## 2026-10-18 — Production Pages metadata verification
+
+- Rechecked the live GitHub Pages homepage using a fresh external fetch; it returned HTTP 200 and resolved to the Persian homepage at `/fa/`.
+- Verified live Open Graph and Twitter image metadata use the project-base-aware URL `https://saeed92m.github.io/company-website/brand/alpha-team-mark.svg`, addressing the malformed social-image URL previously tracked in issue #52 / PR #61.
+- Confirmed latest main commit `1e8a3fd99d4eb34d2082d5560eef81981799fa7e` has successful CI (38985578466), CodeQL (38985578444), Pages deploy/smoke (38985578426), and Playwright Browser QA (38986084634).
+- Updated issue #52 with the current evidence. Independent human-operated device/browser visual acceptance remains open; automated checks and external HTTP 200 do not prove visual acceptance on a physical device.
+
 ## 2026-10-15 — Supabase migration provenance verification
 
 - Retrieved the exact remote SQL for migration `20261014120423_revoke_public_execution_on_rls_auto_enable`.
