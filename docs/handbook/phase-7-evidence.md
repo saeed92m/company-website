@@ -42,3 +42,18 @@ Future work remains intentionally deferred where it depends on external inputs: 
 - `90e4cd3e696e27b423a05789c2d4824a9ec31706` — hardened production `main`
 - `37198959825` — final Browser QA
 - `37198896307` — final Pages deployment
+
+
+## Post-fix production verification — 2026-10-18
+
+- Verified the current deployed Persian homepage via a fresh external fetch: HTTP 200; canonical destination `https://saeed92m.github.io/company-website/fa/`.
+- Verified `og:image` and `twitter:image` resolve to `https://saeed92m.github.io/company-website/brand/alpha-team-mark.svg`, including the repository base path.
+- Latest `main` commit checked: `1e8a3fd99d4eb34d2082d5560eef81981799fa7e`.
+- CI: [38985578466](https://github.com/saeed92m/company-website/actions/runs/38985578466) — success.
+- CodeQL: [38985578444](https://github.com/saeed92m/company-website/actions/runs/38985578444) — success.
+- Pages deployment and smoke tests: [38985578426](https://github.com/saeed92m/company-website/actions/runs/38985578426) — success.
+- Browser QA across the configured eight-locale mobile/desktop matrix: [38986084634](https://github.com/saeed92m/company-website/actions/runs/38986084634) — success.
+
+### Acceptance boundary
+
+This is fresh external reachability and automated-test evidence, not a claim of human visual approval. Physical-device rendering, typography, perceived spacing, and browser-specific behavior still require an ordinary user-operated browser/device check. Issue #52 remains the tracking record until that evidence is supplied.
