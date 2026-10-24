@@ -10,10 +10,10 @@
     "check": "astro check"
   },
   "engines": {
-    "node": ">=22.19.0"
+    "node": ">=22.22.0"
   },
   "dependencies": {
-    "astro": "7.3.8"
+    "astro": "7.4.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
