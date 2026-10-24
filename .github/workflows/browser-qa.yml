@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22.19.0"
+          node-version: "22.22.0"
 
       - name: Install Playwright
         run: |
@@ -71,7 +71,7 @@ jobs:
                   horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 1,
                   hasMain: Boolean(document.querySelector("main#main-content")),
                   hasHeader: Boolean(document.querySelector("header.site-header")),
-                  hasBrand: Boolean(document.querySelector("header .brand svg")),
+                  hasBrand: Boolean(document.querySelector("header .brand svg, header .brand img")),
                   hasStyles: [...document.styleSheets].length > 0,
                   visibleText: (document.body.innerText || "").trim().length > 0,
                   h1Count: document.querySelectorAll("h1").length,
