@@ -1,12 +1,11 @@
 /**
  * Brand asset routing.
  *
- * The owner-supplied IMG_6104.PNG remains the visual source-of-truth.
- * The deployed site uses a repository-local, smooth traced vector derivative
- * so rendering is deterministic and does not depend on Dropbox at runtime.
+ * Preview-only change: use the owner-supplied official logo hosted in Supabase
+ * Storage. This creates a runtime dependency on that public object URL.
+ * Keep this change isolated until the owner approves the visual result.
  */
 export const suppliedLogoSourceUrl =
-  "https://www.dropbox.com/scl/fi/aqibwvywas752lppcrkad/IMG_6104.PNG?rlkey=kd5v1u6n3ae3dgzrgvtrfrtb4&raw=1";
+  "https://jjypkzunhwtkxzeepgag.supabase.co/storage/v1/object/public/site_assets/46E04CA0-22BD-4B55-B220-E200E8AFF33C.png";
 
-export const webLogoUrl =
-  `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/brand/alpha-team-mark.svg`;
+export const webLogoUrl = suppliedLogoSourceUrl;
