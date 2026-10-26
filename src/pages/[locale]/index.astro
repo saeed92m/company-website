@@ -27,7 +27,7 @@ const site = content[locale]; const labels = ui[locale];
       <div class="hero-mark" aria-hidden="true"><BrandMark label="ALPHA TEAM" /></div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
-      <div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
+      <div class="section-heading"><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)} style={`--domain-image: url(${domainImageUrl(field.slug)})`}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
     <section id="projects" aria-labelledby="projects-title">
