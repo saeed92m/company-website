@@ -18,7 +18,7 @@ const labels = ui[locale];
       <h1 id="projects-title">{site.navigation.projects}</h1>
       <p class="lede">{labels.projectsNote}</p>
     </section>
-    <section>
+    <section aria-label={site.navigation.projects}>
       <div class="project-grid">
         {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p></article>)}
       </div>
