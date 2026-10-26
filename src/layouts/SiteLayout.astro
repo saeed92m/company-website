@@ -28,6 +28,7 @@ const base = path.replace(/^.*?\/(fa|en|ar|ru|de|zh|fr|es)(?=\/|$)/, "");
 const isLocalizedPage = /\/(fa|en|ar|ru|de|zh|fr|es)(?:\/|$)/.test(path);
 const isNotFoundPage = path.endsWith("/404.html") || path.endsWith("/404/");
 const isCeoProfilePage = /\/(fa|en|ar|ru|de|zh|fr|es)\/company\/ceo\/?$/.test(path);
+const localePath = isLocalizedPage ? base : "";
 
 const localeForOg: Record<Locale, string> = {
   fa: "fa_IR", en: "en_US", ar: "ar_AR", ru: "ru_RU",
