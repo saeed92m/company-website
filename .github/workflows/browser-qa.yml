@@ -103,6 +103,14 @@ jobs:
                   }
                 }
 
+                if (suffix === "projects/") {
+                  const projectCards = page.locator(".project-grid > .project-card");
+                  const count = await projectCards.count();
+                  if (count !== 3) throw new Error(`${url}: expected 3 project cards, got ${count}`);
+                  const platformCard = page.locator(".project-card", { has: page.locator("h3", { hasText: "Company Platform" }) });
+                  if (await platformCard.count() !== 1) throw new Error(`${url}: Company Platform card missing`);
+                }
+
                 results.push({viewport: viewport.name, locale, route: suffix || "/"});
                 await page.close();
               }
