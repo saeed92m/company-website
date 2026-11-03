@@ -62,6 +62,8 @@ Each project requires:
 
 Alpha Linux and ZTF Classifier must not expose repository URLs until explicitly approved.
 
+Company Platform may be listed as a company digital platform under development. Its implementation repository is separate from this website repository and must not be linked publicly unless explicitly approved.
+
 ## CEO
 
 **Objective:** Present the founder and CEO professionally.
