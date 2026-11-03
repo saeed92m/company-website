@@ -3,6 +3,7 @@ import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { ui } from "../../../content/ui";
+import ProjectCards from "../../../components/ProjectCards.astro";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -19,9 +20,7 @@ const labels = ui[locale];
       <p class="lede">{labels.projectsNote}</p>
     </section>
     <section aria-label={site.navigation.projects}>
-      <div class="project-grid">
-        {site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p></article>)}
-      </div>
+      <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
   </div>
 </SiteLayout>

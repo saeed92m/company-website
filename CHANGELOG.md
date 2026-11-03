@@ -1,3 +1,19 @@
+## 2026-11-04 — Localized project summary dialogs (review)
+
+- Added a reusable project-card component with native, keyboard-dismissible summary dialogs on the homepage and Projects page.
+- Added source-grounded project overviews for Alpha Linux, ZTF Classifier, and Company Platform; distinguished Alpha release phase, ZTF software v1.0.1 release with continued product development, and Company Platform development status.
+- Added localized dialog headings, collaboration actions, and close labels for all eight supported locales.
+- Added responsive dark/light dialog styling, RTL/LTR layout support, backdrop dismissal, and reduced-motion handling.
+- Extended Browser QA to verify three project cards, dialog opening, non-empty overview content, and Escape dismissal on homepage and Projects routes.
+- Changes remain isolated on the review branch; production deployment is not triggered.
+
+## 2026-11-04 — Company Platform project listing (review)
+
+- Added Company Platform as the third project in the shared localized project content for all eight supported locales.
+- Described it as a unified digital platform for company activity and project management, coordination, and development; status is explicitly under development.
+- Kept the Company Platform implementation repository separate from the corporate website repository and did not publish a repository URL.
+- Updated the Projects content contract and information architecture. This change is isolated on a review branch and is not part of production until approved and merged.
+
 ## 2026-10-18 — Production Pages metadata verification
 
 - Rechecked the live GitHub Pages homepage using a fresh external fetch; it returned HTTP 200 and resolved to the Persian homepage at `/fa/`.

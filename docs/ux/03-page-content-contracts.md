@@ -55,12 +55,17 @@ Each project requires:
 - name
 - purpose
 - short description
-- current public status
+- localized summary-dialog overview
+- current public status, stated precisely
 - company relationship
 - optional technical highlights
 - future link policy
 
+The homepage and Projects page must use the same localized project-card component. Each card opens an accessible native dialog with a project title, a concise summary heading, source-grounded overview text, a clear close control, and a localized contact action. The dialog must support keyboard dismissal, focus handling, RTL/LTR, reduced motion, mobile viewports, and the light/dark themes.
+
 Alpha Linux and ZTF Classifier must not expose repository URLs until explicitly approved.
+
+Company Platform may be listed as a company digital platform under development. Its implementation repository is separate from this website repository and must not be linked publicly unless explicitly approved.
 
 ## CEO
 

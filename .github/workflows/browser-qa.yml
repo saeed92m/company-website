@@ -103,6 +103,24 @@ jobs:
                   }
                 }
 
+                if (suffix === "" || suffix === "projects/") {
+                  const projectSection = suffix === "" ? page.locator("#projects") : page.locator(".project-grid");
+                  const projectCards = projectSection.locator(".project-card");
+                  const count = await projectCards.count();
+                  if (count !== 3) throw new Error(`${url}: expected 3 project cards, got ${count}`);
+                  const summaryButtons = projectSection.locator(".project-summary-trigger");
+                  if (await summaryButtons.count() !== 3) throw new Error(`${url}: expected 3 project summary buttons`);
+                  const platformCard = projectSection.locator(".project-card", { has: page.locator("h3", { hasText: "Company Platform" }) });
+                  if (await platformCard.count() !== 1) throw new Error(`${url}: Company Platform card missing`);
+                  await summaryButtons.first().click();
+                  const dialog = page.locator("dialog.project-dialog");
+                  if (await dialog.count() !== 3 || !(await dialog.first().isVisible())) throw new Error(`${url}: project summary dialog did not open`);
+                  const summaryText = await dialog.first().locator(".project-dialog__description").innerText();
+                  if (!summaryText.trim()) throw new Error(`${url}: project summary is empty`);
+                  await page.keyboard.press("Escape");
+                  if (await dialog.first().isVisible()) throw new Error(`${url}: Escape did not close project summary dialog`);
+                }
+
                 results.push({viewport: viewport.name, locale, route: suffix || "/"});
                 await page.close();
               }
