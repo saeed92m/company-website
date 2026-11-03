@@ -1,0 +1,68 @@
+---
+import type { Locale } from "../data/locales";
+import { route } from "../data/routes";
+
+interface Props {
+  locale: Locale;
+  projects: { title: string; summary: string; overview: string }[];
+  labels: {
+    summaryProject: string;
+    collaborateProject: string;
+    close: string;
+  };
+}
+
+const { locale, projects, labels } = Astro.props;
+---
+
+<div class="project-grid">
+  {projects.map((project, index) => {
+    const dialogId = `project-summary-${index}`;
+    const titleId = `project-summary-title-${index}`;
+    const descriptionId = `project-summary-description-${index}`;
+    return (
+      <article class="project-card">
+        <h3>{project.title}</h3>
+        <p>{project.summary}</p>
+        <div class="card-actions">
+          <button
+            class="button button-secondary project-summary-trigger"
+            type="button"
+            data-project-dialog={dialogId}
+            aria-haspopup="dialog"
+            aria-controls={dialogId}
+          >
+            {labels.summaryProject}
+          </button>
+        </div>
+        <dialog class="project-dialog" id={dialogId} aria-labelledby={titleId} aria-describedby={descriptionId}>
+          <div class="project-dialog__panel">
+            <form method="dialog">
+              <button class="project-dialog__close" type="submit" aria-label={labels.close}>×</button>
+            </form>
+            <h2 id={titleId} class="project-dialog__title">{project.title}</h2>
+            <p class="project-dialog__label">{labels.summaryProject}</p>
+            <p id={descriptionId} class="project-dialog__description">{project.overview}</p>
+            <a class="button button-primary project-dialog__action" href={route(locale, "contact")}>{labels.collaborateProject}</a>
+          </div>
+        </dialog>
+      </article>
+    );
+  })}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-project-dialog]").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const id = trigger.dataset.projectDialog;
+      const dialog = id ? document.getElementById(id) : null;
+      if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>(".project-dialog").forEach((dialog) => {
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  });
+</script>
