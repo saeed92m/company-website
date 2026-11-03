@@ -7,6 +7,7 @@ import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
 import { formatFounded } from "../../utils/date-format";
 import BrandMark from "../../components/BrandMark.astro";
+import ProjectCards from "../../components/ProjectCards.astro";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
@@ -32,7 +33,7 @@ const site = content[locale]; const labels = ui[locale];
     </section>
     <section id="projects" aria-labelledby="projects-title">
       <div class="section-heading"><p class="eyebrow">{site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
-      <div class="project-grid">{site.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><a href={route(locale,"projects")}>{site.navigation.projects}</a></article>)}</div>
+      <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
     <section id="company" class="split" aria-labelledby="company-title">
       <div><p class="eyebrow">{site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div><p>{site.intro}</p>
