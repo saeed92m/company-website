@@ -42,4 +42,11 @@ No repository URL is published for any of the three projects.
 - Browser QA opens the first dialog, checks that the overview is non-empty, and verifies Escape dismissal.
 - CI runs Astro type checking and a production build on pull requests.
 
-**Pending:** CI and browser QA results. Production deployment is intentionally not triggered from this review branch. Visual acceptance on the user's device remains pending.
+## Validation status
+
+- **CI:** PASS — GitHub Actions run `41720979899` (Astro type check and production build).
+- **CodeQL:** In progress — run `41720979829` at the time of this record.
+- **Browser interaction QA:** Automated assertions are added to the production Browser QA workflow, but they have not yet run against this branch. That workflow currently tests the deployed production URL only.
+- **Visual preview:** No staging host or PR preview deployment is configured. The live production site remains unchanged; deploying this branch to the production Pages environment would violate the approval gate.
+
+Visual acceptance on the user's device remains pending.
