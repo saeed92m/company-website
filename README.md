@@ -33,4 +33,8 @@ This repository is **public by project decision**. The repository contains only 
 
 Phase 7 — automated release gates are passing on `main`: Astro check/build, CodeQL, GitHub Pages deployment smoke tests, and Playwright Chromium Browser QA across eight locales at mobile and desktop viewport sizes.
 
-**Operational acceptance is not fully closed yet.** Independent visual/device-browser acceptance, custom-domain/DNS verification (if a custom domain is configured), and a documented backup/restore or rollback drill remain tracked follow-ups. The Supabase migration provenance issue also remains open; Supabase is not part of the current static-site runtime. Do not interpret passing automated checks as proof that every production-readiness item has been independently verified.
+**Production acceptance remains in progress.** Automated CI, CodeQL, GitHub Pages deployment/smoke tests, and Chromium Browser QA have passed on the current production baseline. These checks do not establish full production readiness.
+
+Open acceptance work includes repository security-setting verification, deployed response-header review, independent WCAG 2.2 AA assessment, Lighthouse/Core Web Vitals, Firefox/WebKit coverage, physical-device review, recovery drills, and a verified private vulnerability-reporting route. Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+
+The logo refresh is deferred. The current repository-local brand asset remains in use; PR #75 was closed without merge. Do not interpret passing automated checks as proof that every production-readiness item has been independently verified.
