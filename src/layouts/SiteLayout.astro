@@ -96,15 +96,8 @@ if (isCeoProfilePage) {
   });
 }
 
-const structuredData = origin
-  ? JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/[<>&\u2028\u2029]/g, (character) => ({
-      "<": "\\u003c",
-      ">": "\\u003e",
-      "&": "\\u0026",
-      "\u2028": "\\u2028",
-      "\u2029": "\\u2029"
-    })[character] ?? character)
-  : "";
+const structuredData = origin ? serializeJsonLd(graph) : "";
+import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
 ---
 <!doctype html>
 <html lang={locale} dir={meta.dir} data-theme="dark">
