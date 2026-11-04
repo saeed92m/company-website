@@ -1,6 +1,8 @@
 name: Browser QA
 
 on:
+  pull_request:
+    branches: [main]
   workflow_run:
     workflows: ["Deploy GitHub Pages"]
     types: [completed]
@@ -14,7 +16,7 @@ jobs:
     concurrency:
       group: browser-qa-${{ github.workflow }}-${{ github.event.workflow_run.id || github.run_id }}-${{ matrix.browser }}
       cancel-in-progress: true
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
