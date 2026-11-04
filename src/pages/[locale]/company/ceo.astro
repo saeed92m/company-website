@@ -8,7 +8,6 @@ import { publications } from "../../../content/publications";
 import { ceoAdditional } from "../../../content/ceo-additional";
 import { formatPeriod } from "../../../utils/date-format";
 import BrandMark from "../../../components/BrandMark.astro";
-const assetBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + "/";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
