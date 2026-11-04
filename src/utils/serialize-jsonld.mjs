@@ -9,7 +9,7 @@ const SCRIPT_CONTEXT_ESCAPES = {
 /** Serialize JSON-LD without allowing data to terminate its HTML script context. */
 export function serializeJsonLd(graph) {
   return JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(
-    /[<>&\\u2028\\u2029]/g,
+    /[<>&\u2028\u2029]/g,
     (character) => SCRIPT_CONTEXT_ESCAPES[character] ?? character
   );
 }
