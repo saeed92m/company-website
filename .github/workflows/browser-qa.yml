@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Playwright
         run: |
-          npm install --no-save --no-package-lock playwright@1.55.0
+          npm ci --no-audit --no-fund
           npx playwright install --with-deps chromium
 
       - name: Run production browser checks
