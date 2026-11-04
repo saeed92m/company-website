@@ -1,3 +1,16 @@
+## 2026-11-04 — GitHub Actions pinning (in review)
+
+- Pinned all third-party actions in CI, Browser QA, CodeQL, and GitHub Pages workflows to full commit SHAs. Version comments are retained for maintainers.
+- Recorded upstream reference resolution, least-privilege workflow permissions, source-review findings, and security-settings visibility limits in `docs/audits/github-actions-pinning-2026-11-04.md`.
+- Validation and merge are pending PR checks. No production settings or runtime application code changed.
+
+## 2026-11-04 — Previous security hardening changes merged
+
+- PR #72 (JSON-LD script-context hardening) was squash-merged to `main` as `c566b02c2d86e5cd16fb9348b6339f7029966bec`. CI and CodeQL passed.
+- PR #73 (deterministic npm lockfile and Playwright advisory remediation) was squash-merged to `main` as `a59bb7fc558be2f31d163fed006c55ddfde7588c`.
+- Main CI, CodeQL, GitHub Pages build/deploy/smoke, and post-deployment Browser QA passed on the PR #73 merge commit. Browser QA reported 96 route/viewport checks.
+- The earlier review notes below describe their status at the time. They are superseded by this closeout record.
+
 ## 2026-11-04 — Localized project summary dialogs (review)
 
 - Added a reusable project-card component with native, keyboard-dismissible summary dialogs on the homepage and Projects page.
