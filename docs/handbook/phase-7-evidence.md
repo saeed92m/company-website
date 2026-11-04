@@ -63,11 +63,11 @@ This is fresh external reachability and automated-test evidence, not a claim of 
 
 The earlier statements that the site was fully production-ready describe a historical acceptance checkpoint. They do not close the current security and operational acceptance work.
 
-Current status: **In Progress**. Production `main` is `13639d111d355c06f86472f2af501158e408fbf9` (PR #76). On this commit:
-- CI [41876913563](https://github.com/saeed92m/company-website/actions/runs/41876913563) passed repository validation, `npm ci`, JSON-LD regression tests, Astro check, and production build.
-- CodeQL [41876913679](https://github.com/saeed92m/company-website/actions/runs/41876913679) completed successfully. The alert backlog remains a separate review.
-- Pages [41876913878](https://github.com/saeed92m/company-website/actions/runs/41876913878) passed build, deploy, and smoke jobs.
-- Production Chromium Browser QA [41879525886](https://github.com/saeed92m/company-website/actions/runs/41879525886) passed **96 route/viewport checks** across eight locales, six route families, and mobile/desktop viewports.
+Current status: **In Progress**. Production `main` is `1ccc79611aafcade6ca506c42c41ba515284a6af` (PR #77). On this commit:
+- CI [41890668100](https://github.com/saeed92m/company-website/actions/runs/41890668100) passed repository validation, `npm ci`, JSON-LD regression tests, Astro check, and production build.
+- CodeQL [41890668278](https://github.com/saeed92m/company-website/actions/runs/41890668278) completed successfully. The alert backlog remains a separate review.
+- Pages [41890668470](https://github.com/saeed92m/company-website/actions/runs/41890668470) passed build, deploy, and smoke jobs.
+- Production Chromium Browser QA [41890810578](https://github.com/saeed92m/company-website/actions/runs/41890810578) passed **96 route/viewport checks** across eight locales, six route families, and mobile/desktop viewports.
 
 Independent WCAG 2.2 AA, Lighthouse/Core Web Vitals, Firefox/WebKit, physical-device review, repository security-setting and alert review, deployed response headers, and backup/restore/rollback evidence remain open in Issue #69.
 
