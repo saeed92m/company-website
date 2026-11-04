@@ -68,7 +68,8 @@ section{padding:clamp(4rem,8vw,7rem) 0}
 .section-heading{display:grid;grid-template-columns:minmax(180px,.32fr) minmax(0,1fr);gap:2rem;align-items:end;margin-bottom:2.5rem}
 .section-heading .lede{margin:0}
 .domain-grid,.project-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-.domain-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,rgba(5,11,19,.76),rgba(5,11,19,.96));text-decoration:none}\n.project-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,var(--surface-2),var(--surface));text-decoration:none}
+.domain-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,rgba(5,11,19,.76),rgba(5,11,19,.96));text-decoration:none}
+.project-card{position:relative;overflow:hidden;min-height:250px;padding:1.5rem;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(145deg,var(--surface-2),var(--surface));text-decoration:none}
 .domain-card:before{content:"";position:absolute;inset:-2%;background-image:var(--domain-image);background-size:cover;background-position:center;filter:blur(3px);transform:scale(1.05);opacity:.22;transition:opacity .3s ease}
 .domain-card:after{content:"";position:absolute;inset:0;background:linear-gradient(145deg,rgba(0,60,145,.22),transparent 52%),linear-gradient(transparent 35%,rgba(5,11,19,.92));pointer-events:none}
 .domain-card>*{position:relative;z-index:1}
