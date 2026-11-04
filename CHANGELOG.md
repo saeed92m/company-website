@@ -5,14 +5,14 @@
 - Added localized dialog headings, collaboration actions, and close labels for all eight supported locales.
 - Added responsive dark/light dialog styling, RTL/LTR layout support, backdrop dismissal, and reduced-motion handling.
 - Extended Browser QA to verify three project cards, dialog opening, non-empty overview content, and Escape dismissal on homepage and Projects routes.
-- Changes remain isolated on the review branch; production deployment is not triggered.
+- Merged in PR #68 to main as commit c3793220bd637007ea9e4a1f336ba888192a600b. CI, CodeQL, GitHub Pages deployment/smoke tests, and production Chromium Browser QA passed on that commit.
 
 ## 2026-11-04 — Company Platform project listing (review)
 
 - Added Company Platform as the third project in the shared localized project content for all eight supported locales.
 - Described it as a unified digital platform for company activity and project management, coordination, and development; status is explicitly under development.
 - Kept the Company Platform implementation repository separate from the corporate website repository and did not publish a repository URL.
-- Updated the Projects content contract and information architecture. This change is isolated on a review branch and is not part of production until approved and merged.
+- Updated the Projects content contract and information architecture. Merged in PR #68 to main as commit c3793220bd637007ea9e4a1f336ba888192a600b; deployment and configured automated QA passed.
 
 ## 2026-10-18 — Production Pages metadata verification
 
