@@ -63,3 +63,25 @@
 ## Definition of Done
 
 Close Issue #69 only after every gate has a verified result, no unresolved critical/high security finding remains without a documented risk decision, and backup/restore plus rollback drills have passed.
+
+
+## Follow-up — PR-build Browser QA and CSS review
+
+### PR #81 current head
+
+- Current head: `83a8882c8839a00ed9cb9ca4df1232208a149684`.
+- The `pull_request` path builds the proposed Astro site with the production base path and serves the built `dist` directory under `/company-website`.
+- The `workflow_run` path continues to test the deployed Production site after Pages deployment.
+- Browser QA [41908868252](https://github.com/saeed92m/company-website/actions/runs/41908868252): Chromium 96/96 and Firefox 96/96 passed against the PR build. WebKit installation is still in progress.
+- CI [41908868254](https://github.com/saeed92m/company-website/actions/runs/41908868254), CodeQL [41908868213](https://github.com/saeed92m/company-website/actions/runs/41908868213), and Dependency Audit [41908868219](https://github.com/saeed92m/company-website/actions/runs/41908868219): PASS.
+- Earlier head `cda6338...` passed 288 production checks. That run did not test the unmerged PR build.
+
+### PR #83 — CSS selector defect
+
+- Source review found one literal backslash-n sequence before `.project-card{` in `src/styles/global.css`. The intended base selector was malformed.
+- PR [#83](https://github.com/saeed92m/company-website/pull/83) replaces the literal escape with a real line break and adds a regression test.
+- CI [41909341146](https://github.com/saeed92m/company-website/actions/runs/41909341146), CodeQL [41909341109](https://github.com/saeed92m/company-website/actions/runs/41909341109), and Dependency Audit [41909340996](https://github.com/saeed92m/company-website/actions/runs/41909340996): PASS.
+- The regression test passed. CI reports 3 tests passed and 0 failed.
+- PR #83 remains open and unmerged. The CSS fix has not been deployed.
+
+These changes do not close manual accessibility, performance, security-setting, deployed-header, physical-device, backup/restore, rollback, or private vulnerability-reporting gates.
