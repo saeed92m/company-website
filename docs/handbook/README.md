@@ -12,7 +12,7 @@ The repository documentation is the engineering source for implementation detail
 
 ## Current phase
 
-**Phase 7 — Production QA & Release Closeout — multilingual UI, supplied-logo integration, deployment smoke QA, and automated Chromium responsive production checks complete. Current static corporate scope is production-ready.**
+**Current status: In Progress — automated release gates pass, but production security and operational acceptance remain open.**
 
 ## Phase 0 Definition of Done / Evidence
 
@@ -113,3 +113,15 @@ The repository's public status must be treated as a current project fact in futu
 - Engineering evidence: `docs/handbook/` and `CHANGELOG.md`.
 - Project-level knowledge/decisions: Notion **Corporate Website — Master Handbook v0.1.0**.
 - Never back up or commit secrets, credentials, private keys, or unpublished sensitive material.
+
+
+## Current acceptance status — 2026-11-04
+
+- Production `main` baseline: `c25b16bcbd3ff50c7c1bf7f501116d6aa34da0d9`.
+- CI, CodeQL, Pages deployment/smoke, and Chromium Browser QA pass on the current baseline; Browser QA reports 96 route/viewport checks.
+- GitHub Actions are pinned to full commit SHAs.
+- Logo refresh is deferred. PR #75 was closed without merge. The repository-local SVG remains the deployed brand asset.
+- Production acceptance remains open under [Issue #69](https://github.com/saeed92m/company-website/issues/69). Open evidence includes GitHub security settings/alert inventory, deployed security headers, independent WCAG 2.2 AA review, Lighthouse/Core Web Vitals, Firefox/WebKit, physical-device review, backup/restore and rollback drills, and private vulnerability reporting.
+- The Supabase migration-provenance issue #57 is separate from the static website runtime and remains open.
+
+Do not use older phase snapshots below as proof of current production acceptance. Use the latest dated audit and Issue #69 for current status.

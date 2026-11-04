@@ -1,3 +1,10 @@
+## 2026-11-04 — Production acceptance status alignment
+
+- Clarified that automated CI, CodeQL, Pages deployment/smoke, and Chromium Browser QA passing does not close all production-readiness gates.
+- Recorded production acceptance as In Progress; remaining evidence is tracked in GitHub Issue #69.
+- Deferred the logo refresh. PR #75 was closed without merge; the existing repository-local SVG remains the production asset.
+- No production runtime, DNS, hosting, database, email, or security setting was changed by this documentation update.
+
 ## 2026-11-04 — GitHub Actions pinning (in review)
 
 - Pinned all third-party actions in CI, Browser QA, CodeQL, and GitHub Pages workflows to full commit SHAs. Version comments are retained for maintainers.
