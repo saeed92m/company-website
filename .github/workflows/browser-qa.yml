@@ -71,8 +71,22 @@ jobs:
               for (const suffix of routes) {
                 const url = `${base}/${locale}/${suffix}`;
                 const page = await context.newPage();
-                const response = await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
-                if (!response || !response.ok()) throw new Error(`${url}: HTTP ${response?.status()}`);
+                let response;
+                let lastError;
+                for (let attempt = 1; attempt <= 4; attempt++) {
+                  try {
+                    response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+                    if (response && response.ok()) break;
+                    const status = response?.status();
+                    if (status && status < 500 && status !== 429) throw new Error(`${url}: non-retryable HTTP ${status}`);
+                    lastError = new Error(`${url}: transient HTTP ${status ?? "no response"} (attempt ${attempt}/4)`);
+                  } catch (error) {
+                    if (String(error.message).includes("non-retryable HTTP")) throw error;
+                    lastError = error;
+                  }
+                  if (attempt < 4) await new Promise((resolve) => setTimeout(resolve, attempt * 2000));
+                }
+                if (!response || !response.ok()) throw lastError || new Error(`${url}: request failed after 4 attempts`);
 
                 const checks = await page.evaluate(() => ({
                   dir: document.documentElement.dir,
