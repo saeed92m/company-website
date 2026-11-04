@@ -1,3 +1,14 @@
+## 2026-11-05 — Production acceptance evidence refresh
+
+- Verified production `main` remains at `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+- Re-checked main CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766), CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580), GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601), Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684), and Chromium Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184). All jobs completed successfully.
+- Re-read the dependency-audit log: both the full locked npm dependency graph and production-only dependency audit reported `found 0 vulnerabilities`.
+- Re-read the main Browser QA log: `PASS: 96 production route/viewport checks`.
+- Re-checked PR [#81](https://github.com/saeed92m/company-website/pull/81), head `cda633885acd460fbe25e4bc7613c3282c6a90ba). CI, CodeQL, Dependency Security Audit, and Browser QA passed. Chromium, Firefox, and WebKit each reported 96 successful production route/viewport checks (288 total).
+- PR #81 changes only `.github/workflows/browser-qa.yml`; it remains open and unmerged. Its Browser QA targets the deployed production URL and does not validate an unmerged application build.
+- Production acceptance remains In Progress. Security-setting/alert inventory, branch protection, deployed headers, manual WCAG 2.2 AA, Lighthouse/Core Web Vitals, physical-device review, recovery drills, and private vulnerability reporting remain open. See [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+- No production source, deployment, DNS, hosting, email, database, or security setting was changed by this evidence refresh.
+
 ## 2026-11-04 — Production acceptance and evidence alignment
 
 - Current production `main`: `1ccc79611aafcade6ca506c42c41ba515284a6af` (PR #77).
