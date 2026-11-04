@@ -9,12 +9,11 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: browser-qa-${{ matrix.browser || 'manual' }}
-  cancel-in-progress: true
-
 jobs:
   browser:
+    concurrency:
+      group: browser-qa-${{ github.workflow }}-${{ github.event.workflow_run.id || github.run_id }}-${{ matrix.browser }}
+      cancel-in-progress: true
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     strategy:
