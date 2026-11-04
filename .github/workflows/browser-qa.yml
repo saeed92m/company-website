@@ -36,9 +36,32 @@ jobs:
           npm ci --no-audit --no-fund
           npx playwright install --with-deps ${{ matrix.browser }}
 
-      - name: Run production browser checks
+      - name: Build pull request preview
+        if: ${{ github.event_name == 'pull_request' }}
         env:
-          BASE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_BASE_PATH: /company-website
+        run: npm run build
+
+      - name: Start pull request preview
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 --strictPort > /tmp/astro-preview.log 2>&1 &
+          echo "$!" > /tmp/astro-preview.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4321/company-website/fa/ > /dev/null; then
+              echo "PASS: pull request preview is reachable"
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/astro-preview.log
+          echo "FAIL: pull request preview did not become ready"
+          exit 1
+
+      - name: Run browser checks against PR preview or production
+        env:
+          BASE_URL: ${{ github.event_name == 'pull_request' && 'http://127.0.0.1:4321/company-website' || 'https://saeed92m.github.io/company-website' }}
           BROWSER: ${{ matrix.browser }}
         run: |
           cat > browser-qa.mjs <<'EOF'
