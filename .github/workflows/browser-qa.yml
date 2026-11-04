@@ -10,13 +10,17 @@ permissions:
   contents: read
 
 concurrency:
-  group: browser-qa
+  group: browser-qa-${{ matrix.browser || 'manual' }}
   cancel-in-progress: true
 
 jobs:
   browser:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -26,19 +30,24 @@ jobs:
         with:
           node-version: "22.23.4"
 
-      - name: Install Playwright
+      - name: Install Playwright browser
         run: |
           npm ci --no-audit --no-fund
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run production browser checks
         env:
           BASE_URL: https://saeed92m.github.io/company-website
+          BROWSER: ${{ matrix.browser }}
         run: |
           cat > browser-qa.mjs <<'EOF'
-          import { chromium } from "playwright";
+          import { chromium, firefox, webkit } from "playwright";
 
           const base = process.env.BASE_URL;
+          const browserName = process.env.BROWSER || "chromium";
+          const browserType = { chromium, firefox, webkit }[browserName];
+          if (!browserType) throw new Error(`Unsupported browser: ${browserName}`);
+
           const locales = ["fa","en","ar","ru","de","zh","fr","es"];
           const routes = [
             "",
@@ -49,7 +58,7 @@ jobs:
             "contact/",
           ];
 
-          const browser = await chromium.launch({headless:true});
+          const browser = await browserType.launch({headless:true});
           const results = [];
 
           for (const viewport of [
@@ -88,7 +97,7 @@ jobs:
                 await page.keyboard.press("Tab");
                 const focused = await page.evaluate(() => document.activeElement?.matches('a.skip-link'));
                 if (!focused) throw new Error(`${url} [${viewport.name}]: skip link is not keyboard-focusable`);
-                
+
                 if (checks.horizontalOverflow) {
                   throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
                 }
@@ -121,7 +130,7 @@ jobs:
                   if (await dialog.first().isVisible()) throw new Error(`${url}: Escape did not close project summary dialog`);
                 }
 
-                results.push({viewport: viewport.name, locale, route: suffix || "/"});
+                results.push({browser: browserName, viewport: viewport.name, locale, route: suffix || "/"});
                 await page.close();
               }
             }
@@ -129,6 +138,6 @@ jobs:
           }
 
           await browser.close();
-          console.log(`PASS: ${results.length} production route/viewport checks`);
+          console.log(`PASS: ${results.length} production route/viewport checks in ${browserName}`);
           EOF
           node browser-qa.mjs
