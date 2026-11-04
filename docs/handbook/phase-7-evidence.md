@@ -57,3 +57,12 @@ Future work remains intentionally deferred where it depends on external inputs: 
 ### Acceptance boundary
 
 This is fresh external reachability and automated-test evidence, not a claim of human visual approval. Physical-device rendering, typography, perceived spacing, and browser-specific behavior still require an ordinary user-operated browser/device check. Issue #52 remains the tracking record until that evidence is supplied.
+
+
+## Status clarification — 2026-11-04
+
+The earlier statements that the site was fully production-ready describe the acceptance scope and evidence available at that historical checkpoint. They do not close the current production security and operational acceptance work.
+
+Current status: **In Progress**. The latest baseline is `c25b16bcbd3ff50c7c1bf7f501116d6aa34da0d9`. Automated CI, CodeQL, Pages deployment/smoke, and 96 Chromium route/viewport checks pass. Independent WCAG 2.2 AA, performance, Firefox/WebKit, physical-device, security-settings, response-header, and recovery evidence remain open in Issue #69.
+
+The logo refresh is deferred. PR #75 was closed without merge; the existing repository-local SVG remains in production.
