@@ -97,7 +97,13 @@ if (isCeoProfilePage) {
 }
 
 const structuredData = origin
-  ? JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
+  ? JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/[<>&\u2028\u2029]/g, (character) => ({
+      "<": "\\u003c",
+      ">": "\\u003e",
+      "&": "\\u0026",
+      "\u2028": "\\u2028",
+      "\u2029": "\\u2029"
+    })[character] ?? character)
   : "";
 ---
 <!doctype html>
