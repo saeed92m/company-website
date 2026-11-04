@@ -1,10 +1,10 @@
 ## 2026-11-04 — Production acceptance and evidence alignment
 
-- Current production `main`: `13639d111d355c06f86472f2af501158e408fbf9` (PR #76).
-- Main CI [41876913563](https://github.com/saeed92m/company-website/actions/runs/41876913563): success; dependency installation, JSON-LD regression tests, Astro check, and production build passed.
-- Main CodeQL [41876913679](https://github.com/saeed92m/company-website/actions/runs/41876913679): workflow success. Alert-backlog review remains open.
-- GitHub Pages [41876913878](https://github.com/saeed92m/company-website/actions/runs/41876913878): build, deploy, and smoke jobs passed.
-- Production Chromium Browser QA [41879525886](https://github.com/saeed92m/company-website/actions/runs/41879525886): success; job log confirms 96 route/viewport checks across eight locales, six route families, and mobile/desktop viewports.
+- Current production `main`: `1ccc79611aafcade6ca506c42c41ba515284a6af` (PR #77).
+- Main CI [41890668100](https://github.com/saeed92m/company-website/actions/runs/41890668100): success on the current commit; repository validation, dependency installation, JSON-LD regression tests, Astro check, and production build passed.
+- Main CodeQL [41890668278](https://github.com/saeed92m/company-website/actions/runs/41890668278): workflow success on the current commit. Alert-backlog review remains open.
+- GitHub Pages [41890668470](https://github.com/saeed92m/company-website/actions/runs/41890668470): build, deploy, and smoke jobs passed on the current commit.
+- Production Chromium Browser QA [41890810578](https://github.com/saeed92m/company-website/actions/runs/41890810578): success; job log confirms 96 route/viewport checks across eight locales, six route families, and mobile/desktop viewports.
 - PR #76 aligned README, Handbook, Phase 7 evidence, and Changelog. Production acceptance remains In Progress; see Issue #69.
 - PR #75 (logo refresh) was closed without merge at the owner's request. The current repository-local brand SVG remains in production.
 - No production runtime, database, DNS, hosting, email, or security settings were changed by this documentation work.
