@@ -1,6 +1,8 @@
 name: Browser QA
 
 on:
+  pull_request:
+    branches: [main]
   workflow_run:
     workflows: ["Deploy GitHub Pages"]
     types: [completed]
@@ -9,14 +11,17 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: browser-qa
-  cancel-in-progress: true
-
 jobs:
   browser:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    concurrency:
+      group: browser-qa-${{ github.workflow }}-${{ github.event.workflow_run.id || github.run_id }}-${{ matrix.browser }}
+      cancel-in-progress: true
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -26,19 +31,50 @@ jobs:
         with:
           node-version: "22.23.4"
 
-      - name: Install Playwright
+      - name: Install Playwright browser
         run: |
           npm ci --no-audit --no-fund
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps ${{ matrix.browser }}
 
-      - name: Run production browser checks
+      - name: Build pull request preview
+        if: ${{ github.event_name == 'pull_request' }}
         env:
-          BASE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_BASE_PATH: /company-website
+        run: npm run build
+
+      - name: Start pull request static preview
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/company-website-preview
+          ln -s "$GITHUB_WORKSPACE/dist" /tmp/company-website-preview/company-website
+          python3 -m http.server 4321 --bind 127.0.0.1 --directory /tmp/company-website-preview > /tmp/company-website-preview.log 2>&1 &
+          echo "$!" > /tmp/company-website-preview.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --max-time 5 http://127.0.0.1:4321/company-website/fa/ > /dev/null; then
+              echo "PASS: pull request static preview is reachable"
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/company-website-preview.log
+          echo "FAIL: pull request static preview did not become ready"
+          exit 1
+
+      - name: Run browser checks against PR preview or production
+        env:
+          BASE_URL: ${{ github.event_name == 'pull_request' && 'http://127.0.0.1:4321/company-website' || 'https://saeed92m.github.io/company-website' }}
+          BROWSER: ${{ matrix.browser }}
         run: |
           cat > browser-qa.mjs <<'EOF'
-          import { chromium } from "playwright";
+          import { chromium, firefox, webkit } from "playwright";
 
           const base = process.env.BASE_URL;
+          const browserName = process.env.BROWSER || "chromium";
+          const browserType = { chromium, firefox, webkit }[browserName];
+          if (!browserType) throw new Error(`Unsupported browser: ${browserName}`);
+
           const locales = ["fa","en","ar","ru","de","zh","fr","es"];
           const routes = [
             "",
@@ -49,7 +85,7 @@ jobs:
             "contact/",
           ];
 
-          const browser = await chromium.launch({headless:true});
+          const browser = await browserType.launch({headless:true});
           const results = [];
 
           for (const viewport of [
@@ -61,8 +97,22 @@ jobs:
               for (const suffix of routes) {
                 const url = `${base}/${locale}/${suffix}`;
                 const page = await context.newPage();
-                const response = await page.goto(url, { waitUntil: "networkidle", timeout: 30000 });
-                if (!response || !response.ok()) throw new Error(`${url}: HTTP ${response?.status()}`);
+                let response;
+                let lastError;
+                for (let attempt = 1; attempt <= 4; attempt++) {
+                  try {
+                    response = await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
+                    if (response && response.ok()) break;
+                    const status = response?.status();
+                    if (status && status < 500 && status !== 429) throw new Error(`${url}: non-retryable HTTP ${status}`);
+                    lastError = new Error(`${url}: transient HTTP ${status ?? "no response"} (attempt ${attempt}/4)`);
+                  } catch (error) {
+                    if (String(error.message).includes("non-retryable HTTP")) throw error;
+                    lastError = error;
+                  }
+                  if (attempt < 4) await new Promise((resolve) => setTimeout(resolve, attempt * 2000));
+                }
+                if (!response || !response.ok()) throw lastError || new Error(`${url}: request failed after 4 attempts`);
 
                 const checks = await page.evaluate(() => ({
                   dir: document.documentElement.dir,
@@ -88,7 +138,7 @@ jobs:
                 await page.keyboard.press("Tab");
                 const focused = await page.evaluate(() => document.activeElement?.matches('a.skip-link'));
                 if (!focused) throw new Error(`${url} [${viewport.name}]: skip link is not keyboard-focusable`);
-                
+
                 if (checks.horizontalOverflow) {
                   throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
                 }
@@ -121,7 +171,7 @@ jobs:
                   if (await dialog.first().isVisible()) throw new Error(`${url}: Escape did not close project summary dialog`);
                 }
 
-                results.push({viewport: viewport.name, locale, route: suffix || "/"});
+                results.push({browser: browserName, viewport: viewport.name, locale, route: suffix || "/"});
                 await page.close();
               }
             }
@@ -129,6 +179,6 @@ jobs:
           }
 
           await browser.close();
-          console.log(`PASS: ${results.length} production route/viewport checks`);
+          console.log(`PASS: ${results.length} production route/viewport checks in ${browserName}`);
           EOF
           node browser-qa.mjs
