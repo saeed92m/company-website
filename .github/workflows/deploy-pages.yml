@@ -136,7 +136,7 @@ jobs:
           echo "PASS Open Graph image URL respects base path and returns HTTP 200"
 
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
-          stylesheet="$(printf '%s' "$html" | grep -oE 'href="[^"]+\.css"' | head -n 1 | sed -E 's/^href="|"\$//g')"
+          stylesheet="$(printf '%s' "$html" | grep -oE 'href="[^"]+\.css"' | head -n 1 | sed -E 's/^href="|"//g')"
           if [ -z "$stylesheet" ]; then
             echo "FAIL /en/: no stylesheet link found"
             exit 1
