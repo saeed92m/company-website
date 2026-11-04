@@ -31,10 +31,18 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-Phase 7 — automated release gates are passing on `main`: Astro check/build, CodeQL, GitHub Pages deployment smoke tests, and Playwright Chromium Browser QA across eight locales at mobile and desktop viewport sizes.
+**Production acceptance: In Progress.** The current production `main` baseline is `06af87e1053e7d25a3efd263ba8fefde0d997589`.
 
-**Production acceptance remains in progress.** Automated CI, CodeQL, GitHub Pages deployment/smoke tests, and Chromium Browser QA have passed on the current production baseline. These checks do not establish full production readiness.
+The following main-branch workflows passed on that commit:
 
-Open acceptance work includes repository security-setting verification, deployed response-header review, independent WCAG 2.2 AA assessment, Lighthouse/Core Web Vitals, Firefox/WebKit coverage, physical-device review, recovery drills, and a verified private vulnerability-reporting route. Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+- CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766): repository validation, JSON-LD regression tests, Astro check, and production build.
+- CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580): analysis completed successfully. This does not prove that the alert backlog is empty.
+- GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601): build, deploy, and smoke jobs passed.
+- Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684): full and production npm audits each reported zero vulnerabilities in the locked dependency graph.
+- Chromium production Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184): 96 route/viewport checks passed.
 
-The logo refresh is deferred. The current repository-local brand asset remains in use; PR #75 was closed without merge. Do not interpret passing automated checks as proof that every production-readiness item has been independently verified.
+PR [#81](https://github.com/saeed92m/company-website/pull/81) adds Firefox and WebKit to the production Browser QA matrix. Its head `cda633885acd460fbe25e4bc7613c3282c6a90ba` passed 96 checks in each of Chromium, Firefox, and WebKit: **288 successful production route/viewport checks**. This PR changes the QA workflow only. It remains open and unmerged; its tests exercised the deployed production site, not an unmerged application build.
+
+Open acceptance work includes GitHub security-setting and alert-backlog verification, branch protection, deployed response-header review, independent WCAG 2.2 AA assessment, Lighthouse/Core Web Vitals, physical-device review, backup/restore and rollback drills, and a verified private vulnerability-reporting route. Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+
+The logo refresh is deferred. The current repository-local brand asset remains in use; PR #75 was closed without merge. Passing automated checks do not prove full production readiness.
