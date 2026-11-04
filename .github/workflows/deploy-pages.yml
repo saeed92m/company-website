@@ -121,6 +121,7 @@ jobs:
             echo "PASS ${route}: canonical/hreflang/JSON-LD/social SEO markers present"
           done
 
+          # Validate that the Open Graph/Twitter logo URL respects the project base path.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
           og_image="$(printf '%s' "$html" | grep -oE '<meta property="og:image" content="[^"]+"' | head -n 1 | sed -E 's/.*content="([^"]+)".*/\1/')"
           expected_og_image="${base}/brand/alpha-team-mark.svg"
@@ -134,9 +135,10 @@ jobs:
             exit 1
           fi
           echo "PASS Open Graph image URL respects base path and returns HTTP 200"
-
+          # HTTP 200 alone is not sufficient for production QA: a page can be
+          # reachable while its stylesheet or critical brand assets are missing.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
-          stylesheet="$(printf '%s' "$html" | grep -oE 'href="[^"]+\.css"' | head -n 1 | sed -E 's/^href="([^"]+)"$/\1/')"
+          stylesheet="$(printf '%s' "$html" | grep -oE 'href="[^"]+\.css"' | head -n 1 | sed -E 's/^href="|"$//g')"
           if [ -z "$stylesheet" ]; then
             echo "FAIL /en/: no stylesheet link found"
             exit 1
@@ -156,6 +158,7 @@ jobs:
           done
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
 
+          # Validate every homepage domain-card image URL, not just that the raw SVG files exist.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
           for asset in \
             "/assets/domains/astronomy.svg" \
@@ -182,7 +185,6 @@ jobs:
             exit 1
           fi
           echo "PASS /en/fields/astronomy/: domain hero image URL respects project base path"
-
           for route in "/en/" "/en/company/ceo/" "/fa/" "/fa/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
             if ! grep -Fq '<svg' <<< "$html"; then
