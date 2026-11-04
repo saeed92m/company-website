@@ -1,22 +1,21 @@
-## 2026-11-04 — Production acceptance status alignment
+## 2026-11-04 — Production acceptance and evidence alignment
 
-- Clarified that automated CI, CodeQL, Pages deployment/smoke, and Chromium Browser QA passing does not close all production-readiness gates.
-- Recorded production acceptance as In Progress; remaining evidence is tracked in GitHub Issue #69.
-- Deferred the logo refresh. PR #75 was closed without merge; the existing repository-local SVG remains the production asset.
-- No production runtime, DNS, hosting, database, email, or security setting was changed by this documentation update.
+- Current production `main`: `13639d111d355c06f86472f2af501158e408fbf9` (PR #76).
+- Main CI [41876913563](https://github.com/saeed92m/company-website/actions/runs/41876913563): success; dependency installation, JSON-LD regression tests, Astro check, and production build passed.
+- Main CodeQL [41876913679](https://github.com/saeed92m/company-website/actions/runs/41876913679): workflow success. Alert-backlog review remains open.
+- GitHub Pages [41876913878](https://github.com/saeed92m/company-website/actions/runs/41876913878): build, deploy, and smoke jobs passed.
+- Production Chromium Browser QA [41879525886](https://github.com/saeed92m/company-website/actions/runs/41879525886): success; job log confirms 96 route/viewport checks across eight locales, six route families, and mobile/desktop viewports.
+- PR #76 aligned README, Handbook, Phase 7 evidence, and Changelog. Production acceptance remains In Progress; see Issue #69.
+- PR #75 (logo refresh) was closed without merge at the owner's request. The current repository-local brand SVG remains in production.
+- No production runtime, database, DNS, hosting, email, or security settings were changed by this documentation work.
 
-## 2026-11-04 — GitHub Actions pinning (in review)
+## 2026-11-04 — Security hardening already merged
 
-- Pinned all third-party actions in CI, Browser QA, CodeQL, and GitHub Pages workflows to full commit SHAs. Version comments are retained for maintainers.
-- Recorded upstream reference resolution, least-privilege workflow permissions, source-review findings, and security-settings visibility limits in `docs/audits/github-actions-pinning-2026-11-04.md`.
-- Validation and merge are pending PR checks. No production settings or runtime application code changed.
-
-## 2026-11-04 — Previous security hardening changes merged
-
-- PR #72 (JSON-LD script-context hardening) was squash-merged to `main` as `c566b02c2d86e5cd16fb9348b6339f7029966bec`. CI and CodeQL passed.
-- PR #73 (deterministic npm lockfile and Playwright advisory remediation) was squash-merged to `main` as `a59bb7fc558be2f31d163fed006c55ddfde7588c`.
-- Main CI, CodeQL, GitHub Pages build/deploy/smoke, and post-deployment Browser QA passed on the PR #73 merge commit. Browser QA reported 96 route/viewport checks.
-- The earlier review notes below describe their status at the time. They are superseded by this closeout record.
+- PR #72: JSON-LD script-context escaping and regression tests merged to `main`.
+- PR #73: deterministic npm lockfile, `npm ci`, and Playwright 1.64.1 advisory remediation merged to `main`.
+- PR #74: GitHub Actions references pinned to full commit SHAs in CI, Browser QA, CodeQL, and Pages workflows; least-privilege workflow permissions retained.
+- Main-branch validation for the current baseline is recorded above. The successful CodeQL workflow does not establish that the alert backlog is empty.
+- PR #75 logo refresh was not merged and is deferred.
 
 ## 2026-11-04 — Localized project summary dialogs (review)
 

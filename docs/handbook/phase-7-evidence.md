@@ -61,8 +61,14 @@ This is fresh external reachability and automated-test evidence, not a claim of 
 
 ## Status clarification — 2026-11-04
 
-The earlier statements that the site was fully production-ready describe the acceptance scope and evidence available at that historical checkpoint. They do not close the current production security and operational acceptance work.
+The earlier statements that the site was fully production-ready describe a historical acceptance checkpoint. They do not close the current security and operational acceptance work.
 
-Current status: **In Progress**. The latest baseline is `c25b16bcbd3ff50c7c1bf7f501116d6aa34da0d9`. Automated CI, CodeQL, Pages deployment/smoke, and 96 Chromium route/viewport checks pass. Independent WCAG 2.2 AA, performance, Firefox/WebKit, physical-device, security-settings, response-header, and recovery evidence remain open in Issue #69.
+Current status: **In Progress**. Production `main` is `13639d111d355c06f86472f2af501158e408fbf9` (PR #76). On this commit:
+- CI [41876913563](https://github.com/saeed92m/company-website/actions/runs/41876913563) passed repository validation, `npm ci`, JSON-LD regression tests, Astro check, and production build.
+- CodeQL [41876913679](https://github.com/saeed92m/company-website/actions/runs/41876913679) completed successfully. The alert backlog remains a separate review.
+- Pages [41876913878](https://github.com/saeed92m/company-website/actions/runs/41876913878) passed build, deploy, and smoke jobs.
+- Production Chromium Browser QA [41879525886](https://github.com/saeed92m/company-website/actions/runs/41879525886) passed **96 route/viewport checks** across eight locales, six route families, and mobile/desktop viewports.
 
-The logo refresh is deferred. PR #75 was closed without merge; the existing repository-local SVG remains in production.
+Independent WCAG 2.2 AA, Lighthouse/Core Web Vitals, Firefox/WebKit, physical-device review, repository security-setting and alert review, deployed response headers, and backup/restore/rollback evidence remain open in Issue #69.
+
+The logo refresh is deferred. PR #75 was closed without merge; the current repository-local SVG remains in production.
