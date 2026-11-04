@@ -43,20 +43,23 @@ jobs:
           PUBLIC_BASE_PATH: /company-website
         run: npm run build
 
-      - name: Start pull request preview
+      - name: Start pull request static preview
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          npm run preview -- --host 127.0.0.1 --port 4321 --strictPort > /tmp/astro-preview.log 2>&1 &
-          echo "$!" > /tmp/astro-preview.pid
+          set -euo pipefail
+          mkdir -p /tmp/company-website-preview
+          ln -s "$GITHUB_WORKSPACE/dist" /tmp/company-website-preview/company-website
+          python3 -m http.server 4321 --bind 127.0.0.1 --directory /tmp/company-website-preview > /tmp/company-website-preview.log 2>&1 &
+          echo "$!" > /tmp/company-website-preview.pid
           for attempt in $(seq 1 30); do
-            if curl --fail --silent http://127.0.0.1:4321/company-website/fa/ > /dev/null; then
-              echo "PASS: pull request preview is reachable"
+            if curl --fail --silent --max-time 5 http://127.0.0.1:4321/company-website/fa/ > /dev/null; then
+              echo "PASS: pull request static preview is reachable"
               exit 0
             fi
             sleep 2
           done
-          cat /tmp/astro-preview.log
-          echo "FAIL: pull request preview did not become ready"
+          cat /tmp/company-website-preview.log
+          echo "FAIL: pull request static preview did not become ready"
           exit 1
 
       - name: Run browser checks against PR preview or production
