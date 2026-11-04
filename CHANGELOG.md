@@ -119,3 +119,10 @@ All notable changes to this project will be documented here.
 - PR #49 merged as `90e4cd3e696e27b423a05789c2d4824a9ec31706`.
 - Final CI `37198896329`, CodeQL `37198896316`, Pages deployment `37198896307`, and Browser QA `37198959825` all passed.
 - Current static corporate scope is production-ready.
+
+
+## 2026-11-04 — JSON-LD script-context hardening (review)
+
+- Added defense-in-depth escaping for HTML-significant characters and Unicode line separators in the serialized JSON-LD payload before Astro inserts it into a script element.
+- The existing payload is generated from repository-controlled structured data. This change hardens the script context; it does not claim that all source or dependency security review is complete.
+- Proposed on branch `security/jsonld-script-escaping`; validation and merge remain pending.
