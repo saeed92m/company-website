@@ -126,3 +126,12 @@ All notable changes to this project will be documented here.
 - Added defense-in-depth escaping for HTML-significant characters and Unicode line separators in the serialized JSON-LD payload before Astro inserts it into a script element.
 - The existing payload is generated from repository-controlled structured data. This change hardens the script context; it does not claim that all source or dependency security review is complete.
 - Proposed on branch `security/jsonld-script-escaping`; validation and merge remain pending.
+
+
+## 2026-11-04 — Deterministic npm installation and Browser QA dependency security
+
+- Added a generated npm v3 lockfile and validated clean `npm ci`, JSON-LD regression tests, Astro checks, and a 98-page production build with Node.js 22.23.4.
+- Reproduced and identified the Browser QA High npm advisory: GHSA-7mvr-c777-76hp affects Playwright versions below 1.55.1. Updated the exact Playwright development dependency to 1.64.1.
+- Changed CI, GitHub Pages build, and Browser QA to install from the committed lockfile with `npm ci`.
+- Audited the locked dependency graph. Both the full dependency audit and production-only audit report zero vulnerabilities.
+- Prepared on branch `maintenance/deterministic-npm-lockfile`; production `main` is unchanged pending PR review and checks.
