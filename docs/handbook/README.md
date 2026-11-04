@@ -137,3 +137,11 @@ Do not use older phase snapshots below as proof of current production acceptance
 - Current status is **In Progress**. See [Issue #69](https://github.com/saeed92m/company-website/issues/69) and `docs/handbook/phase-7-evidence.md`.
 
 Do not use older phase snapshots as proof of current production acceptance.
+
+
+## Additional verification — 2026-11-05
+
+- PR #81 now tests both the proposed local PR build and the deployed Production site. Current head `83a8882c8839a00ed9cb9ca4df1232208a149684`: Chromium and Firefox each passed 96 checks against the PR build; WebKit installation remains in progress. CI, CodeQL, and Dependency Audit passed.
+- Previous PR #81 head `cda6338...` passed 288 production checks across three browser engines.
+- PR #83 fixes the malformed `.project-card` CSS selector and adds a regression test. Its CI, CodeQL, and Dependency Audit passed; the regression test passed.
+- PRs #81 and #83 remain open and unmerged. Production acceptance remains In Progress. See Issue #69.
