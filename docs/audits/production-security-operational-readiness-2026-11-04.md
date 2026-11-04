@@ -100,3 +100,16 @@ Track remediation and evidence in issue #69. Close each item only after the evid
 The audited commit is deployed, and the configured CI, CodeQL, Pages deployment/smoke, and Chromium Browser QA workflows pass. This is a strong automated baseline.
 
 The website is **not yet independently certified as fully production-secure or operationally accepted**. The unverified repository settings, dependency reproducibility, workflow action pinning, response headers, full accessibility/browser review, and recovery drill must be completed before closing production acceptance.
+
+
+## 6. Follow-up review — 2026-11-04
+
+- Rechecked the current production commit `3792f1d04f1d607d017463fd03467fc1c97982bc`. CI, CodeQL, GitHub Pages deployment/smoke, and production Browser QA completed successfully on this commit. Browser QA run `41840387446` reports 96 route/viewport checks across eight locales, six route families, and two viewport sizes.
+- Confirmed that the Browser QA workflow installs Playwright `1.55.0` transiently with `--no-save --no-package-lock`. Its npm output reports one high-severity audit finding but does not identify the package or dependency path. Treat this as an unresolved transient-install finding; do not infer that it is a production dependency vulnerability. The exact advisory and affected dependency remain unknown.
+- Source review found one use of Astro `set:html` for JSON-LD. The payload is currently generated from repository-controlled structured data with `JSON.stringify`, not directly from request input. Defense-in-depth hardening is proposed in PR `security/jsonld-script-escaping`: escape HTML-significant characters and Unicode line separators before inserting the JSON text into the script element. This does not replace a broader source and dependency review.
+- The repository still has no committed `package-lock.json`; CI and Pages build use `npm install`. Reproducible dependency installation remains open.
+- The Actions version tags, GitHub security-setting visibility, response headers, Firefox/WebKit, independent WCAG review, physical-device QA, and restore/rollback drill remain open as described above.
+
+### Follow-up acceptance evidence
+
+Do not close issue #69 until the transient npm advisory is identified or the QA dependency installation is replaced with a reproducible, audited setup; the lockfile and CI installation are deterministic; the JSON-LD hardening PR passes checks; and all remaining human/operational gates have recorded evidence.

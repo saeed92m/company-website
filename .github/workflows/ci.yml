@@ -37,6 +37,9 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
+      - name: JSON-LD serialization regression tests
+        run: npm test
+
       - name: Astro type and project check
         run: npm run check
 

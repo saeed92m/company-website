@@ -96,9 +96,8 @@ if (isCeoProfilePage) {
   });
 }
 
-const structuredData = origin
-  ? JSON.stringify({ "@context": "https://schema.org", "@graph": graph })
-  : "";
+const structuredData = origin ? serializeJsonLd(graph) : "";
+import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
 ---
 <!doctype html>
 <html lang={locale} dir={meta.dir} data-theme="dark">
