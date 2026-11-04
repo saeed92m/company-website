@@ -113,3 +113,16 @@ The website is **not yet independently certified as fully production-secure or o
 ### Follow-up acceptance evidence
 
 Do not close issue #69 until the transient npm advisory is identified or the QA dependency installation is replaced with a reproducible, audited setup; the lockfile and CI installation are deterministic; the JSON-LD hardening PR passes checks; and all remaining human/operational gates have recorded evidence.
+
+
+## 7. Dependency reproducibility and Browser QA advisory — 2026-11-04
+
+- Generated `package-lock.json` on a GitHub-hosted runner with Node.js `22.23.4`; no lockfile content was hand-authored.
+- Validated a clean `npm ci`, `npm test`, `npm run check`, and `npm run build`. The build produced 98 static pages. The Astro check passed with two existing unused-variable warnings: `content` in `src/pages/404.astro` and `assetBase` in `src/pages/[locale]/company/ceo.astro`.
+- Reproduced the Browser QA warning in an isolated lockfile-backed package. The finding is GHSA-7mvr-c777-76hp: Playwright versions below `1.55.1` do not verify the authenticity of the SSL certificate when downloading/installing browsers. npm reports High severity and identifies direct dependency `playwright@1.55.0`; the advisory's affected range is `<1.55.1`.
+- Updated the Browser QA dependency to exact version `1.64.1`, added it to `devDependencies`, and changed Browser QA to use the committed lockfile through `npm ci`. This removes the transient, untracked install.
+- Re-generated the lockfile and audited the complete locked dependency graph. Both `npm audit` and `npm audit --omit=dev` report zero vulnerabilities on the validated branch. Raw JSON evidence is retained in Actions artifact `locked-dependency-audit` from run [41845743167](https://github.com/saeed92m/company-website/actions/runs/41845743167).
+- The successful lockfile validation is run [41845178268](https://github.com/saeed92m/company-website/actions/runs/41845178268). The isolated advisory reproduction is run [41845492777](https://github.com/saeed92m/company-website/actions/runs/41845492777); its artifact identified the advisory and the affected package.
+- CI, Pages build, and Browser QA now use `npm ci` on this branch. Production is unchanged until the pull request is reviewed and merged.
+
+This resolves the previously unclassified High npm warning for the exact Playwright dependency and provides a reproducible dependency graph. It does not complete the remaining repository security, accessibility, cross-browser, performance, or operational recovery gates.
