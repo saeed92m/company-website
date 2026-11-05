@@ -1,3 +1,55 @@
+/* Shared design tokens: approved brand colors + independently authored themes. */
+:root {
+  --brand-blue: #003c91;
+  --brand-gray: #a8a8a8;
+  --page: #07111f;
+  --surface: #0c1a2b;
+  --ink: #f1f5fb;
+  --muted: #b1bfd1;
+  --accent: #8abaff;
+  --link: #a8ccff;
+  --focus: #a8d0ff;
+  --control-height: 48px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --space-20: 80px; --space-24: 96px; --space-32: 128px;
+  font-family: "Manrope", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Sans CJK SC", system-ui, sans-serif;
+}
+html[data-theme="light"] {
+  --page: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #14243a;
+  --muted: #526176;
+  --accent: #003c91;
+  --link: #003c91;
+  --focus: #005fcc;
+}
+.site-header {
+  min-height: 76px;
+  gap: clamp(12px, 2vw, 28px);
+  padding-block: 12px;
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--page) 94%, transparent);
+}
+.brand { gap: 12px; max-width: min(34%, 340px); }
+.brand-mark { width: 42px; flex: 0 0 42px; }
+.brand-wordmark { font-size: 12px; font-weight: 750; line-height: 1.45; letter-spacing: 0; }
+.primary-nav { gap: clamp(12px, 1.5vw, 24px); }
+.primary-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: 13px; }
+.language-select select, .theme-toggle { min-height: 44px; padding: 8px 12px; font-size: 12px; }
+button, select { min-height: 44px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+@media (max-width: 720px) {
+  .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-block: 10px; }
+  .brand { min-width: 0; gap: 8px; }
+  .brand-mark { width: 34px; flex-basis: 34px; }
+  .brand-wordmark { max-width: 10rem; font-size: 11px; }
+  .primary-nav { grid-column: 1 / -1; order: 0; justify-content: flex-start; gap: 14px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .primary-nav a { white-space: nowrap; font-size: 12px; }
+  .header-tools { justify-self: end; gap: 6px; }
+  .language-select select, .theme-toggle { min-height: 44px; padding-inline: 9px; font-size: 11px; }
+}
+
 /* Visual direction v2: technical editorial / research atlas.
    This is a structural redesign of the homepage, not only a token layer. */
 .home-redesign {
