@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const css = await readFile(new URL("../src/styles/design-system.css", import.meta.url), "utf8");
 const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
 const home = await readFile(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
+const companyPage = await readFile(new URL("../src/pages/[locale]/company/index.astro", import.meta.url), "utf8");
 const requireGlobalCss = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
 
 function getColor(name, selector = ":root {") {
@@ -90,14 +91,15 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
   assert.ok(ratio(accent, "#14243a") >= 4.5, "domain-card accent must meet WCAG AA");
 });
 
-test("homepage has no vanity metrics and keeps registration details in the company section", () => {
+test("homepage has no vanity metrics and registration details live on the Company page", () => {
   assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
   assert.doesNotMatch(home, /orbit-visual|orbit-node|orbit-ring|new-metrics|metric-item/);
   assert.doesNotMatch(css, /\.home-redesign \.orbit-visual|\.home-redesign \.new-metrics/);
   assert.doesNotMatch(home, /site\.founded\.replace/);
-  assert.match(home, /new-registration-fact/);
-  assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
-  assert.match(home, /Official Gazette notice: 29 July 2023/);
+  assert.doesNotMatch(home, /۱۴۰۲\/۰۵\/۰۷|Official Gazette notice/);
+  assert.match(companyPage, /company-registration-fact/);
+  assert.match(companyPage, /۱۴۰۲\/۰۵\/۰۷/);
+  assert.match(companyPage, /Founded: August 2023/);
 });
 
 
