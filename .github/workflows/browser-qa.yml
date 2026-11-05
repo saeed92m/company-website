@@ -160,7 +160,7 @@ jobs:
                   throw new Error(`${url} [${viewport.name}]: structural check failed: ${JSON.stringify(checks)}`);
                 }
                 if (externalFontRequest) throw new Error(`${url}: external Google Fonts request detected`);
-                if (fontResponses.some((item) => item.status !== 200)) throw new Error(`${url}: WOFF2 request failed: ${JSON.stringify(fontResponses)}`);
+                if (fontResponses.some((item) => ![200, 304].includes(item.status))) throw new Error(`${url}: WOFF2 request failed: ${JSON.stringify(fontResponses)}`);
                 if (checks.fontFamily && (!checks.fontLoaded || fontResponses.length === 0)) {
                   throw new Error(`${url}: expected self-hosted ${checks.fontFamily} font to load; checks=${JSON.stringify(checks)}; responses=${JSON.stringify(fontResponses)}`);
                 }
