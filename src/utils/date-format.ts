@@ -33,7 +33,7 @@ export function formatYear(year: number, locale: Locale, month = 6): string {
  */
 export function formatPeriod(value: string, locale: Locale): string {
   const digitsNormalized = toAsciiDigits(value);
-  const normalized = locale === "zh" ? digitsNormalized.replace(/((?:19|20)\\d{2})年/g, "$1") : digitsNormalized;
+  const normalized = locale === "zh" ? digitsNormalized.replace(/((?:19|20)\d{2})年/g, "$1") : digitsNormalized;
   return normalized.replace(/\b(19|20)\d{2}\b(?:\s*[–-]\s*\b(19|20)\d{2}\b)?/g, (match) => {
     const years = match.match(/\d{4}/g) ?? [];
     if (years.length === 1) return yearForLocale(Number(years[0]), locale);
