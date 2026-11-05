@@ -45,12 +45,15 @@ The static architecture reduces the application's direct attack surface. It does
 
 - Project status: `ACTIVE_HEALTHY`; PostgreSQL 17.11.
 - Public application schema: zero tables, zero views, zero materialized views, and zero foreign tables.
+- Full non-system schema inventory found only Supabase-managed relations in `auth`, `storage`, `realtime`, `vault`, `extensions`, and migration schemas; no application relations were found outside the managed schemas.
 - Auth user count: zero.
 - Edge Functions: zero.
 - Security Advisor: no findings returned at assessment time.
 - Performance Advisor: no findings returned at assessment time.
 - The public `rls_auto_enable()` event-trigger function is `SECURITY DEFINER`, uses a fixed `search_path = pg_catalog`, and its execution ACL is limited to `postgres` and `service_role`. It is not executable by `PUBLIC`, `anon`, or `authenticated`.
 - The `ensure_rls` event trigger is enabled and attempts to enable RLS for new tables created in `public`.
+- The `vault` schema denies `USAGE` to `anon` and `authenticated`; the inspected Vault table grants are limited to `service_role`. No SECURITY DEFINER function was found executable by `PUBLIC`, `anon`, or `authenticated` in the non-system schemas.
+- The `realtime.messages` relation has RLS enabled and no policies; the default-deny behavior prevents row access through ordinary roles. Auth-managed tables with RLS disabled have no direct table grants to `anon` or `authenticated` in the inspected grants.
 - The `site_assets` Storage bucket is public and has a 2 MiB upload-size limit with an image-only MIME allowlist. It contains one PNG object of approximately 1.05 MB. Public read access is expected for a public asset bucket. No Storage RLS policies were found; anonymous uploads or object mutations are therefore not authorized by the inspected policy state.
 
 ## Findings and required action
