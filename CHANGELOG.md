@@ -1,3 +1,14 @@
+## 2026-11-05 — Visual review, legal-content accuracy, and self-hosted typography
+
+- The owner provisionally approved the current visual direction in PR [#86](https://github.com/saeed92m/company-website/pull/86). This approval does not authorize merge or Production deployment.
+- Added seven subsetted variable WOFF2 files for Vazirmatn (Arabic/Latin/Latin Extended) and IBM Plex Sans (Cyrillic/Cyrillic Extended/Latin/Latin Extended). Added the SIL Open Font License notices and source provenance in `docs/design/05-self-hosted-typography.md`.
+- Removed the external Google Fonts CSS dependency and its preconnect hints. The browser matrix now checks local font loading and external font requests.
+- Moved the founding month and Gazette notice from the homepage to the Company page. Removed the unsupported exact `foundingDate` value from Organization JSON-LD.
+- Added a localized registered-scope disclosure. The site now distinguishes six public activity areas from the narrower registered R&D scope and the motorsport roadmap.
+- Extended CodeQL and Dependency Security Audit pull-request triggers to stacked feature/design branches.
+- On the typography and legal-content checkpoint, CI passed **27/27 tests**, Astro check reported **0 errors and 0 warnings**, and the build generated **98 pages**. Browser QA is being rerun on the latest PR head; no pass is claimed until all three engines complete.
+- Production `main` remains `ecaa7ab5b931bd20691f5744298be1a34c151234`. No Production source or deployment was changed.
+
 ## 2026-11-05 — PR-build browser QA and project-card CSS defect
 
 - Updated PR [#81](https://github.com/saeed92m/company-website/pull/81) to test the built PR itself on `pull_request` events. The workflow builds with the production GitHub Pages base path and serves `dist` under `/company-website`; post-deployment runs continue to test Production.
