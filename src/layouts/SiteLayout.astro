@@ -9,6 +9,7 @@ import { resolveSiteUrl } from "../utils/site-url.mjs";
 import { webLogoUrl } from "../data/brand";
 import { formatFounded } from "../utils/date-format";
 import BrandMark from "../components/BrandMark.astro";
+import AnalyticsConsent from "../components/AnalyticsConsent.astro";
 import "../styles/global.css";
 import "../styles/design-system.css";
 import "../styles/screenshot-review.css";
@@ -173,6 +174,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         </div>
       </div>
     </footer>
+    <AnalyticsConsent locale={locale} />
     <script is:inline>
       (() => {
         const root = document.documentElement;
