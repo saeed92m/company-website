@@ -1,0 +1,179 @@
+---
+import type { Locale } from "../data/locales";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const configuredId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? "";
+const measurementId = /^G-[A-Z0-9]+$/.test(configuredId) ? configuredId : "";
+
+const labels: Record<Locale, { title: string; body: string; accept: string; reject: string; settings: string }> = {
+  fa: { title: "تنظیمات تحلیل بازدید", body: "با اجازه شما، از Google Analytics برای تحلیل بازدید و بهبود وب‌سایت استفاده می‌کنیم. تا پیش از انتخاب شما، ابزار تحلیل بارگذاری نمی‌شود.", accept: "پذیرش تحلیل", reject: "رد تحلیل", settings: "تنظیمات حریم خصوصی" },
+  en: { title: "Analytics preferences", body: "With your permission, Google Analytics helps us understand site usage and improve this website. Analytics does not load before you make a choice.", accept: "Allow analytics", reject: "Reject analytics", settings: "Privacy settings" },
+  ar: { title: "تفضيلات التحليلات", body: "بموافقتك، نستخدم Google Analytics لفهم استخدام الموقع وتحسينه. لن يتم تحميل أداة التحليلات قبل اختيارك.", accept: "السماح بالتحليلات", reject: "رفض التحليلات", settings: "إعدادات الخصوصية" },
+  ru: { title: "Настройки аналитики", body: "С вашего разрешения Google Analytics помогает понять использование сайта и улучшить его. До вашего выбора аналитика не загружается.", accept: "Разрешить аналитику", reject: "Отклонить аналитику", settings: "Настройки конфиденциальности" },
+  de: { title: "Analyse-Einstellungen", body: "Mit Ihrer Zustimmung hilft Google Analytics, die Nutzung der Website zu verstehen und sie zu verbessern. Vor Ihrer Auswahl wird das Analysetool nicht geladen.", accept: "Analyse erlauben", reject: "Analyse ablehnen", settings: "Datenschutzeinstellungen" },
+  zh: { title: "分析偏好设置", body: "经您同意后，我们使用 Google Analytics 了解网站使用情况并改进网站。在您作出选择前，不会加载分析工具。", accept: "允许分析", reject: "拒绝分析", settings: "隐私设置" },
+  fr: { title: "Préférences d’analyse", body: "Avec votre autorisation, Google Analytics nous aide à comprendre l’utilisation du site et à l’améliorer. L’outil ne se charge pas avant votre choix.", accept: "Autoriser l’analyse", reject: "Refuser l’analyse", settings: "Paramètres de confidentialité" },
+  es: { title: "Preferencias de análisis", body: "Con su permiso, Google Analytics nos ayuda a comprender el uso del sitio y a mejorarlo. La herramienta no se carga antes de que elija.", accept: "Permitir análisis", reject: "Rechazar análisis", settings: "Configuración de privacidad" }
+};
+const copy = labels[locale];
+---
+<div class="analytics-consent-root" data-analytics-consent data-measurement-id={measurementId} hidden={!measurementId}>
+  <section class="analytics-consent-banner" data-consent-banner aria-labelledby="analytics-consent-title" aria-describedby="analytics-consent-description" aria-live="polite" hidden>
+    <div class="analytics-consent-copy">
+      <h2 id="analytics-consent-title">{copy.title}</h2>
+      <p id="analytics-consent-description">{copy.body}</p>
+    </div>
+    <div class="analytics-consent-actions">
+      <button type="button" data-consent-accept>{copy.accept}</button>
+      <button type="button" data-consent-reject>{copy.reject}</button>
+    </div>
+  </section>
+  <button class="analytics-consent-settings" type="button" data-consent-settings>{copy.settings}</button>
+</div>
+
+<style>
+  .analytics-consent-root { position: relative; z-index: 100; }
+  .analytics-consent-banner {
+    position: fixed; inset-inline: 1rem; inset-block-end: 1rem; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.25rem;
+    max-width: 900px; margin-inline: auto; padding: 1rem 1.15rem;
+    color: var(--text, #f8fafc); background: var(--surface, #101c2d);
+    border: 1px solid var(--border, #526174); border-radius: 1rem;
+    box-shadow: 0 12px 40px rgb(0 0 0 / 28%);
+  }
+  .analytics-consent-banner[hidden], .analytics-consent-root[hidden] { display: none; }
+  .analytics-consent-copy { min-width: 0; }
+  .analytics-consent-copy h2 { margin: 0 0 .35rem; font-size: 1rem; }
+  .analytics-consent-copy p { margin: 0; font-size: .9rem; line-height: 1.6; }
+  .analytics-consent-actions { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: .5rem; }
+  .analytics-consent-actions button, .analytics-consent-settings {
+    min-height: 44px; padding: .55rem .85rem; border: 1px solid var(--border, #526174);
+    border-radius: .65rem; color: inherit; background: transparent; font: inherit; cursor: pointer;
+  }
+  .analytics-consent-actions [data-consent-accept] { color: white; background: var(--accent, #1457a6); border-color: transparent; }
+  .analytics-consent-settings {
+    position: fixed; inset-inline-end: .75rem; inset-block-end: .75rem; z-index: 900;
+    color: var(--text, #f8fafc); background: var(--surface, #101c2d);
+    font-size: .75rem; opacity: .82;
+  }
+  .analytics-consent-actions button:focus-visible, .analytics-consent-settings:focus-visible { outline: 3px solid var(--focus, #70b7ff); outline-offset: 3px; }
+  @media (max-width: 680px) {
+    .analytics-consent-banner { flex-direction: column; align-items: stretch; inset-inline: .5rem; inset-block-end: .5rem; padding: .9rem; }
+    .analytics-consent-actions { display: grid; grid-template-columns: 1fr 1fr; }
+    .analytics-consent-actions button { padding-inline: .4rem; font-size: .85rem; }
+    .analytics-consent-settings { inset-inline-end: .5rem; inset-block-end: .5rem; }
+    .analytics-consent-banner:not([hidden]) ~ .analytics-consent-settings { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) { .analytics-consent-banner { scroll-behavior: auto; } }
+</style>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector("[data-analytics-consent]");
+    if (!root) return;
+    const measurementId = root.dataset.measurementId || "";
+    if (!/^G-[A-Z0-9]+$/.test(measurementId)) return;
+
+    const banner = root.querySelector("[data-consent-banner]");
+    const accept = root.querySelector("[data-consent-accept]");
+    const reject = root.querySelector("[data-consent-reject]");
+    const settings = root.querySelector("[data-consent-settings]");
+    const storageKey = "pnfk-analytics-consent-v1";
+
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.__pnfkAnalyticsGranted = false;
+    window.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      functionality_storage: "denied",
+      personalization_storage: "denied",
+      security_storage: "granted"
+    });
+
+    const startAnalytics = () => {
+      if (window.__pnfkAnalyticsStarted) {
+        window.__pnfkAnalyticsGranted = true;
+        window.gtag("consent", "update", { analytics_storage: "granted" });
+        return;
+      }
+      window.__pnfkAnalyticsStarted = true;
+      window.__pnfkAnalyticsGranted = true;
+      window.gtag("consent", "update", { analytics_storage: "granted" });
+      window.gtag("js", new Date());
+      window.gtag("config", measurementId, {
+        send_page_view: true,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(measurementId);
+      script.referrerPolicy = "strict-origin-when-cross-origin";
+      document.head.appendChild(script);
+    };
+
+    const readChoice = () => {
+      try { return window.localStorage.getItem(storageKey); } catch { return null; }
+    };
+    const saveChoice = (choice) => {
+      try { window.localStorage.setItem(storageKey, choice); } catch {}
+    };
+
+    const choice = readChoice();
+    if (choice === "accepted") startAnalytics();
+    if (choice !== "accepted" && choice !== "rejected") banner.hidden = false;
+
+    accept?.addEventListener("click", () => {
+      saveChoice("accepted");
+      banner.hidden = true;
+      startAnalytics();
+    });
+    reject?.addEventListener("click", () => {
+      saveChoice("rejected");
+      window.__pnfkAnalyticsGranted = false;
+      window.gtag("consent", "update", { analytics_storage: "denied" });
+      document.cookie.split(";").forEach((cookie) => {
+        const name = cookie.split("=")[0].trim();
+        if (name === "_ga" || name.startsWith("_ga_")) {
+          document.cookie = name + "=; Max-Age=0; path=/; SameSite=Lax";
+          document.cookie = name + "=; Max-Age=0; path=/; domain=" + window.location.hostname + "; SameSite=Lax";
+        }
+      });
+      banner.hidden = true;
+    });
+    settings?.addEventListener("click", () => {
+      banner.hidden = false;
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!window.__pnfkAnalyticsGranted || typeof window.gtag !== "function" || !(event.target instanceof Element)) return;
+      const link = event.target.closest("a[href]");
+      if (!link) return;
+      const href = link.getAttribute("href") || "";
+      if (href.startsWith("mailto:")) {
+        window.gtag("event", "contact_click", { contact_method: "email" });
+      } else if (link.hasAttribute("download")) {
+        window.gtag("event", "file_download", {
+          file_extension: (() => {
+            const fileName = new URL(href, window.location.href).pathname.split("/").pop() || "";
+            return (fileName.includes(".") ? fileName.split(".").pop() : "unknown").slice(0, 12);
+          })()
+        });
+      } else {
+        try {
+          const destination = new URL(href, window.location.href);
+          if (destination.origin !== window.location.origin) {
+            window.gtag("event", "outbound_click", { link_domain: destination.hostname });
+          }
+        } catch {}
+      }
+    });
+  })();
+</script>
