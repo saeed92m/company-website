@@ -4,6 +4,12 @@ import { readFile } from "node:fs/promises";
 
 const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
 const home = await readFile(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
+const styles = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
+
+test("the corporate source colors remain explicit design tokens", () => {
+  assert.match(styles, /--brand:#003c91/);
+  assert.match(styles, /--brand-gray:#a8a8a8/);
+});
 
 test("the legal company name is the shared website and social identity", () => {
   assert.match(layout, /og:site_name" content=\{site\.companyName\}/);
