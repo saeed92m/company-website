@@ -137,7 +137,8 @@ const copy = labels[locale];
     });
     reject?.addEventListener("click", () => {
       saveChoice("rejected");
-      window.__pnfkAnalyticsGranted = false;\n      window.gtag("consent", "update", { analytics_storage: "denied" });
+      window.__pnfkAnalyticsGranted = false;
+      window.gtag("consent", "update", { analytics_storage: "denied" });
       document.cookie.split(";").forEach((cookie) => {
         const name = cookie.split("=")[0].trim();
         if (name === "_ga" || name.startsWith("_ga_")) {
