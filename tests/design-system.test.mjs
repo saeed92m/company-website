@@ -92,3 +92,9 @@ test("homepage has no vanity metrics and keeps registration details in the compa
   assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
   assert.match(home, /Official Gazette notice: 29 July 2023/);
 });
+
+test("homepage keeps the six verified activity domains as its only numeric metric", () => {
+  assert.match(home, /metric-item"><strong>06<\/strong><span>\{copy\.discipline\}/);
+  assert.doesNotMatch(home, /metric-item"><strong>08/);
+  assert.doesNotMatch(home, /metric-item"><strong>2023/);
+});
