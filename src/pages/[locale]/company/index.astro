@@ -7,15 +7,15 @@ import { route } from "../../../data/routes";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
-const registeredScope: Record<Locale, { label: string; detail: string }> = {
-  fa: { label: "موضوع فعالیت رسمی ثبت‌شده:", detail: "تحقیق و توسعه در زمینه نجوم، هوافضا، انرژی‌های نو و هوش مصنوعی است. سنجش از دور در موضوع فعالیت رسمی درج نشده است. موتوراسپرت و قطعات پرفورمنس در نقشه راه توسعه شرکت قرار دارد و الحاق رسمی آن به اساسنامه در دستور کار است." },
-  en: { label: "Registered scope:", detail: "R&D in astronomy, aerospace, renewable energy, and artificial intelligence. Remote sensing is not listed in the current registered scope. Motorsport and performance parts are on the company's development roadmap; formal addition to the articles of association is in progress." },
-  ar: { label: "النطاق الرسمي المسجّل:", detail: "البحث والتطوير في علم الفلك والفضاء والطاقة المتجددة والذكاء الاصطناعي. لم يُدرج الاستشعار عن بُعد ضمن نطاق النشاط المسجّل الحالي. تقع رياضة المحركات وقطع الأداء ضمن خارطة تطوير الشركة، ويجري العمل على إضافتها رسميًا إلى النظام الأساسي." },
-  ru: { label: "Зарегистрированный вид деятельности:", detail: "Исследования и разработки в области астрономии, аэрокосмических технологий, возобновляемой энергетики и искусственного интеллекта. Дистанционное зондирование не указано в текущем зарегистрированном перечне. Автоспорт и высокопроизводительные компоненты входят в дорожную карту развития; их официальное включение в устав находится в работе." },
-  de: { label: "Offiziell eingetragener Tätigkeitsbereich:", detail: "Forschung und Entwicklung in Astronomie, Luft- und Raumfahrt, erneuerbaren Energien und künstlicher Intelligenz. Fernerkundung ist im derzeit eingetragenen Tätigkeitsbereich nicht aufgeführt. Motorsport und Performance-Teile sind Teil der Entwicklungsroadmap; ihre formelle Aufnahme in die Satzung ist in Vorbereitung." },
-  zh: { label: "正式登记的经营范围：", detail: "天文学、航空航天、可再生能源和人工智能领域的研究与开发。遥感未列入当前登记的经营范围。赛车运动及高性能零部件属于公司的发展路线图，正在推进将其正式纳入公司章程。" },
-  fr: { label: "Objet social officiellement enregistré :", detail: "Recherche et développement dans les domaines de l’astronomie, de l’aérospatiale, des énergies renouvelables et de l’intelligence artificielle. La télédétection ne figure pas dans le périmètre actuellement enregistré. Le sport automobile et les pièces de performance font partie de la feuille de route de développement ; leur ajout officiel aux statuts est en cours." },
-  es: { label: "Actividad oficialmente registrada:", detail: "Investigación y desarrollo en astronomía, aeroespacial, energías renovables e inteligencia artificial. La teledetección no figura en el alcance registrado actual. El automovilismo y las piezas de alto rendimiento forman parte de la hoja de ruta de desarrollo; su incorporación formal a los estatutos está en curso." }
+const roadmapNote: Record<Locale, string> = {
+  fa: "موتوراسپرت و قطعات پرفورمنس در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به اساسنامه در دست پیگیری است.",
+  en: "Motorsport and performance parts are on the company's development roadmap; formal addition to the articles of association is being pursued.",
+  ar: "تقع رياضة المحركات وقطع الأداء ضمن خارطة تطوير الشركة، ويجري العمل على إضافتها رسميًا إلى النظام الأساسي.",
+  ru: "Автоспорт и высокопроизводительные компоненты входят в дорожную карту развития компании; их официальное включение в устав находится в работе.",
+  de: "Motorsport und Performance-Teile sind Teil der Entwicklungsroadmap des Unternehmens; ihre formelle Aufnahme in die Satzung wird verfolgt.",
+  zh: "赛车运动及高性能零部件属于公司的发展路线图，正在推进将其正式纳入公司章程。",
+  fr: "Le sport automobile et les pièces de performance font partie de la feuille de route de développement ; leur ajout officiel aux statuts est en cours.",
+  es: "El automovilismo y las piezas de alto rendimiento forman parte de la hoja de ruta de desarrollo; su incorporación formal a los estatutos está en curso."
 };
 const registrationFact: Record<Locale, string> = {
   fa: "تاریخ تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷",
@@ -30,7 +30,7 @@ const registrationFact: Record<Locale, string> = {
 ---
 <SiteLayout locale={locale} title={site.navigation.company + " — " + site.companyName} description={site.intro}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p class="company-registration-fact">{registrationFact[locale]}</p><p class="company-registration-scope"><strong>{registeredScope[locale].label}</strong> {registeredScope[locale].detail}</p><p>{site.founder}</p></section>
+    <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p class="company-registration-fact">{registrationFact[locale]}</p><p class="company-roadmap-note">{roadmapNote[locale]}</p><p>{site.founder}</p></section>
     <section aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
