@@ -72,5 +72,5 @@ test("prototype controls and cards use the provisional soft-rounded geometry", (
   assert.match(css, /--radius-control:\s*12px/);
   assert.match(css, /--radius-card:\s*18px/);
   assert.match(css, /\.home-redesign \.new-button[\s\S]*?border-radius:\s*var\(--radius-control\)/);
-  assert.match(css, /\.home-redesign \.new-domain-card[\s\S]*?border-radius:\s*var\(--radius-card\)/);
+  assert.match(css, /\.home-redesign \.new-domain-card[\s\S]*?border-radius:\s*var\(--radius-card\)/);\n  assert.match(css, /\.home-redesign \.new-projects \.project-card[\s\S]*?border-radius:\s*var\(--radius-card\)/);\n  assert.match(css, /\.home-redesign \.new-projects \.project-card \.button \{ border-radius: var\(--radius-control\); \}/);
 });

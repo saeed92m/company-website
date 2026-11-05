@@ -41,7 +41,7 @@ The project owner has provisionally approved the following primary typefaces for
 - Test Persian shaping, punctuation, numerals, mixed-direction text, headings, body copy, form controls, and navigation at mobile and desktop sizes.
 - Keep typography tokens centralized. Avoid hard-coding font-family declarations in individual components.
 - Compare rendering and readability in both Night and Day themes. Confirm layout stability and avoid font-induced cumulative layout shift.
-- The font files have not yet been added or loaded by this decision record.
+- The approved families are loaded in this prototype through the external CSS endpoint. Font binaries are not yet self-hosted in the repository.
 
 ### Prototype implementation update (2026-11-05)
 
@@ -54,6 +54,6 @@ The project owner has provisionally approved the following primary typefaces for
 ### Next validation
 
 1. Replace the prototype Google Fonts request with optimized, self-hosted WOFF2 assets and include both OFL notices.
-2. Define the global font stacks and script-aware fallback stacks.
-3. Add typography regression checks and visual samples for fa/en/ar/ru/de/zh/fr/es.
+2. Verify global font stacks and script-aware fallback stacks on real devices.
+3. Extend typography regression coverage and review visual samples for fa/en/ar/ru/de/zh/fr/es.
 4. Review real browser rendering before treating typography as production-ready.
