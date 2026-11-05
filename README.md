@@ -11,6 +11,8 @@ Corporate website project for **Pishgaman Novandish Fannavargostar Keyhan (Ltd.)
 - Artificial Intelligence
 - Motorsport
 
+These are the six public activity areas. They are not all part of the current registered legal scope. The registered R&D scope covers astronomy, aerospace, renewable energy, and artificial intelligence. Remote sensing is not listed in the current registered scope. Motorsport and performance parts remain on the development roadmap pending formal addition to the articles of association.
+
 ## Project
 
 This repository contains the source code, content, design system, documentation, tests, and deployment configuration for the company's public multilingual corporate website.
@@ -31,18 +33,36 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The current production `main` baseline is `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+**Production acceptance: In Progress.** The current Production `main` baseline is `ecaa7ab5b931bd20691f5744298be1a34c151234`.
 
-The following main-branch workflows passed on that commit:
+The following workflows passed on that Production commit:
 
-- CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766): repository validation, JSON-LD regression tests, Astro check, and production build.
-- CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580): analysis completed successfully. This does not prove that the alert backlog is empty.
-- GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601): build, deploy, and smoke jobs passed.
-- Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684): full and production npm audits each reported zero vulnerabilities in the locked dependency graph.
-- Chromium production Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184): 96 route/viewport checks passed.
+- CI [41940065948](https://github.com/saeed92m/company-website/actions/runs/41940065948): repository validation, regression tests, Astro check, and production build.
+- CodeQL [41940066085](https://github.com/saeed92m/company-website/actions/runs/41940066085): JavaScript/TypeScript analysis completed successfully. This does not prove that the alert backlog is empty.
+- GitHub Pages [41940065926](https://github.com/saeed92m/company-website/actions/runs/41940065926): build, deploy, and smoke jobs passed.
+- Dependency Security Audit [41940065918](https://github.com/saeed92m/company-website/actions/runs/41940065918): full and production npm audits passed.
+- Cross-browser production Browser QA [41940225986](https://github.com/saeed92m/company-website/actions/runs/41940225986): **288 route/viewport checks passed** (96 each in Chromium, Firefox, and WebKit).
 
-PR [#81](https://github.com/saeed92m/company-website/pull/81) expands Browser QA to Chromium, Firefox, and WebKit. Earlier head `cda633885acd460fbe25e4bc7613c3282c6a90ba` passed **288 production route/viewport checks** (96 per engine). The current head `83a8882c8839a00ed9cb9ca4df1232208a149684` also builds the proposed PR and tests it through a local static preview under the GitHub Pages base path. In run [41908868252](https://github.com/saeed92m/company-website/actions/runs/41908868252), Chromium and Firefox each passed 96 PR-build checks; WebKit browser installation is still in progress. CI, CodeQL, and Dependency Audit passed on this head. PR #81 remains open and unmerged.
+The active `main-protection` ruleset requires pull requests and the repository's required CI, CodeQL, dependency-audit, and three-browser checks. It blocks branch deletion and non-fast-forward updates. It currently requires zero approving reviews.
 
-Open acceptance work includes GitHub security-setting and alert-backlog verification, branch protection, deployed response-header review, independent WCAG 2.2 AA assessment, Lighthouse/Core Web Vitals, physical-device review, backup/restore and rollback drills, and a verified private vulnerability-reporting route. Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), and [#86](https://github.com/saeed92m/company-website/pull/86) remain open and unmerged. The owner has provisionally approved the visual direction in PR #86. This is not merge or Production release authorization. Production remains on `main`.
 
-The logo refresh is deferred. The current repository-local brand asset remains in use; PR #75 was closed without merge. Passing automated checks do not prove full production readiness.
+## Preview and Production hosting
+
+Production deployment uses GitHub Pages. Cloudflare Pages is used for pull-request previews only; it is not a Production hosting dependency. The Cloudflare Preview URL failed to establish a secure connection from the owner's reported network. VPN-free access from intended user networks, including Iranian mobile networks, remains unverified. Do not claim universal reachability until it has been tested.
+
+## Open acceptance work
+
+- Verify Secret Scanning and Push Protection settings.
+- Review Dependabot alert inventory and security-update settings.
+- Review CodeQL alert inventory; confirm no unresolved high/critical findings.
+- Review GitHub Actions permissions and remaining workflow security controls.
+- Complete source review for unsafe DOM sinks, content injection, and external-link handling.
+- Verify deployed HTTPS response headers and document the hosting/security-header strategy.
+- Complete an independent WCAG 2.2 AA assessment.
+- Measure Lighthouse and Core Web Vitals on representative locales and routes.
+- Complete physical-device visual review and target-network access tests without VPN.
+- Document and execute backup/restore and deployment rollback drills.
+- Establish a private vulnerability-reporting channel and update SECURITY.md.
+
+Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69). Automated checks do not prove full Production readiness. Keep Production unchanged until the remaining acceptance gates pass and the owner gives separate release authorization.
