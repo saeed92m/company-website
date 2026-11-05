@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const css = await readFile(new URL("../src/styles/design-system.css", import.meta.url), "utf8");
 const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
 const home = await readFile(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
+const requireGlobalCss = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
 
 function getColor(name, selector = ":root {") {
   const start = css.indexOf(selector);
@@ -56,4 +57,20 @@ test("interactive controls preserve a 44px minimum target", () => {
 });
 test("reduced-motion preferences disable non-essential animation", () => {
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
+});
+
+
+test("approved prototype typefaces are configured with script-aware fallback stacks", () => {
+  const globalCss = requireGlobalCss;
+  assert.match(globalCss, /family=IBM\+Plex\+Sans/);
+  assert.match(globalCss, /family=Vazirmatn/);
+  assert.match(globalCss, /html\[lang="fa"\] body\{font-family:"Vazirmatn"/);
+  assert.match(globalCss, /html\[lang="ar"\] body\{font-family:"Noto Sans Arabic"/);
+  assert.match(globalCss, /html\[lang="zh"\] body\{font-family:"Noto Sans CJK SC"/);
+});
+test("prototype controls and cards use the provisional soft-rounded geometry", () => {
+  assert.match(css, /--radius-control:\s*12px/);
+  assert.match(css, /--radius-card:\s*18px/);
+  assert.match(css, /\.home-redesign \.new-button[\s\S]*?border-radius:\s*var\(--radius-control\)/);
+  assert.match(css, /\.home-redesign \.new-domain-card[\s\S]*?border-radius:\s*var\(--radius-card\)/);
 });

@@ -13,7 +13,14 @@
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
   --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
   --space-20: 80px; --space-24: 96px; --space-32: 128px;
-  font-family: "Manrope", "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Sans CJK SC", system-ui, sans-serif;
+  font-family: "IBM Plex Sans", "Vazirmatn", "Noto Sans Arabic", "Noto Sans CJK SC", system-ui, sans-serif;
+  --font-latin: "IBM Plex Sans", system-ui, sans-serif;
+  --font-persian: "Vazirmatn", "Noto Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-arabic: "Noto Sans Arabic", "Vazirmatn", "IBM Plex Sans", system-ui, sans-serif;
+  --font-cjk: "Noto Sans CJK SC", "IBM Plex Sans", system-ui, sans-serif;
+  --radius-control: 12px;
+  --radius-card: 18px;
+  --radius-panel: 24px;
 }
 html[data-theme="light"] {
   --page: #f5f7fb;
@@ -151,7 +158,7 @@ html[data-theme="light"] .home-redesign {
   min-height: 54px;
   padding: 0 22px;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: var(--radius-control);
   text-decoration: none;
   font-size: 13px;
   font-weight: 800;
@@ -218,7 +225,7 @@ html[data-theme="light"] .home-redesign {
   border-radius: 50%;
   color: var(--rd-accent);
   background: var(--rd-bg);
-  font: 700 10px/1 "Manrope", system-ui, sans-serif;
+  font: 700 10px/1 "IBM Plex Sans", system-ui, sans-serif;
 }
 .home-redesign .node-a { inset: 8% auto auto 48%; }
 .home-redesign .node-b { inset: 26% 8% auto auto; }
@@ -289,6 +296,7 @@ html[data-theme="light"] .home-redesign {
   border: 1px solid var(--rd-line);
   background: var(--rd-bg);
   color: var(--rd-ink);
+  border-radius: var(--radius-card);
   text-decoration: none;
   transition: border-color .22s ease, transform .22s ease;
 }
@@ -324,8 +332,9 @@ html[data-theme="light"] .home-redesign {
 .home-redesign .new-projects { padding-block: clamp(80px, 10vw, 136px); }
 .home-redesign .new-projects .project-card {
   border: 1px solid var(--rd-line);
-  border-radius: 2px;
+  border-radius: var(--radius-control);
   background: var(--rd-panel);
+  border-radius: var(--radius-card);
   box-shadow: none;
   padding: 28px;
   min-height: 260px;
@@ -340,6 +349,7 @@ html[data-theme="light"] .home-redesign {
 .home-redesign .new-company-detail .new-founder { margin-top: 24px; color: var(--rd-ink); font-weight: 750; }
 .home-redesign .new-contact { padding-block: 60px 80px; }
 .home-redesign .new-contact-panel {
+  border-radius: var(--radius-panel);
   display: flex;
   align-items: end;
   justify-content: space-between;
