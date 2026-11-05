@@ -33,20 +33,20 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The current Production `main` baseline is `3dad024ea6c4261dc6153db0bbcca9f04f3d45c2` (PR #88, merged 2026-11-05).
+**Production acceptance: In Progress.** The current `main` HEAD is `6b220525f9d2e7a443fa8cac63d99b377e9d0f00` (PR #89, documentation-only; merged 2026-11-05). The latest application-source change is PR #88 at `3dad024ea6c4261dc6153db0bbcca9f04f3d45c2`.
 
-The following post-merge workflows passed on this exact Production commit:
+Post-PR #89 workflows on the current `main` HEAD:
 
-- CI [42022156023](https://github.com/saeed92m/company-website/actions/runs/42022156023): Repository baseline succeeded.
-- CodeQL [42022156078](https://github.com/saeed92m/company-website/actions/runs/42022156078): analysis job succeeded. The alert backlog is a separate check.
-- GitHub Pages [42022156060](https://github.com/saeed92m/company-website/actions/runs/42022156060): build, deploy, and smoke jobs succeeded.
-- Dependency Security Audit [42022156007](https://github.com/saeed92m/company-website/actions/runs/42022156007): audit job succeeded. The run log and alert inventories must be read separately before claiming no vulnerabilities.
+- CI [42053095375](https://github.com/saeed92m/company-website/actions/runs/42053095375): success.
+- Dependency Security Audit [42053095564](https://github.com/saeed92m/company-website/actions/runs/42053095564): success.
+- GitHub Pages [42053095907](https://github.com/saeed92m/company-website/actions/runs/42053095907): build, deploy, and smoke jobs succeeded.
+- CodeQL [42053095890](https://github.com/saeed92m/company-website/actions/runs/42053095890): pending at the time of this update. Do not treat this as a completed check until its conclusion is recorded.
 
-The last recorded three-engine production Browser QA passed on the pre-PR-88 baseline. It has not been rerun on `3dad024...`; post-merge browser acceptance remains open.
+Production Browser QA [42022265665](https://github.com/saeed92m/company-website/actions/runs/42022265665) passed on the application-source commit `3dad024...`: 96 checks in each of Chromium, Firefox, and WebKit (288 total). PR #89 changed documentation only. A Browser QA run against the new deployment is still required to establish the post-PR-89 deployment checkpoint.
 
 The active `main-protection` ruleset requires pull requests and six required checks: Repository baseline, CodeQL, locked dependency audit, and Chromium, Firefox, and WebKit Browser QA. It blocks branch deletion and non-fast-forward updates. It has no bypass actors and currently requires zero approving reviews.
 
-PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), [#86](https://github.com/saeed92m/company-website/pull/86), [#87](https://github.com/saeed92m/company-website/pull/87), and [#88](https://github.com/saeed92m/company-website/pull/88) are merged. Production acceptance remains **In Progress**; successful automated workflows do not prove full security, accessibility, or operational readiness.
+PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), [#86](https://github.com/saeed92m/company-website/pull/86), [#87](https://github.com/saeed92m/company-website/pull/87), [#88](https://github.com/saeed92m/company-website/pull/88), and [#89](https://github.com/saeed92m/company-website/pull/89) are merged. Production acceptance remains **In Progress**; successful automated workflows do not prove full security, accessibility, or operational readiness.
 
 ## Preview and Production hosting
 
