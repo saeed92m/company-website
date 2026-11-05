@@ -35,6 +35,6 @@ test("sitemap includes all localized route families and hreflang alternates", ()
 
 test("robots.txt permits public crawling and points to the sitemap", () => {
   assert.match(robots, /User-agent: \*/);
-  assert.match(robots, /Allow: \/ /);
+  assert.match(robots, /Allow: \\/"/);
   assert.match(robots, /Sitemap: /);
 });
