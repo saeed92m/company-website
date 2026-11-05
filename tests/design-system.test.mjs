@@ -63,7 +63,9 @@ test("reduced-motion preferences disable non-essential animation", () => {
 test("approved prototype typefaces are configured with script-aware fallback stacks", () => {
   const globalCss = requireGlobalCss;
   assert.match(globalCss, /family=IBM\+Plex\+Sans/);
-  assert.match(globalCss, /family=Vazirmatn/);\n  assert.match(globalCss, /IBM\\\+Plex\\\+Sans:wght@400\.\.700/);\n  assert.match(globalCss, /Vazirmatn:wght@400\.\.900/);
+  assert.match(globalCss, /family=Vazirmatn/);
+  assert.match(globalCss, /IBM\+Plex\+Sans:wght@400\.\.700/);
+  assert.match(globalCss, /Vazirmatn:wght@400\.\.900/);
   assert.match(globalCss, /html\[lang="fa"\] body\{font-family:"Vazirmatn"/);
   assert.match(globalCss, /html\[lang="ar"\] body\{font-family:"Noto Sans Arabic"/);
   assert.match(globalCss, /html\[lang="zh"\] body\{font-family:"Noto Sans CJK SC"/);
