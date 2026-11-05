@@ -86,7 +86,7 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
 
 test("homepage has no vanity metrics and keeps registration details in the company section", () => {
   assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
-  assert.doesNotMatch(home, /metric-item"><strong>08/);
+  assert.doesNotMatch(home, /new-metrics|metric-item|metric-index/);
   assert.doesNotMatch(home, /site\.founded\.replace/);
   assert.match(home, /new-registration-fact/);
   assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
