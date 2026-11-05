@@ -1,11 +1,13 @@
 # Visual Direction — Phase 2
 
 ## Status
-Implementation baseline complete; final live visual QA pending
+Approved direction — implementation and full visual QA in progress
 
 This document defines the visual direction before component implementation. It is intentionally system-oriented so the identity can scale across eight languages and future product/platform surfaces.
 
 ## Brand intent
+The registered legal company name, **پیشگامان نواندیش فناورگستر کیهان**, is the primary public identity. Alpha Team is not a registered company name and may appear only as a secondary team/project reference where supported by source material.
+
 The visual language should communicate:
 - scientific credibility;
 - engineering precision;
@@ -48,7 +50,7 @@ Typography must prioritize:
 4. CJK coverage;
 5. consistent numeric rendering.
 
-The final typeface stack will be selected after testing the eight required locales.
+Current implementation baseline: Manrope for Latin/Cyrillic and IBM Plex Sans Arabic for Persian/Arabic. CJK fallback and the final type scale remain subject to testing with real translated strings.
 
 Typography scale should support:
 - display/hero;
@@ -68,7 +70,11 @@ The palette should be restrained and corporate, with:
 - one primary brand accent derived from the approved company identity;
 - a limited secondary accent set for states/data visualization only.
 
-Exact color values are not frozen yet. They must be extracted/validated against the approved company logo/brand asset before implementation.
+Approved corporate source colors:
+- Primary Blue: `#003C91`
+- Brand Gray: `#A8A8A8`
+
+Night/Dark is the default theme. Day/Light is a first-class selectable theme. Each theme must use semantic surface, text, link, border, focus, and control tokens. Do not use the same foreground color on both themes without contrast validation. `#003C91` is the primary corporate blue; accessible lighter/darker tints may be derived for specific UI states.
 
 ## Imagery
 Prefer:

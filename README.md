@@ -31,18 +31,20 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The current production `main` baseline is `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+**Production acceptance: In Progress.** The latest repository `main` commit is `ecaa7ab5b931bd20691f5744298be1a34c151234` (documentation evidence refresh). The deployed application source includes the merged CSS regression fix from PR #83.
 
-The following main-branch workflows passed on that commit:
+The following workflows passed on the latest `main` commit:
 
-- CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766): repository validation, JSON-LD regression tests, Astro check, and production build.
-- CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580): analysis completed successfully. This does not prove that the alert backlog is empty.
-- GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601): build, deploy, and smoke jobs passed.
-- Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684): full and production npm audits each reported zero vulnerabilities in the locked dependency graph.
-- Chromium production Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184): 96 route/viewport checks passed.
+- CI [41940065948](https://github.com/saeed92m/company-website/actions/runs/41940065948).
+- CodeQL [41940066085](https://github.com/saeed92m/company-website/actions/runs/41940066085).
+- GitHub Pages deployment and smoke [41940065926](https://github.com/saeed92m/company-website/actions/runs/41940065926).
+- Dependency Security Audit [41940065918](https://github.com/saeed92m/company-website/actions/runs/41940065918).
+- Browser QA [41940225986](https://github.com/saeed92m/company-website/actions/runs/41940225986): Chromium, Firefox, and WebKit jobs succeeded.
 
-PR [#81](https://github.com/saeed92m/company-website/pull/81) expands Browser QA to Chromium, Firefox, and WebKit. Earlier head `cda633885acd460fbe25e4bc7613c3282c6a90ba` passed **288 production route/viewport checks** (96 per engine). The current head `83a8882c8839a00ed9cb9ca4df1232208a149684` also builds the proposed PR and tests it through a local static preview under the GitHub Pages base path. In run [41908868252](https://github.com/saeed92m/company-website/actions/runs/41908868252), Chromium and Firefox each passed 96 PR-build checks; WebKit browser installation is still in progress. CI, CodeQL, and Dependency Audit passed on this head. PR #81 remains open and unmerged.
+PR #81 (cross-browser Browser QA) and PR #83 (project-card CSS selector regression fix) are merged. The latest Browser QA matrix runs three browser engines against eight locales and six route families at mobile and desktop viewports.
 
-Open acceptance work includes GitHub security-setting and alert-backlog verification, branch protection, deployed response-header review, independent WCAG 2.2 AA assessment, Lighthouse/Core Web Vitals, physical-device review, backup/restore and rollback drills, and a verified private vulnerability-reporting route. Track evidence in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+An active `main-protection` repository ruleset now requires pull requests and the Repository baseline, CodeQL, dependency audit, and Chromium/Firefox/WebKit checks. It blocks branch deletion and non-fast-forward updates. It currently requires zero approving reviews.
 
-The logo refresh is deferred. The current repository-local brand asset remains in use; PR #75 was closed without merge. Passing automated checks do not prove full production readiness.
+Production acceptance remains In Progress. Open manual gates include security-alert inventory, deployed response headers, WCAG 2.2 AA, Lighthouse/Core Web Vitals, physical-device review, backup/restore, rollback, and private vulnerability reporting. Track these in [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+
+The website identity decision is now legal-company-first. See ADR 0008 and the live-site audit at `docs/audits/website-design-architecture-audit-2026-11-05.md`. The supplied transparent logo candidate is not yet approved or committed. Passing automated checks do not prove full production readiness.

@@ -1,7 +1,7 @@
 # Design Tokens — Phase 2
 
 ## Status
-Working baseline — derived from the approved logo asset and subject to contrast/accessibility validation.
+Approved corporate source colors; semantic Night/Day theme tokens are being implemented and require full contrast/accessibility validation.
 
 ## Brand colors
 The supplied logo asset contains a dominant corporate blue and neutral gray.
@@ -9,13 +9,18 @@ The supplied logo asset contains a dominant corporate blue and neutral gray.
 - Brand Blue: #003C91 — RGB 0,60,145
 - Brand Gray: #A8A8A8 — RGB 168,168,168
 
-These values are source brand colors, not a complete UI palette.
+These values are source brand colors, not a complete UI palette. Preserve the supplied logo artwork; do not recolor or approximate it.
 
 ### Semantic roles
-- brand.primary → Brand Blue
-- brand.neutral → Brand Gray
-- surface.light → white / near-white
-- surface.dark → deep neutral, to be selected during contrast validation
+- `brand.primary` → `#003C91`
+- `brand.neutral` → `#A8A8A8`
+- `theme.default` → Night/Dark
+- `theme.alternate` → Day/Light
+- `surface.light` → white / near-white
+- `surface.dark` → deep neutral
+- `text.primary` → high-contrast neutral
+- `text.secondary` → accessible secondary neutral
+- `link` and `accent` → theme-specific accessible colors
 - text.primary → high-contrast neutral
 - text.secondary → accessible secondary neutral
 - border.default → restrained neutral
@@ -35,7 +40,7 @@ Requirements:
 - legible and consistent numerals
 - no major performance regression from font loading
 
-Final font selection remains pending validation against real translated strings.
+Current implementation uses Manrope for Latin/Cyrillic and IBM Plex Sans Arabic for Persian/Arabic. CJK fallback and final type scale remain pending validation against real translated strings.
 
 ## Spacing
 Initial token scale: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128.
@@ -78,6 +83,15 @@ Every interactive component should account for:
 
 ## RTL/LTR
 Use logical CSS properties, mirror directional icons, preserve semantic reading order, and test navigation, forms and breadcrumbs with real localized strings.
+
+## Target CSS token mapping (introduced by implementation PR #85)
+
+- `--brand`: `#003C91`
+- `--brand-gray`: `#A8A8A8`
+- Night: `--accent: #6FAEFF`, `--link: #78B6FF`, `--footer-accent: #79B8FF`
+- Day: `--accent: #003C91`, `--link: #003C91`, `--footer-accent: #003C91`
+
+These values cover selected text accents only. The complete component/surface contrast matrix remains open.
 
 ## Validation gates
 1. Contrast matrix

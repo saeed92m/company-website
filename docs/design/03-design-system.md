@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation-ready baseline.
+Working implementation baseline — final visual design and full QA remain in progress.
 
 This specification converts the visual direction and design tokens into reusable UI contracts for the first public website release.
 
@@ -16,6 +16,7 @@ This specification converts the visual direction and design tokens into reusable
 - Responsive behavior must be defined per component.
 - Accessibility is part of the component contract.
 - Public UI must never imply unsupported company/project claims.
+- The registered legal company name is the primary website identity; Alpha Team is secondary only.
 
 ## 2. Global layout
 
@@ -57,6 +58,8 @@ Rules:
 ## 4. Core components
 
 ### Header
+The primary brand text is the registered company name. Do not use Alpha Team as the site-wide brand wordmark.
+
 Anatomy:
 - brand
 - primary navigation
@@ -190,6 +193,8 @@ Fields must tolerate translated labels and error messages.
 Status must be conveyed by text/icon plus semantic state, not color alone.
 
 ### Footer
+The registered company name is the primary identity in the footer. Alpha Team is not the primary footer brand.
+
 Include:
 - company identity
 - primary navigation
@@ -199,7 +204,16 @@ Include:
 
 Footer must remain usable in RTL and on small screens.
 
-## 5. Responsive behavior
+## 5. Theme behavior
+
+- Night/Dark is the default theme.
+- Day/Light is a first-class selectable theme.
+- Theme choice persists when browser storage is available; storage failures must not block page use.
+- Semantic tokens must cover text, muted text, surfaces, links, borders, focus, controls, dialogs, and status states.
+- The theme-color browser metadata must follow the active theme.
+- Validate every actual foreground/background combination in both themes; the current token tests cover only selected text accents.
+
+## 7. Responsive behavior
 
 ### Small mobile
 - single-column content
@@ -241,7 +255,7 @@ Directional icons such as arrows must mirror when their semantic direction chang
 
 Brand marks and non-directional technical diagrams must not be mirrored automatically.
 
-## 7. Accessibility contract
+## 8. Accessibility contract
 
 Baseline: WCAG 2.2 AA.
 
@@ -262,7 +276,7 @@ Additional requirements:
 - status updates announced where necessary
 - no information conveyed by color alone
 
-## 8. Motion contract
+## 9. Motion contract
 
 Default motion should be subtle and non-essential.
 
@@ -276,7 +290,7 @@ When prefers-reduced-motion: reduce is active:
 - preserve state changes and feedback
 - do not hide content behind animation
 
-## 9. Content/localization constraints
+## 10. Content/localization constraints
 
 Components must support:
 - short and long strings
@@ -289,7 +303,7 @@ Components must support:
 
 Do not hard-code English sentence structure into components.
 
-## 10. Validation matrix
+## 11. Validation matrix
 
 Before implementation is considered complete, test:
 1. all eight locales
@@ -305,13 +319,13 @@ Before implementation is considered complete, test:
 11. no horizontal overflow
 12. no unsupported claims introduced by UI
 
-## 11. Implementation boundary
+## 12. Implementation boundary
 
 The design system defines behavior and contracts, not a mandatory framework.
 
 The implementation may use Astro and component technology selected during the architecture implementation phase, provided these contracts remain intact.
 
-## 12. Next step
+## 13. Next step
 
 Proceed to implementation architecture and frontend scaffold only after:
 - design-system contract accepted

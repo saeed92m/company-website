@@ -1,11 +1,11 @@
 # ADR 0003 — Brand Architecture and Website Identity
 
-- **Status:** Accepted for initial website release
+- **Status:** Superseded by ADR 0008 (2026-11-05)
 - **Date:** 2026-10-02
 
-## Decision
+## Historical decision (superseded)
 
-Use **ALPHA TEAM** as the public-facing technology/team brand while retaining the legal corporate identity:
+The initial release used **ALPHA TEAM** as the public-facing technology/team brand while retaining the legal corporate identity. This presentation decision no longer applies. See ADR 0008 for the current approved identity.
 
 **Pishgaman Novandish Fannavargostar Keyhan (Ltd.)**  
 **شرکت پیشگامان نواندیش فناورگستر کیهان (مسئولیت محدود)**
@@ -31,9 +31,6 @@ Wallpapers are optional presentation assets, not required UI chrome.
 
 The current frontend uses the approved colors and a lightweight inline mark/wordmark treatment so the site can progress without blocking on binary asset transfer. The supplied binary assets remain the preferred source package for final visual QA; they must not be recreated, recolored, stretched, or otherwise altered.
 
-## Consequences
+## Historical consequences
 
-- Corporate/legal identity remains explicit.
-- Public-facing pages can use the concise ALPHA TEAM identity.
-- Future products and projects can sit under the same technology brand without tying the brand to the word “startup”.
-- Brand assets remain separate from content and application logic.
+These consequences describe the initial release only. They are superseded by ADR 0008. Brand assets remain separate from content and application logic.
