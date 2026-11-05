@@ -16,8 +16,8 @@
   font-family: "IBM Plex Sans", "Vazirmatn", "Noto Sans Arabic", "Noto Sans CJK SC", system-ui, sans-serif;
   --font-latin: "IBM Plex Sans", system-ui, sans-serif;
   --font-persian: "Vazirmatn", "Noto Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
-  --font-arabic: "Noto Sans Arabic", "Vazirmatn", "IBM Plex Sans", system-ui, sans-serif;
-  --font-cjk: "Noto Sans CJK SC", "IBM Plex Sans", system-ui, sans-serif;
+  --font-arabic: "Vazirmatn", "Noto Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-cjk: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", "SimSun", "IBM Plex Sans", system-ui, sans-serif;
   --radius-control: 12px;
   --radius-card: 18px;
   --radius-panel: 24px;
