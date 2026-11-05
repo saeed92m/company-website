@@ -13,9 +13,10 @@ function blockFor(selector) {
 }
 
 function token(block, name) {
-  const match = block.match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{6})`));
+  const match = block.match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?)`));
   assert.ok(match, `missing CSS token --${name}`);
-  return match[1];
+  const value = match[1];
+  return value.length === 4 ? `#${[...value.slice(1)].map((part) => part + part).join("")}` : value;
 }
 
 function luminance(hex) {
