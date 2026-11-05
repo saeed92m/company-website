@@ -18,7 +18,7 @@ test("analytics does not load before explicit consent and rejection is persisted
   assert.match(component, /ad_user_data:\s*"denied"/);
   assert.match(component, /ad_personalization:\s*"denied"/);
   assert.match(component, /saveChoice\("accepted"\)/);
-  assert.match(component, /saveChoice\("rejected"\)/);
+  assert.match(component, /saveChoice\("rejected"\)/);\n  assert.match(component, /analytics_storage: "denied"\}\);/);\n  assert.match(component, /name.startsWith\("_ga_"\)/);\n  assert.match(component, /if \(window.__pnfkAnalyticsStarted\)/);
   assert.match(component, /choice === "accepted"\) startAnalytics\(\)/);
   assert.match(component, /data-consent-reject/);
 });
