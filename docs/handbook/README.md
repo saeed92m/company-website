@@ -14,6 +14,16 @@ The repository documentation is the engineering source for implementation detail
 
 **Current status: In Progress — automated release gates pass, but production security and operational acceptance remain open.**
 
+## Current brand and audit decision — 2026-11-05
+
+- ADR 0008 is the current identity decision: the registered legal company name is primary; Alpha Team is only a secondary team/project reference and is not presented as a registered or primary brand.
+- Corporate colors: Blue `#003C91`; Gray `#A8A8A8`.
+- Night/Dark is the default theme; Day/Light is a first-class selectable theme.
+- Live-site audit: 96/96 localized HTML routes returned HTTP 200; the sitemap contains 96 URLs and 864 alternate-language declarations. See `docs/audits/website-design-architecture-audit-2026-11-05.md`.
+- Confirmed fixes required: Chinese date suffix duplication, duplicated base path in CEO JSON-LD URL, light-theme contrast gaps, and site-wide Alpha Team identity usage.
+- The transparent logo PNG is a review candidate only. Do not publish or commit it as the canonical mark before owner approval.
+- The redesign must use a feature branch and PR. Do not change the static Astro architecture or `main` directly.
+
 ## Phase 0 Definition of Done / Evidence
 
 - Repository created and public by project decision.
