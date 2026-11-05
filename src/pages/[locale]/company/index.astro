@@ -7,10 +7,20 @@ import { route } from "../../../data/routes";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
+const registrationFact: Record<Locale, string> = {
+  fa: "تاریخ تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷",
+  en: "Founded: August 2023 · Official Gazette notice: 29 July 2023",
+  ar: "تأسست في أغسطس 2023 · إعلان الجريدة الرسمية: 29 يوليو 2023",
+  ru: "Основана в августе 2023 года · публикация в официальном вестнике: 29 июля 2023 года",
+  de: "Gegründet im August 2023 · Bekanntmachung im Amtsblatt: 29. Juli 2023",
+  zh: "成立于 2023 年 8 月 · 官方公报公告日期：2023 年 7 月 29 日",
+  fr: "Fondée en août 2023 · avis au Journal officiel : 29 juillet 2023",
+  es: "Fundada en agosto de 2023 · anuncio en el Boletín Oficial: 29 de julio de 2023"
+};
 ---
 <SiteLayout locale={locale} title={site.navigation.company + " — " + site.companyName} description={site.intro}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p>{site.founder}</p></section>
+    <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p class="company-registration-fact">{registrationFact[locale]}</p><p>{site.founder}</p></section>
     <section aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
