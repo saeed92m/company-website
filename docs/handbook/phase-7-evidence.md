@@ -146,9 +146,9 @@ Keep Issue [#69](https://github.com/saeed92m/company-website/issues/69) open unt
 ### Latest validation checkpoint
 
 - Code-equivalent PR #86 checkpoint `ce301ca3292f8c93a9809fed1f1d9cd292b0c404`: CI passed 27/27 tests, Astro check reported 0 errors and 0 warnings, and the production build generated 98 pages.
-- CodeQL and Dependency Audit passed on that checkpoint.
-- Browser QA on the built PR preview passed 96 checks in Chromium and 96 in Firefox. WebKit was still running at the time of this record.
-- Latest documentation head `90369471a5d27bb534fe98a8350191b6dd77afbe` has fresh checks running. Update this evidence only after the latest head completes all three browser engines.
+- Latest PR #86 head `b6f530be6c74be32d9c920d44068764ca4636cb3` completed all required automated checks: CI passed 27/27 tests, Astro check reported 0 errors and 0 warnings, and the build generated 98 pages. CodeQL passed. Dependency Audit reported zero vulnerabilities in both audit scopes. Browser QA passed 96 checks in each of Chromium, Firefox, and WebKit (288 total) against the built PR preview. The browser matrix also confirmed local WOFF2 font loading and no external Google Fonts requests.
+- Cloudflare Pages Preview deployment succeeded. The owner reported a secure-connection failure when accessing that preview from their network. Supabase Preview was skipped because preview branches are disabled; no database changes were made.
+- PR #86 remains open and unmerged. Production is unchanged.
 
 ### Hosting and network
 
