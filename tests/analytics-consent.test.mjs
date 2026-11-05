@@ -14,6 +14,8 @@ test("GA4 is disabled unless a valid public measurement ID is configured", () =>
 
 test("analytics does not load before explicit consent and rejection is persisted", () => {
   assert.match(component, /analytics_storage:\s*"denied"/);
+  assert.match(component, /window\.gtag\("consent", "default", \{/);
+  assert.match(component, /!window\.__pnfkAnalyticsGranted/);
   assert.match(component, /ad_storage:\s*"denied"/);
   assert.match(component, /ad_user_data:\s*"denied"/);
   assert.match(component, /ad_personalization:\s*"denied"/);
