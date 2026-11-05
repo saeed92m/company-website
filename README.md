@@ -11,7 +11,7 @@ Corporate website project for **Pishgaman Novandish Fannavargostar Keyhan (Ltd.)
 - Artificial Intelligence
 - Motorsport
 
-These are the six public activity areas. They are not all part of the current registered legal scope. The registered R&D scope covers astronomy, aerospace, renewable energy, and artificial intelligence. Remote sensing is not listed in the current registered scope. Motorsport and performance parts remain on the development roadmap pending formal addition to the articles of association.
+These are the six public activity areas. Do not describe all six as the registered statutory scope. The supplied company profile describes Motorsport and Performance Parts as a development-roadmap area pending formal addition to the articles of association. Verify any public statement about the registered legal scope against current official registration documents before publication.
 
 ## Project
 
