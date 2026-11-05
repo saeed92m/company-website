@@ -145,7 +145,7 @@ const copy = labels[locale];
         window.gtag("event", "contact_click", { contact_method: "email" });
       } else if (link.hasAttribute("download")) {
         window.gtag("event", "file_download", {
-          file_extension: (href.split("?")[0].split(".").pop() || "unknown").slice(0, 12)
+          file_extension: (() => {\n            const fileName = new URL(href, window.location.href).pathname.split("/").pop() || "";\n            return (fileName.includes(".") ? fileName.split(".").pop() : "unknown").slice(0, 12);\n          })()
         });
       } else {
         try {
