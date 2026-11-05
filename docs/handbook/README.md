@@ -125,3 +125,23 @@ The repository's public status must be treated as a current project fact in futu
 - The Supabase migration-provenance issue #57 is separate from the static website runtime and remains open.
 
 Do not use older phase snapshots below as proof of current production acceptance. Use the latest dated audit and Issue #69 for current status.
+
+
+## Current production acceptance evidence — 2026-11-05
+
+- Production `main`: `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+- Main CI, CodeQL, Pages deployment/smoke, dependency audit, and Chromium Browser QA all passed. Dependency audit logs report zero vulnerabilities in both the full locked npm graph and production dependencies. Chromium QA reports 96 checks.
+- PR [#81](https://github.com/saeed92m/company-website/pull/81) adds Firefox and WebKit to Browser QA. Its head `cda633885acd460fbe25e4bc7613c3282c6a90ba` passed 96 production checks in each of Chromium, Firefox, and WebKit (288 total). PR #81 remains open and unmerged. It changes the workflow only and tests the deployed production site.
+- Branch protection remains a blocker. The last verified branch metadata reported `main.protected=false`, and the rulesets endpoint returned no rulesets. The repository owner must configure protection and required checks in GitHub settings.
+- Manual WCAG 2.2 AA, Lighthouse/Core Web Vitals, physical-device review, deployed response headers, GitHub security settings and alert inventory, backup/restore, rollback, and private vulnerability reporting remain open.
+- Current status is **In Progress**. See [Issue #69](https://github.com/saeed92m/company-website/issues/69) and `docs/handbook/phase-7-evidence.md`.
+
+Do not use older phase snapshots as proof of current production acceptance.
+
+
+## Additional verification — 2026-11-05
+
+- PR #81 now tests both the proposed local PR build and the deployed Production site. Current head `83a8882c8839a00ed9cb9ca4df1232208a149684`: Chromium and Firefox each passed 96 checks against the PR build; WebKit installation remains in progress. CI, CodeQL, and Dependency Audit passed.
+- Previous PR #81 head `cda6338...` passed 288 production checks across three browser engines.
+- PR #83 fixes the malformed `.project-card` CSS selector and adds a regression test. Its CI, CodeQL, and Dependency Audit passed; the regression test passed.
+- PRs #81 and #83 remain open and unmerged. Production acceptance remains In Progress. See Issue #69.

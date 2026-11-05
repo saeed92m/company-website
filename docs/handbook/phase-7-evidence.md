@@ -21,9 +21,9 @@ Final production hardening after the Test 1/2/3 visual feedback cycle.
 
 Automated browser QA validates the deployed DOM/layout contract but does not replace human visual judgment for typography, exact spacing, imagery aesthetics, or cross-device rendering on every physical browser. Those are monitored as ongoing QA rather than blockers for the current static corporate release.
 
-## Release status
+## Historical release status — 2026-10-04 (superseded)
 
-**Production-ready for the current scope.**
+**Production-ready for the then-current static scope.** This historical statement does not represent the current production acceptance status.
 
 Future work remains intentionally deferred where it depends on external inputs: custom .ir domain/DNS, corporate email, CMS/API/CRM/portal integration, and additional brand assets.
 ## Post-release accessibility hardening — 2026-10-04
@@ -33,9 +33,9 @@ Future work remains intentionally deferred where it depends on external inputs: 
 - PR #49 merged as `90e4cd3e696e27b423a05789c2d4824a9ec31706`.
 - Final CI `37198896329`, CodeQL `37198896316`, Pages deployment `37198896307`, and production Browser QA `37198959825` all passed.
 
-## Final status
+## Historical final status — 2026-10-04 (superseded)
 
-**Production-ready for the current static corporate scope.** `v0.1.0` remains the immutable initial release baseline; post-release hardening is retained on `main`.
+**Production-ready for the then-current static corporate scope.** This historical statement does not represent the current production acceptance status. `v0.1.0` remains the immutable initial release baseline; post-release hardening is retained on `main`.
 
 ## Recovery points
 - `v0.1.0` — initial production baseline
@@ -72,3 +72,54 @@ Current status: **In Progress**. Production `main` is `1ccc79611aafcade6ca506c42
 Independent WCAG 2.2 AA, Lighthouse/Core Web Vitals, Firefox/WebKit, physical-device review, repository security-setting and alert review, deployed response headers, and backup/restore/rollback evidence remain open in Issue #69.
 
 The logo refresh is deferred. PR #75 was closed without merge; the current repository-local SVG remains in production.
+
+
+## Current verified state — 2026-11-05
+
+**Production acceptance: In Progress.** The current production `main` commit is `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+
+### Main-branch verification
+
+- CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766): success. Repository validation, dependency installation, JSON-LD regression tests, Astro check, and production build all passed.
+- CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580): success. Workflow success is not proof that the alert backlog is empty.
+- GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601): build, deploy, and smoke jobs all passed.
+- Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684): both the full locked npm dependency graph and production-only audit reported zero vulnerabilities.
+- Chromium Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184): job log reports `PASS: 96 production route/viewport checks`.
+
+### Cross-browser production verification — PR #81
+
+- PR: [#81](https://github.com/saeed92m/company-website/pull/81)
+- Head: `cda633885acd460fbe25e4bc7613c3282c6a90ba`
+- Base: `main` at `06af87e1053e7d25a3efd263ba8fefde0d997589`
+- Changed file: `.github/workflows/browser-qa.yml` only.
+- Browser QA run [41900713833](https://github.com/saeed92m/company-website/actions/runs/41900713833): success.
+- Job logs explicitly report 96 successful checks in Chromium, 96 in Firefox, and 96 in WebKit. Total: **288 successful production route/viewport checks**.
+- CI [41900713882](https://github.com/saeed92m/company-website/actions/runs/41900713882), CodeQL [41900713688](https://github.com/saeed92m/company-website/actions/runs/41900713688), and Dependency Security Audit [41900713892](https://github.com/saeed92m/company-website/actions/runs/41900713892): success.
+- The matrix checks the deployed production URL. It does not validate an unmerged application build.
+- PR #81 remains open and unmerged. Production application source and deployment are unchanged by this PR.
+
+### Remaining acceptance gates
+
+- GitHub branch protection and required checks: last verified repository metadata reported `main.protected=false`; the rulesets endpoint returned no rulesets. This requires owner action in GitHub repository settings. The connected GitHub tool cannot configure branch protection.
+- Secret Scanning, Push Protection, Dependabot alert inventory, CodeQL alert backlog, and Actions repository permissions: Unverified.
+- Deployed HTTPS response headers: Unverified. GitHub Pages does not provide repository-level custom response-header configuration. Do not add a nonfunctional `_headers` file. A CDN/hosting architecture decision is required before enforcing custom headers.
+- Independent WCAG 2.2 AA assessment: Pending.
+- Lighthouse and Core Web Vitals: Pending.
+- Physical-device visual review: Pending.
+- Backup/restore and deployment rollback drills: Pending.
+- Private vulnerability reporting route: Pending. `SECURITY.md` still refers to a private channel that has not been established.
+
+### Scope boundary
+
+No DNS, custom domain, business email, hosting, production secrets, production database, or production settings were changed. The Contact page remains informational. Do not add a form backend until privacy, retention, access, and incident-handling requirements are approved.
+
+Keep Issue [#69](https://github.com/saeed92m/company-website/issues/69) open until every Definition of Done gate has evidence.
+
+
+## PR-build browser QA and CSS source review — 2026-11-05
+
+- PR [#81](https://github.com/saeed92m/company-website/pull/81) head `83a8882c8839a00ed9cb9ca4df1232208a149684` now builds the proposed Astro site with `PUBLIC_BASE_PATH=/company-website`, serves the built output under that path, and runs the browser matrix against the PR build.
+- Browser QA [41908868252](https://github.com/saeed92m/company-website/actions/runs/41908868252): Chromium 96/96 and Firefox 96/96 passed on the PR build. WebKit browser installation is still in progress. CI [41908868254](https://github.com/saeed92m/company-website/actions/runs/41908868254), CodeQL [41908868213](https://github.com/saeed92m/company-website/actions/runs/41908868213), and Dependency Audit [41908868219](https://github.com/saeed92m/company-website/actions/runs/41908868219) passed.
+- The earlier PR #81 head `cda6338...` passed 288 checks on the deployed Production site. It did not test an unmerged app build.
+- Source review found a literal `\n` before the `.project-card` selector in `src/styles/global.css`. PR [#83](https://github.com/saeed92m/company-website/pull/83) fixes it and adds a regression test. CI [41909341146](https://github.com/saeed92m/company-website/actions/runs/41909341146), CodeQL [41909341109](https://github.com/saeed92m/company-website/actions/runs/41909341109), and Dependency Audit [41909340996](https://github.com/saeed92m/company-website/actions/runs/41909340996) passed. The new regression test passed.
+- PRs #81 and #83 remain open and unmerged. Production is unchanged.

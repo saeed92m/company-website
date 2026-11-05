@@ -1,3 +1,23 @@
+## 2026-11-05 — PR-build browser QA and project-card CSS defect
+
+- Updated PR [#81](https://github.com/saeed92m/company-website/pull/81) to test the built PR itself on `pull_request` events. The workflow builds with the production GitHub Pages base path and serves `dist` under `/company-website`; post-deployment runs continue to test Production.
+- Current PR #81 head: `83a8882c8839a00ed9cb9ca4df1232208a149684`. CI [41908868254](https://github.com/saeed92m/company-website/actions/runs/41908868254), CodeQL [41908868213](https://github.com/saeed92m/company-website/actions/runs/41908868213), and Dependency Audit [41908868219](https://github.com/saeed92m/company-website/actions/runs/41908868219) passed. Chromium and Firefox each passed 96 PR-build checks; WebKit installation remains in progress.
+- The previous PR #81 head `cda6338...` passed 288 production checks across Chromium, Firefox, and WebKit. Those checks exercised the deployed site, not the PR build.
+- Source review found a literal backslash-n before `.project-card{` in `src/styles/global.css`. Opened PR [#83](https://github.com/saeed92m/company-website/pull/83) to restore the CSS selector and add a regression test.
+- PR #83 CI [41909341146](https://github.com/saeed92m/company-website/actions/runs/41909341146), CodeQL [41909341109](https://github.com/saeed92m/company-website/actions/runs/41909341109), and Dependency Audit [41909340996](https://github.com/saeed92m/company-website/actions/runs/41909340996) passed. The new regression test passed (3 tests total, 0 failures).
+- PRs #81 and #83 remain open and unmerged. No production source or deployment change has been made.
+
+## 2026-11-05 — Production acceptance evidence refresh
+
+- Verified production `main` remains at `06af87e1053e7d25a3efd263ba8fefde0d997589`.
+- Re-checked main CI [41896492766](https://github.com/saeed92m/company-website/actions/runs/41896492766), CodeQL [41896492580](https://github.com/saeed92m/company-website/actions/runs/41896492580), GitHub Pages [41896492601](https://github.com/saeed92m/company-website/actions/runs/41896492601), Dependency Security Audit [41896492684](https://github.com/saeed92m/company-website/actions/runs/41896492684), and Chromium Browser QA [41896664184](https://github.com/saeed92m/company-website/actions/runs/41896664184). All jobs completed successfully.
+- Re-read the dependency-audit log: both the full locked npm dependency graph and production-only dependency audit reported `found 0 vulnerabilities`.
+- Re-read the main Browser QA log: `PASS: 96 production route/viewport checks`.
+- Re-checked PR [#81](https://github.com/saeed92m/company-website/pull/81), head `cda633885acd460fbe25e4bc7613c3282c6a90ba). CI, CodeQL, Dependency Security Audit, and Browser QA passed. Chromium, Firefox, and WebKit each reported 96 successful production route/viewport checks (288 total).
+- PR #81 changes only `.github/workflows/browser-qa.yml`; it remains open and unmerged. Its Browser QA targets the deployed production URL and does not validate an unmerged application build.
+- Production acceptance remains In Progress. Security-setting/alert inventory, branch protection, deployed headers, manual WCAG 2.2 AA, Lighthouse/Core Web Vitals, physical-device review, recovery drills, and private vulnerability reporting remain open. See [Issue #69](https://github.com/saeed92m/company-website/issues/69).
+- No production source, deployment, DNS, hosting, email, database, or security setting was changed by this evidence refresh.
+
 ## 2026-11-04 — Production acceptance and evidence alignment
 
 - Current production `main`: `1ccc79611aafcade6ca506c42c41ba515284a6af` (PR #77).
