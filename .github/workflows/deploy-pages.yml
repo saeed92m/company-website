@@ -34,6 +34,7 @@ jobs:
         env:
           PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
           PUBLIC_BASE_PATH: /company-website
+          PUBLIC_GA_MEASUREMENT_ID: ${{ vars.PUBLIC_GA_MEASUREMENT_ID }}
         run: npm run build
 
       - name: Upload Pages artifact
