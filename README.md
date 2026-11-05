@@ -35,20 +35,23 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The current `main` HEAD is `6b220525f9d2e7a443fa8cac63d99b377e9d0f00` (PR #89, documentation-only; merged 2026-11-05). The latest application-source change is PR #88 at `3dad024ea6c4261dc6153db0bbcca9f04f3d45c2`.
+**Production acceptance: In Progress.** The latest application-source change is PR #88 at `3dad024ea6c4261dc6153db0bbcca9f04f3d45c2`. PRs #89 and #91 are documentation-only follow-ups. Their merge commits and validation records are listed in the production acceptance addendum. Use the repository's [main branch](https://github.com/saeed92m/company-website/tree/main) for the live branch head; this README does not pin a moving branch head to a static SHA.
 
-Post-PR #89 workflows on the current `main` HEAD:
+### Verified workflow evidence
 
-- CI [42053095375](https://github.com/saeed92m/company-website/actions/runs/42053095375): success.
-- Dependency Security Audit [42053095564](https://github.com/saeed92m/company-website/actions/runs/42053095564): success.
-- GitHub Pages [42053095907](https://github.com/saeed92m/company-website/actions/runs/42053095907): build, deploy, and smoke jobs succeeded.
-- CodeQL [42053095890](https://github.com/saeed92m/company-website/actions/runs/42053095890): success.
+- PR #89 merge deployment [42053095907](https://github.com/saeed92m/company-website/actions/runs/42053095907): Pages build, deploy, and smoke succeeded.
+- PR #89 merge CI [42053095375](https://github.com/saeed92m/company-website/actions/runs/42053095375): success.
+- PR #89 merge CodeQL [42053095890](https://github.com/saeed92m/company-website/actions/runs/42053095890): success.
+- PR #89 merge Dependency Security Audit [42053095564](https://github.com/saeed92m/company-website/actions/runs/42053095564): success.
+- PR #89 post-deployment Browser QA [42053363792](https://github.com/saeed92m/company-website/actions/runs/42053363792): still in progress at this checkpoint. WebKit passed; Chromium and Firefox had not completed.
+- PR #91 checks all passed before merge: CI [42053712146](https://github.com/saeed92m/company-website/actions/runs/42053712146), CodeQL [42053712142](https://github.com/saeed92m/company-website/actions/runs/42053712142), Dependency Security Audit [42053712064](https://github.com/saeed92m/company-website/actions/runs/42053712064), and Chromium/Firefox/WebKit Browser QA [42053712044](https://github.com/saeed92m/company-website/actions/runs/42053712044).
+- PR #91's dependency audit log reported 0 vulnerabilities in the full locked dependency graph and 0 in production dependencies.
 
-Production Browser QA [42022265665](https://github.com/saeed92m/company-website/actions/runs/42022265665) passed on the application-source commit `3dad024...`: 96 checks in each of Chromium, Firefox, and WebKit (288 total). PR #89 changed documentation only. Post-PR-89 Browser QA [42053363792](https://github.com/saeed92m/company-website/actions/runs/42053363792) is running against the deployment; record its final result before closing this checkpoint.
+PR #91 added the recovery runbook and updated the acceptance records. Its PR Browser QA validates the PR preview; it does not replace the post-deployment production Browser QA run.
 
 The active `main-protection` ruleset requires pull requests and six required checks: Repository baseline, CodeQL, locked dependency audit, and Chromium, Firefox, and WebKit Browser QA. It blocks branch deletion and non-fast-forward updates. It has no bypass actors and currently requires zero approving reviews.
 
-PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), [#86](https://github.com/saeed92m/company-website/pull/86), [#87](https://github.com/saeed92m/company-website/pull/87), [#88](https://github.com/saeed92m/company-website/pull/88), and [#89](https://github.com/saeed92m/company-website/pull/89) are merged. Production acceptance remains **In Progress**; successful automated workflows do not prove full security, accessibility, or operational readiness.
+PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), [#86](https://github.com/saeed92m/company-website/pull/86), [#87](https://github.com/saeed92m/company-website/pull/87), [#88](https://github.com/saeed92m/company-website/pull/88), [#89](https://github.com/saeed92m/company-website/pull/89), and [#91](https://github.com/saeed92m/company-website/pull/91) are merged. PR #90 remains open and paused by owner direction. GA4 and Search Console work is deferred. Production acceptance remains **In Progress**.
 
 ## Preview and Production hosting
 
@@ -69,4 +72,4 @@ Production deployment uses GitHub Pages. Cloudflare Pages is used for pull-reque
 - Execute and record a production rollback drill. The procedure is documented in [the production recovery runbook](docs/operations/production-recovery.md).
 - Enable and verify GitHub private vulnerability reporting; update SECURITY.md after the reporting path is confirmed.
 
-The latest post-merge verification and remaining owner-dependent gates are recorded in [the 2026-11-05 acceptance addendum](docs/audits/production-acceptance-addendum-2026-11-05.md) and [Issue #69](https://github.com/saeed92m/company-website/issues/69). Automated checks do not prove full Production readiness. Keep Production unchanged until the remaining acceptance gates pass and the owner gives separate release authorization.
+The latest acceptance evidence and remaining owner-dependent gates are recorded in [the 2026-11-05 acceptance addendum](docs/audits/production-acceptance-addendum-2026-11-05.md) and [Issue #69](https://github.com/saeed92m/company-website/issues/69). Automated checks do not prove full Production readiness. Keep Production unchanged until the remaining acceptance gates pass and the owner gives separate release authorization.
