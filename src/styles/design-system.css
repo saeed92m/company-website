@@ -385,3 +385,38 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (prefers-reduced-motion: reduce) {
   .home-redesign *, .home-redesign *:before, .home-redesign *:after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+
+/* The only homepage metric is the six verified activity domains. */
+.home-redesign .new-metrics {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: min(100%, 280px);
+  margin-top: clamp(40px, 6vw, 82px);
+  border-block: 1px solid var(--rd-line);
+}
+.home-redesign .new-metrics .metric-item {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-height: 84px;
+  padding: 18px 0;
+  border: 0;
+}
+.home-redesign .new-metrics .metric-item strong {
+  color: var(--rd-ink);
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -.05em;
+}
+.home-redesign .new-metrics .metric-item span {
+  color: var(--rd-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+@media (max-width: 700px) {
+  .home-redesign .new-metrics { width: min(100%, 240px); }
+  .home-redesign .new-metrics .metric-item { display: flex; min-height: 72px; padding: 12px 0; }
+  .home-redesign .new-metrics .metric-item strong { font-size: 25px; }
+  .home-redesign .new-metrics .metric-item span { font-size: 10px; }
+}
