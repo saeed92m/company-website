@@ -213,7 +213,7 @@ Footer must remain usable in RTL and on small screens.
 - The theme-color browser metadata must follow the active theme.
 - Validate every actual foreground/background combination in both themes; the current token tests cover only selected text accents.
 
-## 6. Responsive behavior
+## 7. Responsive behavior
 
 ### Small mobile
 - single-column content
@@ -255,7 +255,7 @@ Directional icons such as arrows must mirror when their semantic direction chang
 
 Brand marks and non-directional technical diagrams must not be mirrored automatically.
 
-## 7. Accessibility contract
+## 8. Accessibility contract
 
 Baseline: WCAG 2.2 AA.
 
@@ -276,7 +276,7 @@ Additional requirements:
 - status updates announced where necessary
 - no information conveyed by color alone
 
-## 8. Motion contract
+## 9. Motion contract
 
 Default motion should be subtle and non-essential.
 
@@ -290,7 +290,7 @@ When prefers-reduced-motion: reduce is active:
 - preserve state changes and feedback
 - do not hide content behind animation
 
-## 9. Content/localization constraints
+## 10. Content/localization constraints
 
 Components must support:
 - short and long strings
@@ -303,7 +303,7 @@ Components must support:
 
 Do not hard-code English sentence structure into components.
 
-## 10. Validation matrix
+## 11. Validation matrix
 
 Before implementation is considered complete, test:
 1. all eight locales
@@ -319,13 +319,13 @@ Before implementation is considered complete, test:
 11. no horizontal overflow
 12. no unsupported claims introduced by UI
 
-## 11. Implementation boundary
+## 12. Implementation boundary
 
 The design system defines behavior and contracts, not a mandatory framework.
 
 The implementation may use Astro and component technology selected during the architecture implementation phase, provided these contracts remain intact.
 
-## 12. Next step
+## 13. Next step
 
 Proceed to implementation architecture and frontend scaffold only after:
 - design-system contract accepted
