@@ -6,16 +6,19 @@ This policy covers the company's corporate website source repository and deploye
 
 ## Reporting
 
-Do not disclose suspected vulnerabilities, credentials, or sensitive data in public issues. Report security concerns through the company's designated private security/contact channel once established.
+Do not disclose suspected vulnerabilities, credentials, or sensitive data in public issues or pull requests.
+
+If GitHub **Private vulnerability reporting** is enabled for this repository, use the repository's **Report a vulnerability** action. The feature is not yet verified as enabled. Until the owner confirms that private reporting works, do not treat a public issue as an accepted disclosure channel. A separate company security contact must be published only after the owner approves a monitored address and response owner.
 
 ## Repository rules
 
-- Secrets must never be committed to Git.
-- Production credentials must be stored in approved secret-management facilities.
-- Dependencies must be reviewed and updated regularly.
-- Security-sensitive changes require explicit validation before production deployment.
-- Contact-form and other user-submitted data must be handled according to the project's privacy and retention requirements.
+- Never commit secrets, credentials, private keys, or private customer data.
+- Store production credentials in approved secret-management facilities.
+- Review and update dependencies regularly.
+- Validate security-sensitive changes before production deployment.
+- Handle contact-form and other user-submitted data under approved privacy, retention, and access requirements.
+- Keep the static website independent of Supabase until a concrete backend feature is approved.
 
 ## Incident handling
 
-Security incidents must be documented, contained, investigated, remediated, and followed by a recovery/lessons-learned record.
+Security incidents must be documented, contained, investigated, remediated, and followed by a recovery and lessons-learned record.
