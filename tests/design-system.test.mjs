@@ -106,3 +106,24 @@ test("mobile header stays compact and homepage hero is content-first", () => {
   assert.match(css, /\.home-redesign \.new-hero \{ padding-block: 42px 64px; \}/);
   assert.match(home, /<h1 id="hero-title">\{site\.tagline\}<\/h1>/);
 });
+
+test("self-hosted WOFF2 files and font licenses are present and valid", async () => {
+  const fontFiles = [
+    "vazirmatn-arabic-wght-normal.woff2",
+    "vazirmatn-latin-ext-wght-normal.woff2",
+    "vazirmatn-latin-wght-normal.woff2",
+    "ibm-plex-sans-cyrillic-ext-wght-normal.woff2",
+    "ibm-plex-sans-cyrillic-wght-normal.woff2",
+    "ibm-plex-sans-latin-ext-wght-normal.woff2",
+    "ibm-plex-sans-latin-wght-normal.woff2"
+  ];
+  for (const name of fontFiles) {
+    const bytes = await readFile(new URL(`../src/assets/fonts/${name}`, import.meta.url));
+    assert.equal(bytes.toString("ascii", 0, 4), "wOF2", `${name} must be a WOFF2 file`);
+    assert.ok(bytes.byteLength > 1024, `${name} must not be empty or truncated`);
+  }
+  const vazLicense = await readFile(new URL("../licenses/fonts/OFL-Vazirmatn.txt", import.meta.url), "utf8");
+  const ibmLicense = await readFile(new URL("../licenses/fonts/OFL-IBM-Plex-Sans.txt", import.meta.url), "utf8");
+  assert.match(vazLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
+  assert.match(ibmLicense, /SIL OPEN FONT LICENSE Version 1\.1/);
+});
