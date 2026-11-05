@@ -24,10 +24,13 @@ The live site was crawled with a bounded full-site crawl.
 |---|---|
 | Localized HTML pages | 96 found |
 | HTTP status for localized HTML pages | 96/96 returned 200 |
-| Page titles | 96/96 present |
+| Page titles | 96/96 present; no duplicate title within a locale |
 | Locale `lang` and `dir` | All 96 matched the route locale and direction |
+| Main landmark and skip link | 96/96 pages have both |
+| H1 structure | Exactly one H1 on each of the 96 pages |
 | Unique internal link targets | 96 |
 | Internal link targets missing from the crawl | 0 |
+| Unique internal fragment targets | 96; all 96 resolve to an existing ID/name |
 | Sitemap | HTTP 200 |
 | Sitemap URL entries | 96 |
 | Sitemap alternate declarations | 864 (8 locale links + x-default per URL) |
