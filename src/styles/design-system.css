@@ -250,20 +250,6 @@ html[data-theme="light"] .home-redesign {
   font-size: 9px;
   letter-spacing: .2em;
 }
-.home-redesign .new-metrics {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-  align-items: center;
-  margin-top: clamp(40px, 6vw, 82px);
-  border-top: 1px solid var(--rd-line);
-  border-bottom: 1px solid var(--rd-line);
-}
-.home-redesign .metric-item { display: flex; align-items: baseline; gap: 14px; min-height: 84px; padding: 18px 22px 18px 0; border-inline-end: 1px solid var(--rd-line); }
-.home-redesign .metric-item strong { color: var(--rd-ink); font-size: 32px; font-weight: 650; letter-spacing: -.05em; }
-.home-redesign .metric-item span { color: var(--rd-muted); font-size: 11px; font-weight: 700; }
-.home-redesign .metric-index { padding-inline: 26px 0; color: var(--rd-accent); font-size: 12px; font-weight: 800; white-space: nowrap; }
-.home-redesign .metric-index span { color: var(--rd-muted); }
 .home-redesign .new-domains { padding-block: clamp(80px, 10vw, 136px); background: var(--rd-panel); }
 .home-redesign .new-section-head {
   display: grid;
@@ -376,7 +362,6 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (max-width: 1000px) {
   .home-redesign .new-hero { grid-template-columns: 1fr; min-height: auto; }
   .home-redesign .orbit-visual { justify-self: center; width: min(76vw, 460px); margin-block: 24px; }
-  .home-redesign .new-metrics { margin-top: 30px; }
   .home-redesign .new-section-head { grid-template-columns: 1fr; gap: 18px; }
   .home-redesign .new-company-inner { grid-template-columns: 1fr; gap: 24px; }
 }
@@ -387,11 +372,6 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .home-redesign .orbit-visual { width: min(88vw, 360px); }
   .home-redesign .orbit-node { width: 30px; font-size: 9px; }
   .home-redesign .orbit-caption { font-size: 10px; bottom: 2%; }
-  .home-redesign .new-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .home-redesign .metric-item { display: grid; gap: 2px; padding: 12px 8px; min-height: 72px; }
-  .home-redesign .metric-item strong { font-size: 25px; }
-  .home-redesign .metric-item span { font-size: 9px; line-height: 1.5; }
-  .home-redesign .metric-index { display: none; }
   .home-redesign .new-domain-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
   .home-redesign .new-domain-card { min-height: 230px; padding: 14px; }
   .home-redesign .domain-featured { grid-row: span 1; min-height: 270px; }
