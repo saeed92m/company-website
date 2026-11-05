@@ -47,6 +47,10 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           set -euo pipefail
+          echo "Built WOFF2 assets:"
+          find dist -type f -name '*.woff2' -printf '%P %s bytes\n' | sort
+          echo "Built CSS font references:"
+          grep -R -n -m 2 'Vazirmatn\|IBM Plex Sans' dist/_astro --include='*.css' | head -20 || true
           mkdir -p /tmp/company-website-preview
           ln -s "$GITHUB_WORKSPACE/dist" /tmp/company-website-preview/company-website
           python3 -m http.server 4321 --bind 127.0.0.1 --directory /tmp/company-website-preview > /tmp/company-website-preview.log 2>&1 &
@@ -123,9 +127,10 @@ jobs:
                 if (!response || !response.ok()) throw lastError || new Error(`${url}: request failed after 4 attempts`);
 
                 const checks = await page.evaluate(async (locale) => {
-                  await document.fonts.ready;
                   const fontFamily = ["fa", "ar"].includes(locale) ? "Vazirmatn" : locale === "zh" ? null : "IBM Plex Sans";
                   const fontSample = locale === "fa" || locale === "ar" ? "سلام" : locale === "ru" ? "Привет" : "Company";
+                  const loadedFontFaces = fontFamily ? await document.fonts.load(`16px "${fontFamily}"`, fontSample) : [];
+                  await document.fonts.ready;
                   return ({
                   dir: document.documentElement.dir,
                   lang: document.documentElement.lang,
@@ -143,7 +148,9 @@ jobs:
                   unlabeledImages: [...document.querySelectorAll("img")].filter((img) => !img.hasAttribute("alt")).length,
                   unlabeledControls: [...document.querySelectorAll("button")].filter((el) => !(el.textContent || "").trim() && !el.getAttribute("aria-label")).length + [...document.querySelectorAll("select")].filter((el) => !el.getAttribute("aria-label") && !el.closest("label")).length,
                   fontFamily,
-                  fontLoaded: fontFamily ? document.fonts.check(`16px "${fontFamily}"`, fontSample) : null,
+                  fontLoaded: fontFamily ? document.fonts.check(`16px "${fontFamily}"`, fontSample) && loadedFontFaces.length > 0 : null,
+                  loadedFontFaces: loadedFontFaces.map((face) => ({ family: face.family, status: face.status, weight: face.weight })),
+                  registeredFontFaces: [...document.fonts].map((face) => ({ family: face.family, status: face.status, weight: face.weight })),
                   fontStack: document.body ? getComputedStyle(document.body).fontFamily : ""
                 });
                 }, locale);
@@ -154,7 +161,7 @@ jobs:
                 if (externalFontRequest) throw new Error(`${url}: external Google Fonts request detected`);
                 if (fontResponses.some((item) => item.status !== 200)) throw new Error(`${url}: WOFF2 request failed: ${JSON.stringify(fontResponses)}`);
                 if (checks.fontFamily && (!checks.fontLoaded || fontResponses.length === 0)) {
-                  throw new Error(`${url}: expected self-hosted ${checks.fontFamily} font to load; responses=${JSON.stringify(fontResponses)}`);
+                  throw new Error(`${url}: expected self-hosted ${checks.fontFamily} font to load; checks=${JSON.stringify(checks)}; responses=${JSON.stringify(fontResponses)}`);
                 }
                 if (locale === "zh" && !checks.fontStack.includes("Noto Sans CJK SC")) {
                   throw new Error(`${url}: Chinese fallback stack is missing Noto Sans CJK SC`);
