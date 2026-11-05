@@ -33,19 +33,19 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The current Production `main` baseline is `ecaa7ab5b931bd20691f5744298be1a34c151234`.
+**Production acceptance: In Progress.** The current Production `main` baseline is `2e2eac9da0838c0ef4d5b3ba6c264764e662ce58`.
 
-The following workflows passed on that Production commit:
+The following workflows passed on this exact Production commit:
 
-- CI [41940065948](https://github.com/saeed92m/company-website/actions/runs/41940065948): repository validation, regression tests, Astro check, and production build.
-- CodeQL [41940066085](https://github.com/saeed92m/company-website/actions/runs/41940066085): JavaScript/TypeScript analysis completed successfully. This does not prove that the alert backlog is empty.
-- GitHub Pages [41940065926](https://github.com/saeed92m/company-website/actions/runs/41940065926): build, deploy, and smoke jobs passed.
-- Dependency Security Audit [41940065918](https://github.com/saeed92m/company-website/actions/runs/41940065918): full and production npm audits passed.
-- Cross-browser production Browser QA [41940225986](https://github.com/saeed92m/company-website/actions/runs/41940225986): **288 route/viewport checks passed** (96 each in Chromium, Firefox, and WebKit).
+- CI [42006848851](https://github.com/saeed92m/company-website/actions/runs/42006848851): repository validation, regression tests, Astro check, and production build.
+- CodeQL [42006849160](https://github.com/saeed92m/company-website/actions/runs/42006849160): JavaScript/TypeScript analysis completed successfully. The alert backlog is a separate check.
+- GitHub Pages [42006849138](https://github.com/saeed92m/company-website/actions/runs/42006849138): build, deployment, and production smoke checks passed.
+- Dependency Security Audit [42006848958](https://github.com/saeed92m/company-website/actions/runs/42006848958): full and production dependency audits passed.
+- Production Browser QA [42007005132](https://github.com/saeed92m/company-website/actions/runs/42007005132): **288 route/viewport checks passed** (96 each in Chromium, Firefox, and WebKit).
 
-The active `main-protection` ruleset requires pull requests and the repository's required CI, CodeQL, dependency-audit, and three-browser checks. It blocks branch deletion and non-fast-forward updates. It currently requires zero approving reviews.
+The active `main-protection` ruleset requires pull requests and six required checks: Repository baseline, CodeQL, locked dependency audit, and Chromium, Firefox, and WebKit Browser QA. It blocks branch deletion and non-fast-forward updates. It has no bypass actors and currently requires zero approving reviews.
 
-PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), and [#86](https://github.com/saeed92m/company-website/pull/86) remain open and unmerged. The owner has provisionally approved the visual direction in PR #86. This is not merge or Production release authorization. Production remains on `main`.
+PRs [#84](https://github.com/saeed92m/company-website/pull/84), [#85](https://github.com/saeed92m/company-website/pull/85), [#86](https://github.com/saeed92m/company-website/pull/86), and [#87](https://github.com/saeed92m/company-website/pull/87) are merged. Production acceptance remains **In Progress**; successful automated workflows do not prove full security, accessibility, or operational readiness.
 
 ## Preview and Production hosting
 
