@@ -4,13 +4,13 @@ import { readFile } from "node:fs/promises";
 
 const css = await readFile(new URL("../src/styles/design-system.css", import.meta.url), "utf8");
 const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
+const home = await readFile(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
 
-function token(name, blockStart = ":root {") {
-  const start = css.indexOf(blockStart);
-  assert.notEqual(start, -1, `missing token block: ${blockStart}`);
+function getColor(name, selector = ":root {") {
+  const start = css.indexOf(selector);
+  assert.notEqual(start, -1, `missing selector: ${selector}`);
   const end = css.indexOf("}", start);
-  const block = css.slice(start, end);
-  const match = block.match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{3,8})`));
+  const match = css.slice(start, end).match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{3,8})`));
   assert.ok(match, `missing color token --${name}`);
   return match[1];
 }
@@ -29,16 +29,26 @@ test("design system is loaded after the foundation stylesheet", () => {
   assert.match(layout, /global\.css";\s*import "\.\.\/styles\/design-system\.css";/);
 });
 test("approved corporate colors remain unchanged", () => {
-  assert.equal(token("brand-blue"), "#003c91");
-  assert.equal(token("brand-gray"), "#a8a8a8");
+  assert.equal(getColor("brand-blue"), "#003c91");
+  assert.equal(getColor("brand-gray"), "#a8a8a8");
 });
-test("dark theme accent and link colors meet WCAG AA for small text", () => {
-  assert.ok(ratio(token("accent"), token("page")) >= 4.5);
-  assert.ok(ratio(token("link"), token("surface")) >= 4.5);
+test("night theme accent and link colors meet WCAG AA for small text", () => {
+  assert.ok(ratio(getColor("accent"), getColor("page")) >= 4.5);
+  assert.ok(ratio(getColor("link"), getColor("surface")) >= 4.5);
 });
-test("light theme accent and link colors meet WCAG AA for small text", () => {
-  assert.ok(ratio(token("accent", 'html[data-theme="light"] {'), token("page", 'html[data-theme="light"] {')) >= 4.5);
-  assert.ok(ratio(token("link", 'html[data-theme="light"] {'), token("surface", 'html[data-theme="light"] {')) >= 4.5);
+test("day theme accent and link colors meet WCAG AA for small text", () => {
+  assert.ok(ratio(getColor("accent", 'html[data-theme="light"] {'), getColor("page", 'html[data-theme="light"] {')) >= 4.5);
+  assert.ok(ratio(getColor("link", 'html[data-theme="light"] {'), getColor("surface", 'html[data-theme="light"] {')) >= 4.5);
+});
+test("homepage is a structural redesign, not only a token override", () => {
+  for (const selector of ["new-hero", "orbit-visual", "new-metrics", "new-domain-grid", "new-projects", "new-company"]) {
+    assert.ok(home.includes(selector), `homepage is missing ${selector}`);
+    assert.ok(css.includes(`.home-redesign .${selector}`) || css.includes(`.home-redesign .new-domain-grid`), `stylesheet is missing design rules for ${selector}`);
+  }
+});
+test("homepage preserves all six domain links and localized paths", () => {
+  assert.match(home, /site\.fields\.map/);
+  assert.match(home, /route\(locale,"fields\/"/);
 });
 test("interactive controls preserve a 44px minimum target", () => {
   assert.match(css, /--control-height:\s*48px/);

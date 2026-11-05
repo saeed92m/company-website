@@ -1,41 +1,24 @@
-# Visual Prototype — Design System Implementation
+# Visual Prototype v2 — Structural Homepage Redesign
 
 ## Status
-Prototype implementation prepared on a dedicated branch. It is not a production release.
+In progress on the review branch. This version replaces the previous token-only draft because it did not create a sufficiently distinct visual result.
 
-## Purpose
-Apply the approved visual baseline to the existing Astro website so the owner can review real page layouts before the design is frozen.
+## Direction
+Technical editorial / research atlas. The design uses a clear typographic hierarchy, a central orbital identity diagram, structured metrics, and an image-led six-domain index.
 
-## Visual direction
-- Scientific and engineering-focused corporate identity.
-- Restrained technical details; no decorative imagery that implies unsupported capability.
-- Original company brand colors remain unchanged: blue `#003C91`, gray `#A8A8A8`.
-- Existing company mark remains unchanged. This prototype does not replace or modify the logo asset.
-- Night and Day are separate semantic palettes, not simple color inversions.
+## Scope
+- Recompose the homepage hero and navigation hierarchy.
+- Present six activity areas in a bento-style grid with existing domain artwork.
+- Recompose projects, company overview, and contact call to action.
+- Keep all copy sourced from existing localized content.
+- Support all eight locales, with RTL for Persian and Arabic.
+- Keep the company logo artwork unchanged.
+- Maintain independent Night and Day palettes.
 
-## Implemented tokens
-- Spacing: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128 px.
-- Controls: 48 px primary control height; 44 px minimum interaction target.
-- Typography: responsive display and heading scale; body text starts at 16 px.
-- Shape: 8, 14 and 22 px radius tiers.
-- Layout: 1240 px content maximum; 72ch long-form reading measure.
-- Motion: short state transitions; reduced-motion override.
+## Non-goals
+- No change to company claims or legal identity.
+- No publication of project repository links.
+- No production merge before owner review.
 
-## Component coverage
-- Header, navigation, language selector and theme toggle.
-- Homepage hero and brand presentation.
-- Domain and project cards.
-- Split information sections, contact CTA and footer.
-- Dialog surfaces inherit the semantic theme tokens.
-
-## Validation still required
-- Astro build and Astro Check.
-- Unit tests, including color contrast and token regression.
-- Chromium, Firefox and WebKit.
-- Eight locales, including Persian and Arabic RTL.
-- Mobile, tablet, laptop and wide desktop.
-- Keyboard-only navigation and screen-reader review.
-- Image/font loading and performance checks.
-
-## Review rule
-This is a reviewable prototype. The owner must approve the visual direction before it becomes the final design system. Do not merge into `main` without explicit approval.
+## Validation
+Build, Astro Check, unit tests, browser QA, mobile layout, eight locales, RTL/LTR, keyboard navigation, and color contrast must pass before the prototype is considered review-ready.
