@@ -47,6 +47,7 @@ The project owner has provisionally approved the following primary typefaces for
 
 - The homepage prototype now requests IBM Plex Sans for Latin/Cyrillic text and Vazirmatn for Persian text through the Google Fonts CSS endpoint.
 - Arabic and Chinese use explicit script-aware fallback stacks (Noto Sans Arabic and Noto Sans CJK SC first, then the approved families and system fallback). Their actual font availability must be verified on target devices; these fallback names are not bundled by this change.
+- CI and browser QA now include stacked feature/design PR base branches. The repository workflow previously ran only for PRs targeting `main`, so PR #86 had no automated CI or cross-browser job while based on a feature branch.
 - This is a prototype implementation, not yet a self-hosted production font delivery. The current Google Fonts endpoint remains an external dependency. Production hardening must pin and self-host optimized WOFF2 assets, preserve the applicable OFL license notices, and remove the external font request.
 - The prototype applies soft-rounded geometry: 12px controls/buttons, 18px cards, and 24px major panels. This is a provisional visual treatment for owner review.
 - The upstream Google Fonts repository publishes OFL license files for both families: `ofl/vazirmatn/OFL.txt` and `ofl/ibmplexsans/OFL.txt`. Verify the exact upstream license and preserve notices when vendoring font files.

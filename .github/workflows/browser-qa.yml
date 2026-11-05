@@ -2,7 +2,7 @@ name: Browser QA
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**', 'design/**']
   workflow_run:
     workflows: ["Deploy GitHub Pages"]
     types: [completed]
