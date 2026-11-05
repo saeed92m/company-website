@@ -28,7 +28,7 @@ The assessment used read-only operations. It did not run destructive tests, modi
 - CI, CodeQL, Browser QA, and dependency-audit workflows declare read-only repository permissions.
 - The source search found no `innerHTML`, `outerHTML`, `eval(`, or `dangerouslySetInnerHTML` use in the indexed default-branch source. One Astro `set:html` use renders JSON-LD through `serializeJsonLd`, which escapes HTML-significant characters and Unicode line separators.
 - External links found with `target="_blank"` use `rel="noopener noreferrer"` (one also uses `me`).
-- The current default-branch tree contains no obvious `.env`, private-key, certificate, database-dump, or backup file paths. Searches for common GitHub, AWS, Supabase service-key, and private-key patterns returned no matches in the indexed default branch.
+- The current default-branch tree contains no obvious `.env`, private-key, certificate, database-dump, or backup file paths. Searches for common GitHub, AWS, Supabase service-key, and private-key patterns returned no matches in the indexed default branch. A separate search did find an unused Dropbox shared-file URL containing an `rlkey` parameter in `src/data/brand.ts`; the URL was not used by the application and has been removed in this PR. This was a public asset-share URL, not confirmed to be a credential or private secret.
 
 These source searches are useful signals only. They do not prove that no credential exists in old commits, other branches, Actions logs, artifacts, or GitHub settings.
 
