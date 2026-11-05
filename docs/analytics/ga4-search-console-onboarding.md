@@ -6,7 +6,7 @@ Status: **Implementation prepared; external account setup is pending.**
 
 - The site uses a static Astro build and GitHub Pages.
 - The GA4 Measurement ID is public configuration. Store it as the GitHub Actions repository variable `PUBLIC_GA_MEASUREMENT_ID`; do not store it as a secret and do not commit a real account ID to source.
-- The analytics script is not loaded until a visitor selects **Allow analytics**. A rejection is stored locally and prevents GA4 from loading on later page views.
+- The implementation uses Google's **Basic Consent Mode** pattern: the default consent state is denied, and the Google tag is not loaded until a visitor selects **Allow analytics**. A rejection is stored locally and prevents GA4 from loading on later page views.
 - The implementation denies analytics and advertising consent by default. It does not enable Google Ads, remarketing, or advertising signals.
 - The event model excludes email addresses, phone numbers, full outbound URLs, form contents, and other direct identifiers.
 - Consent UI text is localized for fa, en, ar, ru, de, zh, fr, and es.
@@ -88,6 +88,14 @@ No event is sent before consent. No form submission event is configured because 
 - Search Console verifies the live property and accepts the sitemap.
 - Representative localized URLs are inspected and any indexing errors are tracked.
 - Privacy notice and legal review are completed before production analytics is enabled.
+
+## Official references
+
+- [Google Analytics: Set up a GA4 property and web data stream](https://support.google.com/analytics/answer/14183469)
+- [Google for Developers: Set up consent mode on websites](https://developers.google.com/tag-platform/security/guides/consent)
+- [Google Search Console: Add a property](https://support.google.com/webmasters/answer/34592)
+- [Google Search Console: Submit and monitor sitemaps](https://support.google.com/webmasters/answer/7451001)
+- [Google Search Console: Verify site ownership](https://support.google.com/webmasters/answer/9008080)
 
 ## Rollback
 
