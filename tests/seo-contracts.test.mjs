@@ -30,7 +30,7 @@ test("sitemap includes all localized route families and hreflang alternates", ()
   }
   assert.match(sitemap, /xhtml:link rel="alternate" hreflang=/);
   assert.match(sitemap, /hreflang="x-default"/);
-  assert.match(sitemap, /sitemap\.org\/schemas\/sitemap\/0\.9/);
+  assert.match(sitemap, /sitemaps\.org\/schemas\/sitemap\/0\.9/);
 });
 
 test("robots.txt permits public crawling and points to the sitemap", () => {
