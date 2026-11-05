@@ -4,7 +4,7 @@
 In progress on the review branch. This version replaces the previous token-only draft because it did not create a sufficiently distinct visual result.
 
 ## Direction
-Technical editorial / research atlas. The design uses a clear typographic hierarchy, a central orbital identity diagram, structured metrics, and an image-led six-domain index.
+Technical editorial / research atlas. The design uses a clear typographic hierarchy, a central orbital identity diagram, a clear section hierarchy, and an image-led six-domain index.
 
 ## Scope
 - Recompose the homepage hero and navigation hierarchy.
@@ -67,7 +67,7 @@ The owner reviewed the mobile preview and rejected two homepage metrics as irrel
 - The supported-locale count is a technical implementation detail. Keep locale selection in the site navigation; do not present the number of website languages as a company achievement or homepage metric.
 - The founding year is not a homepage metric. Present the founding and registration information in the Company / About section.
 
-The homepage now retains the six-domain fact only. The Company section presents the sourced founding date and official-gazette notice:
+The homepage has no company-metric strip. It presents the six activity areas as navigation, not as numerical claims. The Company / About section presents the sourced founding date and official-gazette notice:
 - Persian: تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷
 - English: Founded: August 2023 · Official Gazette notice: 29 July 2023
 
