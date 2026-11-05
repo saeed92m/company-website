@@ -59,3 +59,16 @@ The project owner has provisionally approved the following primary typefaces for
 2. Verify global font stacks and script-aware fallback stacks on real devices.
 3. Extend typography regression coverage and review visual samples for fa/en/ar/ru/de/zh/fr/es.
 4. Review real browser rendering before treating typography as production-ready.
+
+
+## Homepage content correction — 2026-11-05
+
+The owner reviewed the mobile preview and rejected two homepage metrics as irrelevant corporate claims:
+- The supported-locale count is a technical implementation detail. Keep locale selection in the site navigation; do not present the number of website languages as a company achievement or homepage metric.
+- The founding year is not a homepage metric. Present the founding and registration information in the Company / About section.
+
+The homepage now retains the six-domain fact only. The Company section presents the sourced founding date and official-gazette notice:
+- Persian: تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷
+- English: Founded: August 2023 · Official Gazette notice: 29 July 2023
+
+The eight locale strings are localized in the homepage component. The exact dates come from the supplied company profile; do not replace them with inferred dates or treat the Gazette notice date as the founding month.
