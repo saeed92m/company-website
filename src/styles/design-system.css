@@ -326,15 +326,12 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 }
 
 
-/* Keep the legal registered scope distinct from the six public activity areas. */
-.company-registration-scope {
+
+/* State the supplied development-roadmap item without publishing an unverified statutory-scope claim. */
+.company-roadmap-note {
   max-width: 76ch;
   margin: 1rem 0 1.5rem;
   color: var(--muted);
   font-size: .9rem;
   line-height: 1.9;
-}
-.company-registration-scope strong {
-  color: var(--ink);
-  font-weight: 800;
 }
