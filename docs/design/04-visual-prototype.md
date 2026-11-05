@@ -96,3 +96,7 @@ The project owner has provisionally approved the current visual direction and ap
 - Replace external Google Fonts delivery with licensed, self-hosted WOFF2 assets before Production.
 - Confirm the production deployment and rollback path.
 - Validate access from target user networks without VPN, including the previously reported mobile-network failure of the Cloudflare Preview host.
+
+## Legal-scope clarification — 2026-11-05
+
+The supplied company profile distinguishes the six public activity areas from the narrower registered scope. The Company / About page now states the registered R&D scope separately: astronomy, aerospace, renewable energy, and artificial intelligence. It also states that remote sensing is not listed in the current registered scope and that motorsport/performance parts remain on the development roadmap pending formal addition to the articles of association. Do not describe all six activity areas as the company's registered legal scope.
