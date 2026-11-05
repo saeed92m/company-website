@@ -84,7 +84,7 @@ Every interactive component should account for:
 ## RTL/LTR
 Use logical CSS properties, mirror directional icons, preserve semantic reading order, and test navigation, forms and breadcrumbs with real localized strings.
 
-## Current CSS token mapping
+## Target CSS token mapping (introduced by implementation PR #85)
 
 - `--brand`: `#003C91`
 - `--brand-gray`: `#A8A8A8`
