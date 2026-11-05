@@ -67,7 +67,7 @@ The owner reviewed the mobile preview and rejected two homepage metrics as irrel
 - The supported-locale count is a technical implementation detail. Keep locale selection in the site navigation; do not present the number of website languages as a company achievement or homepage metric.
 - The founding year is not a homepage metric. Present the founding and registration information in the Company / About section.
 
-The homepage does not present the supported-locale count or founding year as company metrics. The six activity areas remain a valid company fact and may appear as the single domain-count metric. The Company / About section presents the sourced founding date and official-gazette notice:
+The homepage does not present the supported-locale count or founding year as company metrics. The six activity areas remain a valid company fact and may appear as the single domain-count metric. The Company / About page presents the sourced founding month and official-gazette notice:
 - Persian: تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷
 - English: Founded: August 2023 · Official Gazette notice: 29 July 2023
 
