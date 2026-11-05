@@ -60,15 +60,21 @@ test("reduced-motion preferences disable non-essential animation", () => {
 });
 
 
-test("approved prototype typefaces are configured with script-aware fallback stacks", () => {
+test("approved typefaces are self-hosted with script-aware WOFF2 subsets", () => {
   const globalCss = requireGlobalCss;
-  assert.match(globalCss, /family=IBM\+Plex\+Sans/);
-  assert.match(globalCss, /family=Vazirmatn/);
-  assert.match(globalCss, /IBM\+Plex\+Sans:wght@400\.\.700/);
-  assert.match(globalCss, /Vazirmatn:wght@400\.\.900/);
+  assert.doesNotMatch(globalCss, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
+  assert.match(globalCss, /@font-face/);
+  assert.match(globalCss, /font-family: 'IBM Plex Sans'/);
+  assert.match(globalCss, /font-family: 'Vazirmatn'/);
+  assert.match(globalCss, /font-weight: 100 700/);
+  assert.match(globalCss, /font-weight: 100 900/);
+  for (const subset of ["vazirmatn-arabic-wght-normal.woff2","vazirmatn-latin-ext-wght-normal.woff2","vazirmatn-latin-wght-normal.woff2","ibm-plex-sans-cyrillic-ext-wght-normal.woff2","ibm-plex-sans-cyrillic-wght-normal.woff2","ibm-plex-sans-latin-ext-wght-normal.woff2","ibm-plex-sans-latin-wght-normal.woff2"]) {
+    assert.ok(globalCss.includes(subset), `missing font subset: ${subset}`);
+  }
   assert.match(globalCss, /html\[lang="fa"\] body\{font-family:"Vazirmatn"/);
-  assert.match(globalCss, /html\[lang="ar"\] body\{font-family:"Noto Sans Arabic"/);
+  assert.match(globalCss, /html\[lang="ar"\] body\{font-family:"Vazirmatn"/);
   assert.match(globalCss, /html\[lang="zh"\] body\{font-family:"Noto Sans CJK SC"/);
+  assert.doesNotMatch(layout, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
 });
 test("prototype controls and cards use the provisional soft-rounded geometry", () => {
   assert.match(css, /--radius-control:\s*12px/);
