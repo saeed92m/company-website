@@ -5,6 +5,7 @@ import { content } from "../content/site";
 import { ui } from "../content/ui";
 import { ceo } from "../content/ceo";
 import { route } from "../data/routes";
+import { resolveSiteUrl } from "../utils/site-url.mjs";
 import { webLogoUrl } from "../data/brand";
 import { formatFounded } from "../utils/date-format";
 import BrandMark from "../components/BrandMark.astro";
@@ -59,7 +60,7 @@ const organization = {
     "addressRegion": "East Azerbaijan",
     "addressCountry": "IR"
   },
-  "brand": { "@type": "Brand", "name": "ALPHA TEAM" },
+  "brand": { "@type": "Brand", "name": site.companyName },
   "founder": { "@id": origin + "/#person" }
 };
 
@@ -68,7 +69,7 @@ const person = {
   "@id": origin + "/#person",
   "name": profile.name,
   "jobTitle": profile.role,
-  "url": origin + route(locale, "company/ceo"),
+  "url": resolveSiteUrl(route(locale, "company/ceo"), origin),
   "sameAs": personSameAs,
   "worksFor": { "@id": origin + "/#organization" },
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Tabriz" }
@@ -80,7 +81,7 @@ const graph: Record<string, unknown>[] = [
   {
     "@type": "WebSite",
     "@id": origin + "/#website",
-    "name": "ALPHA TEAM",
+    "name": site.companyName,
     "url": origin,
     "inLanguage": locale,
     "publisher": { "@id": origin + "/#organization" }
@@ -90,8 +91,8 @@ const graph: Record<string, unknown>[] = [
 if (isCeoProfilePage) {
   graph.push({
     "@type": "ProfilePage",
-    "@id": origin + path + "#profile",
-    "url": origin + path,
+    "@id": resolveSiteUrl(path, origin) + "#profile",
+    "url": resolveSiteUrl(path, origin),
     "mainEntity": { "@id": origin + "/#person" }
   });
 }
@@ -105,7 +106,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title ?? site.companyName}</title>
-    <meta name="theme-color" content="#07111f" />
+    <meta name="theme-color" content="#07111f" data-theme-color />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="author" content={profile.name} />
@@ -113,14 +114,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <meta name="description" content={description ?? site.intro} />
     <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
     <meta name="google-site-verification" content="kTQUPwNOP6x5RNqDWtHOSG-KstdG9cWiKPrl3jWcQUE" />
-    <meta property="og:site_name" content="ALPHA TEAM" />
+    <meta property="og:site_name" content={site.companyName} />
     <meta property="og:locale" content={localeForOg[locale]} />
     <meta property="og:title" content={title ?? site.companyName} />
     <meta property="og:description" content={description ?? site.intro} />
     <meta property="og:type" content={isCeoProfilePage ? "profile" : "website"} />
     {origin && !isNotFoundPage && <meta property="og:url" content={new URL(path, origin)} />}
     {logoUrl && !isNotFoundPage && <meta property="og:image" content={logoUrl} />}
-    {logoUrl && !isNotFoundPage && <meta property="og:image:alt" content="ALPHA TEAM — Pishgaman Novandish Fannavargostar Keyhan" />}
+    {logoUrl && !isNotFoundPage && <meta property="og:image:alt" content={site.companyName + " logo"} />}
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={title ?? site.companyName} />
     <meta name="twitter:description" content={description ?? site.intro} />
@@ -133,9 +134,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
-      <a class="brand" href={route(locale)} aria-label={"ALPHA TEAM — " + site.companyName}>
-        <span class="brand-mark" aria-hidden="true"><BrandMark label="ALPHA TEAM" /></span>
-        <span class="brand-wordmark">ALPHA TEAM</span>
+      <a class="brand" href={route(locale)} aria-label={site.companyName}>
+        <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
+        <span class="brand-wordmark">{site.companyName}</span>
       </a>
       <nav class="primary-nav" aria-label={site.navigation.company}>
         <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
@@ -161,8 +162,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <footer class="site-footer">
       <div class="site-shell footer-grid">
         <div>
-          <p class="footer-brand">ALPHA TEAM</p>
-          <p>{site.companyName}</p>
+          <p class="footer-brand">{site.companyName}</p>
+          <p>{site.intro}</p>
         </div>
         <div>
           <p class="footer-kicker">{site.navigation.fields}</p>
@@ -177,7 +178,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <script is:inline>
       (() => {
         const root = document.documentElement;
-        const stored = localStorage.getItem("site-theme");
+        let stored = null;
+        try { stored = localStorage.getItem("site-theme"); } catch {}
         if (stored === "light" || stored === "dark") root.dataset.theme = stored;
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
@@ -191,6 +193,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const currentLocale = document.documentElement.lang || "fa";
         const updateThemeUi = () => {
           const isDark = root.dataset.theme !== "light";
+          const themeColor = document.querySelector("[data-theme-color]");
+          if (themeColor) themeColor.setAttribute("content", isDark ? "#07111f" : "#f8fafc");
           if (toggle) toggle.setAttribute("aria-pressed", String(isDark));
           if (label) label.textContent = isDark ? labels[currentLocale].night : labels[currentLocale].day;
           const icon = toggle?.querySelector("span[aria-hidden]");
@@ -199,7 +203,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         updateThemeUi();
         toggle?.addEventListener("click", () => {
           root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-          localStorage.setItem("site-theme", root.dataset.theme);
+          try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}
           updateThemeUi();
         });
         select?.addEventListener("change", (event) => {

@@ -16,7 +16,8 @@ const site = content[locale]; const labels = ui[locale];
   <div class="site-shell">
     <section class="hero hero-brand" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">ALPHA TEAM · {formatFounded(locale)}</p>
+        <p class="hero-company-name">{site.companyName}</p>
+        <p class="eyebrow">{formatFounded(locale)}</p>
         <h1 id="hero-title">{site.tagline}</h1>
         <p class="lede">{site.intro}</p>
         <p class="hero-identity">{site.founder}</p>
@@ -25,7 +26,7 @@ const site = content[locale]; const labels = ui[locale];
           <a class="button button-secondary" href={route(locale,"company")}>{site.navigation.company}</a>
         </div>
       </div>
-      <div class="hero-mark" aria-hidden="true"><BrandMark label="ALPHA TEAM" /></div>
+      <div class="hero-mark" aria-hidden="true"><BrandMark label={site.companyName} /></div>
     </section>
     <section id="fields" aria-labelledby="fields-title">
       <div class="section-heading"><h2 id="fields-title">{site.navigation.fields}</h2><p class="lede">{site.intro}</p></div>
