@@ -77,3 +77,22 @@ The eight locale strings are localized in the homepage component. The exact date
 ## Mobile design correction — 2026-11-05
 
 The owner rejected the oversized orbital hero illustration and its detached six-domain metric on mobile. Both elements have been removed from the homepage at all breakpoints. The hero now prioritizes the company proposition, introduction, and navigation actions. The mobile header hides the long legal wordmark beside the unchanged brand mark to prevent excessive wrapping and reduce the header height. This correction is specific to the homepage shell; inner-page templates still require a separate responsive review.
+
+## Owner visual review — provisional approval (2026-11-05)
+
+The project owner has provisionally approved the current visual direction and appearance for the next project stage.
+
+### Approval scope
+- Approval applies to the current visual presentation of the prototype.
+- Approval is provisional and may be revisited after content, responsive, accessibility, localization, and real-device reviews.
+- This approval does not certify production readiness.
+- This approval does not authorize merging any pull request or deploying to Production.
+- The Production branch and its GitHub Pages deployment remain unchanged until the owner gives separate release authorization.
+
+### Remaining acceptance work
+- Complete responsive review of all page templates, not only the homepage.
+- Verify all eight locales and RTL/LTR behavior on representative devices.
+- Complete accessibility, contrast, keyboard, SEO, performance, and security checks.
+- Replace external Google Fonts delivery with licensed, self-hosted WOFF2 assets before Production.
+- Confirm the production deployment and rollback path.
+- Validate access from target user networks without VPN, including the previously reported mobile-network failure of the Cloudflare Preview host.
