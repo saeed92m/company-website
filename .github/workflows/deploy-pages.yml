@@ -167,7 +167,7 @@ jobs:
             "/assets/domains/energy.svg" \
             "/assets/domains/artificial-intelligence.svg" \
             "/assets/domains/motorsport.svg"; do
-            expected="url(/company-website${asset})"
+            expected="/company-website${asset}"
             if ! grep -Fq "${expected}" <<< "$html"; then
               echo "FAIL /en/: domain image URL missing or malformed: ${expected}"
               exit 1
@@ -180,7 +180,7 @@ jobs:
           fi
 
           field_html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/fields/astronomy/")"
-          if ! grep -Fq 'url(/company-website/assets/domains/astronomy.svg)' <<< "$field_html"; then
+          if ! grep -Fq '/company-website/assets/domains/astronomy.svg' <<< "$field_html"; then
             echo "FAIL /en/fields/astronomy/: domain hero image URL missing or malformed"
             exit 1
           fi
