@@ -78,3 +78,8 @@ test("prototype controls and cards use the provisional soft-rounded geometry", (
   assert.match(css, /\.home-redesign \.new-projects \.project-card[\s\S]*?border-radius:\s*var\(--radius-card\)/);
   assert.match(css, /\.home-redesign \.new-projects \.project-card \.button \{ border-radius: var\(--radius-control\); \}/);
 });
+
+test("light-theme domain-card accents remain readable on the dark image cards", () => {
+  const accent = getColor("rd-accent", 'html[data-theme="light"] .home-redesign .new-domain-card {');
+  assert.ok(ratio(accent, "#14243a") >= 4.5, "domain-card accent must meet WCAG AA");
+});

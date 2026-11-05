@@ -364,7 +364,7 @@ html[data-theme="light"] .home-redesign {
 .home-redesign .new-contact-panel p:not(.new-kicker) { max-width: 52ch; color: #e0ebf8; font-size: 14px; }
 .home-redesign .new-button-light { color: #003c91; background: #fff; white-space: nowrap; }
 html[data-theme="light"] .home-redesign .new-domains { background: #e9eff6; }
-html[data-theme="light"] .home-redesign .new-domain-card { background: #14243a; color: #fff; }
+html[data-theme="light"] .home-redesign .new-domain-card { --rd-accent: #9cc8ff; background: #14243a; color: #fff; }
 html[data-theme="light"] .home-redesign .new-domain-card:after { background: linear-gradient(180deg, rgba(9,19,32,.12), rgba(9,19,32,.96)); }
 html[data-theme="light"] .home-redesign .new-domain-card .domain-card-bottom > span:not(.domain-explore) { color: #d3deeb; }
 html[data-theme="light"] .home-redesign .new-domain-card .domain-card-bottom strong { color: #fff; }
