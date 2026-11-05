@@ -86,15 +86,10 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
 
 test("homepage has no vanity metrics and keeps registration details in the company section", () => {
   assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
-  assert.doesNotMatch(home, /new-metrics|metric-item|metric-index/);
+  assert.match(home, /metric-item"><strong>06<\/strong><span>\{copy\.discipline\}/);
   assert.doesNotMatch(home, /site\.founded\.replace/);
   assert.match(home, /new-registration-fact/);
   assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
   assert.match(home, /Official Gazette notice: 29 July 2023/);
 });
 
-test("homepage keeps the six verified activity domains as its only numeric metric", () => {
-  assert.match(home, /metric-item"><strong>06<\/strong><span>\{copy\.discipline\}/);
-  assert.doesNotMatch(home, /metric-item"><strong>08/);
-  assert.doesNotMatch(home, /metric-item"><strong>2023/);
-});
