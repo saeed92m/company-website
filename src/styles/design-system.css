@@ -310,3 +310,17 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .home-redesign .new-hero-intro { margin-top: 20px; }
   .home-redesign .new-hero-actions { gap: 14px; margin-top: 26px; }
 }
+
+
+/* Company registration details belong on the Company page, not the homepage. */
+.company-registration-fact {
+  margin: 1.25rem 0;
+  padding: .9rem 1rem;
+  border-inline-start: 3px solid var(--accent);
+  border-radius: .6rem;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.9;
+}
