@@ -1,3 +1,14 @@
+## 2026-11-05 — Visual review, legal-content accuracy, and self-hosted typography
+
+- The owner provisionally approved the current visual direction in PR [#86](https://github.com/saeed92m/company-website/pull/86). This approval does not authorize merge or Production deployment.
+- Added seven subsetted variable WOFF2 files for Vazirmatn (Arabic/Latin/Latin Extended) and IBM Plex Sans (Cyrillic/Cyrillic Extended/Latin/Latin Extended). Added the SIL Open Font License notices and source provenance in `docs/design/05-self-hosted-typography.md`.
+- Removed the external Google Fonts CSS dependency and its preconnect hints. The browser matrix now checks local font loading and external font requests.
+- Moved the founding month and Gazette notice from the homepage to the Company page. Removed the unsupported exact `foundingDate` value from Organization JSON-LD.
+- Kept statutory-scope claims off the public page until current official registration documents are verified. The Company page presents Motorsport & Performance Parts as a development-roadmap area, consistent with the supplied company profile.
+- Extended CodeQL and Dependency Security Audit pull-request triggers to stacked feature/design branches.
+- On latest PR #86 head `b6f530be6c74be32d9c920d44068764ca4636cb3`, CI passed **27/27 tests**, Astro check reported **0 errors and 0 warnings**, and the build generated **98 pages**. CodeQL passed. Dependency Audit reported **0 vulnerabilities** in both the full and production dependency graphs. Browser QA passed **288 PR-build route/viewport checks** (96 each in Chromium, Firefox, and WebKit), including local WOFF2 loading and no external Google Fonts requests. Cloudflare Preview deployment passed; the owner's reported network still could not establish a secure connection to that host. Supabase Preview was skipped; no database changes were made.
+- Production `main` remains `ecaa7ab5b931bd20691f5744298be1a34c151234`. No Production source or deployment was changed.
+
 ## 2026-11-05 — PR-build browser QA and project-card CSS defect
 
 - Updated PR [#81](https://github.com/saeed92m/company-website/pull/81) to test the built PR itself on `pull_request` events. The workflow builds with the production GitHub Pages base path and serves `dist` under `/company-website`; post-deployment runs continue to test Production.

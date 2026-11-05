@@ -1,0 +1,102 @@
+# Visual Prototype v2 — Structural Homepage Redesign
+
+## Status
+In progress on the review branch. This version replaces the previous token-only draft because it did not create a sufficiently distinct visual result.
+
+## Direction
+Technical editorial / research atlas. The design uses a clear typographic hierarchy, a restrained typographic hero, a clear section hierarchy, and an image-led six-domain index.
+
+## Scope
+- Recompose the homepage hero and navigation hierarchy. Remove decorative orbital graphics that do not explain a real company capability.
+- Present six activity areas in a bento-style grid with existing domain artwork.
+- Recompose projects, company overview, and contact call to action.
+- Keep all copy sourced from existing localized content.
+- Support all eight locales, with RTL for Persian and Arabic.
+- Keep the company logo artwork unchanged.
+- Maintain independent Night and Day palettes.
+
+## Non-goals
+- No change to company claims or legal identity.
+- No publication of project repository links.
+- No production merge before owner review.
+
+## Validation
+Build, Astro Check, unit tests, browser QA, mobile layout, eight locales, RTL/LTR, keyboard navigation, and color contrast must pass before the prototype is considered review-ready.
+
+## Typography decision — provisional approval (2026-11-05)
+
+The project owner has provisionally approved the following primary typefaces for the next design iteration:
+
+| Script / language use | Typeface | Decision |
+|---|---|---|
+| Persian (fa) | Vazirmatn | Provisionally approved |
+| English (en) | IBM Plex Sans | Provisionally approved |
+
+### Implementation constraints
+
+- Treat these as approved design choices for the prototype, not as an irreversible or production-final decision.
+- Do not silently substitute B Nazanin or Apple SF Pro.
+- Before enabling the fonts in production, verify the exact font files, license, required weights, subset coverage, file size, and self-hosting strategy.
+- Use appropriate script-specific fallbacks for Arabic and Chinese. Do not assume that Vazirmatn or IBM Plex Sans covers all eight supported locales.
+- Test Persian shaping, punctuation, numerals, mixed-direction text, headings, body copy, form controls, and navigation at mobile and desktop sizes.
+- Keep typography tokens centralized. Avoid hard-coding font-family declarations in individual components.
+- Compare rendering and readability in both Night and Day themes. Confirm layout stability and avoid font-induced cumulative layout shift.
+- The approved families are loaded in this prototype through the external CSS endpoint. Font binaries are not yet self-hosted in the repository.
+
+### Prototype implementation update (2026-11-05)
+
+- The homepage prototype now requests IBM Plex Sans (variable weight axis 400–700) for Latin/Cyrillic text and Vazirmatn (variable weight axis 400–900) for Persian text through the Google Fonts CSS endpoint.
+- Upstream Google Fonts metadata confirms IBM Plex Sans covers Cyrillic, Greek and Latin subsets; Vazirmatn covers Arabic and Latin subsets. Neither family is a complete Chinese typeface, so Chinese relies on the Noto Sans CJK SC/system fallback stack.
+- Arabic and Chinese use explicit script-aware fallback stacks (Noto Sans Arabic and Noto Sans CJK SC first, then the approved families and system fallback). Their actual font availability must be verified on target devices; these fallback names are not bundled by this change.
+- CI and browser QA now include stacked feature/design PR base branches. The repository workflow previously ran only for PRs targeting `main`, so PR #86 had no automated CI or cross-browser job while based on a feature branch.
+- This is a prototype implementation, not yet a self-hosted production font delivery. The current Google Fonts endpoint remains an external dependency. Production hardening must pin and self-host optimized WOFF2 assets, preserve the applicable OFL license notices, and remove the external font request.
+- The prototype applies soft-rounded geometry: 12px controls/buttons, 18px cards, and 24px major panels. This is a provisional visual treatment for owner review.
+- The upstream Google Fonts repository publishes OFL license files for both families: `ofl/vazirmatn/OFL.txt` and `ofl/ibmplexsans/OFL.txt`. Verify the exact upstream license and preserve notices when vendoring font files.
+
+### Next validation
+
+1. Replace the prototype Google Fonts request with optimized, self-hosted WOFF2 assets and include both OFL notices.
+2. Verify global font stacks and script-aware fallback stacks on real devices.
+3. Extend typography regression coverage and review visual samples for fa/en/ar/ru/de/zh/fr/es.
+4. Review real browser rendering before treating typography as production-ready.
+
+
+## Homepage content correction — 2026-11-05
+
+The owner reviewed the mobile preview and rejected two homepage metrics as irrelevant corporate claims:
+- The supported-locale count is a technical implementation detail. Keep locale selection in the site navigation; do not present the number of website languages as a company achievement or homepage metric.
+- The founding year is not a homepage metric. Present the founding and registration information in the Company / About section.
+
+The homepage does not present the supported-locale count or founding year as company metrics. The six activity areas remain a valid company fact and may appear as the single domain-count metric. The Company / About page presents the sourced founding month and official-gazette notice:
+- Persian: تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷
+- English: Founded: August 2023 · Official Gazette notice: 29 July 2023
+
+The eight locale strings are localized in the homepage component. The exact dates come from the supplied company profile; do not replace them with inferred dates or treat the Gazette notice date as the founding month.
+
+
+## Mobile design correction — 2026-11-05
+
+The owner rejected the oversized orbital hero illustration and its detached six-domain metric on mobile. Both elements have been removed from the homepage at all breakpoints. The hero now prioritizes the company proposition, introduction, and navigation actions. The mobile header hides the long legal wordmark beside the unchanged brand mark to prevent excessive wrapping and reduce the header height. This correction is specific to the homepage shell; inner-page templates still require a separate responsive review.
+
+## Owner visual review — provisional approval (2026-11-05)
+
+The project owner has provisionally approved the current visual direction and appearance for the next project stage.
+
+### Approval scope
+- Approval applies to the current visual presentation of the prototype.
+- Approval is provisional and may be revisited after content, responsive, accessibility, localization, and real-device reviews.
+- This approval does not certify production readiness.
+- This approval does not authorize merging any pull request or deploying to Production.
+- The Production branch and its GitHub Pages deployment remain unchanged until the owner gives separate release authorization.
+
+### Remaining acceptance work
+- Complete responsive review of all page templates, not only the homepage.
+- Verify all eight locales and RTL/LTR behavior on representative devices.
+- Complete accessibility, contrast, keyboard, SEO, performance, and security checks.
+- Replace external Google Fonts delivery with licensed, self-hosted WOFF2 assets before Production.
+- Confirm the production deployment and rollback path.
+- Validate access from target user networks without VPN, including the previously reported mobile-network failure of the Cloudflare Preview host.
+
+## Legal-scope clarification — 2026-11-05
+
+The supplied company profile distinguishes the six public activity areas from the narrower registered scope. The Company / About page now states the registered R&D scope separately: astronomy, aerospace, renewable energy, and artificial intelligence. It also states that remote sensing is not listed in the current registered scope and that motorsport/performance parts remain on the development roadmap pending formal addition to the articles of association. Do not describe all six activity areas as the company's registered legal scope.

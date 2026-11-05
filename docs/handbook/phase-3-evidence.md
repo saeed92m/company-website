@@ -29,3 +29,15 @@ Phase 3 continues the production-facing multilingual frontend after the initial 
 - Sitemap and robots configuration after the canonical domain is known.
 - Public contact workflow after corporate email architecture is operational.
 - Final brand asset decision remains pending; the currently supplied image is an Alpha Team logo/color reference, not an approved PNFK corporate wordmark.
+
+## 2026-11-05 — Visual direction and typography hardening
+
+- The owner provisionally approved the current visual direction and appearance in PR [#86](https://github.com/saeed92m/company-website/pull/86). This is design approval only; it does not authorize merge or Production deployment.
+- The homepage is content-first. The oversized orbital illustration and vanity-metric strip remain removed.
+- The founding month and official-gazette notice now appear on the Company page, not on the homepage. Organization JSON-LD no longer claims an exact founding date because the supplied profile supports a month, not an exact founding day.
+- Seven subsetted variable WOFF2 assets are self-hosted for Vazirmatn (Arabic, Latin, Latin Extended) and IBM Plex Sans (Cyrillic, Cyrillic Extended, Latin, Latin Extended). The original SIL Open Font License notices are committed. Google Fonts runtime requests have been removed.
+- Chinese remains on a script-aware system fallback stack. Its actual glyph coverage must be checked on target devices; no CJK font binary is bundled.
+- Motorsport and Performance Parts are presented as a development-roadmap area. The public page does not publish a statutory registered-scope claim until current official registration documents are verified.
+- Current prototype branch: `design/visual-system-prototype-2026-11-05`. Latest PR #86 head: `b6f530be6c74be32d9c920d44068764ca4636cb3`. PR #86 remains open and unmerged. Production `main` is unchanged.
+- Latest-head CI passed 27/27 tests, Astro check (0 errors, 0 warnings), and a 98-page build. CodeQL passed. Dependency Audit reported zero vulnerabilities. PR-build Browser QA passed 288 route/viewport checks (96 each in Chromium, Firefox, and WebKit).
+- Typography source provenance, subset mapping, and remaining validation are recorded in `docs/design/05-self-hosted-typography.md`.
