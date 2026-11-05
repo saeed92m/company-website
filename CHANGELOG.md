@@ -4,7 +4,7 @@
 - Added seven subsetted variable WOFF2 files for Vazirmatn (Arabic/Latin/Latin Extended) and IBM Plex Sans (Cyrillic/Cyrillic Extended/Latin/Latin Extended). Added the SIL Open Font License notices and source provenance in `docs/design/05-self-hosted-typography.md`.
 - Removed the external Google Fonts CSS dependency and its preconnect hints. The browser matrix now checks local font loading and external font requests.
 - Moved the founding month and Gazette notice from the homepage to the Company page. Removed the unsupported exact `foundingDate` value from Organization JSON-LD.
-- Added a localized registered-scope disclosure. The site now distinguishes six public activity areas from the narrower registered R&D scope and the motorsport roadmap.
+- Kept statutory-scope claims off the public page until current official registration documents are verified. The Company page presents Motorsport & Performance Parts as a development-roadmap area, consistent with the supplied company profile.
 - Extended CodeQL and Dependency Security Audit pull-request triggers to stacked feature/design branches.
 - On the typography and legal-content checkpoint, CI passed **27/27 tests**, Astro check reported **0 errors and 0 warnings**, and the build generated **98 pages**. Browser QA is being rerun on the latest PR head; no pass is claimed until all three engines complete.
 - Production `main` remains `ecaa7ab5b931bd20691f5744298be1a34c151234`. No Production source or deployment was changed.
