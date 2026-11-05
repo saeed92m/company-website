@@ -4,10 +4,10 @@
 In progress on the review branch. This version replaces the previous token-only draft because it did not create a sufficiently distinct visual result.
 
 ## Direction
-Technical editorial / research atlas. The design uses a clear typographic hierarchy, a central orbital identity diagram, a clear section hierarchy, and an image-led six-domain index.
+Technical editorial / research atlas. The design uses a clear typographic hierarchy, a restrained typographic hero, a clear section hierarchy, and an image-led six-domain index.
 
 ## Scope
-- Recompose the homepage hero and navigation hierarchy.
+- Recompose the homepage hero and navigation hierarchy. Remove decorative orbital graphics that do not explain a real company capability.
 - Present six activity areas in a bento-style grid with existing domain artwork.
 - Recompose projects, company overview, and contact call to action.
 - Keep all copy sourced from existing localized content.
@@ -72,3 +72,8 @@ The homepage does not present the supported-locale count or founding year as com
 - English: Founded: August 2023 · Official Gazette notice: 29 July 2023
 
 The eight locale strings are localized in the homepage component. The exact dates come from the supplied company profile; do not replace them with inferred dates or treat the Gazette notice date as the founding month.
+
+
+## Mobile design correction — 2026-11-05
+
+The owner rejected the oversized orbital hero illustration and its detached six-domain metric on mobile. Both elements have been removed from the homepage at all breakpoints. The hero now prioritizes the company proposition, introduction, and navigation actions. The mobile header hides the long legal wordmark beside the unchanged brand mark to prevent excessive wrapping and reduce the header height. This correction is specific to the homepage shell; inner-page templates still require a separate responsive review.
