@@ -15,15 +15,15 @@ const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
 
-const visualLabels: Record<Locale, { discipline: string; languages: string; founded: string; explore: string; focus: string; overview: string }> = {
-  fa: { discipline: "حوزهٔ تخصصی", languages: "زبان وب‌سایت", founded: "سال تأسیس", explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
-  en: { discipline: "Technical domains", languages: "Website languages", founded: "Established", explore: "Explore domain", focus: "RESEARCH · ENGINEERING · DEVELOPMENT", overview: "From scientific research to engineered solutions" },
-  ar: { discipline: "مجالات التخصص", languages: "لغات الموقع", founded: "سنة التأسيس", explore: "استكشف المجال", focus: "البحث · الهندسة · التطوير", overview: "من البحث العلمي إلى الحلول الهندسية" },
-  ru: { discipline: "Направления", languages: "Языки сайта", founded: "Год основания", explore: "Подробнее", focus: "ИССЛЕДОВАНИЯ · ИНЖЕНЕРИЯ · РАЗРАБОТКА", overview: "От научных исследований к инженерным решениям" },
-  de: { discipline: "Fachgebiete", languages: "Website-Sprachen", founded: "Gegründet", explore: "Bereich ansehen", focus: "FORSCHUNG · ENGINEERING · ENTWICKLUNG", overview: "Von wissenschaftlicher Forschung zu technischen Lösungen" },
-  zh: { discipline: "技术领域", languages: "网站语言", founded: "成立年份", explore: "了解领域", focus: "研究 · 工程 · 开发", overview: "从科学研究到工程解决方案" },
-  fr: { discipline: "Domaines techniques", languages: "Langues du site", founded: "Fondée en", explore: "Explorer", focus: "RECHERCHE · INGÉNIERIE · DÉVELOPPEMENT", overview: "De la recherche scientifique aux solutions d’ingénierie" },
-  es: { discipline: "Áreas técnicas", languages: "Idiomas del sitio", founded: "Fundada en", explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
+const visualLabels: Record<Locale, { discipline: string; registration: string; explore: string; focus: string; overview: string }> = {
+  fa: { discipline: "حوزهٔ تخصصی", registration: "تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷", explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
+  en: { discipline: "Technical domains", registration: "Founded: August 2023 · Official Gazette notice: 29 July 2023", explore: "Explore domain", focus: "RESEARCH · ENGINEERING · DEVELOPMENT", overview: "From scientific research to engineered solutions" },
+  ar: { discipline: "مجالات التخصص", registration: "تأسست في أغسطس 2023 · إعلان الجريدة الرسمية: 29 يوليو 2023", explore: "استكشف المجال", focus: "البحث · الهندسة · التطوير", overview: "من البحث العلمي إلى الحلول الهندسية" },
+  ru: { discipline: "Направления", registration: "Основана в августе 2023 года · публикация в официальном вестнике: 29 июля 2023 года", explore: "Подробнее", focus: "ИССЛЕДОВАНИЯ · ИНЖЕНЕРИЯ · РАЗРАБОТКА", overview: "От научных исследований к инженерным решениям" },
+  de: { discipline: "Fachgebiete", registration: "Gegründet im August 2023 · Bekanntmachung im Amtsblatt: 29. Juli 2023", explore: "Bereich ansehen", focus: "FORSCHUNG · ENGINEERING · ENTWICKLUNG", overview: "Von wissenschaftlicher Forschung zu technischen Lösungen" },
+  zh: { discipline: "技术领域", registration: "成立于 2023 年 8 月 · 官方公报公告日期：2023 年 7 月 29 日", explore: "了解领域", focus: "研究 · 工程 · 开发", overview: "从科学研究到工程解决方案" },
+  fr: { discipline: "Domaines techniques", registration: "Fondée en août 2023 · avis au Journal officiel : 29 juillet 2023", explore: "Explorer", focus: "RECHERCHE · INGÉNIERIE · DÉVELOPPEMENT", overview: "De la recherche scientifique aux solutions d’ingénierie" },
+  es: { discipline: "Áreas técnicas", registration: "Fundada en agosto de 2023 · anuncio en el Boletín Oficial: 29 de julio de 2023", explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
 };
 const copy = visualLabels[locale];
 const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
@@ -60,12 +60,6 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
         <span class="orbit-coordinate">KEYHAN / R&D</span>
       </div>
 
-      <div class="new-metrics" aria-label={copy.overview}>
-        <div class="metric-item"><strong>06</strong><span>{copy.discipline}</span></div>
-        <div class="metric-item"><strong>08</strong><span>{copy.languages}</span></div>
-        <div class="metric-item"><strong>{site.founded.replace(/[^0-9]/g, "").slice(0,4) || "2023"}</strong><span>{copy.founded}</span></div>
-        <div class="metric-index">01 <span>/ 03</span></div>
-      </div>
     </section>
 
     <section class="new-domains" id="fields" aria-labelledby="fields-title">
@@ -96,7 +90,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-company" id="company" aria-labelledby="company-title">
       <div class="site-shell new-company-inner">
         <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
-        <div class="new-company-detail"><p>{site.intro}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
+        <div class="new-company-detail"><p>{site.intro}</p><p class="new-registration-fact">{copy.registration}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
