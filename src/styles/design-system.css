@@ -1,0 +1,337 @@
+/* Shared design tokens: approved brand colors + independently authored themes. */
+:root {
+  --brand-blue: #003c91;
+  --brand-gray: #a8a8a8;
+  --page: #07111f;
+  --surface: #0c1a2b;
+  --ink: #f1f5fb;
+  --muted: #b1bfd1;
+  --accent: #8abaff;
+  --link: #a8ccff;
+  --focus: #a8d0ff;
+  --control-height: 48px;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px;
+  --space-20: 80px; --space-24: 96px; --space-32: 128px;
+  font-family: "IBM Plex Sans", "Vazirmatn", "Noto Sans Arabic", "Noto Sans CJK SC", system-ui, sans-serif;
+  --font-latin: "IBM Plex Sans", system-ui, sans-serif;
+  --font-persian: "Vazirmatn", "Noto Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-arabic: "Vazirmatn", "Noto Sans Arabic", "IBM Plex Sans", system-ui, sans-serif;
+  --font-cjk: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", "SimSun", "IBM Plex Sans", system-ui, sans-serif;
+  --radius-control: 12px;
+  --radius-card: 18px;
+  --radius-panel: 24px;
+}
+html[data-theme="light"] {
+  --page: #f5f7fb;
+  --surface: #ffffff;
+  --ink: #14243a;
+  --muted: #526176;
+  --accent: #003c91;
+  --link: #003c91;
+  --focus: #005fcc;
+}
+.site-header {
+  min-height: 76px;
+  gap: clamp(12px, 2vw, 28px);
+  padding-block: 12px;
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--page) 94%, transparent);
+}
+.brand { gap: 12px; max-width: min(34%, 340px); }
+.brand-mark { width: 42px; flex: 0 0 42px; }
+.brand-wordmark { font-size: 12px; font-weight: 750; line-height: 1.45; letter-spacing: 0; }
+.primary-nav { gap: clamp(12px, 1.5vw, 24px); }
+.primary-nav a { min-height: 44px; display: inline-flex; align-items: center; font-size: 13px; }
+.language-select select, .theme-toggle { min-height: 44px; padding: 8px 12px; font-size: 12px; }
+button, select { min-height: 44px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+@media (max-width: 720px) {
+  .site-header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-block: 10px; }
+  .brand { min-width: 0; gap: 8px; }
+  .brand-mark { width: 34px; flex-basis: 34px; }
+  .brand-wordmark { max-width: 10rem; font-size: 11px; }
+  .primary-nav { grid-column: 1 / -1; order: 0; justify-content: flex-start; gap: 14px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+  .primary-nav a { white-space: nowrap; font-size: 12px; }
+  .header-tools { justify-self: end; gap: 6px; }
+  .language-select select, .theme-toggle { min-height: 44px; padding-inline: 9px; font-size: 11px; }
+}
+
+/* Visual direction v2: technical editorial / research atlas.
+   This is a structural redesign of the homepage, not only a token layer. */
+.home-redesign {
+  --rd-bg: #070e18;
+  --rd-panel: #0d1a2a;
+  --rd-panel-2: #10243a;
+  --rd-ink: #f1f5fa;
+  --rd-muted: #aebdce;
+  --rd-line: rgba(174, 196, 222, .18);
+  --rd-blue: #003c91;
+  --rd-accent: #86b8f5;
+  color: var(--rd-ink);
+  background: var(--rd-bg);
+  overflow: clip;
+}
+html[data-theme="light"] .home-redesign {
+  --rd-bg: #f4f6f9;
+  --rd-panel: #fff;
+  --rd-panel-2: #e9eff6;
+  --rd-ink: #14243a;
+  --rd-muted: #526176;
+  --rd-line: rgba(20, 36, 58, .16);
+  --rd-blue: #003c91;
+  --rd-accent: #003c91;
+}
+.home-redesign .new-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  min-height: auto;
+  padding-block: clamp(72px, 10vw, 128px) clamp(64px, 8vw, 104px);
+}
+.home-redesign .new-hero:before { content: none; }
+.home-redesign .new-hero-copy { position: relative; z-index: 2; max-width: 860px; }
+.home-redesign .new-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px;
+  color: var(--rd-accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.home-redesign[dir="rtl"] .new-kicker { letter-spacing: 0; }
+.home-redesign .kicker-rule { display: inline-block; width: 30px; height: 1px; background: var(--rd-accent); }
+.home-redesign .new-company-name {
+  max-width: 44ch;
+  margin: 0 0 18px;
+  color: var(--rd-muted);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+.home-redesign .new-hero h1 {
+  max-width: 13ch;
+  margin: 0;
+  color: var(--rd-ink);
+  font-size: clamp(48px, 6.2vw, 88px);
+  font-weight: 750;
+  letter-spacing: -.055em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.home-redesign[dir="rtl"] .new-hero h1 {
+  max-width: 14ch;
+  font-size: clamp(42px, 5.5vw, 76px);
+  letter-spacing: 0;
+  line-height: 1.42;
+}
+.home-redesign .new-hero-intro {
+  max-width: 62ch;
+  margin: 28px 0 0;
+  color: var(--rd-muted);
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.95;
+}
+.home-redesign .new-hero-actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 36px; }
+.home-redesign .new-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  min-height: 54px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 800;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.home-redesign .new-button:hover { transform: translateY(-2px); }
+.home-redesign .new-button-primary { color: #fff; background: #003c91; }
+.home-redesign .new-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px;
+  color: var(--rd-ink);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  border-bottom: 1px solid var(--rd-line);
+}
+.home-redesign .new-text-link:hover { color: var(--rd-accent); border-color: var(--rd-accent); }
+.home-redesign .new-domains { padding-block: clamp(80px, 10vw, 136px); background: var(--rd-panel); }
+.home-redesign .new-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr);
+  gap: 56px;
+  align-items: end;
+  margin-bottom: 42px;
+}
+.home-redesign .new-section-head .new-kicker { margin-bottom: 20px; }
+.home-redesign .new-section-head h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--rd-ink);
+  font-size: clamp(34px, 4.2vw, 58px);
+  letter-spacing: -.04em;
+  line-height: 1.15;
+}
+.home-redesign[dir="rtl"] .new-section-head h2 { letter-spacing: 0; line-height: 1.5; }
+.home-redesign .new-section-head > p { margin: 0; color: var(--rd-muted); font-size: 14px; line-height: 1.9; }
+.home-redesign .new-domain-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.home-redesign .new-domain-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--rd-line);
+  background: var(--rd-bg);
+  color: var(--rd-ink);
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  transition: border-color .22s ease, transform .22s ease;
+}
+.home-redesign .new-domain-card:before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background-image: var(--domain-art);
+  background-size: cover;
+  background-position: center;
+  opacity: .3;
+  filter: grayscale(.25);
+  transition: transform .35s ease, opacity .35s ease;
+}
+.home-redesign .new-domain-card:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rd-bg) 15%, transparent), color-mix(in srgb, var(--rd-bg) 94%, transparent));
+}
+.home-redesign .new-domain-card:hover { transform: translateY(-4px); border-color: var(--rd-accent); }
+.home-redesign .new-domain-card:hover:before { transform: scale(1.06); opacity: .48; }
+.home-redesign .domain-featured { grid-row: span 2; min-height: 572px; }
+.home-redesign .domain-card-top { display: flex; justify-content: space-between; align-items: center; }
+.home-redesign .domain-number { color: var(--rd-accent); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.home-redesign .domain-arrow { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--rd-line); border-radius: 50%; }
+.home-redesign .domain-card-bottom { display: grid; gap: 12px; max-width: 34ch; }
+.home-redesign .domain-card-bottom strong { font-size: clamp(23px, 2.4vw, 32px); font-weight: 750; line-height: 1.25; }
+.home-redesign .domain-card-bottom > span:not(.domain-explore) { color: var(--rd-muted); font-size: 13px; line-height: 1.8; }
+.home-redesign .domain-explore { display: inline-flex; align-items: center; gap: 10px; margin-top: 8px; color: var(--rd-accent); font-size: 11px; font-weight: 800; }
+.home-redesign .new-projects { padding-block: clamp(80px, 10vw, 136px); }
+.home-redesign .new-projects .project-card {
+  border: 1px solid var(--rd-line);
+  border-radius: var(--radius-control);
+  background: var(--rd-panel);
+  border-radius: var(--radius-card);
+  box-shadow: none;
+  padding: 28px;
+  min-height: 260px;
+}
+.home-redesign .new-projects .project-card h3 { color: var(--rd-ink); font-size: 24px; }
+.home-redesign .new-projects .project-card p { color: var(--rd-muted); font-size: 14px; line-height: 1.8; }
+.home-redesign .new-projects .project-card .button { border-radius: var(--radius-control); }
+.home-redesign .new-company { padding-block: clamp(72px, 9vw, 120px); border-block: 1px solid var(--rd-line); background: var(--rd-panel); }
+.home-redesign .new-company-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .8fr); gap: 64px; }
+.home-redesign .new-company h2 { max-width: 17ch; margin: 0; color: var(--rd-ink); font-size: clamp(30px, 3.8vw, 52px); line-height: 1.3; overflow-wrap: anywhere; }
+.home-redesign .new-company-detail p { color: var(--rd-muted); font-size: 16px; line-height: 1.9; }
+.home-redesign .new-company-detail .new-registration-fact { margin-top: 22px; padding: 14px 16px; border-inline-start: 3px solid var(--rd-accent); background: var(--rd-bg); color: var(--rd-ink); font-size: 13px; font-weight: 700; line-height: 1.9; }
+.home-redesign .new-company-detail .new-founder { margin-top: 24px; color: var(--rd-ink); font-weight: 750; }
+.home-redesign .new-contact { padding-block: 60px 80px; }
+.home-redesign .new-contact-panel {
+  border-radius: var(--radius-panel);
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 36px;
+  padding: clamp(30px, 5vw, 64px);
+  color: #fff;
+  background: #003c91;
+}
+.home-redesign .new-contact-panel .new-kicker { color: #d7e7ff; }
+.home-redesign .new-contact-panel .kicker-rule { background: #d7e7ff; }
+.home-redesign .new-contact-panel h2 { max-width: 16ch; margin: 0 0 16px; font-size: clamp(30px, 4vw, 52px); line-height: 1.2; }
+.home-redesign .new-contact-panel p:not(.new-kicker) { max-width: 52ch; color: #e0ebf8; font-size: 14px; }
+.home-redesign .new-button-light { color: #003c91; background: #fff; white-space: nowrap; }
+html[data-theme="light"] .home-redesign .new-domains { background: #e9eff6; }
+html[data-theme="light"] .home-redesign .new-domain-card { --rd-accent: #9cc8ff; background: #14243a; color: #fff; }
+html[data-theme="light"] .home-redesign .new-domain-card:after { background: linear-gradient(180deg, rgba(9,19,32,.12), rgba(9,19,32,.96)); }
+html[data-theme="light"] .home-redesign .new-domain-card .domain-card-bottom > span:not(.domain-explore) { color: #d3deeb; }
+html[data-theme="light"] .home-redesign .new-domain-card .domain-card-bottom strong { color: #fff; }
+html[data-theme="light"] .home-redesign .new-company { background: #fff; }
+html[data-theme="light"] .home-redesign .new-projects .project-card { background: #fff; }
+html[data-theme="light"] .home-redesign .new-projects .project-card h3 { color: #14243a; }
+html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #526176; }
+@media (max-width: 1000px) {
+  .home-redesign .new-hero { grid-template-columns: 1fr; min-height: auto; }
+  .home-redesign .new-section-head { grid-template-columns: 1fr; gap: 18px; }
+  .home-redesign .new-company-inner { grid-template-columns: 1fr; gap: 24px; }
+}
+@media (max-width: 700px) {
+  .home-redesign .new-hero { padding-top: 44px; }
+  .home-redesign .new-hero h1 { font-size: clamp(40px, 12vw, 58px); }
+  .home-redesign[dir="rtl"] .new-hero h1 { font-size: clamp(34px, 10vw, 48px); }
+  .home-redesign .new-domain-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .home-redesign .new-domain-card { min-height: 230px; padding: 14px; }
+  .home-redesign .domain-featured { grid-row: span 1; min-height: 270px; }
+  .home-redesign .domain-card-bottom strong { font-size: 20px; }
+  .home-redesign .domain-card-bottom > span:not(.domain-explore) { font-size: 11px; }
+  .home-redesign .new-projects .project-grid { grid-template-columns: 1fr; }
+  .home-redesign .new-projects .project-card { padding: 22px; }
+  .home-redesign .new-contact-panel { align-items: stretch; flex-direction: column; }
+  .home-redesign .new-button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-redesign *, .home-redesign *:before, .home-redesign *:after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+
+
+/* Mobile header: keep the brand mark and navigation clear without a tall wrapped legal wordmark. */
+@media (max-width: 700px) {
+  .site-header { row-gap: 10px; }
+  .site-header .brand-wordmark { display: none; }
+  .site-header .brand-mark { width: 38px; flex-basis: 38px; }
+  .site-header .primary-nav { min-height: 40px; align-items: center; }
+  .home-redesign .new-hero { padding-block: 42px 64px; }
+  .home-redesign .new-hero-copy { max-width: 100%; }
+  .home-redesign .new-hero-intro { margin-top: 20px; }
+  .home-redesign .new-hero-actions { gap: 14px; margin-top: 26px; }
+}
+
+
+/* Company registration details belong on the Company page, not the homepage. */
+.company-registration-fact {
+  margin: 1.25rem 0;
+  padding: .9rem 1rem;
+  border-inline-start: 3px solid var(--accent);
+  border-radius: .6rem;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: .9rem;
+  font-weight: 700;
+  line-height: 1.9;
+}
+
+
+
+/* State the supplied development-roadmap item without publishing an unverified statutory-scope claim. */
+.company-roadmap-note {
+  max-width: 76ch;
+  margin: 1rem 0 1.5rem;
+  color: var(--muted);
+  font-size: .9rem;
+  line-height: 1.9;
+}

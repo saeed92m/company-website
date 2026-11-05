@@ -2,7 +2,7 @@ name: Browser QA
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**', 'design/**']
   workflow_run:
     workflows: ["Deploy GitHub Pages"]
     types: [completed]
@@ -47,6 +47,10 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: |
           set -euo pipefail
+          echo "Built WOFF2 assets:"
+          find dist -type f -name '*.woff2' -printf '%P %s bytes\n' | sort
+          echo "Built CSS font references:"
+          grep -R -n -m 2 'Vazirmatn\|IBM Plex Sans' dist/_astro --include='*.css' | head -20 || true
           mkdir -p /tmp/company-website-preview
           ln -s "$GITHUB_WORKSPACE/dist" /tmp/company-website-preview/company-website
           python3 -m http.server 4321 --bind 127.0.0.1 --directory /tmp/company-website-preview > /tmp/company-website-preview.log 2>&1 &
@@ -97,6 +101,15 @@ jobs:
               for (const suffix of routes) {
                 const url = `${base}/${locale}/${suffix}`;
                 const page = await context.newPage();
+                let externalFontRequest = false;
+                const fontResponses = [];
+                page.on("request", (request) => {
+                  const requestUrl = new URL(request.url());
+                  if (["fonts.googleapis.com", "fonts.gstatic.com"].includes(requestUrl.hostname)) externalFontRequest = true;
+                });
+                page.on("response", (fontResponse) => {
+                  if (fontResponse.url().split("?")[0].endsWith(".woff2")) fontResponses.push({ url: fontResponse.url(), status: fontResponse.status() });
+                });
                 let response;
                 let lastError;
                 for (let attempt = 1; attempt <= 4; attempt++) {
@@ -114,7 +127,12 @@ jobs:
                 }
                 if (!response || !response.ok()) throw lastError || new Error(`${url}: request failed after 4 attempts`);
 
-                const checks = await page.evaluate(() => ({
+                const checks = await page.evaluate(async (locale) => {
+                  const fontFamily = ["fa", "ar"].includes(locale) ? "Vazirmatn" : locale === "zh" ? null : "IBM Plex Sans";
+                  const fontSample = locale === "fa" || locale === "ar" ? "سلام" : locale === "ru" ? "Привет" : "Company";
+                  const loadedFontFaces = fontFamily ? await document.fonts.load(`16px "${fontFamily}"`, fontSample) : [];
+                  await document.fonts.ready;
+                  return ({
                   dir: document.documentElement.dir,
                   lang: document.documentElement.lang,
                   title: document.title,
@@ -130,10 +148,24 @@ jobs:
                   unnamedLinks: [...document.querySelectorAll("a")].filter((a) => !(a.textContent || "").trim() && !a.getAttribute("aria-label") && !a.querySelector("img[alt]")).length,
                   unlabeledImages: [...document.querySelectorAll("img")].filter((img) => !img.hasAttribute("alt")).length,
                   unlabeledControls: [...document.querySelectorAll("button")].filter((el) => !(el.textContent || "").trim() && !el.getAttribute("aria-label")).length + [...document.querySelectorAll("select")].filter((el) => !el.getAttribute("aria-label") && !el.closest("label")).length,
-                }));
+                  fontFamily,
+                  fontLoaded: fontFamily ? document.fonts.check(`16px "${fontFamily}"`, fontSample) && loadedFontFaces.length > 0 : null,
+                  loadedFontFaces: loadedFontFaces.map((face) => ({ family: face.family, status: face.status, weight: face.weight })),
+                  registeredFontFaces: [...document.fonts].map((face) => ({ family: face.family, status: face.status, weight: face.weight })),
+                  fontStack: document.body ? getComputedStyle(document.body).fontFamily : ""
+                });
+                }, locale);
 
                 if (!checks.title || !checks.hasMain || !checks.hasHeader || !checks.hasBrand || !checks.hasStyles || !checks.visibleText || checks.h1Count !== 1 || !checks.hasSkipLink || !checks.hasPrimaryNavLabel || checks.unnamedLinks || checks.unlabeledImages || checks.unlabeledControls) {
                   throw new Error(`${url} [${viewport.name}]: structural check failed: ${JSON.stringify(checks)}`);
+                }
+                if (externalFontRequest) throw new Error(`${url}: external Google Fonts request detected`);
+                if (fontResponses.some((item) => ![200, 304].includes(item.status))) throw new Error(`${url}: WOFF2 request failed: ${JSON.stringify(fontResponses)}`);
+                if (checks.fontFamily && (!checks.fontLoaded || fontResponses.length === 0)) {
+                  throw new Error(`${url}: expected self-hosted ${checks.fontFamily} font to load; checks=${JSON.stringify(checks)}; responses=${JSON.stringify(fontResponses)}`);
+                }
+                if (locale === "zh" && !checks.fontStack.includes("Noto Sans CJK SC")) {
+                  throw new Error(`${url}: Chinese fallback stack is missing Noto Sans CJK SC`);
                 }
                 await page.keyboard.press("Tab");
                 const focused = await page.evaluate(() => document.activeElement?.matches('a.skip-link'));

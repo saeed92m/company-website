@@ -10,6 +10,7 @@ import { webLogoUrl } from "../data/brand";
 import { formatFounded } from "../utils/date-format";
 import BrandMark from "../components/BrandMark.astro";
 import "../styles/global.css";
+import "../styles/design-system.css";
 import "../styles/screenshot-review.css";
 
 interface Props {
@@ -53,7 +54,6 @@ const organization = {
   "alternateName": "Pishgaman Novandish Fannavargostar Keyhan",
   "url": origin,
   ...(logoUrl ? { "logo": logoUrl } : {}),
-  "foundingDate": "2023-07-29",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Tabriz",
@@ -107,8 +107,6 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title ?? site.companyName}</title>
     <meta name="theme-color" content="#07111f" data-theme-color />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <meta name="author" content={profile.name} />
     <link rel="icon" type="image/svg+xml" href={webLogoUrl} />
     <meta name="description" content={description ?? site.intro} />

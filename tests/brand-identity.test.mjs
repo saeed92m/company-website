@@ -19,6 +19,6 @@ test("the legal company name is the shared website and social identity", () => {
 });
 
 test("the homepage presents the registered company name before the tagline", () => {
-  assert.match(home, /hero-company-name">\{site\.companyName\}/);
+  assert.match(home, /new-company-name">\{site\.companyName\}/);
   assert.doesNotMatch(home, /ALPHA TEAM/);
 });
