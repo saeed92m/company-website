@@ -84,23 +84,27 @@ const copy = labels[locale];
     const settings = root.querySelector("[data-consent-settings]");
     const storageKey = "pnfk-analytics-consent-v1";
 
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.__pnfkAnalyticsGranted = false;
+    window.gtag("consent", "default", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      functionality_storage: "denied",
+      personalization_storage: "denied",
+      security_storage: "granted"
+    });
+
     const startAnalytics = () => {
       if (window.__pnfkAnalyticsStarted) {
-        if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "granted" });
+        window.__pnfkAnalyticsGranted = true;
+        window.gtag("consent", "update", { analytics_storage: "granted" });
         return;
       }
       window.__pnfkAnalyticsStarted = true;
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function () { window.dataLayer.push(arguments); };
-      window.gtag("consent", "default", {
-        analytics_storage: "denied",
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
-        functionality_storage: "denied",
-        personalization_storage: "denied",
-        security_storage: "granted"
-      });
+      window.__pnfkAnalyticsGranted = true;
       window.gtag("consent", "update", { analytics_storage: "granted" });
       window.gtag("js", new Date());
       window.gtag("config", measurementId, {
@@ -133,7 +137,7 @@ const copy = labels[locale];
     });
     reject?.addEventListener("click", () => {
       saveChoice("rejected");
-      if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "denied" });
+      window.__pnfkAnalyticsGranted = false;\n      window.gtag("consent", "update", { analytics_storage: "denied" });
       document.cookie.split(";").forEach((cookie) => {
         const name = cookie.split("=")[0].trim();
         if (name === "_ga" || name.startsWith("_ga_")) {
@@ -148,7 +152,7 @@ const copy = labels[locale];
     });
 
     document.addEventListener("click", (event) => {
-      if (typeof window.gtag !== "function" || !(event.target instanceof Element)) return;
+      if (!window.__pnfkAnalyticsGranted || typeof window.gtag !== "function" || !(event.target instanceof Element)) return;
       const link = event.target.closest("a[href]");
       if (!link) return;
       const href = link.getAttribute("href") || "";
