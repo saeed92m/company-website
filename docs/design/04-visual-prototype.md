@@ -45,7 +45,8 @@ The project owner has provisionally approved the following primary typefaces for
 
 ### Prototype implementation update (2026-11-05)
 
-- The homepage prototype now requests IBM Plex Sans for Latin/Cyrillic text and Vazirmatn for Persian text through the Google Fonts CSS endpoint.
+- The homepage prototype now requests IBM Plex Sans (variable weight axis 400–700) for Latin/Cyrillic text and Vazirmatn (variable weight axis 400–900) for Persian text through the Google Fonts CSS endpoint.
+- Upstream Google Fonts metadata confirms IBM Plex Sans covers Cyrillic, Greek and Latin subsets; Vazirmatn covers Arabic and Latin subsets. Neither family is a complete Chinese typeface, so Chinese relies on the Noto Sans CJK SC/system fallback stack.
 - Arabic and Chinese use explicit script-aware fallback stacks (Noto Sans Arabic and Noto Sans CJK SC first, then the approved families and system fallback). Their actual font availability must be verified on target devices; these fallback names are not bundled by this change.
 - CI and browser QA now include stacked feature/design PR base branches. The repository workflow previously ran only for PRs targeting `main`, so PR #86 had no automated CI or cross-browser job while based on a feature branch.
 - This is a prototype implementation, not yet a self-hosted production font delivery. The current Google Fonts endpoint remains an external dependency. Production hardening must pin and self-host optimized WOFF2 assets, preserve the applicable OFL license notices, and remove the external font request.
