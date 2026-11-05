@@ -42,7 +42,7 @@ test("day theme accent and link colors meet WCAG AA for small text", () => {
   assert.ok(ratio(getColor("link", 'html[data-theme="light"] {'), getColor("surface", 'html[data-theme="light"] {')) >= 4.5);
 });
 test("homepage is a structural redesign, not only a token override", () => {
-  for (const selector of ["new-hero", "orbit-visual", "new-metrics", "new-domain-grid", "new-projects", "new-company"]) {
+  for (const selector of ["new-hero", "orbit-visual", "new-domain-grid", "new-projects", "new-company"]) {
     assert.ok(home.includes(selector), `homepage is missing ${selector}`);
     assert.ok(css.includes(`.home-redesign .${selector}`) || css.includes(`.home-redesign .new-domain-grid`), `stylesheet is missing design rules for ${selector}`);
   }
@@ -84,7 +84,7 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
   assert.ok(ratio(accent, "#14243a") >= 4.5, "domain-card accent must meet WCAG AA");
 });
 
-test("homepage does not present website locale count or founding year as vanity metrics", () => {
+test("homepage has no vanity metrics and keeps registration details in the company section", () => {
   assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
   assert.doesNotMatch(home, /metric-item"><strong>08/);
   assert.doesNotMatch(home, /site\.founded\.replace/);
