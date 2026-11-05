@@ -41,6 +41,18 @@ These source searches are useful signals only. They do not prove that no credent
 
 The static architecture reduces the application's direct attack surface. It does not remove risks in the source repository, deployment pipeline, hosting platform, DNS, or future integrations.
 
+### Cloudflare account and Pages preview
+
+- The connected Cloudflare identity is the account's only listed member and has the **Super Administrator — All Privileges** role. The account member record reports `two_factor_authentication_enabled: false`. This is an account-security gap; enable MFA for the Cloudflare login before using it for production administration. The connector does not provide a safe way to enroll the user's authenticator or recovery method.
+- The account's Zone inventory is empty. Therefore, no customer-owned domain/zone is available in this account for DNS, zone-level WAF, or zone security-header configuration. This does not mean Cloudflare's platform-wide protections for `pages.dev` are absent; it means custom zone controls cannot be verified or configured from this account state.
+- The only Pages project is `company-website-preview`, linked to `saeed92m/company-website`. Its only configured domain is `company-website-preview.pages.dev`.
+- The project is configured for preview deployments. `production_deployments_enabled` is `false`; the most recent deployment inspected is a successful **preview** deployment from PR #88's security branch. This confirms Cloudflare Pages is not the website's Production host and does not currently deploy `main` as a Pages production deployment.
+- The account ruleset inventory contains only Cloudflare's managed free firewall ruleset. No custom account-level ruleset was returned. No customer-owned Zone exists for a zone-level WAF configuration review.
+- The Cloudflare audit log shows automated Pages certificate provisioning and temporary ACME DNS challenge record creation/deletion for the Pages subdomain. The inspected events are attributed to Cloudflare system actors; no unexplained human administrator action was established by this sample.
+- The Pages project has no configured environment variables in the returned project configuration. Its build command is `npm run build`, output directory is `dist`, and framework is Astro. The current preview deployment completed successfully.
+
+**Required action:** enable Cloudflare MFA in the account UI, save recovery codes securely, and verify a second sign-in. Keep Cloudflare Pages preview-only unless a reviewed hosting migration is approved. If a custom domain is added later, onboard the domain/Zone and review DNSSEC, SSL/TLS, WAF, rate limiting, bot controls, cache rules, security headers, and origin exposure before routing Production traffic through it.
+
 ### Supabase database
 
 - Project status: `ACTIVE_HEALTHY`; PostgreSQL 17.11.
