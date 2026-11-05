@@ -30,16 +30,31 @@ function contrast(foreground, background) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-test("dark-theme text accents meet WCAG AA contrast against their surfaces", () => {
+test("dark-theme text tokens meet WCAG AA contrast against page and card surfaces", () => {
   const dark = blockFor(":root");
+  assert.ok(contrast(token(dark, "ink"), token(dark, "page")) >= 4.5);
+  assert.ok(contrast(token(dark, "muted"), token(dark, "page")) >= 4.5);
+  assert.ok(contrast(token(dark, "muted"), token(dark, "surface")) >= 4.5);
   assert.ok(contrast(token(dark, "accent"), token(dark, "page")) >= 4.5);
   assert.ok(contrast(token(dark, "link"), token(dark, "surface")) >= 4.5);
   assert.ok(contrast(token(dark, "footer-accent"), token(dark, "page")) >= 4.5);
+  assert.ok(contrast(token(dark, "focus"), token(dark, "page")) >= 3);
 });
 
-test("light-theme text accents meet WCAG AA contrast against their surfaces", () => {
+test("light-theme text tokens meet WCAG AA contrast against page and card surfaces", () => {
   const light = blockFor('html[data-theme="light"]');
+  assert.ok(contrast(token(light, "ink"), token(light, "page")) >= 4.5);
+  assert.ok(contrast(token(light, "muted"), token(light, "page")) >= 4.5);
+  assert.ok(contrast(token(light, "muted"), token(light, "surface")) >= 4.5);
   assert.ok(contrast(token(light, "accent"), token(light, "page")) >= 4.5);
   assert.ok(contrast(token(light, "link"), token(light, "surface")) >= 4.5);
   assert.ok(contrast(token(light, "footer-accent"), token(light, "page")) >= 4.5);
+  assert.ok(contrast(token(light, "focus"), token(light, "page")) >= 3);
+});
+
+test("primary button text meets WCAG AA contrast against both gradient endpoints", () => {
+  const dark = blockFor(":root");
+  const white = token(dark, "white");
+  assert.ok(contrast(white, token(dark, "brand-bright")) >= 4.5);
+  assert.ok(contrast(white, token(dark, "brand")) >= 4.5);
 });
