@@ -5,7 +5,6 @@ import { content } from "../../content/site";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
-import BrandMark from "../../components/BrandMark.astro";
 import ProjectCards from "../../components/ProjectCards.astro";
 
 export function getStaticPaths() {
@@ -15,15 +14,15 @@ const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
 
-const visualLabels: Record<Locale, { registration: string; explore: string; focus: string; overview: string }> = {
-  fa: { registration: "تأسیس: مرداد ۱۴۰۲ · آگهی تأسیس روزنامهٔ رسمی: ۱۴۰۲/۰۵/۰۷", explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
-  en: { registration: "Founded: August 2023 · Official Gazette notice: 29 July 2023", explore: "Explore domain", focus: "RESEARCH · ENGINEERING · DEVELOPMENT", overview: "From scientific research to engineered solutions" },
-  ar: { registration: "تأسست في أغسطس 2023 · إعلان الجريدة الرسمية: 29 يوليو 2023", explore: "استكشف المجال", focus: "البحث · الهندسة · التطوير", overview: "من البحث العلمي إلى الحلول الهندسية" },
-  ru: { registration: "Основана в августе 2023 года · публикация в официальном вестнике: 29 июля 2023 года", explore: "Подробнее", focus: "ИССЛЕДОВАНИЯ · ИНЖЕНЕРИЯ · РАЗРАБОТКА", overview: "От научных исследований к инженерным решениям" },
-  de: { registration: "Gegründet im August 2023 · Bekanntmachung im Amtsblatt: 29. Juli 2023", explore: "Bereich ansehen", focus: "FORSCHUNG · ENGINEERING · ENTWICKLUNG", overview: "Von wissenschaftlicher Forschung zu technischen Lösungen" },
-  zh: { registration: "成立于 2023 年 8 月 · 官方公报公告日期：2023 年 7 月 29 日", explore: "了解领域", focus: "研究 · 工程 · 开发", overview: "从科学研究到工程解决方案" },
-  fr: { registration: "Fondée en août 2023 · avis au Journal officiel : 29 juillet 2023", explore: "Explorer", focus: "RECHERCHE · INGÉNIERIE · DÉVELOPPEMENT", overview: "De la recherche scientifique aux solutions d’ingénierie" },
-  es: { registration: "Fundada en agosto de 2023 · anuncio en el Boletín Oficial: 29 de julio de 2023", explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
+const visualLabels: Record<Locale, { explore: string; focus: string; overview: string }> = {
+  fa: { explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
+  en: { explore: "Explore domain", focus: "RESEARCH · ENGINEERING · DEVELOPMENT", overview: "From scientific research to engineered solutions" },
+  ar: { explore: "استكشف المجال", focus: "البحث · الهندسة · التطوير", overview: "من البحث العلمي إلى الحلول الهندسية" },
+  ru: { explore: "Подробнее", focus: "ИССЛЕДОВАНИЯ · ИНЖЕНЕРИЯ · РАЗРАБОТКА", overview: "От научных исследований к инженерным решениям" },
+  de: { explore: "Bereich ansehen", focus: "FORSCHUNG · ENGINEERING · ENTWICKLUNG", overview: "Von wissenschaftlicher Forschung zu technischen Lösungen" },
+  zh: { explore: "了解领域", focus: "研究 · 工程 · 开发", overview: "从科学研究到工程解决方案" },
+  fr: { explore: "Explorer", focus: "RECHERCHE · INGÉNIERIE · DÉVELOPPEMENT", overview: "De la recherche scientifique aux solutions d’ingénierie" },
+  es: { explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
 };
 const copy = visualLabels[locale];
 const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
@@ -74,7 +73,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-company" id="company" aria-labelledby="company-title">
       <div class="site-shell new-company-inner">
         <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
-        <div class="new-company-detail"><p>{site.intro}</p><p class="new-registration-fact">{copy.registration}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
+        <div class="new-company-detail"><p>{site.intro}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
