@@ -85,7 +85,7 @@ const copy = labels[locale];
     const storageKey = "pnfk-analytics-consent-v1";
 
     const startAnalytics = () => {
-      if (window.__pnfkAnalyticsStarted) return;
+      if (window.__pnfkAnalyticsStarted) {\n        if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "granted" });\n        return;\n      }
       window.__pnfkAnalyticsStarted = true;
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () { window.dataLayer.push(arguments); };
