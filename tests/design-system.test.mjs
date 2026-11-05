@@ -83,3 +83,12 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
   const accent = getColor("rd-accent", 'html[data-theme="light"] .home-redesign .new-domain-card {');
   assert.ok(ratio(accent, "#14243a") >= 4.5, "domain-card accent must meet WCAG AA");
 });
+
+test("homepage does not present website locale count or founding year as vanity metrics", () => {
+  assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
+  assert.doesNotMatch(home, /metric-item"><strong>08/);
+  assert.doesNotMatch(home, /site\.founded\.replace/);
+  assert.match(home, /new-registration-fact/);
+  assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
+  assert.match(home, /Official Gazette notice: 29 July 2023/);
+});
