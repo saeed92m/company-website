@@ -114,6 +114,17 @@ The current mobile navigation is a horizontally scrollable row. It has no dedica
 
 Required change: prototype an accessible mobile navigation pattern and validate keyboard, touch, focus, RTL, and long translated labels before implementation.
 
+## Legal scope versus activity areas
+
+The supplied `company_profile.pdf` lists six fields of activity. Its registration-details section separately lists the formal registered scope as research and development in astronomy, aerospace, renewable energy, and artificial intelligence. It also states that Motorsport & Performance Parts is part of the active roadmap and that its formal addition to the articles of association is in progress. Remote Sensing is listed as an activity field but is not listed in that formal-scope summary.
+
+This source distinction must remain explicit:
+- The website may describe all six as company activity areas.
+- Do not state or imply that all six are already part of the registered statutory scope.
+- Keep Motorsport labelled as a developing/roadmap area until updated official registration evidence confirms a change.
+- Do not claim knowledge-based-company status or science-park membership without current official evidence.
+- Recheck the current articles of association and official gazette notice before publishing a formal registered-scope statement. The supplied company profile is the source for this audit note; its registration status may have changed since it was prepared.
+
 ## Architecture assessment
 
 The current architecture is suitable for a visual redesign without a framework or route rewrite:
