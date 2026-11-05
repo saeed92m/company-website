@@ -75,6 +75,8 @@ test("approved typefaces are self-hosted with script-aware WOFF2 subsets", () =>
   assert.match(globalCss, /html\[lang="fa"\] body\{font-family:"Vazirmatn"/);
   assert.match(globalCss, /html\[lang="ar"\] body\{font-family:"Vazirmatn"/);
   assert.match(globalCss, /html\[lang="zh"\] body\{font-family:"Noto Sans CJK SC"/);
+  assert.match(css, /--font-arabic: "Vazirmatn"/);
+  assert.match(css, /--font-cjk: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", "SimSun"/);
   assert.doesNotMatch(layout, /fonts\.googleapis\.com|fonts\.gstatic\.com/);
 });
 test("prototype controls and cards use the provisional soft-rounded geometry", () => {
