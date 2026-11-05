@@ -104,10 +104,11 @@ jobs:
                 let externalFontRequest = false;
                 const fontResponses = [];
                 page.on("request", (request) => {
-                  if (/fonts\\.googleapis\\.com|fonts\\.gstatic\\.com/.test(request.url())) externalFontRequest = true;
+                  const requestUrl = new URL(request.url());
+                  if (["fonts.googleapis.com", "fonts.gstatic.com"].includes(requestUrl.hostname)) externalFontRequest = true;
                 });
                 page.on("response", (fontResponse) => {
-                  if (/\\.woff2(?:\\?|$)/.test(fontResponse.url())) fontResponses.push({ url: fontResponse.url(), status: fontResponse.status() });
+                  if (fontResponse.url().split("?")[0].endsWith(".woff2")) fontResponses.push({ url: fontResponse.url(), status: fontResponse.status() });
                 });
                 let response;
                 let lastError;
