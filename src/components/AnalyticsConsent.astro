@@ -85,7 +85,10 @@ const copy = labels[locale];
     const storageKey = "pnfk-analytics-consent-v1";
 
     const startAnalytics = () => {
-      if (window.__pnfkAnalyticsStarted) {\n        if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "granted" });\n        return;\n      }
+      if (window.__pnfkAnalyticsStarted) {
+        if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "granted" });
+        return;
+      }
       window.__pnfkAnalyticsStarted = true;
       window.dataLayer = window.dataLayer || [];
       window.gtag = function () { window.dataLayer.push(arguments); };
@@ -130,6 +133,14 @@ const copy = labels[locale];
     });
     reject?.addEventListener("click", () => {
       saveChoice("rejected");
+      if (typeof window.gtag === "function") window.gtag("consent", "update", { analytics_storage: "denied" });
+      document.cookie.split(";").forEach((cookie) => {
+        const name = cookie.split("=")[0].trim();
+        if (name === "_ga" || name.startsWith("_ga_")) {
+          document.cookie = name + "=; Max-Age=0; path=/; SameSite=Lax";
+          document.cookie = name + "=; Max-Age=0; path=/; domain=" + window.location.hostname + "; SameSite=Lax";
+        }
+      });
       banner.hidden = true;
     });
     settings?.addEventListener("click", () => {
@@ -145,7 +156,10 @@ const copy = labels[locale];
         window.gtag("event", "contact_click", { contact_method: "email" });
       } else if (link.hasAttribute("download")) {
         window.gtag("event", "file_download", {
-          file_extension: (() => {\n            const fileName = new URL(href, window.location.href).pathname.split("/").pop() || "";\n            return (fileName.includes(".") ? fileName.split(".").pop() : "unknown").slice(0, 12);\n          })()
+          file_extension: (() => {
+            const fileName = new URL(href, window.location.href).pathname.split("/").pop() || "";
+            return (fileName.includes(".") ? fileName.split(".").pop() : "unknown").slice(0, 12);
+          })()
         });
       } else {
         try {
