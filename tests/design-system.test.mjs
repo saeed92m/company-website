@@ -100,11 +100,14 @@ test("homepage has no vanity metrics and registration details live on the Compan
   assert.match(companyPage, /company-registration-fact/);
   assert.match(companyPage, /۱۴۰۲\/۰۵\/۰۷/);
   assert.match(companyPage, /Founded: August 2023/);
-  assert.match(companyPage, /registeredScope: Record<Locale/);
-  assert.match(companyPage, /Remote sensing is not listed in the current registered scope/);
-  assert.match(companyPage, /سنجش از دور در موضوع فعالیت رسمی درج نشده است/);
-  assert.match(companyPage, /formal addition to the articles of association is in progress/);
-  assert.match(companyPage, /الحاق رسمی آن به اساسنامه در دستور کار است/);
+  assert.match(companyPage, /roadmapNote: Record<Locale, string>/);
+  assert.match(companyPage, /company-roadmap-note/);
+  assert.match(companyPage, /Motorsport and performance parts are on the company's development roadmap/);
+  assert.match(companyPage, /موتوراسپرت و قطعات پرفورمنس در نقشه راه توسعه شرکت قرار دارد/);
+  assert.doesNotMatch(companyPage, /registeredScope|Remote sensing is not listed in the current registered scope/);
+  for (const locale of ["fa", "en", "ar", "ru", "de", "zh", "fr", "es"]) {
+    assert.ok(companyPage.includes(`${locale}: "`) || companyPage.includes(`${locale}: { label:`), `missing localized company text for ${locale}`);
+  }
 });
 
 
