@@ -67,6 +67,7 @@ The static architecture reduces the application's direct attack surface. It does
 - The `vault` schema denies `USAGE` to `anon` and `authenticated`; the inspected Vault table grants are limited to `service_role`. No SECURITY DEFINER function was found executable by `PUBLIC`, `anon`, or `authenticated` in the non-system schemas.
 - The `realtime.messages` relation has RLS enabled and no policies; the default-deny behavior prevents row access through ordinary roles. Auth-managed tables with RLS disabled have no direct table grants to `anon` or `authenticated` in the inspected grants.
 - The `site_assets` Storage bucket is public and has a 2 MiB upload-size limit with an image-only MIME allowlist. It contains one PNG object of approximately 1.05 MB. Public read access is expected for a public asset bucket. No Storage RLS policies were found; anonymous uploads or object mutations are therefore not authorized by the inspected policy state.
+- PostgreSQL grants `USAGE` on `public`, `graphql_public`, and `storage` to `anon` and `authenticated`, but does not grant them `CREATE` on those schemas. `vault` denies `USAGE` to both roles. The SQL-visible PostgREST configuration values for exposed schemas were `NULL`, so the Data API's effective exposed-schema configuration remains unverified and must be checked in Supabase Dashboard > Integrations > Data API.
 
 ## Findings and required action
 
