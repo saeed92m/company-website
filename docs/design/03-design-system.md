@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation-ready baseline.
+Working implementation baseline — final visual design and full QA remain in progress.
 
 This specification converts the visual direction and design tokens into reusable UI contracts for the first public website release.
 
@@ -16,6 +16,7 @@ This specification converts the visual direction and design tokens into reusable
 - Responsive behavior must be defined per component.
 - Accessibility is part of the component contract.
 - Public UI must never imply unsupported company/project claims.
+- The registered legal company name is the primary website identity; Alpha Team is secondary only.
 
 ## 2. Global layout
 
@@ -57,6 +58,8 @@ Rules:
 ## 4. Core components
 
 ### Header
+The primary brand text is the registered company name. Do not use Alpha Team as the site-wide brand wordmark.
+
 Anatomy:
 - brand
 - primary navigation
@@ -190,6 +193,8 @@ Fields must tolerate translated labels and error messages.
 Status must be conveyed by text/icon plus semantic state, not color alone.
 
 ### Footer
+The registered company name is the primary identity in the footer. Alpha Team is not the primary footer brand.
+
 Include:
 - company identity
 - primary navigation
@@ -199,7 +204,16 @@ Include:
 
 Footer must remain usable in RTL and on small screens.
 
-## 5. Responsive behavior
+## 5. Theme behavior
+
+- Night/Dark is the default theme.
+- Day/Light is a first-class selectable theme.
+- Theme choice persists when browser storage is available; storage failures must not block page use.
+- Semantic tokens must cover text, muted text, surfaces, links, borders, focus, controls, dialogs, and status states.
+- The theme-color browser metadata must follow the active theme.
+- Validate every actual foreground/background combination in both themes; the current token tests cover only selected text accents.
+
+## 6. Responsive behavior
 
 ### Small mobile
 - single-column content
