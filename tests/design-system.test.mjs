@@ -42,7 +42,7 @@ test("day theme accent and link colors meet WCAG AA for small text", () => {
   assert.ok(ratio(getColor("link", 'html[data-theme="light"] {'), getColor("surface", 'html[data-theme="light"] {')) >= 4.5);
 });
 test("homepage is a structural redesign, not only a token override", () => {
-  for (const selector of ["new-hero", "orbit-visual", "new-domain-grid", "new-projects", "new-company"]) {
+  for (const selector of ["new-hero", "new-domain-grid", "new-projects", "new-company"]) {
     assert.ok(home.includes(selector), `homepage is missing ${selector}`);
     assert.ok(css.includes(`.home-redesign .${selector}`) || css.includes(`.home-redesign .new-domain-grid`), `stylesheet is missing design rules for ${selector}`);
   }
@@ -86,10 +86,17 @@ test("light-theme domain-card accents remain readable on the dark image cards", 
 
 test("homepage has no vanity metrics and keeps registration details in the company section", () => {
   assert.doesNotMatch(home, /Website languages|زبان وب‌سایت|لغات الموقع|Website-Sprachen|Langues du site|Idiomas del sitio|网站语言/);
-  assert.match(home, /metric-item"><strong>06<\/strong><span>\{copy\.discipline\}/);
+  assert.doesNotMatch(home, /orbit-visual|orbit-node|orbit-ring|new-metrics|metric-item/);
+  assert.doesNotMatch(css, /\.home-redesign \.orbit-visual|\.home-redesign \.new-metrics/);
   assert.doesNotMatch(home, /site\.founded\.replace/);
   assert.match(home, /new-registration-fact/);
   assert.match(home, /۱۴۰۲\/۰۵\/۰۷/);
   assert.match(home, /Official Gazette notice: 29 July 2023/);
 });
 
+
+test("mobile header stays compact and homepage hero is content-first", () => {
+  assert.match(css, /\.site-header \.brand-wordmark \{ display: none; \}/);
+  assert.match(css, /\.home-redesign \.new-hero \{ padding-block: 42px 64px; \}/);
+  assert.match(home, /<h1 id="hero-title">\{site\.tagline\}<\/h1>/);
+});
