@@ -9,7 +9,7 @@ export function getStaticPaths() { return locales.map((locale) => ({ params: { l
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
 const copy = corporateCopy[locale];
-const legalNameParts = site.companyName.match(/^(.*?)(\\s*\\([^)]*\\))$/);
+const legalNameParts = site.companyName.match(/^(.*?)(\s*\([^)]*\\))$/);
 const roadmapNote: Record<Locale, string> = {
   fa: "موتوراسپرت و قطعات پرفورمنس در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به اساسنامه در دست پیگیری است.",
   en: "Motorsport and performance parts are on the company's development roadmap; formal addition to the articles of association is being pursued.",
