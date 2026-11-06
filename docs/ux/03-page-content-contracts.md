@@ -111,4 +111,6 @@ Source → Draft → Technical review → Language review → Approval → Publi
 
 ## Status
 
-**Phase 1 baseline — ready for wireframe preparation.**
+**Phase 1 implementation — in review.**
+
+The Phase 1 implementation includes localized corporate copy, six domain detail routes, documented related-work references where supported by the supplied CV, application areas, homepage vision and CEO preview, grouped CEO skills, and the four-path contact gateway. Automated validation and visual review must pass before merge.
