@@ -1,3 +1,12 @@
+## 2026-11-06 — Cross-page whitespace review and spacing normalization
+
+- Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.
+- Reduced the default vertical gap between sections on standard content pages while preserving larger spacing for the homepage's distinct visual sections.
+- Applied a tighter section rhythm to all six discipline detail pages and reduced their internal vertical padding.
+- Standardized section-heading bottom spacing on content pages.
+- Changes are shared across all eight locales and retain responsive CSS behavior.
+- Automated checks and visual review of the new preview build are pending; no Production changes were made.
+
 ## 2026-11-06 — Domain detail page layout correction
 
 - Standardized the six localized domain detail routes with a dedicated page layout scope.
