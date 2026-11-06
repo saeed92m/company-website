@@ -2,11 +2,14 @@
 import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
+import { corporateCopy } from "../../../content/corporate-copy";
 import { ui } from "../../../content/ui";
 import { route } from "../../../data/routes";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale]; const labels = ui[locale];
+const copy = corporateCopy[locale];
+const legalNameParts = site.companyName.match(/^(.*?)(\\s*\\([^)]*\\))$/);
 const roadmapNote: Record<Locale, string> = {
   fa: "موتوراسپرت و قطعات پرفورمنس در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به اساسنامه در دست پیگیری است.",
   en: "Motorsport and performance parts are on the company's development roadmap; formal addition to the articles of association is being pursued.",
@@ -28,9 +31,21 @@ const registrationFact: Record<Locale, string> = {
   es: "Fundada en agosto de 2023 · anuncio en el Boletín Oficial: 29 de julio de 2023"
 };
 ---
-<SiteLayout locale={locale} title={site.navigation.company + " — " + site.companyName} description={site.intro}>
+<SiteLayout locale={locale} title={site.navigation.company + " — " + site.companyName} description={copy.companyOverview.join(" ")}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="company-title"><p class="eyebrow">{site.navigation.company}</p><h1 id="company-title">{site.companyName}</h1><p class="lede">{site.intro}</p><p class="company-registration-fact">{registrationFact[locale]}</p><p class="company-roadmap-note">{roadmapNote[locale]}</p><p>{site.founder}</p></section>
+    <section class="hero company-hero" aria-labelledby="company-title">
+      <p class="eyebrow">{site.navigation.company}</p>
+      <h1 class="company-title" id="company-title">
+        <span>{legalNameParts?.[1] ?? site.companyName}</span>
+        {legalNameParts && <small>{legalNameParts[2]}</small>}
+      </h1>
+      <div class="company-overview">
+        {copy.companyOverview.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <p class="company-registration-fact">{registrationFact[locale]}</p>
+      <p class="company-roadmap-note">{roadmapNote[locale]}</p>
+      <p>{site.founder}</p>
+    </section>
     <section aria-labelledby="fields-title"><div class="section-heading"><p class="eyebrow">{site.navigation.fields}</p><h2 id="fields-title">{site.navigation.fields}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
