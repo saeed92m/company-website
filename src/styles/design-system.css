@@ -694,3 +694,23 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
     padding-block: 2.5rem;
   }
 }
+
+
+/* Site-wide content rhythm: reduce oversized section gaps without collapsing hierarchy. */
+.site-shell > section + section {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* Discipline pages use a tighter rhythm because their content is already grouped. */
+.domain-detail-page > section + section {
+  margin-top: clamp(.75rem, 1.5vw, 1.25rem);
+}
+.domain-detail-page > .domain-content-section,
+.domain-detail-page > .domain-development {
+  padding-block: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+/* Keep long profile pages readable without adding large empty bands. */
+.site-shell > section > .section-heading {
+  margin-bottom: clamp(.75rem, 1.5vw, 1.25rem);
+}
