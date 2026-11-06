@@ -714,3 +714,39 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 .site-shell > section > .section-heading {
   margin-bottom: clamp(.75rem, 1.5vw, 1.25rem);
 }
+
+
+/* Desktop correction: keep the company heading inside its own grid column. */
+@media (min-width: 901px) {
+  .home-redesign .new-company {
+    padding-block: clamp(56px, 6vw, 80px);
+  }
+  .home-redesign .new-company-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+    gap: clamp(32px, 4vw, 56px);
+    align-items: center;
+  }
+  .home-redesign .home-company-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    max-width: 100%;
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: clamp(30px, 3vw, 46px);
+    line-height: 1.45;
+  }
+  .home-redesign .home-company-title > span {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .home-redesign .home-company-title small {
+    white-space: nowrap;
+    font-size: .42em;
+  }
+  .home-redesign .new-company-detail {
+    min-width: 0;
+  }
+}
