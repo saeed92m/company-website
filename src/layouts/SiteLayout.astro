@@ -137,10 +137,11 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
       <nav class="primary-nav" aria-label={site.navigation.company}>
+        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
         <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
         <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{site.navigation.ceo}</a>
+        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">

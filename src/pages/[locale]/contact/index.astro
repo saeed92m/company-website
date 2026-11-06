@@ -10,18 +10,80 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
+const contactIntro: Record<Locale, string> = {
+  fa: "شرکت پیشگامان نواندیش فناورگستر کیهان از ارتباط با پژوهشگران، متخصصان، شرکت‌ها و سازمان‌های فعال در علم و فناوری استقبال می‌کند. اگر پیشنهادی برای همکاری پژوهشی یا مهندسی دارید، به مشاوره تخصصی نیاز دارید یا مایل به بررسی فرصت‌های مشترک هستید، مسیر مناسب را انتخاب کنید. درخواست جلسه پس از بررسی و هماهنگی تأیید می‌شود و به معنی رزرو قطعی نیست.",
+  en: "Pishgaman Novandish Fannavargostar Keyhan welcomes enquiries from researchers, specialists, companies and organisations working in science and technology. Choose a path for collaboration, specialist consultation, a meeting request or general correspondence. Meeting requests are reviewed and coordinated; they are not confirmed bookings.",
+  ar: "ترحب شركة پيشگامان نوانديش فناورگستر كيهان بتواصل الباحثين والمتخصصين والشركات والمؤسسات العاملة في مجالات العلوم والتكنولوجيا. اختر المسار المناسب للتعاون أو الاستشارة المتخصصة أو طلب اجتماع أو المراسلات العامة. تخضع طلبات الاجتماعات للمراجعة والتنسيق، ولا تُعد حجوزات مؤكدة.",
+  ru: "Компания Pishgaman Novandish Fannavargostar Keyhan открыта для обращений исследователей, специалистов, компаний и организаций в сфере науки и технологий. Выберите направление: сотрудничество, профильная консультация, запрос на встречу или общая корреспонденция. Запросы на встречи рассматриваются и согласуются отдельно и не являются подтверждённой бронью.",
+  de: "Pishgaman Novandish Fannavargostar Keyhan begrüßt Anfragen von Forschenden, Fachleuten, Unternehmen und Organisationen aus Wissenschaft und Technologie. Wählen Sie einen Weg für Zusammenarbeit, Fachberatung, eine Terminanfrage oder allgemeine Korrespondenz. Terminanfragen werden geprüft und abgestimmt; sie sind keine bestätigten Buchungen.",
+  zh: "Pishgaman Novandish Fannavargostar Keyhan 欢迎科研人员、专业人士、企业及科技领域机构联系。您可以选择合作、专业咨询、会议申请或一般联络。会议申请需要经过审核和协调，不代表预约已确认。",
+  fr: "Pishgaman Novandish Fannavargostar Keyhan accueille les demandes des chercheurs, spécialistes, entreprises et organisations du secteur scientifique et technologique. Choisissez une voie pour une collaboration, un conseil spécialisé, une demande de réunion ou une correspondance générale. Les demandes de réunion sont examinées et coordonnées ; elles ne constituent pas une réservation confirmée.",
+  es: "Pishgaman Novandish Fannavargostar Keyhan recibe consultas de investigadores, especialistas, empresas y organizaciones del ámbito científico y tecnológico. Elija una vía para colaboración, asesoramiento especializado, solicitud de reunión o comunicación general. Las solicitudes de reunión se revisan y coordinan; no constituyen una reserva confirmada."
+};
+const engagementPaths: Record<Locale, { title: string; description: string }[]> = {
+  fa: [
+    { title: "همکاری و مشارکت", description: "همکاری‌های علمی، پژوهشی، مهندسی، صنعتی و فناورانه" },
+    { title: "درخواست مشاوره", description: "طرح مسائل تخصصی و دریافت مشاوره در حوزه‌های فعالیت شرکت" },
+    { title: "درخواست جلسه", description: "بررسی پیشنهادها، طرح‌ها و فرصت‌های همکاری در جلسه هماهنگ‌شده" },
+    { title: "ارتباط عمومی", description: "پرسش‌ها و مکاتبات رسمی و عمومی" }
+  ],
+  en: [
+    { title: "Collaboration", description: "Scientific, research, engineering, industrial and technology partnerships" },
+    { title: "Consultation", description: "Discuss specialist questions in the company’s areas of activity" },
+    { title: "Meeting request", description: "Review proposals and shared opportunities in a coordinated meeting" },
+    { title: "General enquiries", description: "General questions and formal correspondence" }
+  ],
+  ar: [
+    { title: "التعاون والشراكة", description: "التعاون العلمي والبحثي والهندسي والصناعي والتقني" },
+    { title: "طلب استشارة", description: "مناقشة المسائل التخصصية ضمن مجالات نشاط الشركة" },
+    { title: "طلب اجتماع", description: "مراجعة المقترحات وفرص التعاون في اجتماع منسق" },
+    { title: "استفسارات عامة", description: "الأسئلة العامة والمراسلات الرسمية" }
+  ],
+  ru: [
+    { title: "Сотрудничество", description: "Научное, исследовательское, инженерное, промышленное и технологическое взаимодействие" },
+    { title: "Консультация", description: "Обсуждение профильных вопросов по направлениям компании" },
+    { title: "Запрос на встречу", description: "Обсуждение предложений и совместных возможностей на согласованной встрече" },
+    { title: "Общие обращения", description: "Общие вопросы и официальная переписка" }
+  ],
+  de: [
+    { title: "Zusammenarbeit", description: "Wissenschaftliche, Forschungs-, Ingenieur-, Industrie- und Technologiepartnerschaften" },
+    { title: "Fachberatung", description: "Fachfragen zu den Tätigkeitsbereichen des Unternehmens besprechen" },
+    { title: "Terminanfrage", description: "Vorschläge und gemeinsame Möglichkeiten in einem abgestimmten Gespräch prüfen" },
+    { title: "Allgemeine Anfragen", description: "Allgemeine Fragen und formelle Korrespondenz" }
+  ],
+  zh: [
+    { title: "合作与伙伴关系", description: "科学、研究、工程、工业及技术合作" },
+    { title: "咨询申请", description: "讨论公司业务领域内的专业问题" },
+    { title: "会议申请", description: "通过协调安排的会议讨论提案与合作机会" },
+    { title: "一般联系", description: "一般问题与正式通信" }
+  ],
+  fr: [
+    { title: "Collaboration", description: "Partenariats scientifiques, de recherche, d’ingénierie, industriels et technologiques" },
+    { title: "Conseil spécialisé", description: "Échanger sur des questions spécialisées dans les domaines de l’entreprise" },
+    { title: "Demande de réunion", description: "Examiner des propositions et des possibilités communes lors d’un échange coordonné" },
+    { title: "Demandes générales", description: "Questions générales et correspondance officielle" }
+  ],
+  es: [
+    { title: "Colaboración", description: "Alianzas científicas, de investigación, ingeniería, industria y tecnología" },
+    { title: "Asesoramiento", description: "Consultar cuestiones especializadas en las áreas de actividad de la empresa" },
+    { title: "Solicitud de reunión", description: "Revisar propuestas y oportunidades compartidas en una reunión coordinada" },
+    { title: "Consultas generales", description: "Preguntas generales y correspondencia formal" }
+  ]
+};
 ---
 <SiteLayout locale={locale} title={site.navigation.contact + " — " + site.companyName} description={labels.contactPending}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="contact-title">
+    <section class="hero contact-hero" aria-labelledby="contact-title">
       <p class="eyebrow">{site.navigation.contact}</p>
       <h1 id="contact-title">{site.navigation.contact}</h1>
-      <p class="lede">{labels.contactPending}</p>
+      <p class="lede">{contactIntro[locale]}</p>
     </section>
-    <section class="contact" aria-labelledby="contact-status">
+    <section class="engagement-grid" aria-label={site.navigation.contact}>
+      {engagementPaths[locale].map((item, index) => <article class="engagement-card"><span class="engagement-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h2>{item.title}</h2><p>{item.description}</p></article>)}
+    </section>
+    <section class="contact-status" aria-labelledby="contact-status">
       <p class="eyebrow">{site.companyName}</p>
       <h2 id="contact-status">{site.location}</h2>
-      <p class="contact-location-note">{labels.contactLocationNote}</p>
       <p>{labels.contactPending}</p>
     </section>
   </div>

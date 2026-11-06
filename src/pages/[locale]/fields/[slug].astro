@@ -3,6 +3,7 @@ import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { domainImageUrl } from "../../../data/domain-assets";
+import { ceo } from "../../../content/ceo";
 
 export function getStaticPaths() {
   return locales.flatMap((locale) => content[locale].fields.map((field) => ({
@@ -11,15 +12,55 @@ export function getStaticPaths() {
 }
 const { locale, field } = Astro.props as { locale: Locale; field: (typeof content.en.fields)[number] };
 const site = content[locale];
+const profile = ceo[locale];
+const terms: Record<string, string[]> = { astronomy: ["CBS", "APTO"], aerospace: ["CanSat", "CubeSat"], "remote-sensing": ["Remote Sensing"], energy: [], "artificial-intelligence": [], motorsport: [] };
+const related = profile.selectedProjects.filter((project) => (terms[field.slug] ?? []).some((term) => project.name.toLowerCase().includes(term.toLowerCase())));
+const labels: Record<Locale, { scope: string; work: string; empty: string; approach: string; note: string; roadmap: string }> = {
+  fa: { scope: "روش‌ها، فناوری‌ها و دامنه تخصصی", work: "سوابق و پروژه‌های مرتبط", empty: "در حال حاضر پروژه عمومی و مستندی برای نمایش در این حوزه معرفی نشده است.", approach: "رویکرد توسعه", note: "این صفحه زمینه‌های تخصصی و دامنه مورد توجه شرکت را معرفی می‌کند. ذکر یک توانمندی به‌تنهایی به معنی ارائه مستمر آن به‌عنوان خدمت تجاری یا تکمیل همه فناوری‌های مرتبط نیست. دامنه هر پروژه پس از بررسی نیاز، امکان‌سنجی فنی و منابع در دسترس تعیین می‌شود.", roadmap: "این حوزه در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به موضوع فعالیت اساسنامه در دست پیگیری است." },
+  en: { scope: "Methods, technologies and specialist scope", work: "Related documented work", empty: "No public, documented project is currently listed for this domain.", approach: "Development approach", note: "This page describes the company's areas of focus and technical scope. A listed capability does not, by itself, mean that it is continuously offered as a commercial service or that every related technology is complete. Each project is scoped after requirements review, technical feasibility assessment, and resource evaluation.", roadmap: "This domain is part of the company's development roadmap. Its formal addition to the registered business scope is being pursued." },
+  ar: { scope: "الأساليب والتقنيات والنطاق التخصصي", work: "الأعمال والمشاريع الموثقة ذات الصلة", empty: "لا يوجد حالياً مشروع عام موثق مُدرج لهذا المجال.", approach: "منهج التطوير", note: "تعرض هذه الصفحة مجالات اهتمام الشركة ونطاقها التقني. ولا يعني إدراج قدرة معينة أنها تُقدم باستمرار كخدمة تجارية أو أن جميع التقنيات المرتبطة بها قد اكتملت. ويُحدد نطاق كل مشروع بعد مراجعة المتطلبات وتقييم الجدوى الفنية والموارد المتاحة.", roadmap: "هذا المجال جزء من خارطة تطوير الشركة، ويجري العمل على إضافته رسمياً إلى نطاق النشاط المسجل." },
+  ru: { scope: "Методы, технологии и профильные компетенции", work: "Связанные документированные проекты", empty: "Для этого направления пока не указан публичный документированный проект.", approach: "Подход к развитию", note: "На этой странице представлены области интересов и техническая сфера компании. Указанная компетенция сама по себе не означает, что услуга постоянно предоставляется на коммерческой основе или что все связанные технологии завершены. Объём каждого проекта определяется после анализа требований, технической осуществимости и доступных ресурсов.", roadmap: "Это направление включено в дорожную карту развития компании; ведётся работа над его официальным включением в зарегистрированный перечень видов деятельности." },
+  de: { scope: "Methoden, Technologien und fachlicher Umfang", work: "Zugehörige dokumentierte Projekte", empty: "Für diesen Bereich ist derzeit kein öffentliches, dokumentiertes Projekt aufgeführt.", approach: "Entwicklungsansatz", note: "Diese Seite beschreibt die Interessengebiete und den technischen Umfang des Unternehmens. Eine aufgeführte Kompetenz bedeutet nicht automatisch, dass sie kontinuierlich als kommerzielle Dienstleistung angeboten wird oder dass alle zugehörigen Technologien abgeschlossen sind. Der Umfang jedes Projekts wird nach Anforderungsprüfung, Machbarkeitsbewertung und Prüfung der verfügbaren Ressourcen festgelegt.", roadmap: "Dieser Bereich ist Teil der Entwicklungsroadmap. Die formelle Aufnahme in den eingetragenen Unternehmensgegenstand wird verfolgt." },
+  zh: { scope: "方法、技术与专业范围", work: "相关的已记录项目", empty: "目前尚未列出该领域的公开、可核实项目。", approach: "发展方式", note: "本页面介绍公司的关注领域和技术范围。列出某项能力并不表示公司持续以商业服务形式提供该能力，也不表示相关技术均已完成。每个项目的范围将在需求审查、技术可行性评估和资源评估后确定。", roadmap: "该领域已纳入公司的发展路线图，正在推进将其正式加入注册经营范围。" },
+  fr: { scope: "Méthodes, technologies et périmètre spécialisé", work: "Projets documentés associés", empty: "Aucun projet public et documenté n’est actuellement répertorié pour ce domaine.", approach: "Approche de développement", note: "Cette page présente les domaines d’intérêt et le périmètre technique de l’entreprise. La mention d’une compétence ne signifie pas qu’elle est proposée en continu comme service commercial ni que toutes les technologies associées sont achevées. Le périmètre de chaque projet est défini après examen des besoins, évaluation de la faisabilité technique et analyse des ressources.", roadmap: "Ce domaine figure dans la feuille de route de développement. Son ajout officiel au champ d’activité enregistré est en cours." },
+  es: { scope: "Métodos, tecnologías y alcance especializado", work: "Proyectos documentados relacionados", empty: "Actualmente no hay ningún proyecto público y documentado listado para esta área.", approach: "Enfoque de desarrollo", note: "Esta página describe las áreas de interés y el alcance técnico de la empresa. La inclusión de una capacidad no significa que se ofrezca continuamente como servicio comercial ni que todas las tecnologías relacionadas estén terminadas. El alcance de cada proyecto se define tras revisar los requisitos, evaluar la viabilidad técnica y analizar los recursos disponibles.", roadmap: "Esta área forma parte de la hoja de ruta de desarrollo. Se está tramitando su incorporación formal al objeto social registrado." }
+};
+
+const applicationTitle: Record<Locale, string> = { fa: "زمینه‌های کاربرد", en: "Application areas", ar: "مجالات التطبيق", ru: "Области применения", de: "Anwendungsbereiche", zh: "应用领域", fr: "Domaines d’application", es: "Áreas de aplicación" };
+const applications: Record<Locale, Record<string, string>> = {
+  fa: { astronomy: "پژوهش نجومی، رصد اپتیکی و رادیویی، تحلیل داده‌های نجومی و آموزش تخصصی", aerospace: "مأموریت‌های سنجشی و ارتباطی، سامانه‌های ماهواره‌ای، پهپادها و فناوری‌های پیشرانش", "remote-sensing": "مشاهده زمین، پایش محیطی، تحلیل تصاویر ماهواره‌ای و کشاورزی دقیق", energy: "تولید برق خورشیدی و بادی، سامانه‌های هیبریدی و پشتیبانی فنی صنایع انرژی", "artificial-intelligence": "مدیریت هوشمند، شهر هوشمند، اینترنت اشیا و کاربردهای هوش مصنوعی در حوزه‌های شرکت", motorsport: "مهندسی آیرودینامیک خودرو، قطعات مکانیکی پرفورمنس و اجزای توربوشارژر" },
+  en: { astronomy: "Astronomical research, optical and radio observation, astronomical data analysis, and specialist training", aerospace: "Sensing and communication missions, satellite systems, UAVs, and propulsion technologies", "remote-sensing": "Earth observation, environmental monitoring, satellite-image analysis, and precision agriculture", energy: "Solar and wind electricity generation, hybrid systems, and technical support for energy industries", "artificial-intelligence": "Smart management, smart cities, IoT, and AI applications across the company's domains", motorsport: "Vehicle aerodynamics, mechanical performance components, and turbocharger components" },
+  ar: { astronomy: "البحوث الفلكية والرصد البصري والراديوي وتحليل البيانات الفلكية والتدريب المتخصص", aerospace: "مهام الاستشعار والاتصالات والأنظمة الساتلية والطائرات دون طيار وتقنيات الدفع", "remote-sensing": "رصد الأرض والمراقبة البيئية وتحليل صور الأقمار الصناعية والزراعة الدقيقة", energy: "توليد الكهرباء بالطاقة الشمسية والرياح والأنظمة الهجينة والدعم الفني لصناعات الطاقة", "artificial-intelligence": "الإدارة الذكية والمدن الذكية وإنترنت الأشياء وتطبيقات الذكاء الاصطناعي في مجالات الشركة", motorsport: "الديناميكا الهوائية للمركبات ومكونات الأداء الميكانيكية وأجزاء الشواحن التوربينية" },
+  ru: { astronomy: "Астрономические исследования, оптические и радионаблюдения, анализ астрономических данных и специализированное обучение", aerospace: "Зондирующие и коммуникационные миссии, спутниковые системы, БПЛА и двигательные технологии", "remote-sensing": "Наблюдение Земли, экологический мониторинг, анализ спутниковых изображений и точное земледелие", energy: "Солнечная и ветровая генерация электроэнергии, гибридные системы и техническая поддержка энергетики", "artificial-intelligence": "Интеллектуальное управление, умные города, IoT и применение ИИ в направлениях компании", motorsport: "Автомобильная аэродинамика, механические компоненты Performance и детали турбокомпрессоров" },
+  de: { astronomy: "Astronomische Forschung, optische und Radio-Beobachtung, astronomische Datenanalyse und Fachschulungen", aerospace: "Fernerkundungs- und Kommunikationsmissionen, Satellitensysteme, UAVs und Antriebstechnologien", "remote-sensing": "Erdbeobachtung, Umweltmonitoring, Satellitenbildanalyse und Präzisionslandwirtschaft", energy: "Solar- und Windstromerzeugung, Hybridsysteme und technische Unterstützung der Energieindustrie", "artificial-intelligence": "Intelligentes Management, Smart Cities, IoT und KI-Anwendungen in den Unternehmensbereichen", motorsport: "Fahrzeugaerodynamik, mechanische Performance-Komponenten und Turboladerteile" },
+  zh: { astronomy: "天文学研究、光学与射电观测、天文数据分析及专业培训", aerospace: "遥感与通信任务、卫星系统、无人机及推进技术", "remote-sensing": "地球观测、环境监测、卫星影像分析与精准农业", energy: "太阳能与风能发电、混合能源系统及能源行业技术支持", "artificial-intelligence": "智能管理、智慧城市、物联网以及人工智能在公司各领域的应用", motorsport: "车辆空气动力学、机械高性能部件及涡轮增压器部件" },
+  fr: { astronomy: "Recherche astronomique, observation optique et radio, analyse de données astronomiques et formation spécialisée", aerospace: "Missions de télédétection et de communication, systèmes satellitaires, drones et technologies de propulsion", "remote-sensing": "Observation de la Terre, surveillance environnementale, analyse d’images satellitaires et agriculture de précision", energy: "Production solaire et éolienne, systèmes hybrides et assistance technique aux industries de l’énergie", "artificial-intelligence": "Gestion intelligente, villes intelligentes, IoT et applications de l’IA dans les domaines de l’entreprise", motorsport: "Aérodynamique automobile, composants mécaniques de performance et pièces de turbocompresseurs" },
+  es: { astronomy: "Investigación astronómica, observación óptica y de radio, análisis de datos astronómicos y formación especializada", aerospace: "Misiones de observación y comunicación, sistemas satelitales, UAV y tecnologías de propulsión", "remote-sensing": "Observación de la Tierra, vigilancia ambiental, análisis de imágenes satelitales y agricultura de precisión", energy: "Generación solar y eólica, sistemas híbridos y apoyo técnico a las industrias energéticas", "artificial-intelligence": "Gestión inteligente, ciudades inteligentes, IoT y aplicaciones de IA en las áreas de la empresa", motorsport: "Aerodinámica de vehículos, componentes mecánicos de alto rendimiento y piezas de turbocompresores" }
+};
+
+const pageLabels = labels[locale];
 ---
 <SiteLayout locale={locale} title={field.title + " — " + site.companyName} description={field.summary}>
-  <div class="site-shell">
+  <div class="site-shell domain-detail-page">
     <section class="hero domain-hero" aria-labelledby="field-title" style={`--domain-image: url(${domainImageUrl(field.slug)})`}>
       <p class="eyebrow">{site.navigation.fields}</p><h1 id="field-title">{field.title}</h1><p class="lede">{field.summary}</p>
     </section>
-    <section aria-labelledby="capabilities-title">
-      <div class="section-heading"><h2 id="capabilities-title">{field.title}</h2></div>
-      <ul class="capability-list">{field.capabilities.map((item) => <li>{item}</li>)}</ul>
+    <section class="domain-content-section" aria-labelledby="capabilities-title">
+      <div class="section-heading"><h2 id="capabilities-title">{pageLabels.scope}</h2></div>
+      <ul class="capability-list domain-detail-list">{field.capabilities.map((item) => <li>{item}</li>)}</ul>
+    </section>
+    <section class="domain-content-section" aria-labelledby="applications-title">
+      <div class="section-heading"><h2 id="applications-title">{applicationTitle[locale]}</h2></div>
+      <p class="domain-applications">{applications[locale][field.slug]}</p>
+    </section>
+    <section class="domain-content-section" aria-labelledby="related-title">
+      <div class="section-heading"><h2 id="related-title">{pageLabels.work}</h2></div>
+      {related.length ? <div class="project-grid">{related.map((project) => <article class="project-card"><h3>{project.name}</h3><p>{project.period}</p><p>{project.summary}</p></article>)}</div> : <p class="domain-empty-note">{pageLabels.empty}</p>}
+    </section>
+    <section class="domain-development domain-content-section" aria-labelledby="development-title">
+      <div class="section-heading"><h2 id="development-title">{pageLabels.approach}</h2></div>
+      <p>{pageLabels.note}</p>
+      {field.slug === "motorsport" && <p class="domain-roadmap-note">{pageLabels.roadmap}</p>}
     </section>
   </div>
 </SiteLayout>

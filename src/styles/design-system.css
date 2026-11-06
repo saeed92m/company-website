@@ -335,3 +335,418 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   font-size: .9rem;
   line-height: 1.9;
 }
+
+
+/* Keep the homepage introduction readable while preserving its distinct role. */
+.home-redesign .new-hero-intro {
+  max-width: 76ch;
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 2;
+}
+
+
+/* Phase 1: compact, consistent page layouts. */
+.projects-intro { max-width: 82ch; margin-bottom: 0; }
+.site-shell > section + section { margin-top: clamp(2.25rem, 4vw, 3.5rem); }
+.site-shell > section.hero + section { margin-top: 0; }
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.domain-card {
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+.domain-card:focus-visible,
+.engagement-card:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .domain-grid { grid-template-columns: 1fr; }
+  .domain-card { min-height: 180px; }
+}
+
+/* CEO profile lists: compact cards without inventing proficiency scores. */
+.profile-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .7rem;
+  padding: 0;
+  list-style: none;
+}
+.profile-list li {
+  min-width: 0;
+  margin: 0;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control, 12px);
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 1.75;
+}
+.profile-list--courses,
+.profile-list--memberships { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.profile-list--languages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) {
+  .profile-list--courses,
+  .profile-list--memberships { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .profile-list,
+  .profile-list--courses,
+  .profile-list--memberships,
+  .profile-list--languages { grid-template-columns: 1fr; }
+}
+
+/* Contact page: business engagement paths, not an unconnected form. */
+.contact-hero { padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+.engagement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.engagement-card {
+  min-height: 190px;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface);
+}
+.engagement-index {
+  color: var(--brand-gray, #a8a8a8);
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.engagement-card h2 {
+  margin: .9rem 0 .6rem;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.35;
+}
+.engagement-card p { margin: 0; color: var(--muted); }
+.contact-status {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.contact-status h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); }
+@media (max-width: 640px) {
+  .engagement-grid { grid-template-columns: 1fr; }
+  .engagement-card { min-height: 150px; }
+}
+
+
+/* The management link is a secondary action, not a hero CTA. */
+.home-redesign .management-button {
+  min-height: 42px;
+  padding-inline: 15px;
+  gap: 12px;
+  border-color: var(--brand-gray, #a8a8a8);
+  color: var(--rd-ink);
+  background: transparent;
+  font-size: 12px;
+}
+.home-redesign .management-button:hover {
+  border-color: var(--rd-accent);
+  background: color-mix(in srgb, var(--rd-accent) 10%, transparent);
+}
+
+
+/* Home: complete the corporate story with vision and founder context. */
+.home-vision,
+.home-ceo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .85fr);
+  gap: clamp(24px, 5vw, 72px);
+  padding-block: clamp(52px, 7vw, 88px);
+  border-bottom: 1px solid var(--rd-line);
+}
+.home-vision h2,
+.home-ceo h2 {
+  margin: 0 0 1rem;
+  color: var(--rd-ink);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1.35;
+}
+.home-vision p,
+.home-ceo p {
+  color: var(--rd-muted);
+  font-size: 1rem;
+  line-height: 2;
+}
+.home-vision__roadmap {
+  padding: 1rem 1.25rem;
+  border-inline-start: 3px solid var(--rd-accent);
+  background: var(--rd-panel);
+}
+.home-ceo__role {
+  color: var(--rd-ink) !important;
+  font-weight: 700;
+}
+.home-ceo__detail .management-button { margin-top: .75rem; }
+.domain-detail-list { margin-top: 1rem; }
+.domain-empty-note,
+.domain-development {
+  color: var(--muted);
+  line-height: 2;
+}
+.domain-empty-note {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.domain-development {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.domain-development p { max-width: 88ch; }
+.domain-roadmap-note {
+  margin-top: 1rem;
+  padding-inline-start: 1rem;
+  border-inline-start: 3px solid var(--brand-gray, #a8a8a8);
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .home-vision,
+  .home-ceo { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+.home-redesign .new-company-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .25em .45em;
+}
+.home-redesign .new-company-name small,
+.home-redesign .home-company-title small {
+  color: var(--rd-muted);
+  font-size: .48em;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.home-redesign .home-company-title {
+  max-width: none;
+  overflow-wrap: normal;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: .35em;
+  font-size: clamp(1.35rem, 3vw, 2.5rem);
+  line-height: 1.5;
+}
+.home-redesign .home-company-title > span { min-width: 0; }
+@media (max-width: 900px) {
+  .home-redesign .home-company-title { flex-wrap: wrap; }
+}
+
+@media (max-width: 560px) {
+  .home-redesign .new-domain-grid { grid-template-columns: 1fr; }
+  .home-redesign .new-domain-card { min-height: 190px; }
+}
+
+.domain-applications {
+  max-width: 88ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.skill-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.skill-group {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.skill-group h3 {
+  margin: 0 0 .75rem;
+  color: var(--ink);
+  font-size: 1rem;
+}
+.skill-group .profile-list { margin: 0; }
+@media (max-width: 640px) {
+  .skill-group-grid { grid-template-columns: 1fr; }
+}
+
+.home-redesign .home-company-title {
+  max-width: none;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+.home-redesign .home-company-title > span,
+.home-redesign .new-company-name > span { white-space: nowrap; }
+@media (max-width: 900px) {
+  .home-redesign .home-company-title { white-space: normal; }
+  .home-redesign .home-company-title > span,
+  .home-redesign .new-company-name > span { white-space: normal; }
+}
+
+@media (max-width: 900px) {
+  .home-redesign .new-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* Phase 1 correction: all six domain cards use the same two-row grid.
+   The former featured-card span created an uneven masonry-like layout. */
+.home-redesign .new-domain-grid {
+  grid-auto-rows: minmax(280px, 1fr);
+}
+.home-redesign .domain-featured {
+  grid-row: auto;
+  min-height: 0;
+}
+@media (max-width: 700px) {
+  .home-redesign .domain-featured { min-height: 230px; }
+}
+
+
+/* Domain detail pages: consistent content rhythm across all six disciplines. */
+.domain-detail-page .domain-hero {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  min-height: 0;
+}
+.domain-detail-page > .domain-content-section,
+.domain-detail-page > .domain-development {
+  padding-block: clamp(1.5rem, 2.8vw, 2.5rem);
+}
+.domain-detail-page > .domain-content-section + .domain-content-section,
+.domain-detail-page > .domain-content-section + .domain-development {
+  margin-top: 0;
+}
+.domain-detail-page .section-heading {
+  display: block;
+  margin: 0 0 1rem;
+}
+.domain-detail-page .section-heading h2 {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.4;
+}
+.domain-detail-page .capability-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.domain-detail-page .capability-list li {
+  min-width: 0;
+  padding: 1rem 1.15rem;
+  line-height: 1.85;
+}
+.domain-detail-page .domain-applications {
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.1rem, 2.2vw, 1.6rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 2;
+}
+.domain-detail-page .project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.domain-detail-page .project-card {
+  min-height: 0;
+  padding: 1.25rem;
+}
+.domain-detail-page .domain-empty-note {
+  margin: 0;
+}
+.domain-detail-page .domain-development {
+  margin-block: 0 2rem;
+}
+.domain-detail-page .domain-development p {
+  max-width: 90ch;
+  margin-block: .75rem 0;
+}
+@media (max-width: 760px) {
+  .domain-detail-page .capability-list,
+  .domain-detail-page .project-grid {
+    grid-template-columns: 1fr;
+  }
+  .domain-detail-page > .domain-content-section,
+  .domain-detail-page > .domain-development {
+    padding-block: 1.25rem;
+  }
+  .domain-detail-page .domain-hero {
+    padding-block: 2.5rem;
+  }
+}
+
+
+/* Site-wide content rhythm: reduce oversized section gaps without collapsing hierarchy. */
+.site-shell > section + section {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* Discipline pages use a tighter rhythm because their content is already grouped. */
+.domain-detail-page > section + section {
+  margin-top: clamp(.75rem, 1.5vw, 1.25rem);
+}
+.domain-detail-page > .domain-content-section,
+.domain-detail-page > .domain-development {
+  padding-block: clamp(1rem, 1.8vw, 1.5rem);
+}
+
+/* Keep long profile pages readable without adding large empty bands. */
+.site-shell > section > .section-heading {
+  margin-bottom: clamp(.75rem, 1.5vw, 1.25rem);
+}
+
+
+/* Desktop correction: keep the company heading inside its own grid column. */
+@media (min-width: 901px) {
+  .home-redesign .new-company {
+    padding-block: clamp(56px, 6vw, 80px);
+  }
+  .home-redesign .new-company-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .9fr);
+    gap: clamp(32px, 4vw, 56px);
+    align-items: center;
+  }
+  .home-redesign .home-company-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    max-width: 100%;
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: clamp(30px, 3vw, 46px);
+    line-height: 1.45;
+  }
+  .home-redesign .home-company-title > span {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .home-redesign .home-company-title small {
+    white-space: nowrap;
+    font-size: .42em;
+  }
+  .home-redesign .new-company-detail {
+    min-width: 0;
+  }
+}

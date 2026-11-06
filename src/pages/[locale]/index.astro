@@ -2,6 +2,8 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../data/locales";
 import { content } from "../../content/site";
+import { corporateCopy } from "../../content/corporate-copy";
+import { ceo } from "../../content/ceo";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
@@ -12,7 +14,11 @@ export function getStaticPaths() {
 }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
+const legalNameParts = site.companyName.match(/^(.*?)(\s*\([^)]*\))$/);
 const labels = ui[locale];
+const copyContent = corporateCopy[locale];
+const ceoProfile = ceo[locale];
+const managementButton: Record<Locale, string> = { fa: "درباره مدیریت", en: "About management", ar: "عن الإدارة", ru: "О руководстве", de: "Über die Geschäftsführung", zh: "关于管理层", fr: "À propos de la direction", es: "Sobre la dirección" };
 
 const visualLabels: Record<Locale, { explore: string; focus: string; overview: string }> = {
   fa: { explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
@@ -25,6 +31,19 @@ const visualLabels: Record<Locale, { explore: string; focus: string; overview: s
   es: { explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
 };
 const copy = visualLabels[locale];
+
+const homeSections: Record<Locale, { vision: string; roadmap: string; ceo: string; ceoCta: string; visionTitle: string }> = {
+  fa: { vision: "چشم‌انداز شرکت، توسعه مرحله‌ای فناوری و ایجاد پیوند میان پژوهش، مهندسی و کاربردهای صنعتی است. در بلندمدت، شرکت به‌دنبال ساختاری است که هر حوزه تخصصی بتواند مسیر توسعه و فعالیت مستقل خود را داشته باشد.", roadmap: "گام بعدی: پیگیری ورود به پارک علم و فناوری استان آذربایجان شرقی یا پارک علم و فناوری دانشگاه تبریز.", ceo: "بنیانگذار و مدیرعامل شرکت، دارای کارشناسی ارشد مهندسی هوافضا و کارشناسی مهندسی مکانیک از دانشگاه تبریز است. سوابق علمی و اجرایی او شامل پروژه‌های هوافضایی، نجوم و سنجش از دور است.", ceoCta: "مشاهده سوابق مدیرعامل", visionTitle: "چشم‌انداز و مسیر توسعه" },
+  en: { vision: "The company's vision is to develop technology in stages and connect research, engineering, and industrial applications. In the long term, it aims for a structure in which each specialist domain can follow its own development path and operate independently.", roadmap: "Next step: pursuing entry to the East Azerbaijan Science and Technology Park or the University of Tabriz Science and Technology Park.", ceo: "The company's founder and CEO holds an M.Sc. in Aerospace Engineering and a B.Sc. in Mechanical Engineering from the University of Tabriz. His documented work includes aerospace, astronomy, and remote-sensing projects.", ceoCta: "View CEO profile", visionTitle: "Vision and development path" },
+  ar: { vision: "تتمثل رؤية الشركة في تطوير التكنولوجيا على مراحل وربط البحث بالهندسة والتطبيقات الصناعية. وعلى المدى الطويل، تسعى الشركة إلى هيكل يتيح لكل مجال تخصصي اتباع مسار تطوير وعمل مستقل.", roadmap: "الخطوة التالية: متابعة الانضمام إلى حديقة العلوم والتكنولوجيا في أذربيجان الشرقية أو جامعة تبريز.", ceo: "يحمل مؤسس الشركة ورئيسها التنفيذي درجة الماجستير في هندسة الطيران والفضاء والبكالوريوس في الهندسة الميكانيكية من جامعة تبريز. وتشمل خبراته الموثقة مشاريع في الفضاء والفلك والاستشعار عن بُعد.", ceoCta: "عرض الملف المهني للرئيس التنفيذي", visionTitle: "الرؤية ومسار التطوير" },
+  ru: { vision: "Видение компании — поэтапное развитие технологий и связь исследований, инженерии и промышленных применений. В долгосрочной перспективе компания стремится к структуре, в которой каждое специализированное направление сможет развиваться и работать самостоятельно.", roadmap: "Следующий шаг: работа над вступлением в Научно-технологический парк Восточного Азербайджана или Тебризского университета.", ceo: "Основатель и генеральный директор компании имеет степень магистра аэрокосмической инженерии и степень бакалавра машиностроения Тебризского университета. Его подтверждённый опыт включает проекты в аэрокосмической отрасли, астрономии и дистанционном зондировании.", ceoCta: "Профиль генерального директора", visionTitle: "Видение и путь развития" },
+  de: { vision: "Die Vision des Unternehmens ist die schrittweise Technologieentwicklung und die Verbindung von Forschung, Ingenieurwesen und industriellen Anwendungen. Langfristig strebt das Unternehmen eine Struktur an, in der sich jeder Fachbereich eigenständig entwickeln und arbeiten kann.", roadmap: "Nächster Schritt: Bewerbung um Aufnahme in den Science & Technology Park der Provinz Ost-Aserbaidschan oder der Universität Täbris.", ceo: "Der Gründer und CEO besitzt einen Masterabschluss in Luft- und Raumfahrttechnik sowie einen Bachelorabschluss im Maschinenbau der Universität Täbris. Seine dokumentierte Arbeit umfasst Projekte in Luft- und Raumfahrt, Astronomie und Fernerkundung.", ceoCta: "CEO-Profil ansehen", visionTitle: "Vision und Entwicklungspfad" },
+  zh: { vision: "公司的愿景是分阶段发展技术，并建立研究、工程与工业应用之间的联系。从长期看，公司希望形成一种组织结构，使各专业领域能够沿着自身的发展路径独立开展工作。", roadmap: "下一步：推进加入东阿塞拜疆省科技园或大不里士大学科技园的相关工作。", ceo: "公司创始人兼首席执行官拥有大不里士大学航空航天工程硕士学位和机械工程学士学位。其有记录的项目经历涵盖航空航天、天文学和遥感领域。", ceoCta: "查看首席执行官简介", visionTitle: "愿景与发展路径" },
+  fr: { vision: "La vision de l’entreprise consiste à développer les technologies par étapes et à relier recherche, ingénierie et applications industrielles. À long terme, elle vise une structure dans laquelle chaque domaine spécialisé pourra suivre sa propre trajectoire de développement et fonctionner de manière autonome.", roadmap: "Étape suivante : poursuivre les démarches en vue d’intégrer le parc scientifique et technologique de la province d’Azerbaïdjan oriental ou celui de l’Université de Tabriz.", ceo: "Le fondateur et directeur général est titulaire d’un master en ingénierie aérospatiale et d’une licence en génie mécanique de l’Université de Tabriz. Son expérience documentée comprend des projets en aérospatiale, astronomie et télédétection.", ceoCta: "Voir le profil du dirigeant", visionTitle: "Vision et trajectoire de développement" },
+  es: { vision: "La visión de la empresa es desarrollar tecnología por etapas y conectar la investigación, la ingeniería y las aplicaciones industriales. A largo plazo, aspira a una estructura en la que cada área especializada pueda seguir su propia trayectoria de desarrollo y operar de forma independiente.", roadmap: "Próximo paso: continuar las gestiones para incorporarse al Parque de Ciencia y Tecnología de Azerbaiyán Oriental o al de la Universidad de Tabriz.", ceo: "El fundador y director ejecutivo tiene un máster en Ingeniería Aeroespacial y una licenciatura en Ingeniería Mecánica por la Universidad de Tabriz. Su experiencia documentada incluye proyectos aeroespaciales, de astronomía y teledetección.", ceoCta: "Ver perfil del director ejecutivo", visionTitle: "Visión y trayectoria de desarrollo" }
+};
+const homeSection = homeSections[locale];
+
 const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
 ---
 <SiteLayout locale={locale} title={site.companyName} description={site.intro}>
@@ -32,9 +51,9 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-hero site-shell" aria-labelledby="hero-title">
       <div class="new-hero-copy">
         <p class="new-kicker"><span class="kicker-rule"></span>{copy.focus}</p>
-        <p class="new-company-name">{site.companyName}</p>
+        <p class="new-company-name"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</p>
         <h1 id="hero-title">{site.tagline}</h1>
-        <p class="new-hero-intro">{site.intro}</p>
+        <p class="new-hero-intro">{copyContent.homeHeroIntro}</p>
         <div class="new-hero-actions">
           <a class="new-button new-button-primary" href={route(locale,"fields")}>{site.navigation.fields}<span aria-hidden="true">↗</span></a>
           <a class="new-text-link" href={route(locale,"company")}>{site.navigation.company}<span aria-hidden="true">→</span></a>
@@ -65,15 +84,36 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-projects site-shell" id="projects" aria-labelledby="projects-title">
       <div class="new-section-head">
         <div><p class="new-kicker"><span class="kicker-rule"></span>02 / {site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
-        <p>{site.intro}</p>
+        <p>{labels.projectsNote}</p>
       </div>
       <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
 
     <section class="new-company" id="company" aria-labelledby="company-title">
       <div class="site-shell new-company-inner">
-        <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
-        <div class="new-company-detail"><p>{site.intro}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
+        <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 class="home-company-title" id="company-title"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</h2></div>
+        <div class="new-company-detail"><p>{copyContent.companyOverview[0]}</p><p class="new-founder">{site.founder}</p><a class="new-button new-button-secondary management-button" href={route(locale,"company/ceo")}>{managementButton[locale]}<span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+    <section class="home-vision site-shell" aria-labelledby="vision-title">
+      <div class="home-vision__copy">
+        <p class="new-kicker"><span class="kicker-rule"></span>04 / {homeSection.visionTitle}</p>
+        <h2 id="vision-title">{homeSection.visionTitle}</h2>
+        <p>{homeSection.vision}</p>
+        <p class="home-vision__roadmap">{homeSection.roadmap}</p>
+      </div>
+    </section>
+
+    <section class="home-ceo site-shell" aria-labelledby="home-ceo-title">
+      <div class="home-ceo__identity">
+        <p class="new-kicker"><span class="kicker-rule"></span>05 / {labels.ceo}</p>
+        <h2 id="home-ceo-title">{ceoProfile.name}</h2>
+        <p class="home-ceo__role">{ceoProfile.role}</p>
+      </div>
+      <div class="home-ceo__detail">
+        <p>{homeSection.ceo}</p>
+        <a class="new-button new-button-secondary management-button" href={route(locale,"company/ceo")}>{homeSection.ceoCta}<span aria-hidden="true">↗</span></a>
       </div>
     </section>
 

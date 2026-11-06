@@ -29,12 +29,15 @@ Required sections:
 **Objective:** Provide the authoritative corporate introduction.
 
 Required content:
-- legal/company name
+- legal/company name, with the legal form visually subordinate to the company name
 - founding year
 - location
-- mission/purpose
-- R&D orientation
-- six domains
+- a substantive, source-grounded corporate overview
+- mission/purpose and R&D orientation
+- explanation of the interdisciplinary relationship between the six domains
+- clear distinction between current capabilities, areas of focus, and future development
+
+The homepage hero and Company page must use distinct copy. The hero gives a concise, differentiated value proposition. The Company page provides the authoritative, expanded corporate introduction. Do not reuse the same paragraph in both locations.
 
 ## Fields
 
@@ -108,4 +111,6 @@ Source → Draft → Technical review → Language review → Approval → Publi
 
 ## Status
 
-**Phase 1 baseline — ready for wireframe preparation.**
+**Phase 1 implementation — in review.**
+
+The Phase 1 implementation includes localized corporate copy, six domain detail routes, documented related-work references where supported by the supplied CV, application areas, homepage vision and CEO preview, grouped CEO skills, and the four-path contact gateway. Automated validation and visual review must pass before merge.

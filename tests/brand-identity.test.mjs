@@ -19,6 +19,10 @@ test("the legal company name is the shared website and social identity", () => {
 });
 
 test("the homepage presents the registered company name before the tagline", () => {
-  assert.match(home, /new-company-name">\{site\.companyName\}/);
+  const companyName = home.indexOf("new-company-name");
+  const tagline = home.indexOf('<h1 id="hero-title">');
+  assert.ok(companyName >= 0, "homepage must render the registered company name");
+  assert.ok(tagline > companyName, "registered company name must appear before the tagline");
+  assert.match(home, /legalNameParts\?\.\[1\] \?\? site\.companyName/);
   assert.doesNotMatch(home, /ALPHA TEAM/);
 });

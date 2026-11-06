@@ -1,3 +1,22 @@
+## 2026-11-06 — Cross-page whitespace review and spacing normalization
+
+- Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.
+- Reduced the default vertical gap between sections on standard content pages while preserving larger spacing for the homepage's distinct visual sections.
+- Applied a tighter section rhythm to all six discipline detail pages and reduced their internal vertical padding.
+- Standardized section-heading bottom spacing on content pages.
+- Changes are shared across all eight locales and retain responsive CSS behavior.
+- Automated checks and visual review of the new preview build are pending; no Production changes were made.
+
+## 2026-11-06 — Domain detail page layout correction
+
+- Standardized the six localized domain detail routes with a dedicated page layout scope.
+- Reduced excessive vertical spacing between content sections and tightened the domain hero.
+- Removed decorative list markers from capability cards and aligned capability cards in a responsive grid.
+- Presented application areas as a readable full-width content panel.
+- Standardized related-project cards and empty-state spacing.
+- Applied the same shared styles to all six domains and all eight locales; no domain-specific capability claims or project records were added.
+- Automated validation and preview visual confirmation are pending on the latest pull-request commit.
+
 ## 2026-11-05 — Visual review, legal-content accuracy, and self-hosted typography
 
 - The owner provisionally approved the current visual direction in PR [#86](https://github.com/saeed92m/company-website/pull/86). This approval does not authorize merge or Production deployment.
@@ -185,3 +204,21 @@ All notable changes to this project will be documented here.
 - Changed CI, GitHub Pages build, and Browser QA to install from the committed lockfile with `npm ci`.
 - Audited the locked dependency graph. Both the full dependency audit and production-only audit report zero vulnerabilities.
 - Prepared on branch `maintenance/deterministic-npm-lockfile`; production `main` is unchanged pending PR review and checks.
+
+## 2026-11-06 — UI/UX Phase 1 implementation (review)
+
+- Extended the sticky navigation background and border to the full viewport width while retaining the centered content grid.
+- Added a localized Home navigation item and clarified the management destination as the CEO page.
+- Improved the Fields page introduction, removed the duplicate heading, and standardized the domain grid to three columns on desktop, two on tablet, and one on mobile.
+- Expanded the Projects page introduction in all eight locales. Project repository links remain unpublished.
+- Reframed the Contact page as a four-path business engagement gateway. No form backend or public email address was added; meeting requests are not presented as confirmed bookings.
+- Applied compact responsive card layouts to CEO profile lists. Language proficiency remains descriptive; no unverified star scores were introduced.
+- Converted the homepage management link into a compact secondary action.
+- Validation is pending CI and browser review on the pull request preview.
+
+- Added localized homepage sections for the company's development vision, current roadmap stage, and CEO introduction.
+- Distinguished the registered legal form from the company name on the homepage, with responsive wrapping on narrow screens.
+- Expanded all six localized domain detail routes with capability scope, documented related work where the supplied CV supports it, and a clear development-status note. Motorsport is identified as a roadmap area, not represented as an already registered business scope.
+- Added a responsive, localized skills taxonomy to the CEO profile. The groups use the supplied CV skill order and do not assign unverified proficiency scores.
+- Added localized application-area descriptions and clarified the methods, technologies, and specialist-scope heading on all six domain detail pages.
+- Removed the current-stage statement from the homepage Vision and Development Path section in all eight locales; retained the next-step statement.
