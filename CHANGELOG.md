@@ -1,3 +1,13 @@
+## 2026-11-06 — Domain detail page layout correction
+
+- Standardized the six localized domain detail routes with a dedicated page layout scope.
+- Reduced excessive vertical spacing between content sections and tightened the domain hero.
+- Removed decorative list markers from capability cards and aligned capability cards in a responsive grid.
+- Presented application areas as a readable full-width content panel.
+- Standardized related-project cards and empty-state spacing.
+- Applied the same shared styles to all six domains and all eight locales; no domain-specific capability claims or project records were added.
+- Automated validation and preview visual confirmation are pending on the latest pull-request commit.
+
 ## 2026-11-05 — Visual review, legal-content accuracy, and self-hosted typography
 
 - The owner provisionally approved the current visual direction in PR [#86](https://github.com/saeed92m/company-website/pull/86). This approval does not authorize merge or Production deployment.
