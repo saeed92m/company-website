@@ -245,3 +245,13 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
   .company-title { gap: .2em .45em; font-size: clamp(1.35rem, 6vw, 2rem); line-height: 1.55; }
   .company-overview { line-height: 1.95; }
 }
+
+
+/* Phase 1: full-bleed sticky navigation with content aligned to the site grid. */
+.site-header.site-shell {
+  width: 100%;
+  padding-inline: max(calc((100% - 1240px) / 2), 1.5rem);
+}
+@media (max-width: 700px) {
+  .site-header.site-shell { padding-inline: 1rem; }
+}
