@@ -549,3 +549,8 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (max-width: 900px) {
   .home-redesign .home-company-title { flex-wrap: wrap; }
 }
+
+@media (max-width: 560px) {
+  .home-redesign .new-domain-grid { grid-template-columns: 1fr; }
+  .home-redesign .new-domain-card { min-height: 190px; }
+}
