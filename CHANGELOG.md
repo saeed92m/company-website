@@ -196,3 +196,7 @@ All notable changes to this project will be documented here.
 - Applied compact responsive card layouts to CEO profile lists. Language proficiency remains descriptive; no unverified star scores were introduced.
 - Converted the homepage management link into a compact secondary action.
 - Validation is pending CI and browser review on the pull request preview.
+
+- Added localized homepage sections for the company's development vision, current roadmap stage, and CEO introduction.
+- Distinguished the registered legal form from the company name on the homepage, with responsive wrapping on narrow screens.
+- Expanded all six localized domain detail routes with capability scope, documented related work where the supplied CV supports it, and a clear development-status note. Motorsport is identified as a roadmap area, not represented as an already registered business scope.
