@@ -41,23 +41,23 @@ const applications: Record<Locale, Record<string, string>> = {
 const pageLabels = labels[locale];
 ---
 <SiteLayout locale={locale} title={field.title + " — " + site.companyName} description={field.summary}>
-  <div class="site-shell">
+  <div class="site-shell domain-detail-page">
     <section class="hero domain-hero" aria-labelledby="field-title" style={`--domain-image: url(${domainImageUrl(field.slug)})`}>
       <p class="eyebrow">{site.navigation.fields}</p><h1 id="field-title">{field.title}</h1><p class="lede">{field.summary}</p>
     </section>
-    <section aria-labelledby="capabilities-title">
+    <section class="domain-content-section" aria-labelledby="capabilities-title">
       <div class="section-heading"><h2 id="capabilities-title">{pageLabels.scope}</h2></div>
       <ul class="capability-list domain-detail-list">{field.capabilities.map((item) => <li>{item}</li>)}</ul>
     </section>
-    <section aria-labelledby="applications-title">
+    <section class="domain-content-section" aria-labelledby="applications-title">
       <div class="section-heading"><h2 id="applications-title">{applicationTitle[locale]}</h2></div>
       <p class="domain-applications">{applications[locale][field.slug]}</p>
     </section>
-    <section aria-labelledby="related-title">
+    <section class="domain-content-section" aria-labelledby="related-title">
       <div class="section-heading"><h2 id="related-title">{pageLabels.work}</h2></div>
       {related.length ? <div class="project-grid">{related.map((project) => <article class="project-card"><h3>{project.name}</h3><p>{project.period}</p><p>{project.summary}</p></article>)}</div> : <p class="domain-empty-note">{pageLabels.empty}</p>}
     </section>
-    <section class="domain-development" aria-labelledby="development-title">
+    <section class="domain-development domain-content-section" aria-labelledby="development-title">
       <div class="section-heading"><h2 id="development-title">{pageLabels.approach}</h2></div>
       <p>{pageLabels.note}</p>
       {field.slug === "motorsport" && <p class="domain-roadmap-note">{pageLabels.roadmap}</p>}
