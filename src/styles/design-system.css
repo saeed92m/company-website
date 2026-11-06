@@ -562,3 +562,25 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   font-size: 1rem;
   line-height: 2;
 }
+
+.skill-group-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.skill-group {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.skill-group h3 {
+  margin: 0 0 .75rem;
+  color: var(--ink);
+  font-size: 1rem;
+}
+.skill-group .profile-list { margin: 0; }
+@media (max-width: 640px) {
+  .skill-group-grid { grid-template-columns: 1fr; }
+}
