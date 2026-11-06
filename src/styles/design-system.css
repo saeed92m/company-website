@@ -458,3 +458,66 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   border-color: var(--rd-accent);
   background: color-mix(in srgb, var(--rd-accent) 10%, transparent);
 }
+
+
+/* Home: complete the corporate story with vision and founder context. */
+.home-vision,
+.home-ceo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .85fr);
+  gap: clamp(24px, 5vw, 72px);
+  padding-block: clamp(52px, 7vw, 88px);
+  border-bottom: 1px solid var(--rd-line);
+}
+.home-vision h2,
+.home-ceo h2 {
+  margin: 0 0 1rem;
+  color: var(--rd-ink);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1.35;
+}
+.home-vision p,
+.home-ceo p {
+  color: var(--rd-muted);
+  font-size: 1rem;
+  line-height: 2;
+}
+.home-vision__roadmap {
+  padding: 1rem 1.25rem;
+  border-inline-start: 3px solid var(--rd-accent);
+  background: var(--rd-panel);
+}
+.home-ceo__role {
+  color: var(--rd-ink) !important;
+  font-weight: 700;
+}
+.home-ceo__detail .management-button { margin-top: .75rem; }
+.domain-detail-list { margin-top: 1rem; }
+.domain-empty-note,
+.domain-development {
+  color: var(--muted);
+  line-height: 2;
+}
+.domain-empty-note {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.domain-development {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.domain-development p { max-width: 88ch; }
+.domain-roadmap-note {
+  margin-top: 1rem;
+  padding-inline-start: 1rem;
+  border-inline-start: 3px solid var(--brand-gray, #a8a8a8);
+  color: var(--ink);
+}
+@media (max-width: 760px) {
+  .home-vision,
+  .home-ceo { grid-template-columns: 1fr; gap: 1rem; }
+}
