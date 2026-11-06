@@ -18,6 +18,22 @@ const site = siteContent[locale];
 const labels = ui[locale];
 const profilePublications = publications[locale];
 const additional = ceoAdditional[locale];
+const skillLabels: Record<Locale, { technical: string; science: string; management: string; safety: string }> = {
+  fa: { technical: "مهارت‌های فنی و مهندسی", science: "پژوهش و علوم", management: "مدیریت و کسب‌وکار", safety: "ایمنی و عملیات" },
+  en: { technical: "Technical and engineering", science: "Research and science", management: "Management and business", safety: "Safety and operations" },
+  ar: { technical: "المهارات التقنية والهندسية", science: "البحث والعلوم", management: "الإدارة والأعمال", safety: "السلامة والعمليات" },
+  ru: { technical: "Технические и инженерные навыки", science: "Исследования и наука", management: "Управление и бизнес", safety: "Безопасность и эксплуатация" },
+  de: { technical: "Technik und Ingenieurwesen", science: "Forschung und Wissenschaft", management: "Management und Wirtschaft", safety: "Sicherheit und Betrieb" },
+  zh: { technical: "技术与工程", science: "研究与科学", management: "管理与商业", safety: "安全与运营" },
+  fr: { technical: "Compétences techniques et d’ingénierie", science: "Recherche et sciences", management: "Gestion et entreprise", safety: "Sécurité et opérations" },
+  es: { technical: "Competencias técnicas y de ingeniería", science: "Investigación y ciencia", management: "Gestión y negocios", safety: "Seguridad y operaciones" }
+};
+const skillGroups = [
+  { label: skillLabels[locale].technical, items: additional.skills.filter((_, index) => [0, 1, 3, 6, 7].includes(index)) },
+  { label: skillLabels[locale].science, items: additional.skills.filter((_, index) => [4, 11].includes(index)) },
+  { label: skillLabels[locale].management, items: additional.skills.filter((_, index) => [5, 8, 9, 10].includes(index)) },
+  { label: skillLabels[locale].safety, items: additional.skills.filter((_, index) => [2].includes(index)) }
+];
 const publicProfiles = [
   { label: "LinkedIn", url: "https://linkedin.com/in/saeed-memarzadeh-12559146" },
   { label: "GitHub", url: "https://github.com/saeed92m" },
@@ -60,7 +76,9 @@ const publicProfiles = [
     </section>
     <section aria-labelledby="skills-title">
       <div class="section-heading"><h2 id="skills-title">{labels.skills}</h2></div>
-      <ul class="capability-list profile-list profile-list--skills">{additional.skills.map((item) => <li>{item}</li>)}</ul>
+      <div class="skill-group-grid">
+        {skillGroups.map((group) => <article class="skill-group"><h3>{group.label}</h3><ul class="capability-list profile-list profile-list--skills">{group.items.map((item) => <li>{item}</li>)}</ul></article>)}
+      </div>
     </section>
     <section aria-labelledby="languages-title">
       <div class="section-heading"><h2 id="languages-title">{labels.languages}</h2></div>
