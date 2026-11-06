@@ -201,3 +201,4 @@ All notable changes to this project will be documented here.
 - Distinguished the registered legal form from the company name on the homepage, with responsive wrapping on narrow screens.
 - Expanded all six localized domain detail routes with capability scope, documented related work where the supplied CV supports it, and a clear development-status note. Motorsport is identified as a roadmap area, not represented as an already registered business scope.
 - Added a responsive, localized skills taxonomy to the CEO profile. The groups use the supplied CV skill order and do not assign unverified proficiency scores.
+- Added localized application-area descriptions and clarified the methods, technologies, and specialist-scope heading on all six domain detail pages.
