@@ -597,3 +597,7 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .home-redesign .home-company-title > span,
   .home-redesign .new-company-name > span { white-space: normal; }
 }
+
+@media (max-width: 900px) {
+  .home-redesign .new-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
