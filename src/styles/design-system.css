@@ -554,3 +554,11 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .home-redesign .new-domain-grid { grid-template-columns: 1fr; }
   .home-redesign .new-domain-card { min-height: 190px; }
 }
+
+.domain-applications {
+  max-width: 88ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 2;
+}
