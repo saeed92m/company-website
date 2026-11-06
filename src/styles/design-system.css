@@ -601,3 +601,17 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (max-width: 900px) {
   .home-redesign .new-domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* Phase 1 correction: all six domain cards use the same two-row grid.
+   The former featured-card span created an uneven masonry-like layout. */
+.home-redesign .new-domain-grid {
+  grid-auto-rows: minmax(280px, 1fr);
+}
+.home-redesign .domain-featured {
+  grid-row: auto;
+  min-height: 0;
+}
+@media (max-width: 700px) {
+  .home-redesign .domain-featured { min-height: 230px; }
+}
