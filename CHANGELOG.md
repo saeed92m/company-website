@@ -185,3 +185,14 @@ All notable changes to this project will be documented here.
 - Changed CI, GitHub Pages build, and Browser QA to install from the committed lockfile with `npm ci`.
 - Audited the locked dependency graph. Both the full dependency audit and production-only audit report zero vulnerabilities.
 - Prepared on branch `maintenance/deterministic-npm-lockfile`; production `main` is unchanged pending PR review and checks.
+
+## 2026-11-06 — UI/UX Phase 1 implementation (review)
+
+- Extended the sticky navigation background and border to the full viewport width while retaining the centered content grid.
+- Added a localized Home navigation item and clarified the management destination as the CEO page.
+- Improved the Fields page introduction, removed the duplicate heading, and standardized the domain grid to three columns on desktop, two on tablet, and one on mobile.
+- Expanded the Projects page introduction in all eight locales. Project repository links remain unpublished.
+- Reframed the Contact page as a four-path business engagement gateway. No form backend or public email address was added; meeting requests are not presented as confirmed bookings.
+- Applied compact responsive card layouts to CEO profile lists. Language proficiency remains descriptive; no unverified star scores were introduced.
+- Converted the homepage management link into a compact secondary action.
+- Validation is pending CI and browser review on the pull request preview.
