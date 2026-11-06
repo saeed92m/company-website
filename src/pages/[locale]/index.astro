@@ -84,7 +84,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-projects site-shell" id="projects" aria-labelledby="projects-title">
       <div class="new-section-head">
         <div><p class="new-kicker"><span class="kicker-rule"></span>02 / {site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
-        <p>{site.intro}</p>
+        <p>{labels.projectsNote}</p>
       </div>
       <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
