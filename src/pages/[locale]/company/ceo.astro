@@ -60,19 +60,19 @@ const publicProfiles = [
     </section>
     <section aria-labelledby="skills-title">
       <div class="section-heading"><h2 id="skills-title">{labels.skills}</h2></div>
-      <ul class="capability-list">{additional.skills.map((item) => <li>{item}</li>)}</ul>
+      <ul class="capability-list profile-list profile-list--skills">{additional.skills.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section aria-labelledby="languages-title">
       <div class="section-heading"><h2 id="languages-title">{labels.languages}</h2></div>
-      <ul class="capability-list">{additional.languages.map((item) => <li>{item}</li>)}</ul>
+      <ul class="capability-list profile-list profile-list--languages">{additional.languages.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section aria-labelledby="memberships-title">
       <div class="section-heading"><h2 id="memberships-title">{labels.memberships}</h2></div>
-      <ul class="capability-list">{additional.memberships.map((item) => <li>{formatPeriod(item, locale)}</li>)}</ul>
+      <ul class="capability-list profile-list profile-list--memberships">{additional.memberships.map((item) => <li>{formatPeriod(item, locale)}</li>)}</ul>
     </section>
     <section aria-labelledby="courses-title">
       <div class="section-heading"><h2 id="courses-title">{labels.courses}</h2></div>
-      <ul class="capability-list">{additional.courses.map((item) => <li>{item}</li>)}</ul>
+      <ul class="capability-list profile-list profile-list--courses">{additional.courses.map((item) => <li>{item}</li>)}</ul>
     </section>
     <section aria-labelledby="public-profiles-title">
       <div class="section-heading"><h2 id="public-profiles-title">{labels.publicProfiles}</h2></div>
