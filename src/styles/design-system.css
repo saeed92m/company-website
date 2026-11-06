@@ -615,3 +615,82 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (max-width: 700px) {
   .home-redesign .domain-featured { min-height: 230px; }
 }
+
+
+/* Domain detail pages: consistent content rhythm across all six disciplines. */
+.domain-detail-page .domain-hero {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  min-height: 0;
+}
+.domain-detail-page > .domain-content-section,
+.domain-detail-page > .domain-development {
+  padding-block: clamp(1.5rem, 2.8vw, 2.5rem);
+}
+.domain-detail-page > .domain-content-section + .domain-content-section,
+.domain-detail-page > .domain-content-section + .domain-development {
+  margin-top: 0;
+}
+.domain-detail-page .section-heading {
+  display: block;
+  margin: 0 0 1rem;
+}
+.domain-detail-page .section-heading h2 {
+  margin: 0;
+  max-width: 100%;
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.4;
+}
+.domain-detail-page .capability-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.domain-detail-page .capability-list li {
+  min-width: 0;
+  padding: 1rem 1.15rem;
+  line-height: 1.85;
+}
+.domain-detail-page .domain-applications {
+  max-width: none;
+  margin: 0;
+  padding: clamp(1.1rem, 2.2vw, 1.6rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 2;
+}
+.domain-detail-page .project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.domain-detail-page .project-card {
+  min-height: 0;
+  padding: 1.25rem;
+}
+.domain-detail-page .domain-empty-note {
+  margin: 0;
+}
+.domain-detail-page .domain-development {
+  margin-block: 0 2rem;
+}
+.domain-detail-page .domain-development p {
+  max-width: 90ch;
+  margin-block: .75rem 0;
+}
+@media (max-width: 760px) {
+  .domain-detail-page .capability-list,
+  .domain-detail-page .project-grid {
+    grid-template-columns: 1fr;
+  }
+  .domain-detail-page > .domain-content-section,
+  .domain-detail-page > .domain-development {
+    padding-block: 1.25rem;
+  }
+  .domain-detail-page .domain-hero {
+    padding-block: 2.5rem;
+  }
+}
