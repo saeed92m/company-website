@@ -6,11 +6,22 @@ import { route } from "../../../data/routes";
 import { domainImageUrl } from "../../../data/domain-assets";
 export function getStaticPaths() { return locales.map((locale) => ({ params: { locale }, props: { locale } })); }
 const { locale } = Astro.props as { locale: Locale }; const site = content[locale];
+const fieldsIntro: Record<Locale, string> = {
+  fa: "شرکت پیشگامان نواندیش فناورگستر کیهان در شش حوزه تخصصی فعالیت می‌کند. تمرکز شرکت بر پژوهش، طراحی، توسعه و پیاده‌سازی راهکارهای علمی و مهندسی است؛ از تحلیل داده‌های نجومی و فناوری‌های هوافضایی تا سنجش از دور، انرژی، هوش مصنوعی و مهندسی موتوراسپرت. این حوزه‌ها با رویکردی میان‌رشته‌ای به تبدیل دانش و پژوهش به راهکارهای کاربردی و قابل توسعه کمک می‌کنند.",
+  en: "The company focuses on six specialist areas. Its approach connects research, design and engineering development across astronomy, aerospace, remote sensing, energy, artificial intelligence and motorsport. These areas provide an interdisciplinary framework for turning scientific knowledge and defined needs into practical, scalable solutions.",
+  ar: "تركز الشركة على ستة مجالات تخصصية. ويربط نهجها بين البحث والتصميم والتطوير الهندسي في علم الفلك والطيران والفضاء والاستشعار عن بُعد والطاقة والذكاء الاصطناعي ورياضة المحركات. وتوفر هذه المجالات إطاراً متعدد التخصصات لتحويل المعرفة العلمية والاحتياجات المحددة إلى حلول عملية قابلة للتطوير.",
+  ru: "Компания работает в шести специализированных направлениях. Её подход объединяет исследования, проектирование и инженерную разработку в астрономии, аэрокосмических технологиях, дистанционном зондировании, энергетике, искусственном интеллекте и автоспорте. Эти направления создают междисциплинарную основу для преобразования научных знаний и конкретных задач в практические масштабируемые решения.",
+  de: "Das Unternehmen konzentriert sich auf sechs Fachbereiche. Der Ansatz verbindet Forschung, Entwurf und technische Entwicklung in Astronomie, Luft- und Raumfahrt, Fernerkundung, Energie, künstlicher Intelligenz und Motorsport. Diese Bereiche bilden einen interdisziplinären Rahmen, um wissenschaftliche Erkenntnisse und konkrete Anforderungen in praktische, skalierbare Lösungen zu überführen.",
+  zh: "公司关注六个专业领域。其工作方式将天文学、航空航天、遥感、能源、人工智能和赛车运动中的研究、设计与工程开发联系起来。这些领域构成跨学科框架，帮助将科学知识和明确需求转化为实用且可扩展的解决方案。",
+  fr: "L’entreprise se concentre sur six domaines spécialisés. Son approche relie la recherche, la conception et le développement technique en astronomie, aérospatiale, télédétection, énergie, intelligence artificielle et sport automobile. Ces domaines forment un cadre interdisciplinaire pour transformer les connaissances scientifiques et les besoins définis en solutions pratiques et évolutives.",
+  es: "La empresa se centra en seis áreas especializadas. Su enfoque conecta la investigación, el diseño y el desarrollo de ingeniería en astronomía, aeroespacial, teledetección, energía, inteligencia artificial y motorsport. Estas áreas forman un marco interdisciplinario para convertir el conocimiento científico y las necesidades definidas en soluciones prácticas y escalables."
+};
+const fieldsHeading: Record<Locale, string> = { fa: "شش حوزه تخصصی ما", en: "Our six specialist areas", ar: "مجالاتنا التخصصية الستة", ru: "Шесть специализированных направлений", de: "Unsere sechs Fachbereiche", zh: "六大专业领域", fr: "Nos six domaines spécialisés", es: "Nuestras seis áreas especializadas" };
 ---
 <SiteLayout locale={locale} title={site.navigation.fields + " — " + site.companyName} description={site.intro}>
   <div class="site-shell">
-    <section class="hero" aria-labelledby="fields-title"><p class="eyebrow">{site.navigation.fields}</p><h1 id="fields-title">{site.navigation.fields}</h1><p class="lede">{site.intro}</p></section>
-    <section aria-labelledby="field-list-title"><div class="section-heading"><h2 id="field-list-title">{site.navigation.fields}</h2></div>
+    <section class="hero" aria-labelledby="fields-title"><p class="eyebrow">{site.navigation.fields}</p><h1 id="fields-title">{site.navigation.fields}</h1><p class="lede">{fieldsIntro[locale]}</p></section>
+    <section aria-labelledby="field-list-title"><div class="section-heading"><h2 id="field-list-title">{fieldsHeading[locale]}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)} style={`--domain-image: url(${domainImageUrl(field.slug)})`}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
   </div>
