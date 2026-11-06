@@ -521,3 +521,31 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .home-vision,
   .home-ceo { grid-template-columns: 1fr; gap: 1rem; }
 }
+
+.home-redesign .new-company-name {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .25em .45em;
+}
+.home-redesign .new-company-name small,
+.home-redesign .home-company-title small {
+  color: var(--rd-muted);
+  font-size: .48em;
+  font-weight: 650;
+  white-space: nowrap;
+}
+.home-redesign .home-company-title {
+  max-width: none;
+  overflow-wrap: normal;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: .35em;
+  font-size: clamp(1.35rem, 3vw, 2.5rem);
+  line-height: 1.5;
+}
+.home-redesign .home-company-title > span { min-width: 0; }
+@media (max-width: 900px) {
+  .home-redesign .home-company-title { flex-wrap: wrap; }
+}
