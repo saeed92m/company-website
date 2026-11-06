@@ -335,3 +335,11 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   font-size: .9rem;
   line-height: 1.9;
 }
+
+
+/* Keep the homepage introduction readable while preserving its distinct role. */
+.home-redesign .new-hero-intro {
+  max-width: 76ch;
+  font-size: clamp(17px, 1.4vw, 20px);
+  line-height: 2;
+}
