@@ -442,3 +442,19 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .engagement-grid { grid-template-columns: 1fr; }
   .engagement-card { min-height: 150px; }
 }
+
+
+/* The management link is a secondary action, not a hero CTA. */
+.home-redesign .management-button {
+  min-height: 42px;
+  padding-inline: 15px;
+  gap: 12px;
+  border-color: var(--brand-gray, #a8a8a8);
+  color: var(--rd-ink);
+  background: transparent;
+  font-size: 12px;
+}
+.home-redesign .management-button:hover {
+  border-color: var(--rd-accent);
+  background: color-mix(in srgb, var(--rd-accent) 10%, transparent);
+}
