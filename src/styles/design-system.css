@@ -584,3 +584,16 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 @media (max-width: 640px) {
   .skill-group-grid { grid-template-columns: 1fr; }
 }
+
+.home-redesign .home-company-title {
+  max-width: none;
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+.home-redesign .home-company-title > span,
+.home-redesign .new-company-name > span { white-space: nowrap; }
+@media (max-width: 900px) {
+  .home-redesign .home-company-title { white-space: normal; }
+  .home-redesign .home-company-title > span,
+  .home-redesign .new-company-name > span { white-space: normal; }
+}
