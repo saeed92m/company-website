@@ -343,3 +343,102 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   font-size: clamp(17px, 1.4vw, 20px);
   line-height: 2;
 }
+
+
+/* Phase 1: compact, consistent page layouts. */
+.projects-intro { max-width: 82ch; margin-bottom: 0; }
+.site-shell > section + section { margin-top: clamp(2.25rem, 4vw, 3.5rem); }
+.site-shell > section.hero + section { margin-top: 0; }
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.domain-card {
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+}
+.domain-card:focus-visible,
+.engagement-card:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .domain-grid { grid-template-columns: 1fr; }
+  .domain-card { min-height: 180px; }
+}
+
+/* CEO profile lists: compact cards without inventing proficiency scores. */
+.profile-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .7rem;
+  padding: 0;
+  list-style: none;
+}
+.profile-list li {
+  min-width: 0;
+  margin: 0;
+  padding: .8rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control, 12px);
+  background: var(--surface-2);
+  color: var(--ink);
+  line-height: 1.75;
+}
+.profile-list--courses,
+.profile-list--memberships { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.profile-list--languages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) {
+  .profile-list--courses,
+  .profile-list--memberships { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .profile-list,
+  .profile-list--courses,
+  .profile-list--memberships,
+  .profile-list--languages { grid-template-columns: 1fr; }
+}
+
+/* Contact page: business engagement paths, not an unconnected form. */
+.contact-hero { padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+.engagement-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.engagement-card {
+  min-height: 190px;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface);
+}
+.engagement-index {
+  color: var(--brand-gray, #a8a8a8);
+  font-size: .8rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.engagement-card h2 {
+  margin: .9rem 0 .6rem;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1.35;
+}
+.engagement-card p { margin: 0; color: var(--muted); }
+.contact-status {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card, 18px);
+  background: var(--surface-2);
+}
+.contact-status h2 { font-size: clamp(1.4rem, 2.6vw, 2rem); }
+@media (max-width: 640px) {
+  .engagement-grid { grid-template-columns: 1fr; }
+  .engagement-card { min-height: 150px; }
+}
