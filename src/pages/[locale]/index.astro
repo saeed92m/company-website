@@ -14,6 +14,7 @@ export function getStaticPaths() {
 }
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
+const legalNameParts = site.companyName.match(/^(.*?)(\\s*\\([^)]*\\))$/);
 const labels = ui[locale];
 const copyContent = corporateCopy[locale];
 const ceoProfile = ceo[locale];
@@ -50,7 +51,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-hero site-shell" aria-labelledby="hero-title">
       <div class="new-hero-copy">
         <p class="new-kicker"><span class="kicker-rule"></span>{copy.focus}</p>
-        <p class="new-company-name">{site.companyName}</p>
+        <p class="new-company-name"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</p>
         <h1 id="hero-title">{site.tagline}</h1>
         <p class="new-hero-intro">{copyContent.homeHeroIntro}</p>
         <div class="new-hero-actions">
@@ -90,7 +91,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
 
     <section class="new-company" id="company" aria-labelledby="company-title">
       <div class="site-shell new-company-inner">
-        <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
+        <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 class="home-company-title" id="company-title"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</h2></div>
         <div class="new-company-detail"><p>{copyContent.companyOverview[0]}</p><p class="new-founder">{site.founder}</p><a class="new-button new-button-secondary management-button" href={route(locale,"company/ceo")}>{managementButton[locale]}<span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
