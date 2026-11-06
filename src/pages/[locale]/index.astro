@@ -2,6 +2,7 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../data/locales";
 import { content } from "../../content/site";
+import { corporateCopy } from "../../content/corporate-copy";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
@@ -13,6 +14,7 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
+const copyContent = corporateCopy[locale];
 
 const visualLabels: Record<Locale, { explore: string; focus: string; overview: string }> = {
   fa: { explore: "مشاهدهٔ حوزه", focus: "پژوهش · مهندسی · توسعه", overview: "از پژوهش علمی تا راهکار مهندسی" },
@@ -34,7 +36,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
         <p class="new-kicker"><span class="kicker-rule"></span>{copy.focus}</p>
         <p class="new-company-name">{site.companyName}</p>
         <h1 id="hero-title">{site.tagline}</h1>
-        <p class="new-hero-intro">{site.intro}</p>
+        <p class="new-hero-intro">{copyContent.homeHeroIntro}</p>
         <div class="new-hero-actions">
           <a class="new-button new-button-primary" href={route(locale,"fields")}>{site.navigation.fields}<span aria-hidden="true">↗</span></a>
           <a class="new-text-link" href={route(locale,"company")}>{site.navigation.company}<span aria-hidden="true">→</span></a>
@@ -73,7 +75,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="new-company" id="company" aria-labelledby="company-title">
       <div class="site-shell new-company-inner">
         <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.company}</p><h2 id="company-title">{site.companyName}</h2></div>
-        <div class="new-company-detail"><p>{site.intro}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
+        <div class="new-company-detail"><p>{copyContent.companyOverview[0]}</p><p class="new-founder">{site.founder}</p><a class="new-text-link" href={route(locale,"company/ceo")}>{site.navigation.ceo}<span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
