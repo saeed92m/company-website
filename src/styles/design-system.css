@@ -874,3 +874,6 @@ html[data-theme=light] .home-engineering__list li,html[data-theme=light] .home-l
 html[data-theme=light] .home-lifecycle__grid li strong,html[data-theme=light] .home-collaboration__grid h3{color:#14243a}
 @media(max-width:900px){.home-process__heading{grid-template-columns:1fr;gap:12px}.home-engineering__list{grid-template-columns:repeat(2,minmax(0,1fr))}.home-lifecycle__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-collaboration__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.home-engineering__list,.home-lifecycle__grid,.home-collaboration__grid{grid-template-columns:1fr}}
+
+.project-card__domain{margin:-.2rem 0 .7rem;color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.08em}
+.home-redesign .new-projects .project-card .project-card__domain{color:var(--rd-accent)}
