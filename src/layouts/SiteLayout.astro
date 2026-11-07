@@ -224,8 +224,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           menuToggle.setAttribute("aria-expanded", String(open));
           menuToggle.setAttribute("aria-label", open ? labels[currentLocale].close : labels[currentLocale].menu);
           document.body.classList.toggle("menu-open", open);
+          menuGroups.forEach((group) => { group.open = false; });
           if (open) {
-            menuGroups.forEach((group) => { group.open = false; });
             menu.querySelector("a, summary")?.focus();
           } else {
             menuToggle.focus();
