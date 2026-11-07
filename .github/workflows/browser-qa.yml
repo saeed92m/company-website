@@ -189,9 +189,11 @@ jobs:
                 if (!(await navPanel.isVisible())) throw new Error(`${url}: menu overlay did not open`);
                 const panelGeometry = await navPanel.evaluate((element) => {
                   const rect = element.getBoundingClientRect();
+                  const insideStickyHeader = Boolean(element.closest(".site-header"));
                   const style = getComputedStyle(element);
                   return {
                     position: style.position,
+                    insideStickyHeader,
                     top: rect.top,
                     bottom: rect.bottom,
                     height: rect.height,
@@ -201,6 +203,7 @@ jobs:
                   };
                 });
                 if (panelGeometry.position !== "fixed" ||
+                    panelGeometry.insideStickyHeader ||
                     panelGeometry.height < panelGeometry.viewportHeight * 0.55 ||
                     panelGeometry.bottom > panelGeometry.viewportHeight + 1 ||
                     panelGeometry.width > panelGeometry.viewportWidth + 1) {
