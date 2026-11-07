@@ -243,3 +243,12 @@ All notable changes to this project will be documented here.
 - Added a responsive, localized skills taxonomy to the CEO profile. The groups use the supplied CV skill order and do not assign unverified proficiency scores.
 - Added localized application-area descriptions and clarified the methods, technologies, and specialist-scope heading on all six domain detail pages.
 - Removed the current-stage statement from the homepage Vision and Development Path section in all eight locales; retained the next-step statement.
+
+
+## 2026-11-07 — Mobile expandable navigation correction
+
+- Fixed mobile navigation clipping: disclosure submenus now open in normal document flow instead of inside a horizontally scrolling container.
+- Changed the mobile navigation row to wrap within the viewport. An expanded group occupies the available row width and displays its submenu below the summary.
+- Kept the desktop dropdown positioning and the persistent horizontal navigation pattern. No hamburger menu was added.
+- Added regression coverage for mobile wrapping, visible overflow, and in-flow expanded submenus.
+- Mobile browser and physical-device visual validation are required before merge.
