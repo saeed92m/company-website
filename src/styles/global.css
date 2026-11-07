@@ -118,7 +118,7 @@ html[lang="zh"] body{font-family:"Noto Sans CJK SC","Microsoft YaHei","PingFang 
 .site-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--page) 84%,transparent);backdrop-filter:blur(18px)}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--ink);text-decoration:none;flex:0 0 auto}
 .brand-mark{display:inline-flex;width:2.65rem;height:auto;align-items:center;justify-content:center;line-height:0}.brand-mark img,.brand-mark svg{width:100%;height:auto;display:block;object-fit:contain}
-.brand-wordmark{font-weight:800;letter-spacing:0;font-size:.78rem;line-height:1.4;max-width:14rem;overflow-wrap:anywhere}
+.brand-wordmark{font-weight:800;letter-spacing:0;font-size:clamp(.58rem,1vw,.82rem);line-height:1.2;white-space:nowrap;overflow-wrap:normal;max-width:none}
 .primary-nav{display:flex;flex:1;min-width:0;justify-content:center;gap:1.4rem;flex-wrap:wrap}
 .primary-nav a,.language-select select,.theme-toggle{font-size:.82rem;font-weight:650}
 .primary-nav a{text-decoration:none;color:var(--muted);transition:color .2s ease}.primary-nav a:hover,.primary-nav a:focus-visible,.primary-nav a[aria-current="page"]{color:var(--ink)}.primary-nav a[aria-current="page"]{font-weight:800}
@@ -329,9 +329,7 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
   padding-bottom:1rem;
   border-bottom:1px solid var(--border);
 }
-.nav-panel-brand { display:flex; align-items:center; gap:.75rem; min-width:0; font-weight:800; }
-.nav-panel-brand .brand-mark { width:3rem; flex:0 0 3rem; }
-.nav-panel-brand > span:last-child { overflow-wrap:anywhere; }
+.nav-panel-head--minimal { justify-content:flex-start; }
 .nav-close {
   display:grid;
   place-items:center;
@@ -410,7 +408,9 @@ body.menu-open { overflow:hidden; }
 @media(max-width:720px) {
   .site-header.site-shell { padding-inline:1rem; }
   .site-header { gap:.55rem; }
-  .site-header .brand { min-width:0; max-width:34%; }
+  .site-header .brand { min-width:0; max-width:none; gap:.4rem; }
+  .site-header .brand-mark { width:30px; flex-basis:30px; }
+  .site-header .brand-wordmark { display:inline; font-size:clamp(8px,2.35vw,10px); max-width:none; white-space:nowrap; }
   .brand-wordmark { display:none; }
   .site-header .header-tools { margin-inline:auto; gap:.4rem; }
   .language-select select { max-width:7.5rem; }
@@ -432,7 +432,7 @@ body.menu-open { overflow:hidden; }
 @media (max-width: 720px) {
   .site-header.site-shell {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto auto;
     grid-template-areas: "brand tools menu";
     align-items: center;
     flex-wrap: nowrap;
