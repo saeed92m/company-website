@@ -86,3 +86,11 @@ test("mobile glass overlay is a viewport-level sibling of the sticky header", ()
   assert.match(styles, /\.mobile-nav-panel\s*\{[^}]*flex:\s*1\s+1\s+auto/);
   assert.match(styles, /\.site-header\.site-shell\s*\{[^}]*position:\s*sticky;[^}]*top:\s*0;/);
 });
+
+test("mobile header controls remain visible while the full-height overlay is open", () => {
+  assert.match(styles, /\\.mobile-header-tools\\s*\\{\\s*display:\\s*none/);
+  assert.match(styles, /\\.mobile-header-tools\\s*\\{[^}]*display:\\s*flex/);
+  assert.match(styles, /grid-template-columns:\\s*auto minmax\\(0, 1fr\\) auto/);
+  assert.match(styles, /height:\\s*100dvh/);
+  assert.match(styles, /-webkit-overflow-scrolling:\\s*touch/);
+});
