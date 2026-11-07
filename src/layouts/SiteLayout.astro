@@ -146,6 +146,23 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
+
+      <div class="header-tools">
+        <label class="language-select">
+          <span class="sr-only">{labels.language}</span>
+          <select aria-label={labels.language}>
+            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+          <span aria-hidden="true">☾</span>
+          <span data-theme-label>{labels.night}</span>
+        </button>
+      </div>
+      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span aria-hidden="true">☰</span>
+      </button>
+    </header>
       <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav hidden>
         <div class="nav-panel-head">
           <span class="nav-panel-brand">
@@ -171,22 +188,6 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
-      <div class="header-tools">
-        <label class="language-select">
-          <span class="sr-only">{labels.language}</span>
-          <select aria-label={labels.language}>
-            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
-          </select>
-        </label>
-        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
-          <span aria-hidden="true">☾</span>
-          <span data-theme-label>{labels.night}</span>
-        </button>
-      </div>
-      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
-        <span aria-hidden="true">☰</span>
-      </button>
-    </header>
     <main id="main-content"><slot /></main>
     <footer class="site-footer">
       <div class="site-shell footer-grid">
