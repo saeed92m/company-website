@@ -50,6 +50,9 @@ test("the header stays sticky and keeps persistent controls visible", () => {
   assert.match(styles, /\.site-header \.header-tools \{ order:2; margin-inline:auto; \}/);
   assert.match(styles, /\.menu-toggle \{[\s\S]*min-height:3rem/);
   assert.match(styles, /\.language-select select,\.theme-toggle,\.menu-toggle \{ min-height:3rem; \}/);
+  assert.match(styles, /grid-template-areas: "brand tools menu"/);
+  assert.match(styles, /\.site-header \.menu-toggle \{[\\s\\S]*grid-area: menu/);
+  assert.match(styles, /\.site-header \.primary-nav \{[\\s\\S]*position: fixed[\\s\\S]*inset-block-end:[\\s\\S]*max-height: none/);
 });
 
 test("all eight locales have translated menu controls and navigation labels", () => {
