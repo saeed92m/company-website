@@ -65,7 +65,7 @@ test("mobile v3 uses an accessible glass drawer with language and theme controls
   assert.match(layout, /mobilePanel\?\.removeAttribute\("aria-modal"\)/);
   assert.match(layout, /data-mobile-nav-close/);
   assert.match(layout, /mobile-nav-tools[\s\S]*language-select[\s\S]*theme-toggle/);
-  assert.match(styles, /background:rgba\(7,17,31,\.75\)/);
+  assert.match(styles, /background:\s*rgba\(7,17,31,\.75\)/);
   assert.match(styles, /backdrop-filter:\s*blur\(28px\)/);
   assert.match(styles, /overflow-y:\s*auto/);
   assert.match(layout, /closeMobileMenu\(\)/);
