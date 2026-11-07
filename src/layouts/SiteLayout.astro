@@ -212,7 +212,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const closeMobileMenu = ({ restoreFocus = false } = {}) => {
           header?.removeAttribute("data-mobile-open");
           menuToggle?.setAttribute("aria-expanded", "false");
-          if (menuToggle) menuToggle.setAttribute("aria-label", labels[currentLocale].menu);
+          document.body.style.overflow = "";
+          menuGroups.forEach((group) => { group.open = false; });
+          if (menuToggle) menuToggle.setAttribute("aria-label", menuUi[currentLocale].menu);
           if (restoreFocus) menuToggle?.focus();
         };
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
@@ -239,12 +241,13 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           else {
             header?.setAttribute("data-mobile-open", "");
             menuToggle.setAttribute("aria-expanded", "true");
-            menuToggle.setAttribute("aria-label", labels[currentLocale].close);
+            menuToggle.setAttribute("aria-label", menuUi[currentLocale].close);
+            document.body.style.overflow = "hidden";
+            menu?.querySelector("a")?.focus();
           }
         });
         menu?.addEventListener("click", (event) => {
           if (event.target instanceof Element && event.target.closest("a")) {
-            menuGroups.forEach((group) => { group.open = false; });
             closeMobileMenu();
           }
         });
@@ -252,11 +255,17 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
         }));
         document.addEventListener("keydown", (event) => {
-          if (event.key !== "Escape") return;
-          const openGroup = menuGroups.find((group) => group.open);
-          if (openGroup) {
-            openGroup.open = false;
-            openGroup.querySelector("summary")?.focus();
+          if (event.key === "Escape" && header?.hasAttribute("data-mobile-open")) {
+            event.preventDefault();
+            closeMobileMenu({ restoreFocus: true });
+            return;
+          }
+          if (event.key === "Tab" && header?.hasAttribute("data-mobile-open")) {
+            const focusable = Array.from(header.querySelectorAll('a[href], button:not([disabled]), select, summary'));
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
           }
         });
         document.addEventListener("click", (event) => {
