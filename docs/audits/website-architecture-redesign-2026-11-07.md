@@ -1,8 +1,11 @@
 # Website architecture redesign — 2026-11-07
 
 ## Scope
-- Added a localized `/platforms/` page for all eight supported locales.
+- Added localized `/platforms/`, `/engineering/`, `/how-we-work/`, and `/collaborate/` pages for all eight supported locales.
 - Added the five shared technology platforms and their target/not-started status.
+- Added the nine-stage product lifecycle with stage gates and evidence requirements.
+- Added potential collaboration pathways with explicit non-partner caveats.
+- Added localized project status labels and the ASTROINTEL association for ZTF Classifier.
 - Added a seven-layer company architecture view.
 - Kept Company-Platform separate as an internal corporate operating and integration system.
 - Removed Company-Platform from the public Projects listing.
