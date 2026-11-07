@@ -211,11 +211,17 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const menu = document.querySelector("[data-primary-nav]");
         const menuLabel = document.querySelector("[data-menu-toggle-label]");
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
+        const menuText = {
+          fa: { open: "فهرست", close: "بستن فهرست" }, en: { open: "Menu", close: "Close menu" },
+          ar: { open: "القائمة", close: "إغلاق القائمة" }, ru: { open: "Меню", close: "Закрыть меню" },
+          de: { open: "Menü", close: "Menü schließen" }, zh: { open: "菜单", close: "关闭菜单" },
+          fr: { open: "Menu", close: "Fermer le menu" }, es: { open: "Menú", close: "Cerrar menú" }
+        };
         const setMenuOpen = (open) => {
           if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
           menu.hidden = !open;
           menuToggle.setAttribute("aria-expanded", String(open));
-          if (menuLabel) menuLabel.textContent = open ? "Close menu" : "Menu";
+          if (menuLabel) menuLabel.textContent = open ? menuText[currentLocale].close : menuText[currentLocale].open;
         };
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
@@ -234,46 +240,31 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (icon) icon.textContent = isDark ? "☾" : "☀";
         };
         updateThemeUi();
-        if (menuLabel) {
-          const initialMenuText = menuLabel.textContent || "";
-          const menuText = {
-            fa: { open: "فهرست", close: "بستن فهرست" }, en: { open: "Menu", close: "Close menu" },
-            ar: { open: "القائمة", close: "إغلاق القائمة" }, ru: { open: "Меню", close: "Закрыть меню" },
-            de: { open: "Menü", close: "Menü schließen" }, zh: { open: "菜单", close: "关闭菜单" },
-            fr: { open: "Menu", close: "Fermer le menu" }, es: { open: "Menú", close: "Cerrar menú" }
-          };
-          const currentMenuText = menuText[currentLocale] || menuText.en;
-          menuLabel.textContent = initialMenuText;
-          const updateMenuLabel = (open) => { menuLabel.textContent = open ? currentMenuText.close : currentMenuText.open; };
-          menuToggle?.addEventListener("click", () => updateMenuLabel(menuToggle.getAttribute("aria-expanded") === "true"));
-          menu?.addEventListener("click", (event) => {
-            if (event.target instanceof Element && event.target.closest("a")) {
-              menuGroups.forEach((group) => { group.open = false; });
-              setMenuOpen(false);
-              updateMenuLabel(false);
-            }
-          });
-          menuGroups.forEach((group) => group.addEventListener("toggle", () => {
-            if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
-          }));
-          document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
-              setMenuOpen(false);
-              updateMenuLabel(false);
-              menuToggle.focus();
-              menuGroups.forEach((group) => { group.open = false; });
-            }
-          });
-          document.addEventListener("click", (event) => {
-            if (menuToggle?.getAttribute("aria-expanded") !== "true") return;
-            if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
-              setMenuOpen(false);
-              updateMenuLabel(false);
-              menuGroups.forEach((group) => { group.open = false; });
-            }
-          });
-        }
+        setMenuOpen(false);
         menuToggle?.addEventListener("click", () => setMenuOpen(menuToggle.getAttribute("aria-expanded") !== "true"));
+        menu?.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a")) {
+            menuGroups.forEach((group) => { group.open = false; });
+            setMenuOpen(false);
+          }
+        });
+        menuGroups.forEach((group) => group.addEventListener("toggle", () => {
+          if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
+        }));
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
+            setMenuOpen(false);
+            menuToggle.focus();
+            menuGroups.forEach((group) => { group.open = false; });
+          }
+        });
+        document.addEventListener("click", (event) => {
+          if (menuToggle?.getAttribute("aria-expanded") !== "true") return;
+          if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
+            setMenuOpen(false);
+            menuGroups.forEach((group) => { group.open = false; });
+          }
+        });
         toggle?.addEventListener("click", () => {
           root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
           try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}
