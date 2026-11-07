@@ -1,3 +1,12 @@
+## 2026-11-07 — Mobile navigation Variant 3 viewport correction (review)
+
+- Kept Variant 2 unchanged as the preferred fallback; its hamburger placement remains at the leading edge of the mobile header.
+- Corrected Variant 3 so the open header itself owns a viewport-sized fixed layer. This avoids the header backdrop-filter containing block from constraining fixed descendants.
+- The full-screen navigation now uses the available viewport height, including mobile safe-area insets. Navigation content scrolls inside the overlay when needed.
+- Language and theme controls remain visible at the bottom of the overlay and do not scroll away with the navigation links.
+- Added regression assertions for viewport sizing, internal scrolling, and pinned controls.
+- Automated validation and the updated Cloudflare Preview are pending. No Production changes.
+
 ## 2026-11-07 — Mobile navigation variants 2 and 3 (review)
 
 - Refined Variant 2: moved the hamburger control to the leading edge of the mobile header; kept the compact overlay panel.
