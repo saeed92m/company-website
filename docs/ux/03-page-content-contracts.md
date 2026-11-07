@@ -13,12 +13,12 @@ This document defines what each initial page must accomplish before visual copyw
 
 ## Primary navigation behavior
 
-- Preserve the horizontal primary-navigation bar. Do not replace it with a hamburger menu, side drawer, or full-screen navigation.
+- Desktop: preserve the horizontal primary-navigation bar. Mobile: use a compact brand header and a SpaceX-inspired full-screen navigation overlay.
 - Keep Home, Projects, and Contact as direct links.
 - Provide one expandable Company group and one expandable group containing all six activity domains.
 - Open and close groups by pointer, touch, and keyboard through native disclosure controls.
-- Keep language selection and the light/dark control visible in the header at every viewport size.
-- Close an open group after link selection, on Escape, or after an outside click. Escape returns focus to the relevant group summary.
+- Keep language selection and the light/dark control available in the mobile overlay and visible in the desktop header.
+- Close the mobile overlay after link selection or Escape. Support accordion groups, focus containment, focus restoration, body-scroll locking, RTL/LTR, and reduced motion.
 - Keep the navigation landmark localized and support the active page indicator, RTL/LTR layout, visible focus, reduced motion, and minimum 44 CSS-pixel touch targets.
 - Validate the menu at mobile and desktop widths in Chromium, Firefox, and WebKit. Include keyboard and screen-reader review before Production acceptance.
 
