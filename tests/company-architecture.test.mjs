@@ -6,6 +6,7 @@ const siteSource = readFileSync(new URL("../src/content/site.ts", import.meta.ur
 const platformSource = readFileSync(new URL("../src/content/platforms.ts", import.meta.url), "utf8");
 const homeSource = readFileSync(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
 const layoutSource = readFileSync(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
+const projectStatusSource = readFileSync(new URL("../src/content/project-status.ts", import.meta.url), "utf8");
 
 test("Company-Platform is not presented as a public project", () => {
   assert.equal((siteSource.match(/title:"Company Platform"/g) ?? []).length, 0);
@@ -23,6 +24,13 @@ test("five shared technology platforms are documented", () => {
   for (const label of ["KEYHAN AI CORE", "KEYHAN DATA PLATFORM", "NEXUS IoT", "KEYHAN SDK & API ECOSYSTEM", "ENGINEERING INTEGRATIONS"]) {
     assert.ok(platformSource.includes(label), "Missing shared platform: " + label);
   }
+});
+
+test("public project cards use localized evidence-based status labels", () => {
+  assert.match(projectStatusSource, /Alpha release phase/);
+  assert.match(projectStatusSource, /Version 1.0.1 released/);
+  assert.match(projectStatusSource, /انتشار آلفا/);
+  assert.match(projectStatusSource, /نسخه ۱\.۰\.۱ منتشر شده/);
 });
 
 test("homepage links to the shared-platform architecture", () => {
