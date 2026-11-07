@@ -431,3 +431,29 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav-panel, .mobile-nav-backdrop { transition:none; }
 }
+
+/* Navigation v3 regression fixes: keep desktop controls visible and
+   prevent the sticky header's backdrop filter from containing the mobile overlay. */
+@media (min-width: 721px) {
+  .mobile-nav-backdrop[hidden] { display: contents !important; }
+}
+body.mobile-nav-open .site-header {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+@media (max-width: 720px) {
+  .mobile-nav-backdrop:not([hidden]) {
+    display: flex;
+    align-items: stretch;
+  }
+  .mobile-nav-panel {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+  }
+}
+.site-header.site-shell {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
