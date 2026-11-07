@@ -1,0 +1,46 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { collaborationPage } from "../../../content/collaboration";
+import { route } from "../../../data/routes";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const copy = collaborationPage[locale];
+---
+<SiteLayout locale={locale} title={copy.pageTitle + " — " + site.companyName} description={copy.intro}>
+  <div class="site-shell collaboration-page">
+    <section class="collaboration-hero" aria-labelledby="collaboration-title">
+      <p class="eyebrow">{site.navigation.contact}</p>
+      <h1 id="collaboration-title">{copy.pageTitle}</h1>
+      <p class="lede">{copy.intro}</p>
+      <p class="collaboration-note">{copy.note}</p>
+    </section>
+    <section class="collaboration-section" aria-labelledby="pathways-title">
+      <header class="section-heading"><h2 id="pathways-title">{copy.pathwaysTitle}</h2></header>
+      <div class="collaboration-grid">
+        {copy.pathways.map((pathway, index) => (
+          <article class="collaboration-card">
+            <span class="collaboration-card__index">0{index + 1}</span>
+            <h3>{pathway.title}</h3>
+            <p>{pathway.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section class="collaboration-section" aria-labelledby="process-title">
+      <header class="section-heading"><h2 id="process-title">{copy.processTitle}</h2></header>
+      <ol class="collaboration-process">
+        {copy.process.map((step, index) => <li><span>0{index + 1}</span>{step}</li>)}
+      </ol>
+    </section>
+    <section class="collaboration-cta">
+      <a class="button button-primary" href={route(locale,"contact")}>{copy.contactCta}</a>
+    </section>
+  </div>
+</SiteLayout>
