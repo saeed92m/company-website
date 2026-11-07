@@ -35,12 +35,14 @@ test("Company and six-domain groups are native accordion disclosures", () => {
 
 test("language and theme controls remain available in the mobile overlay", () => {
   assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
-  assert.match(styles, /\.site-header\[data-mobile-open\] \.header-tools\s*\{\s*display:flex; position:fixed/s);
+  assert.match(styles, /\.site-header\.site-shell\[data-mobile-open\] \.header-tools\s*\{[^}]*position:absolute;[^}]*display:flex/s);
 });
 
 test("variant 3 uses a full-screen fixed navigation panel", () => {
   assert.match(styles, /Mobile navigation variant 3: SpaceX-inspired full-screen navigation overlay/);
-  assert.match(styles, /\.site-header \.primary-nav\s*\{[^}]*position:fixed; inset:0/s);
+  assert.match(styles, /\.site-header\.site-shell\[data-mobile-open\]\s*\{[^}]*position:fixed;[^}]*inset:0/s);
+  assert.match(styles, /\.site-header\.site-shell\[data-mobile-open\] \.primary-nav\s*\{[^}]*position:absolute;[^}]*inset:0/s);
+  assert.match(styles, /backdrop-filter:none/);
   assert.match(styles, /\.site-header\[data-mobile-open\] \.primary-nav \{ display:flex; \}/);
   assert.match(styles, /max-height:100dvh/);
 });
@@ -54,4 +56,12 @@ test("desktop navigation remains horizontal and mobile styles respect reduced mo
   assert.match(styles, /\.primary-nav\{display:flex/);
   assert.match(styles, /@media \(min-width:721px\)/);
   assert.match(styles, /@media \(prefers-reduced-motion:reduce\)/);
+});
+
+
+test("variant 3 keeps the full-screen menu within the viewport and pins controls above the safe area", () => {
+  assert.match(styles, /height:100dvh/);
+  assert.match(styles, /overflow-y:auto/);
+  assert.match(styles, /padding:calc\(env\(safe-area-inset-top\) \+ 5rem\).*calc\(env\(safe-area-inset-bottom\) \+ 6rem\)/);
+  assert.match(styles, /bottom:calc\(env\(safe-area-inset-bottom\) \+ 1rem\)/);
 });
