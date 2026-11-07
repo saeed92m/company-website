@@ -146,7 +146,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
+      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav hidden>
+        <div class="nav-panel-head">
+          <span class="nav-panel-brand">
+            <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
+            <span>{site.companyName}</span>
+          </span>
+          <button class="nav-close" type="button" aria-label={menuUi[locale].close} data-menu-close>×</button>
+        </div>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
         <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
           <summary>{site.navigation.company}</summary>
@@ -176,6 +183,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <span data-theme-label>{labels.night}</span>
         </button>
       </div>
+      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span aria-hidden="true">☰</span>
+      </button>
     </header>
     <main id="main-content"><slot /></main>
     <footer class="site-footer">
@@ -205,6 +215,31 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const select = document.querySelector(".language-select select");
         const menu = document.querySelector("[data-primary-nav]");
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
+        const menuToggle = document.querySelector("[data-menu-toggle]");
+        const menuClose = document.querySelector("[data-menu-close]");
+        const siteHeader = document.querySelector(".site-header");
+        const setMenuOpen = (open) => {
+          if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
+          menu.hidden = !open;
+          menuToggle.setAttribute("aria-expanded", String(open));
+          menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          document.body.classList.toggle("menu-open", open);
+          if (open) {
+            menuGroups.forEach((group) => { group.open = false; });
+            menu.querySelector("a, summary")?.focus();
+          } else {
+            menuToggle.focus();
+          }
+        };
+        const syncHeaderHeight = () => {
+          if (siteHeader instanceof HTMLElement) {
+            root.style.setProperty("--site-header-height", siteHeader.getBoundingClientRect().height + "px");
+          }
+        };
+        syncHeaderHeight();
+        window.addEventListener("resize", syncHeaderHeight);
+        menuToggle?.addEventListener("click", () => setMenuOpen(menu?.hidden ?? true));
+        menuClose?.addEventListener("click", () => setMenuOpen(false));
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
@@ -225,6 +260,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         menu?.addEventListener("click", (event) => {
           if (event.target instanceof Element && event.target.closest("a")) {
             menuGroups.forEach((group) => { group.open = false; });
+            setMenuOpen(false);
           }
         });
         menuGroups.forEach((group) => group.addEventListener("toggle", () => {
@@ -232,6 +268,10 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         }));
         document.addEventListener("keydown", (event) => {
           if (event.key !== "Escape") return;
+          if (menu && !menu.hidden) {
+            setMenuOpen(false);
+            return;
+          }
           const openGroup = menuGroups.find((group) => group.open);
           if (openGroup) {
             openGroup.open = false;
@@ -239,8 +279,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           }
         });
         document.addEventListener("click", (event) => {
-          if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
-            menuGroups.forEach((group) => { group.open = false; });
+          if (menu && !menu.hidden && event.target instanceof Node &&
+              !menu.contains(event.target) && !menuToggle?.contains(event.target)) {
+            setMenuOpen(false);
           }
         });
         toggle?.addEventListener("click", () => {
