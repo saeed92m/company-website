@@ -150,7 +150,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span aria-hidden="true">☰</span>
       </button>
       <div class="mobile-nav-backdrop" data-mobile-nav-backdrop hidden>
-        <section class="mobile-nav-panel" id="mobile-navigation-panel" role="dialog" aria-modal="true" aria-label={menuUi[locale].navigation} tabindex="-1">
+        <section class="mobile-nav-panel" id="mobile-navigation-panel" aria-label={menuUi[locale].navigation} tabindex="-1">
           <div class="mobile-nav-top">
             <a class="mobile-nav-brand" href={route(locale)} aria-label={site.companyName}>
               <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
@@ -225,6 +225,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const closeMobileMenu = (restoreFocus = true) => {
           if (!mobileBackdrop || mobileBackdrop.hidden) return;
           mobileBackdrop.hidden = true;
+          mobilePanel?.removeAttribute("role");
+          mobilePanel?.removeAttribute("aria-modal");
           document.body.classList.remove("mobile-nav-open");
           mobileOpen?.setAttribute("aria-expanded", "false");
           if (restoreFocus) mobileOpen?.focus();
@@ -232,6 +234,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const openMobileMenu = () => {
           if (!mobileBackdrop) return;
           mobileBackdrop.hidden = false;
+          mobilePanel?.setAttribute("role", "dialog");
+          mobilePanel?.setAttribute("aria-modal", "true");
           document.body.classList.add("mobile-nav-open");
           mobileOpen?.setAttribute("aria-expanded", "true");
           mobileClose?.focus();
