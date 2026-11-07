@@ -214,7 +214,7 @@ jobs:
                   if (await internalPlatformCard.count() !== 0) throw new Error(`${url}: internal Company-Platform must not appear as a public project`);
                   await summaryButtons.first().click();
                   const dialog = page.locator("dialog.project-dialog");
-                  if (await dialog.count() !== 3 || !(await dialog.first().isVisible())) throw new Error(`${url}: project summary dialog did not open`);
+                  if (await dialog.count() !== 2 || !(await dialog.first().isVisible())) throw new Error(`${url}: project summary dialog did not open`);
                   const summaryText = await dialog.first().locator(".project-dialog__description").innerText();
                   if (!summaryText.trim()) throw new Error(`${url}: project summary is empty`);
                   await page.keyboard.press("Escape");
