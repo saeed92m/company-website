@@ -77,3 +77,11 @@ test("CEO profile page omits the large decorative brand mark but keeps the share
   assert.match(layout, /<span class="brand-mark" aria-hidden="true"><BrandMark/);
   assert.match(styles, /\.hero-profile--text-only\{grid-template-columns:minmax\(0,1fr\);min-height:auto\}/);
 });
+
+
+test("the sticky header does not constrain the fixed navigation overlay", () => {
+  assert.match(styles, /\.site-header\s*\{[^}]*backdrop-filter:\s*none/);
+  assert.match(styles, /\.primary-nav\s*\{[\s\S]*position:fixed/);
+  assert.match(styles, /\.primary-nav\s*\{[\s\S]*inset-block-end:[^;]+/);
+  assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:auto/);
+});
