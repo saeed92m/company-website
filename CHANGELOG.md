@@ -1,3 +1,11 @@
+## 2026-11-07 — Mobile navigation variants 2 and 3 (review)
+
+- Refined Variant 2: moved the hamburger control to the leading edge of the mobile header; kept the compact overlay panel.
+- Added Variant 3 as a separate preview branch. It uses a full-screen dark navigation overlay, top brand/close controls, vertically spaced links, expandable Company and six-domain groups, and language/theme controls at the bottom.
+- Desktop navigation remains horizontal in both variants. No public content, contact implementation, production configuration, or database was changed.
+- Added regression checks for the full-screen overlay, body-scroll lock, Escape dismissal, and focus containment. CI and cross-browser Browser QA are required before visual acceptance.
+- Both variants are previews only. Neither is merged or deployed to Production.
+
 ## 2026-11-07 — Persistent expandable navigation (PR #97)
 
 - Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
