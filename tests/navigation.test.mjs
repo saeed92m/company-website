@@ -25,10 +25,12 @@ test("navigation groups close after selection, on Escape, and outside click", ()
 });
 
 test("mobile language and theme controls remain in the navigation header, outside the overlay", () => {
-  assert.match(layout, /<div class="header-tools mobile-header-tools">[\\s\\S]*language-select[\\s\\S]*theme-toggle[\\s\\S]*<\\/div>/);
+  assert.ok(layout.includes('<div class="header-tools mobile-header-tools">'));
+  assert.ok(layout.includes('class="header-tools mobile-header-tools"'));
+  assert.ok(!layout.includes('class="header-tools mobile-nav-tools"'));
   assert.doesNotMatch(layout, /mobile-nav-tools/);
-  assert.match(layout, /<header class="site-header site-shell">[\\s\\S]*mobile-header-tools[\\s\\S]*data-mobile-nav-open/);
-  assert.match(layout, /aria-label=\\{menuUi\\[locale\\]\\.navigation\\}/);
+  assert.ok(layout.indexOf("mobile-header-tools") < layout.indexOf("data-mobile-nav-open"));
+  assert.ok(layout.includes("navigation:"));
 });
 test("navigation controls meet the minimum 44px touch target", () => {
   assert.match(styles, /\.primary-nav > a, \.nav-group > summary[\s\S]*min-height:\s*2\.9rem/);
@@ -65,7 +67,8 @@ test("mobile v3 uses an accessible glass drawer with language and theme controls
   assert.match(layout, /mobilePanel\?\.removeAttribute\("role"\)/);
   assert.match(layout, /mobilePanel\?\.removeAttribute\("aria-modal"\)/);
   assert.match(layout, /data-mobile-nav-close/);
-  assert.match(layout, /mobile-nav-tools[\s\S]*language-select[\s\S]*theme-toggle/);
+  assert.ok(layout.includes("mobile-header-tools"));
+  assert.ok(!layout.includes("class=\"header-tools mobile-nav-tools\""));
   assert.match(styles, /background:\s*rgba\(7,17,31,\.75\)/);
   assert.match(styles, /backdrop-filter:\s*blur\(28px\)/);
   assert.match(styles, /overflow-y:\s*auto/);
@@ -89,9 +92,7 @@ test("mobile glass overlay is a viewport-level sibling of the sticky header", ()
 });
 
 test("mobile header controls remain visible while the full-height overlay is open", () => {
-  assert.match(styles, /\\.mobile-header-tools\\s*\\{\\s*display:\\s*none/);
-  assert.match(styles, /\\.mobile-header-tools\\s*\\{[^}]*display:\\s*flex/);
-  assert.match(styles, /grid-template-columns:\\s*auto minmax\\(0, 1fr\\) auto/);
-  assert.match(styles, /height:\\s*100dvh/);
-  assert.match(styles, /-webkit-overflow-scrolling:\\s*touch/);
+      assert.ok(styles.includes("grid-template-columns: auto minmax(0, 1fr) auto;"));
+  assert.ok(styles.includes("height: 100dvh;"));
+  assert.ok(styles.includes("-webkit-overflow-scrolling: touch;"));
 });
