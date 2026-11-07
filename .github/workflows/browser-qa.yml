@@ -191,16 +191,24 @@ jobs:
                 if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
                 await companyGroup.evaluate((element) => { element.open = false; });
                 await fieldsGroup.evaluate((element) => { element.open = false; });
-                await companyGroup.locator("summary").focus();
-                await page.keyboard.press("Enter");
-                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Enter did not open Company dropdown`);
+                if (viewport.name === "mobile") {
+                  await companyGroup.locator("summary").click();
+                } else {
+                  await companyGroup.locator("summary").focus();
+                  await page.keyboard.press("Enter");
+                }
+                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Company dropdown did not open`);
                 await page.keyboard.press("Escape");
                 if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
                 if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
 
-                await fieldsGroup.locator("summary").focus();
-                await page.keyboard.press("Space");
-                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: Space did not open six-domain dropdown`);
+                if (viewport.name === "mobile") {
+                  await fieldsGroup.locator("summary").click();
+                } else {
+                  await fieldsGroup.locator("summary").focus();
+                  await page.keyboard.press("Space");
+                }
+                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: six-domain dropdown did not open`);
                 const fieldLinks = fieldsGroup.locator(".nav-submenu a");
                 if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
                 if (viewport.name === "mobile") {
