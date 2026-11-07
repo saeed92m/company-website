@@ -16,6 +16,7 @@ export const GET: APIRoute = () => {
     paths.add(route(locale, "company"));
     paths.add(route(locale, "company/ceo"));
     paths.add(route(locale, "fields"));
+    paths.add(route(locale, "platforms"));
     paths.add(route(locale, "projects"));
     paths.add(route(locale, "contact"));
 
