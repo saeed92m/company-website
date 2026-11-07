@@ -7,6 +7,7 @@ import { ceo } from "../../content/ceo";
 import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
+import { domainBrands, platformsPage } from "../../content/platforms";
 import ProjectCards from "../../components/ProjectCards.astro";
 
 export function getStaticPaths() {
@@ -31,6 +32,7 @@ const visualLabels: Record<Locale, { explore: string; focus: string; overview: s
   es: { explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
 };
 const copy = visualLabels[locale];
+const platformCopy = platformsPage[locale];
 
 const homeSections: Record<Locale, { vision: string; roadmap: string; ceo: string; ceoCta: string; visionTitle: string }> = {
   fa: { vision: "چشم‌انداز شرکت، توسعه مرحله‌ای فناوری و ایجاد پیوند میان پژوهش، مهندسی و کاربردهای صنعتی است. در بلندمدت، شرکت به‌دنبال ساختاری است که هر حوزه تخصصی بتواند مسیر توسعه و فعالیت مستقل خود را داشته باشد.", roadmap: "گام بعدی: پیگیری ورود به پارک علم و فناوری استان آذربایجان شرقی یا پارک علم و فناوری دانشگاه تبریز.", ceo: "بنیانگذار و مدیرعامل شرکت، دارای کارشناسی ارشد مهندسی هوافضا و کارشناسی مهندسی مکانیک از دانشگاه تبریز است. سوابق علمی و اجرایی او شامل پروژه‌های هوافضایی، نجوم و سنجش از دور است.", ceoCta: "مشاهده سوابق مدیرعامل", visionTitle: "چشم‌انداز و مسیر توسعه" },
@@ -74,11 +76,32 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
           {site.fields.map((field, index) => (
             <a class:list={["new-domain-card", index === 0 ? "domain-featured" : ""]} href={route(locale,"fields/"+field.slug)} style={`--domain-art: url("${domainImageUrl(field.slug)}")`}>
               <span class="domain-card-top"><span class="domain-number">0{index + 1}</span><span class="domain-arrow" aria-hidden="true">↗</span></span>
-              <span class="domain-card-bottom"><strong>{field.title}</strong><span>{field.summary}</span><span class="domain-explore">{copy.explore} <span aria-hidden="true">→</span></span></span>
+              <span class="domain-card-bottom"><span class="domain-brand-code">{domainBrands[field.slug]}</span><strong>{field.title}</strong><span>{field.summary}</span><span class="domain-explore">{copy.explore} <span aria-hidden="true">→</span></span></span>
             </a>
           ))}
         </div>
       </div>
+    </section>
+
+    <section class="home-platforms site-shell" id="platforms" aria-labelledby="platforms-title">
+      <div class="home-platforms__heading">
+        <div>
+          <p class="new-kicker"><span class="kicker-rule"></span>02 / {platformCopy.sharedTitle}</p>
+          <h2 id="platforms-title">{platformCopy.homeTitle}</h2>
+        </div>
+        <p>{platformCopy.homeIntro}</p>
+      </div>
+      <div class="home-platforms__grid">
+        {platformCopy.platforms.map((platform, index) => (
+          <article class="home-platform-card">
+            <span class="home-platform-card__index">0{index + 1}</span>
+            <h3>{platform.name}</h3>
+            <p>{platform.summary}</p>
+            <span class="home-platform-card__status">{platformCopy.plannedStatus}</span>
+          </article>
+        ))}
+      </div>
+      <a class="home-platforms__link" href={route(locale,"platforms")}>{platformCopy.viewArchitecture}<span aria-hidden="true">↗</span></a>
     </section>
 
     <section class="new-projects site-shell" id="projects" aria-labelledby="projects-title">
