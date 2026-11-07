@@ -1,3 +1,12 @@
+## 2026-11-07 — Company submenu labels and board profile hero refinement (PR #97)
+
+- Kept the top-level Company navigation group unchanged.
+- Renamed its first submenu item to “معرفی” and the former CEO submenu item to “هیئت‌مدیره”; added equivalent labels across all eight supported locales.
+- Preserved the existing board/CEO profile route and its content for future revision.
+- Removed the oversized decorative logo from the profile hero. The shared site-header logo remains unchanged.
+- Added regression tests for localized submenu labels and the logo-free profile hero.
+- Changes remain in the PR preview branch. No Production source or deployment was changed.
+
 ## 2026-11-07 — Mobile navigation layout correction (PR #97)
 
 - Hide dropdown content while its native disclosure group is closed. This prevents closed submenu content from appearing as an empty horizontal strip.
