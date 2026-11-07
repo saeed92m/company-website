@@ -80,8 +80,10 @@ test("CEO profile page omits the large decorative brand mark but keeps the share
 
 
 test("the navigation overlay is outside the sticky header and fills the viewport", () => {
-  assert.match(layout, /<\/header>\s*<nav id="primary-navigation"/);
-  assert.doesNotMatch(layout, /<header[^>]*>[\s\S]*<nav id="primary-navigation"/);
+  const headerMarkup = layout.match(/<header\\b[\\s\\S]*?<\\/header>/)?.[0] ?? "";
+  assert.ok(headerMarkup, "site header markup must be present");
+  assert.doesNotMatch(headerMarkup, /<nav id="primary-navigation"/);
+  assert.match(layout, /<\\/header>\\s*<nav id="primary-navigation"/);
   assert.match(styles, /\.primary-nav\s*\{[\s\S]*position:\s*fixed/);
   assert.match(styles, /\.primary-nav\s*\{[\s\S]*inset-block-end:[^;]+/);
   assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:\s*auto/);
