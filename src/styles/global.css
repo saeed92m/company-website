@@ -270,6 +270,7 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 .nav-group > summary::after { content:"⌄"; color:var(--muted); }
  .nav-group[open] > summary::after { content:"⌃"; }
 .nav-group[data-current="true"] > summary { color:var(--accent); border-color:var(--border-strong); }
+.nav-group:not([open]) > .nav-submenu { display:none; }
 .nav-submenu {
   position:absolute; z-index:40; top:calc(100% + .35rem); inset-inline-start:0;
   display:grid; gap:.25rem; min-width:min(18rem, calc(100vw - 2rem));
@@ -296,12 +297,17 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
   .header-tools { margin-inline-start:auto; }
 }
 @media (max-width:720px) {
-  .site-header { display:flex; flex-wrap:wrap; gap:.65rem; padding:.7rem 0; }
-  .brand { flex:1 1 calc(100% - 1rem); }
-  .header-tools { order:2; flex:1 1 100%; justify-content:flex-end; }
-  .primary-nav { order:3; flex:1 1 100%; justify-content:flex-start; gap:.35rem; }
-  .primary-nav > a, .nav-group > summary { min-height:2.9rem; padding:.55rem .65rem; }
-  .nav-submenu { inset-inline-start:auto; inset-inline-end:0; }
+  /* Keep the brand and persistent controls on the first row. */
+  .site-header { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:.65rem; padding:.7rem 0; }
+  .brand { min-width:0; flex:0 0 auto; }
+  .header-tools { order:0; flex:0 0 auto; justify-self:end; }
+  .primary-nav {
+    order:0; grid-column:1 / -1; flex:0 0 auto; width:100%;
+    justify-content:flex-start; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden;
+    gap:.35rem; padding:.15rem .15rem .35rem; scrollbar-width:none;
+  }
+  .primary-nav::-webkit-scrollbar { display:none; }
+  .primary-nav > a, .nav-group > summary { min-height:2.9rem; padding:.55rem .65rem; white-space:nowrap; }
 }
 @media (prefers-reduced-motion:reduce) { .primary-nav, .nav-submenu { transition:none; } }
 /* Persistent language and theme controls meet the 44px minimum touch target. */
