@@ -23,15 +23,15 @@ const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
-const menuUi: Record<Locale, { menu: string; close: string; home: string; ceo: string }> = {
-  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", ceo: "مدیرعامل" },
-  en: { menu: "Menu", close: "Close menu", home: "Home", ceo: "CEO" },
-  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", ceo: "الرئيس التنفيذي" },
-  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", ceo: "Генеральный директор" },
-  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", ceo: "Geschäftsführung" },
-  zh: { menu: "菜单", close: "关闭菜单", home: "首页", ceo: "首席执行官" },
-  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", ceo: "Direction générale" },
-  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", ceo: "Dirección general" }
+const menuUi: Record<Locale, { menu: string; close: string; home: string; ceo: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", ceo: "مدیرعامل", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", ceo: "CEO", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", ceo: "الرئيس التنفيذي", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", ceo: "Генеральный директор", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", ceo: "Geschäftsführung", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", ceo: "首席执行官", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", ceo: "Direction générale", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", ceo: "Dirección general", navigation: "Navegación principal" }
 };
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
@@ -149,7 +149,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
       <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" data-menu-toggle>
         <span aria-hidden="true">☰</span><span data-menu-toggle-label>{menuUi[locale].menu}</span>
       </button>
-      <nav id="primary-navigation" class="primary-nav" aria-label={site.navigation.company} hidden data-primary-nav>
+      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} hidden data-primary-nav>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
         <details class="nav-group" data-nav-group>
           <summary>{site.navigation.company}</summary>
