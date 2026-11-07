@@ -182,8 +182,8 @@ jobs:
                 if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
                 const companyGroup = navGroups.nth(0);
                 const fieldsGroup = navGroups.nth(1);
-                if (suffix.startsWith("company/") && !(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Company dropdown should be open for the active section`);
-                if (suffix.startsWith("fields/") && !(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: domain dropdown should be open for the active section`);
+                if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company group is not marked as the active section`);
+                if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
                 await companyGroup.evaluate((element) => { element.open = false; });
                 await fieldsGroup.evaluate((element) => { element.open = false; });
                 await companyGroup.locator("summary").click();
