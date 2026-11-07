@@ -24,7 +24,7 @@ test("navigation groups close after selection, on Escape, and outside click", ()
 });
 
 test("language and theme controls remain available inside the navigation panel", () => {
-  assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
+  assert.match(layout, /<div class="header-tools mobile-nav-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
   assert.match(layout, /aria-label=\{menuUi\[locale\]\.navigation\}/);
 });
 
