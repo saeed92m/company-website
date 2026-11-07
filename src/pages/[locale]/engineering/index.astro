@@ -1,0 +1,60 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { platformsPage } from "../../../content/platforms";
+import { route } from "../../../data/routes";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const copy = platformsPage[locale];
+const pageIntro: Record<Locale, string> = {
+  fa: "قلمرو مهندسی شرکت از نرم‌افزار و داده تا مکانیک، الکترونیک، سامانه‌های نهفته، شبیه‌سازی و یکپارچه‌سازی را پوشش می‌دهد. این فهرست، دامنه توانمندی هدف را مشخص می‌کند.",
+  en: "The company's engineering scope spans software and data, mechanical and electrical systems, embedded engineering, simulation, prototyping, and integration. This page describes target capability areas.",
+  ar: "يشمل نطاق الهندسة البرمجيات والبيانات والأنظمة الميكانيكية والكهربائية والأنظمة المضمنة والمحاكاة والنمذجة والتكامل. تعرض هذه الصفحة مجالات القدرات المستهدفة.",
+  ru: "Инженерный профиль охватывает программное обеспечение и данные, механические и электрические системы, встроенные решения, моделирование, прототипирование и интеграцию. Страница описывает целевые области компетенций.",
+  de: "Der Engineering-Bereich umfasst Software und Daten, mechanische und elektrische Systeme, Embedded Engineering, Simulation, Prototyping und Integration. Diese Seite beschreibt den angestrebten Kompetenzumfang.",
+  zh: "公司的工程范围涵盖软件与数据、机械与电气系统、嵌入式工程、仿真、原型设计和系统集成。本页介绍目标能力范围。",
+  fr: "Le périmètre d’ingénierie couvre les logiciels et les données, les systèmes mécaniques et électriques, l’embarqué, la simulation, le prototypage et l’intégration. Cette page décrit les capacités visées.",
+  es: "El alcance de ingeniería abarca software y datos, sistemas mecánicos y eléctricos, sistemas embebidos, simulación, prototipado e integración. Esta página describe las capacidades objetivo."
+};
+const note: Record<Locale, string> = {
+  fa: "ذکر آزمایشگاه، تجهیزات، نرم‌افزار یا روش آزمون به معنی مالکیت، مجوز تجاری یا ظرفیت عملیاتی موجود نیست. این موارد باید جداگانه ارزیابی و مستند شوند.",
+  en: "Listing a laboratory, tool, or test method does not confirm ownership, commercial licensing, or operational capacity. Each item requires separate verification.",
+  ar: "لا يعني ذكر المختبرات أو الأدوات أو طرق الاختبار امتلاكها أو توفر تراخيص تجارية أو قدرة تشغيلية. يجب التحقق من كل عنصر بشكل مستقل.",
+  ru: "Упоминание лабораторий, инструментов или методов испытаний не подтверждает владение ими, наличие коммерческих лицензий или эксплуатационных мощностей. Каждый пункт требует отдельной проверки.",
+  de: "Die Nennung von Laboren, Werkzeugen oder Prüfmethoden bestätigt weder Eigentum noch kommerzielle Lizenzen oder Betriebskapazitäten. Jeder Punkt muss separat nachgewiesen werden.",
+  zh: "列出实验室、工具或测试方法并不代表公司拥有相关设施、商业许可证或运营能力。每项能力都需要单独核实。",
+  fr: "La mention de laboratoires, d’outils ou de méthodes d’essai ne confirme ni leur possession, ni les licences commerciales, ni une capacité opérationnelle. Chaque élément doit être vérifié séparément.",
+  es: "Mencionar laboratorios, herramientas o métodos de prueba no confirma su propiedad, licencias comerciales ni capacidad operativa. Cada elemento debe verificarse por separado."
+};
+---
+<SiteLayout locale={locale} title={copy.engineeringTitle + " — " + site.companyName} description={pageIntro[locale]}>
+  <div class="site-shell engineering-page">
+    <section class="engineering-hero" aria-labelledby="engineering-title">
+      <p class="eyebrow">{copy.architectureTitle}</p>
+      <h1 id="engineering-title">{copy.engineeringTitle}</h1>
+      <p class="lede">{pageIntro[locale]}</p>
+      <p class="engineering-notice">{copy.engineeringDescription} {note[locale]}</p>
+    </section>
+    <section class="engineering-section" aria-labelledby="engineering-capabilities-title">
+      <header class="section-heading"><h2 id="engineering-capabilities-title">{copy.engineeringTitle}</h2></header>
+      <ul class="engineering-capability-grid">
+        {copy.engineeringItems.map((item, index) => (
+          <li><span class="engineering-capability-index">0{index + 1}</span><span>{item}</span></li>
+        ))}
+      </ul>
+    </section>
+    <section class="engineering-section engineering-platform-link">
+      <div>
+        <h2>{copy.sharedTitle}</h2>
+        <p>{copy.sharedPlatformsDescription}</p>
+      </div>
+      <a class="button button-secondary" href={route(locale,"platforms")}>{copy.viewArchitecture}</a>
+    </section>
+  </div>
+</SiteLayout>
