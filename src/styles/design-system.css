@@ -818,3 +818,38 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 
 .project-card__status{margin:.35rem 0 .7rem;color:var(--accent);font-size:.75rem;font-weight:800;line-height:1.6}
 .home-redesign .new-projects .project-card .project-card__status{color:var(--rd-accent);font-size:11px}
+
+/* Engineering, product lifecycle, and collaboration page systems. */
+.footer-grid{grid-template-columns:1.2fr 1fr 1fr 1fr}
+.footer-explore-list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.footer-explore-list a{color:var(--muted);font-size:13px;text-decoration:none}
+.footer-explore-list a:hover{color:var(--link);text-decoration:underline}
+.engineering-page,.lifecycle-page,.collaboration-page{padding-block:clamp(32px,5vw,64px) 80px}
+.engineering-hero,.lifecycle-hero,.collaboration-hero{max-width:900px;padding-block:clamp(32px,5vw,64px)}
+.engineering-hero h1,.lifecycle-hero h1,.collaboration-hero h1{margin:0 0 18px;font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.2}
+.engineering-notice,.lifecycle-note,.collaboration-note{margin-top:22px;padding:16px 20px;border-inline-start:3px solid var(--accent);border-radius:0 var(--radius-control) var(--radius-control) 0;background:var(--surface-2);color:var(--muted);line-height:1.9}
+.engineering-section,.lifecycle-section,.collaboration-section{padding-block:clamp(24px,4vw,48px)}
+.engineering-capability-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.engineering-capability-grid li{display:flex;align-items:flex-start;gap:14px;min-width:0;padding:16px;border:1px solid var(--border);border-radius:var(--radius-card);background:var(--surface);line-height:1.8}
+.engineering-capability-index{flex:0 0 auto;color:var(--accent);font-size:11px;font-weight:800}
+.engineering-platform-link{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px;border:1px solid var(--border);border-radius:var(--radius-card);background:var(--surface-2)}
+.engineering-platform-link h2{margin:0 0 8px;font-size:1.3rem}
+.engineering-platform-link p{margin:0;color:var(--muted);line-height:1.8}
+.lifecycle-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none;counter-reset:lifecycle}
+.lifecycle-card{display:flex;flex-direction:column;min-width:0;min-height:220px;padding:22px;border:1px solid var(--border);border-radius:var(--radius-card);background:var(--surface);counter-increment:lifecycle}
+.lifecycle-card__number{color:var(--accent);font-size:12px;font-weight:850;letter-spacing:.12em}
+.lifecycle-card h2{margin:18px 0 10px;font-size:1.1rem;line-height:1.45}
+.lifecycle-card p{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.85}
+.lifecycle-card__gate{margin-top:auto;padding-top:10px;border-top:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:750}
+.collaboration-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.collaboration-card{min-width:0;padding:22px;border:1px solid var(--border);border-radius:var(--radius-card);background:var(--surface)}
+.collaboration-card__index{color:var(--accent);font-size:11px;font-weight:850;letter-spacing:.12em}
+.collaboration-card h3{margin:14px 0 8px;font-size:1.1rem;line-height:1.45}
+.collaboration-card p{margin:0;color:var(--muted);font-size:14px;line-height:1.85}
+.collaboration-process{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.collaboration-process li{display:flex;flex-direction:column;gap:12px;min-width:0;padding:16px;border:1px solid var(--border);border-radius:var(--radius-control);background:var(--surface-2);font-size:13px;line-height:1.75}
+.collaboration-process li span{color:var(--accent);font-size:11px;font-weight:850}
+.collaboration-cta{padding-block:24px}
+@media(max-width:1000px){.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lifecycle-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collaboration-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collaboration-process{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:640px){.engineering-capability-grid,.lifecycle-grid,.collaboration-grid{grid-template-columns:1fr}.collaboration-process{grid-template-columns:repeat(2,minmax(0,1fr))}.engineering-platform-link{align-items:stretch;flex-direction:column}.engineering-platform-link .button{width:100%}}
+@media(max-width:720px){.footer-grid{grid-template-columns:1fr}}
