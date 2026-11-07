@@ -171,6 +171,15 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <p>{site.fields.map((field) => field.title).join(" · ")}</p>
         </div>
         <div>
+          <p class="footer-kicker">{({fa:"کاوش",en:"Explore",ar:"استكشف",ru:"Обзор",de:"Entdecken",zh:"探索",fr:"Explorer",es:"Explorar"})[locale]}</p>
+          <ul class="footer-explore-list">
+            <li><a href={route(locale,"platforms")}>{({fa:"فناوری‌های مشترک",en:"Shared platforms",ar:"المنصات المشتركة",ru:"Общие платформы",de:"Gemeinsame Plattformen",zh:"共享平台",fr:"Plateformes partagées",es:"Plataformas compartidas"})[locale]}</a></li>
+            <li><a href={route(locale,"engineering")}>{({fa:"مهندسی و تحقیق‌وتوسعه",en:"Engineering & R&D",ar:"الهندسة والبحث والتطوير",ru:"Инженерия и НИОКР",de:"Engineering und F&E",zh:"工程与研发",fr:"Ingénierie et R&D",es:"Ingeniería e I+D"})[locale]}</a></li>
+            <li><a href={route(locale,"how-we-work")}>{({fa:"روش کار",en:"How we work",ar:"منهجية العمل",ru:"Как мы работаем",de:"Unsere Arbeitsweise",zh:"工作方式",fr:"Notre méthode",es:"Cómo trabajamos"})[locale]}</a></li>
+            <li><a href={route(locale,"collaborate")}>{({fa:"همکاری",en:"Collaborate",ar:"التعاون",ru:"Сотрудничество",de:"Zusammenarbeit",zh:"合作",fr:"Collaborer",es:"Colaborar"})[locale]}</a></li>
+          </ul>
+        </div>
+        <div>
           <p class="footer-kicker">{site.navigation.contact}</p>
           <p>{site.location} · {formatFounded(locale)}</p>
         </div>
