@@ -3,8 +3,8 @@
 - Added a mobile-only full-screen navigation panel on a separate preview branch.
 - Used a 75% opaque glass surface with a 28px backdrop blur.
 - Added expandable Company and Fields groups inside the panel.
-- Moved language and light/dark controls into a persistent bottom row.
-- Made the navigation list scroll independently while keeping the top and bottom controls visible.
+- Kept language and light/dark controls in the persistent mobile header, outside the overlay.
+- Made the navigation list fill the remaining panel height and scroll independently.
 - Added close-button, backdrop-click, Escape-key, and link-selection dismissal behavior.
 - Preserved the Version 2 desktop/tablet navigation and did not change Production.
 - Validation is pending CI and browser/device review.
@@ -278,3 +278,13 @@ All notable changes to this project will be documented here.
 - Add regression checks for desktop visibility, mobile overlay sizing, and sticky-header behavior.
 - Keep the glass panel at 75% opacity with a 28px backdrop blur.
 - Preview only. Version 2 and Production remain unchanged.
+
+
+## 2026-11-07 — Mobile navigation feedback correction
+
+- Moved language selection and light/dark controls from the overlay panel into the persistent mobile navigation header.
+- Sized the overlay to the dynamic viewport with iOS safe-area support.
+- Set the navigation list to use the remaining panel height and scroll independently.
+- Corrected the inline script closing tag in the layout.
+- Added browser checks for header control placement and viewport edge coverage.
+- Preview only. Production and the Version 2 navigation remain unchanged.
