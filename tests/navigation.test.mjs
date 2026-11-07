@@ -32,3 +32,14 @@ test("navigation controls meet the minimum 44px touch target", () => {
   assert.match(styles, /\.primary-nav > a, \.nav-group > summary[\s\S]*min-height:\s*2\.9rem/);
   assert.match(styles, /\.language-select select, \.theme-toggle \{ min-height:2\.75rem/);
 });
+
+
+test("closed disclosure groups do not render submenu content", () => {
+  assert.match(styles, /\.nav-group:not\(\[open\]\)\s*>\s*\.nav-submenu\s*\{\s*display:\s*none\s*\}/);
+});
+
+test("mobile header keeps brand and tools together above a horizontal nav row", () => {
+  assert.match(styles, /@media\s*\(max-width:\s*720px\)[\s\S]*?\.site-header\s*\{\s*display:\s*grid;\s*grid-template-columns:\s*minmax\(0,1fr\)\s+auto/);
+  assert.match(styles, /\.primary-nav\s*\{[^}]*flex-wrap:\s*nowrap;[^}]*overflow-x:\s*auto/s);
+  assert.doesNotMatch(styles, /\.header-tools\s*\{\s*order:\s*2;\s*flex:\s*1\s+1\s+100%/);
+});
