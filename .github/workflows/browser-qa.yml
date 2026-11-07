@@ -185,8 +185,12 @@ jobs:
                   const panelBox = await panel.boundingBox();
                   if (!panelBox || panelBox.height < viewport.height * 0.9) throw new Error(`${url}: mobile navigation panel does not fill the viewport: ${JSON.stringify(panelBox)}`);
                   if (!(await page.locator(".mobile-nav-panel .primary-nav").isVisible())) throw new Error(`${url}: mobile navigation links are not visible`);
-                  if (!(await page.locator(".mobile-nav-tools .language-select select").isVisible())) throw new Error(`${url}: mobile language selector is not visible`);
-                  if (!(await page.locator(".mobile-nav-tools .theme-toggle").isVisible())) throw new Error(`${url}: mobile theme control is not visible`);
+                  if (!(await page.locator(".mobile-header-tools .language-select select").isVisible())) throw new Error(`${url}: mobile language selector is not visible`);
+                  if (!(await page.locator(".mobile-header-tools .theme-toggle").isVisible())) throw new Error(`${url}: mobile theme control is not visible`);
+                  if (await page.locator(".mobile-header-tools").evaluate((element) => element.closest(".mobile-nav-panel") !== null)) throw new Error(`${url}: language/theme controls must stay in the header, outside the menu panel`);
+                  const headerToolsBox = await page.locator(".mobile-header-tools").boundingBox();
+                  if (!headerToolsBox || headerToolsBox.y > 100) throw new Error(`${url}: mobile language/theme controls are not in the visible navigation bar`);
+                  if (panelBox.y > 16 || panelBox.y + panelBox.height < viewport.height - 16) throw new Error(`${url}: mobile navigation panel does not reach the viewport edges: ${JSON.stringify(panelBox)}`);
                   const navOverflow = await page.locator(".mobile-nav-panel .primary-nav").evaluate((element) => getComputedStyle(element).overflowY);
                   if (navOverflow !== "auto" && navOverflow !== "scroll") throw new Error(`${url}: mobile navigation list is not independently scrollable (overflow-y=${navOverflow})`);
                 } else {
