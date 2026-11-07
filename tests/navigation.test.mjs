@@ -17,7 +17,7 @@ test("primary navigation uses an accessible inline expandable menu", () => {
 });
 
 test("navigation closes after selection and supports Escape and focus return", () => {
-  assert.match(layout, /menu\.addEventListener\("click"/);
+  assert.match(layout, /menu\\\?\.addEventListener\\\("click"/);
   assert.match(layout, /event\.key === "Escape"/);
   assert.match(layout, /menuToggle\.focus\(\)/);
   assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
