@@ -65,3 +65,14 @@ test("mobile v3 uses an accessible glass drawer with language and theme controls
   assert.match(styles, /overflow-y:auto/);
   assert.match(layout, /closeMobileMenu\(\)/);
 });
+
+
+test("desktop navigation remains rendered while the mobile backdrop is closed", () => {
+  assert.match(styles, /@media\s*\(min-width:\s*721px\)\s*\{[\s\S]*?\.mobile-nav-backdrop\[hidden\]\s*\{\s*display:\s*contents\s*!important;/);
+});
+
+test("mobile glass overlay fills the viewport outside the sticky header filter", () => {
+  assert.match(styles, /body\.mobile-nav-open\s+\.site-header\s*\{[^}]*backdrop-filter:\s*none/);
+  assert.match(styles, /\.mobile-nav-backdrop:not\(\[hidden\]\)\s*\{[^}]*display:\s*flex/);
+  assert.match(styles, /\.mobile-nav-panel\s*\{[^}]*flex:\s*1\s+1\s+auto/);
+});
