@@ -1,13 +1,13 @@
 import type { Locale } from "../data/locales";
 
-export const domainBrands = {
+export const domainBrands: Record<string, string> = {
   astronomy: "ASTROINTEL",
   aerospace: "AEROINTEL",
   "remote-sensing": "GEOINTEL",
   energy: "ENERGIQ",
   "artificial-intelligence": "KEYHAN AI",
   motorsport: "MOTIONIQ"
-} as const;
+};
 
 const names = [
   "KEYHAN AI CORE",
