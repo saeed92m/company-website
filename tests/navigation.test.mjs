@@ -6,57 +6,63 @@ const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.
 const styles = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
 const ceoPage = await readFile(new URL("../src/pages/[locale]/company/ceo.astro", import.meta.url), "utf8");
 
-test("primary navigation remains visible and uses native expandable groups", () => {
-  assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav/);
-  assert.doesNotMatch(layout, /data-menu-toggle/);
-  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
+test("navigation uses a persistent header toggle and an initially closed overlay panel", () => {
+  assert.match(layout, /data-menu-toggle/);
+  assert.match(layout, /aria-controls="primary-navigation"/);
+  assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav hidden/);
+  assert.match(layout, /data-menu-close/);
+  assert.match(layout, /<details class="nav-group" data-nav-group/);
   assert.doesNotMatch(layout, /<details[^>]+ open=/);
-  assert.match(layout, /site\.fields\.map\(\(field\)/);
-  assert.doesNotMatch(layout, /role="menu"/);
-  assert.match(styles, /\.nav-group\s*\{\s*position:relative/);
-  assert.match(styles, /\.nav-submenu\s*\{\s*position:absolute/);
 });
 
-test("navigation groups close after selection, on Escape, and outside click", () => {
-  assert.match(layout, /menu\?\.addEventListener\("click"/);
-  assert.match(layout, /event\.key !== "Escape"/);
-  assert.match(layout, /openGroup\.querySelector\("summary"\)\?\.focus\(\)/);
+test("language and theme controls stay in the header, outside the menu panel", () => {
+  assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>[\s\S]*data-menu-toggle/);
+  assert.match(layout, /aria-label=\{labels\.language\}/);
+  assert.match(layout, /aria-label=\{labels\.theme\}/);
+});
+
+test("menu opens and closes with focus management and Escape", () => {
+  assert.match(layout, /const setMenuOpen = \(open\)/);
+  assert.match(layout, /menuToggle\.setAttribute\("aria-expanded", String\(open\)\)/);
+  assert.match(layout, /menu\.querySelector\("a, summary"\)\?\.focus\(\)/);
+  assert.match(layout, /menuToggle\.focus\(\)/);
+  assert.match(layout, /if \(menu && !menu\.hidden\)/);
+  assert.match(layout, /setMenuOpen\(false\)/);
+});
+
+test("selecting a destination closes the overlay and its disclosure groups", () => {
   assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
+  assert.match(layout, /menu\?\.addEventListener\("click"/);
 });
 
-test("language and theme controls remain in the persistent header", () => {
-  assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
-  assert.match(layout, /aria-label=\{menuUi\[locale\]\.navigation\}/);
+test("the navigation panel fills the available viewport and supports independent scrolling", () => {
+  assert.match(styles, /\.primary-nav\[hidden\]\s*\{\s*display:none !important/);
+  assert.match(styles, /position:fixed/);
+  assert.match(styles, /bottom:max\(\.75rem, env\(safe-area-inset-bottom\)\)/);
+  assert.match(styles, /overflow-y:auto/);
+  assert.match(styles, /overscroll-behavior:contain/);
+  assert.match(styles, /backdrop-filter:blur\(18px\)/);
+  assert.match(styles, /body\.menu-open \{ overflow:hidden; \}/);
 });
 
-test("navigation controls meet the minimum 44px touch target", () => {
-  assert.match(styles, /\.primary-nav > a, \.nav-group > summary[\s\S]*min-height:\s*2\.9rem/);
-  assert.match(styles, /\.language-select select, \.theme-toggle \{ min-height:2\.75rem/);
+test("the header stays sticky and keeps persistent controls visible", () => {
+  assert.match(styles, /\.site-header \{[\s\S]*position:sticky/);
+  assert.match(styles, /\.site-header \.header-tools \{ order:2; margin-inline:auto; \}/);
+  assert.match(styles, /\.menu-toggle \{[\s\S]*min-height:3rem/);
+  assert.match(styles, /\.language-select select,\.theme-toggle,\.menu-toggle \{ min-height:3rem; \}/);
 });
 
-
-test("closed disclosure groups do not render submenu content", () => {
-  assert.match(styles, /\.nav-group:not\(\[open\]\)\s*>\s*\.nav-submenu\s*\{\s*display:\s*none;?\s*\}/);
-});
-
-test("mobile header keeps brand and tools above a wrapping navigation row", () => {
-  assert.match(styles, /@media\s*\(max-width:\s*720px\)[\s\S]*?\.site-header\s*\{\s*display:\s*grid;\s*grid-template-columns:\s*minmax\(0,1fr\)\s+auto/);
-  assert.doesNotMatch(styles, /\.header-tools\s*\{\s*order:\s*2;\s*flex:\s*1\s+1\s+100%/);
-});
-
-test("mobile disclosure menus are not clipped by a horizontal scroller", () => {
-  assert.ok(styles.includes("/* Mobile disclosure menus must remain visible outside the navigation row. */"));
-  assert.ok(styles.includes("flex-wrap:wrap;"));
-  assert.ok(styles.includes("overflow:visible;"));
-  assert.ok(styles.includes(".nav-group[open] { flex:1 0 100%; min-width:0; }"));
-  assert.ok(styles.includes("position:static;"));
-  assert.ok(styles.includes("width:100%;"));
-});
-
-
-test("company submenu uses Overview and Board labels while keeping the Company group", () => {
-  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
+test("all eight locales have translated menu controls and navigation labels", () => {
+  for (const locale of ["fa","en","ar","ru","de","zh","fr","es"]) {
+    assert.ok(layout.includes(`  ${locale}: {`) || layout.includes(`${locale}: {`));
+  }
   assert.match(layout, /intro: "معرفی", board: "هیئت‌مدیره"/);
+  assert.match(layout, /menuUi\[locale\]\.intro/);
+  assert.match(layout, /menuUi\[locale\]\.board/);
+});
+
+test("company submenu keeps the Company group label and renames only its children", () => {
+  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
   assert.match(layout, /menuUi\[locale\]\.intro/);
   assert.match(layout, /menuUi\[locale\]\.board/);
   assert.doesNotMatch(layout, /menuUi\[locale\]\.ceo/);
