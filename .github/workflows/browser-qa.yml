@@ -178,8 +178,17 @@ jobs:
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
                 if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
 
+                const menuToggle = page.locator("[data-menu-toggle]");
+                const navPanel = page.locator("nav.primary-nav");
+                if (await menuToggle.count() !== 1) throw new Error(`${url}: persistent menu toggle missing`);
+                if (await page.locator(".header-tools .language-select select").count() !== 1 ||
+                    await page.locator(".header-tools [data-theme-toggle]").count() !== 1) {
+                  throw new Error(`${url}: language/theme controls are not persistent in the header`);
+                }
+                await menuToggle.click();
+                if (!(await navPanel.isVisible())) throw new Error(`${url}: menu overlay did not open`);
                 const navGroups = page.locator("nav.primary-nav details.nav-group");
-                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
+                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain disclosure groups`);
                 const companyGroup = navGroups.nth(0);
                 const fieldsGroup = navGroups.nth(1);
                 if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company group is not marked as the active section`);
