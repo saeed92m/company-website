@@ -38,7 +38,7 @@ Language switcher is a global utility, not a primary content destination.
 
 Localized routes must follow the project's localization strategy.
 
-The localized `/projects/` listing currently includes Alpha Linux, ZTF Classifier, and Company Platform. Company Platform is a listing entry only; no standalone project route or public repository link is introduced by this change.
+The localized `/projects/` listing includes Alpha Linux and ZTF Classifier. Company-Platform is described on the Platforms page as an internal corporate operating system, not a public project or commercial product.
 
 
 ## Home page information hierarchy
