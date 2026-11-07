@@ -312,3 +312,27 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 @media (prefers-reduced-motion:reduce) { .primary-nav, .nav-submenu { transition:none; } }
 /* Persistent language and theme controls meet the 44px minimum touch target. */
 .language-select select, .theme-toggle { min-height:2.75rem; }
+
+
+/* Mobile disclosure menus must remain visible outside the navigation row. */
+@media (max-width:720px) {
+  .primary-nav {
+    flex-wrap:wrap;
+    align-items:flex-start;
+    overflow:visible;
+    overflow-x:visible;
+    overflow-y:visible;
+    row-gap:.45rem;
+  }
+  .nav-group { flex:0 0 auto; }
+  .nav-group[open] { flex:1 0 100%; min-width:0; }
+  .nav-submenu {
+    position:static;
+    inset:auto;
+    min-width:0;
+    width:100%;
+    max-height:min(55vh, 24rem);
+    margin-top:.35rem;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+  }
+}
