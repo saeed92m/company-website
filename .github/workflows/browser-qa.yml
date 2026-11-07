@@ -186,14 +186,16 @@ jobs:
                 if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
                 await companyGroup.evaluate((element) => { element.open = false; });
                 await fieldsGroup.evaluate((element) => { element.open = false; });
-                await companyGroup.locator("summary").click();
-                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Company dropdown did not open`);
+                await companyGroup.locator("summary").focus();
+                await page.keyboard.press("Enter");
+                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Enter did not open Company dropdown`);
                 await page.keyboard.press("Escape");
                 if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
                 if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
 
-                await fieldsGroup.locator("summary").click();
-                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: six-domain dropdown did not open`);
+                await fieldsGroup.locator("summary").focus();
+                await page.keyboard.press("Space");
+                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: Space did not open six-domain dropdown`);
                 const fieldLinks = fieldsGroup.locator(".nav-submenu a");
                 if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
                 await page.locator("main#main-content").click({position:{x:12,y:12}});
