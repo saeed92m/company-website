@@ -136,7 +136,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav class="primary-nav" aria-label={site.navigation.company}>
+      <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-nav-toggle><span aria-hidden="true">☰</span><span>{({fa:"منو",en:"Menu",ar:"القائمة",ru:"Меню",de:"Menü",zh:"菜单",fr:"Menu",es:"Menú"})[locale]}</span></button>
+      <nav class="primary-nav" id="primary-navigation" aria-label={site.navigation.company} data-mobile-nav data-open="false">
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
         <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
         <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
@@ -184,6 +185,19 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
+        const navToggle = document.querySelector("[data-mobile-nav-toggle]");
+        const primaryNav = document.querySelector("[data-mobile-nav]");
+        const closeMobileNav = () => {
+          navToggle?.setAttribute("aria-expanded", "false");
+          primaryNav?.setAttribute("data-open", "false");
+        };
+        navToggle?.addEventListener("click", () => {
+          const expanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", String(!expanded));
+          primaryNav?.setAttribute("data-open", String(!expanded));
+        });
+        primaryNav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMobileNav));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeMobileNav(); });
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
