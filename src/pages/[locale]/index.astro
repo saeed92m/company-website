@@ -8,6 +8,8 @@ import { ui } from "../../content/ui";
 import { route } from "../../data/routes";
 import { domainImageUrl } from "../../data/domain-assets";
 import { domainBrands, platformsPage } from "../../content/platforms";
+import { productLifecycle } from "../../content/product-lifecycle";
+import { collaborationPage } from "../../content/collaboration";
 import ProjectCards from "../../components/ProjectCards.astro";
 
 export function getStaticPaths() {
@@ -33,6 +35,8 @@ const visualLabels: Record<Locale, { explore: string; focus: string; overview: s
 };
 const copy = visualLabels[locale];
 const platformCopy = platformsPage[locale];
+const lifecycleCopy = productLifecycle[locale];
+const collaborationCopy = collaborationPage[locale];
 
 const homeSections: Record<Locale, { vision: string; roadmap: string; ceo: string; ceoCta: string; visionTitle: string }> = {
   fa: { vision: "چشم‌انداز شرکت، توسعه مرحله‌ای فناوری و ایجاد پیوند میان پژوهش، مهندسی و کاربردهای صنعتی است. در بلندمدت، شرکت به‌دنبال ساختاری است که هر حوزه تخصصی بتواند مسیر توسعه و فعالیت مستقل خود را داشته باشد.", roadmap: "گام بعدی: پیگیری ورود به پارک علم و فناوری استان آذربایجان شرقی یا پارک علم و فناوری دانشگاه تبریز.", ceo: "بنیانگذار و مدیرعامل شرکت، دارای کارشناسی ارشد مهندسی هوافضا و کارشناسی مهندسی مکانیک از دانشگاه تبریز است. سوابق علمی و اجرایی او شامل پروژه‌های هوافضایی، نجوم و سنجش از دور است.", ceoCta: "مشاهده سوابق مدیرعامل", visionTitle: "چشم‌انداز و مسیر توسعه" },
@@ -66,10 +70,18 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
 
     </section>
 
+    <section class="new-company" id="company" aria-labelledby="company-title">
+      <div class="site-shell new-company-inner">
+        <div><p class="new-kicker"><span class="kicker-rule"></span>01 / {site.navigation.company}</p><h2 class="home-company-title" id="company-title"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</h2></div>
+        <div class="new-company-detail"><p>{copyContent.companyOverview[0]}</p><p class="new-founder">{site.founder}</p><a class="new-button new-button-secondary management-button" href={route(locale,"company/ceo")}>{managementButton[locale]}<span aria-hidden="true">↗</span></a></div>
+      </div>
+    </section>
+
+
     <section class="new-domains" id="fields" aria-labelledby="fields-title">
       <div class="site-shell">
         <div class="new-section-head">
-          <div><p class="new-kicker"><span class="kicker-rule"></span>01 / {site.navigation.fields}</p><h2 id="fields-title">{copy.overview}</h2></div>
+          <div><p class="new-kicker"><span class="kicker-rule"></span>02 / {site.navigation.fields}</p><h2 id="fields-title">{copy.overview}</h2></div>
           <p>{site.intro}</p>
         </div>
         <div class="new-domain-grid">
@@ -86,7 +98,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
     <section class="home-platforms site-shell" id="platforms" aria-labelledby="platforms-title">
       <div class="home-platforms__heading">
         <div>
-          <p class="new-kicker"><span class="kicker-rule"></span>02 / {platformCopy.sharedTitle}</p>
+          <p class="new-kicker"><span class="kicker-rule"></span>03 / {platformCopy.sharedTitle}</p>
           <h2 id="platforms-title">{platformCopy.homeTitle}</h2>
         </div>
         <p>{platformCopy.homeIntro}</p>
@@ -104,24 +116,37 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
       <a class="home-platforms__link" href={route(locale,"platforms")}>{platformCopy.viewArchitecture}<span aria-hidden="true">↗</span></a>
     </section>
 
+    <section class="home-engineering site-shell" aria-labelledby="home-engineering-title">
+      <div class="home-process__heading">
+        <div><p class="new-kicker"><span class="kicker-rule"></span>04 / {platformCopy.engineeringTitle}</p><h2 id="home-engineering-title">{platformCopy.engineeringTitle}</h2></div>
+        <p>{platformCopy.engineeringDescription}</p>
+      </div>
+      <ul class="home-engineering__list">{platformCopy.engineeringItems.slice(0,6).map((item) => <li>{item}</li>)}</ul>
+      <a class="home-platforms__link" href={route(locale,"engineering")}>{({fa:"مشاهده مهندسی و تحقیق‌وتوسعه",en:"Explore Engineering & R&D",ar:"استكشف الهندسة والبحث والتطوير",ru:"Инженерия и НИОКР",de:"Engineering und F&E ansehen",zh:"查看工程与研发",fr:"Explorer l’ingénierie et la R&D",es:"Explorar ingeniería e I+D"})[locale]}<span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="home-lifecycle site-shell" aria-labelledby="home-lifecycle-title">
+      <div class="home-process__heading">
+        <div><p class="new-kicker"><span class="kicker-rule"></span>05 / {lifecycleCopy.gateLabel}</p><h2 id="home-lifecycle-title">{lifecycleCopy.pageTitle}</h2></div>
+        <p>{lifecycleCopy.intro}</p>
+      </div>
+      <ol class="home-lifecycle__grid">{lifecycleCopy.steps.map((step, index) => <li><span>0{index + 1}</span><strong>{step.title}</strong></li>)}</ol>
+      <p class="home-lifecycle__note">{lifecycleCopy.note}</p>
+      <a class="home-platforms__link" href={route(locale,"how-we-work")}>{({fa:"مشاهده چرخه کامل توسعه محصول",en:"View the full product lifecycle",ar:"عرض دورة حياة المنتج",ru:"Полный жизненный цикл продукта",de:"Vollständigen Produktlebenszyklus ansehen",zh:"查看完整产品生命周期",fr:"Voir le cycle de vie complet",es:"Ver el ciclo de vida completo"})[locale]}<span aria-hidden="true">↗</span></a>
+    </section>
     <section class="new-projects site-shell" id="projects" aria-labelledby="projects-title">
       <div class="new-section-head">
-        <div><p class="new-kicker"><span class="kicker-rule"></span>03 / {site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
+        <div><p class="new-kicker"><span class="kicker-rule"></span>06 / {site.navigation.projects}</p><h2 id="projects-title">{site.navigation.projects}</h2></div>
         <p>{labels.projectsNote}</p>
       </div>
       <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
 
-    <section class="new-company" id="company" aria-labelledby="company-title">
-      <div class="site-shell new-company-inner">
-        <div><p class="new-kicker"><span class="kicker-rule"></span>04 / {site.navigation.company}</p><h2 class="home-company-title" id="company-title"><span>{legalNameParts?.[1] ?? site.companyName}</span>{legalNameParts && <small>{legalNameParts[2]}</small>}</h2></div>
-        <div class="new-company-detail"><p>{copyContent.companyOverview[0]}</p><p class="new-founder">{site.founder}</p><a class="new-button new-button-secondary management-button" href={route(locale,"company/ceo")}>{managementButton[locale]}<span aria-hidden="true">↗</span></a></div>
-      </div>
-    </section>
+
 
     <section class="home-vision site-shell" aria-labelledby="vision-title">
       <div class="home-vision__copy">
-        <p class="new-kicker"><span class="kicker-rule"></span>05 / {homeSection.visionTitle}</p>
+        <p class="new-kicker"><span class="kicker-rule"></span>07 / {homeSection.visionTitle}</p>
         <h2 id="vision-title">{homeSection.visionTitle}</h2>
         <p>{homeSection.vision}</p>
         <p class="home-vision__roadmap">{homeSection.roadmap}</p>
@@ -130,7 +155,7 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
 
     <section class="home-ceo site-shell" aria-labelledby="home-ceo-title">
       <div class="home-ceo__identity">
-        <p class="new-kicker"><span class="kicker-rule"></span>06 / {labels.ceo}</p>
+        <p class="new-kicker"><span class="kicker-rule"></span>08 / {labels.ceo}</p>
         <h2 id="home-ceo-title">{ceoProfile.name}</h2>
         <p class="home-ceo__role">{ceoProfile.role}</p>
       </div>
@@ -140,6 +165,14 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
       </div>
     </section>
 
+    <section class="home-collaboration site-shell" aria-labelledby="home-collaboration-title">
+      <div class="home-process__heading">
+        <div><p class="new-kicker"><span class="kicker-rule"></span>{collaborationCopy.pathwaysTitle}</p><h2 id="home-collaboration-title">{collaborationCopy.pageTitle}</h2></div>
+        <p>{collaborationCopy.intro}</p>
+      </div>
+      <div class="home-collaboration__grid">{collaborationCopy.pathways.slice(0,3).map((pathway) => <article><h3>{pathway.title}</h3><p>{pathway.description}</p></article>)}</div>
+      <a class="home-platforms__link" href={route(locale,"collaborate")}>{collaborationCopy.contactCta}<span aria-hidden="true">↗</span></a>
+    </section>
     <section class="new-contact site-shell" id="contact" aria-labelledby="contact-title">
       <div class="new-contact-panel">
         <div><p class="new-kicker"><span class="kicker-rule"></span>{site.navigation.contact}</p><h2 id="contact-title">{copy.overview}</h2><p>{labels.contactPending}</p></div>
