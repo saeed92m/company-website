@@ -1,0 +1,36 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { productLifecycle } from "../../../content/product-lifecycle";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const copy = productLifecycle[locale];
+---
+<SiteLayout locale={locale} title={copy.pageTitle + " — " + site.companyName} description={copy.intro}>
+  <div class="site-shell lifecycle-page">
+    <section class="lifecycle-hero" aria-labelledby="lifecycle-title">
+      <p class="eyebrow">{copy.gateLabel}</p>
+      <h1 id="lifecycle-title">{copy.pageTitle}</h1>
+      <p class="lede">{copy.intro}</p>
+      <p class="lifecycle-note">{copy.note}</p>
+    </section>
+    <section class="lifecycle-section" aria-label={copy.pageTitle}>
+      <ol class="lifecycle-grid">
+        {copy.steps.map((step, index) => (
+          <li class="lifecycle-card">
+            <span class="lifecycle-card__number">0{index + 1}</span>
+            <h2>{step.title}</h2>
+            <p>{step.description}</p>
+            <span class="lifecycle-card__gate">{copy.gateLabel}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</SiteLayout>
