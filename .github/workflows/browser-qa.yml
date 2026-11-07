@@ -190,13 +190,14 @@ jobs:
                   const navOverflow = await page.locator(".mobile-nav-panel .primary-nav").evaluate((element) => getComputedStyle(element).overflowY);
                   if (navOverflow !== "auto" && navOverflow !== "scroll") throw new Error(`${url}: mobile navigation list is not independently scrollable (overflow-y=${navOverflow})`);
                 } else {
-                  if (!(await page.locator("nav.primary-nav").isVisible())) throw new Error(`${url} [${viewport.name}]: desktop/tablet navigation is not visible`);
-                  if (!(await page.locator(".language-select select").isVisible())) throw new Error(`${url} [${viewport.name}]: language selector is not visible`);
-                  if (!(await page.locator(".theme-toggle").isVisible())) throw new Error(`${url} [${viewport.name}]: theme control is not visible`);
+                  if (!(await page.locator("#desktop-primary-navigation").isVisible())) throw new Error(`${url} [${viewport.name}]: desktop/tablet navigation is not visible`);
+                  if (!(await page.locator(".desktop-header-tools .language-select select").isVisible())) throw new Error(`${url} [${viewport.name}]: language selector is not visible`);
+                  if (!(await page.locator(".desktop-header-tools .theme-toggle").isVisible())) throw new Error(`${url} [${viewport.name}]: theme control is not visible`);
                   if (await page.locator("[data-mobile-nav-open]").isVisible()) throw new Error(`${url} [${viewport.name}]: mobile menu trigger must be hidden`);
                 }
 
-                const navGroups = page.locator("nav.primary-nav details.nav-group");
+                const activeNavigation = page.locator(viewport.name === "mobile" ? "#mobile-primary-navigation" : "#desktop-primary-navigation");
+                const navGroups = activeNavigation.locator("details.nav-group");
                 if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
                 const companyGroup = navGroups.nth(0);
                 const fieldsGroup = navGroups.nth(1);
