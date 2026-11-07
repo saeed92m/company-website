@@ -88,6 +88,9 @@ jobs:
             "projects/",
             "contact/",
             "platforms/",
+            "engineering/",
+            "how-we-work/",
+            "collaborate/",
           ];
 
           const browser = await browserType.launch({headless:true});
@@ -188,6 +191,16 @@ jobs:
                   if (await page.locator(".shared-platform-card").count() !== 5) throw new Error(url + ": expected five shared technology platforms");
                   if (await page.locator(".architecture-layer").count() !== 7) throw new Error(url + ": expected seven architecture layers");
                 }
+                if (suffix === "engineering/" && await page.locator(".engineering-capability-grid li").count() !== 14) {
+                  throw new Error(url + ": expected fourteen engineering capability entries");
+                }
+                if (suffix === "how-we-work/" && await page.locator(".lifecycle-card").count() !== 9) {
+                  throw new Error(url + ": expected nine product lifecycle stages");
+                }
+                if (suffix === "collaborate/") {
+                  if (await page.locator(".collaboration-card").count() !== 6) throw new Error(url + ": expected six collaboration pathways");
+                  if (await page.locator(".collaboration-process li").count() !== 5) throw new Error(url + ": expected five collaboration review steps");
+                }
 
                 if (checks.horizontalOverflow) {
                   throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
@@ -210,6 +223,7 @@ jobs:
                   if (count !== 2) throw new Error(`${url}: expected 2 public project cards, got ${count}`);
                   const summaryButtons = projectSection.locator(".project-summary-trigger");
                   if (await summaryButtons.count() !== 2) throw new Error(`${url}: expected 2 project summary buttons`);
+                  if (await projectSection.locator(".project-card__status").count() !== 2) throw new Error(`${url}: expected status labels on both public projects`);
                   const internalPlatformCard = projectSection.locator(".project-card", { has: page.locator("h3", { hasText: "Company Platform" }) });
                   if (await internalPlatformCard.count() !== 0) throw new Error(`${url}: internal Company-Platform must not appear as a public project`);
                   await summaryButtons.first().click();
