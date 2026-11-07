@@ -146,10 +146,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" data-menu-toggle>
-        <span aria-hidden="true">☰</span><span data-menu-toggle-label>{menuUi[locale].menu}</span>
-      </button>
-      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} hidden data-primary-nav>
+      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
         <details class="nav-group" data-nav-group>
           <summary>{site.navigation.company}</summary>
@@ -207,22 +204,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
-        const menuToggle = document.querySelector("[data-menu-toggle]");
-        const menu = document.querySelector("[data-primary-nav]");
-        const menuLabel = document.querySelector("[data-menu-toggle-label]");
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
-        const menuText = {
-          fa: { open: "فهرست", close: "بستن فهرست" }, en: { open: "Menu", close: "Close menu" },
-          ar: { open: "القائمة", close: "إغلاق القائمة" }, ru: { open: "Меню", close: "Закрыть меню" },
-          de: { open: "Menü", close: "Menü schließen" }, zh: { open: "菜单", close: "关闭菜单" },
-          fr: { open: "Menu", close: "Fermer le menu" }, es: { open: "Menú", close: "Cerrar menú" }
-        };
-        const setMenuOpen = (open) => {
-          if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
-          menu.hidden = !open;
-          menuToggle.setAttribute("aria-expanded", String(open));
-          if (menuLabel) menuLabel.textContent = open ? menuText[currentLocale].close : menuText[currentLocale].open;
-        };
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
@@ -240,28 +222,24 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (icon) icon.textContent = isDark ? "☾" : "☀";
         };
         updateThemeUi();
-        setMenuOpen(false);
-        menuToggle?.addEventListener("click", () => setMenuOpen(menuToggle.getAttribute("aria-expanded") !== "true"));
         menu?.addEventListener("click", (event) => {
           if (event.target instanceof Element && event.target.closest("a")) {
             menuGroups.forEach((group) => { group.open = false; });
-            setMenuOpen(false);
           }
         });
         menuGroups.forEach((group) => group.addEventListener("toggle", () => {
           if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
         }));
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && menuToggle?.getAttribute("aria-expanded") === "true") {
-            setMenuOpen(false);
-            menuToggle.focus();
-            menuGroups.forEach((group) => { group.open = false; });
+          if (event.key !== "Escape") return;
+          const openGroup = menuGroups.find((group) => group.open);
+          if (openGroup) {
+            openGroup.open = false;
+            openGroup.querySelector("summary")?.focus();
           }
         });
         document.addEventListener("click", (event) => {
-          if (menuToggle?.getAttribute("aria-expanded") !== "true") return;
           if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
-            setMenuOpen(false);
             menuGroups.forEach((group) => { group.open = false; });
           }
         });
