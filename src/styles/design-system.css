@@ -750,3 +750,40 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
     min-width: 0;
   }
 }
+
+
+/* The navigation overlay is a sibling of the sticky header.
+   This keeps fixed positioning relative to the viewport on iOS Safari and desktop. */
+.primary-nav {
+  position: fixed;
+  z-index: 80;
+  inset-inline: .75rem;
+  inset-block-start: calc(var(--site-header-height, 5rem) + .5rem);
+  inset-block-end: max(.75rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+.primary-nav[hidden] { display: none !important; }
+.primary-nav > a,
+.primary-nav > .nav-group { flex: 0 0 auto; width: 100%; }
+
+@media (max-width: 720px) {
+  .primary-nav {
+    inset-inline: .5rem;
+    inset-block-start: calc(var(--site-header-height, 4.75rem) + .5rem);
+    inset-block-end: max(.5rem, env(safe-area-inset-bottom));
+    padding: 1rem;
+    border-radius: 1.4rem;
+  }
+}

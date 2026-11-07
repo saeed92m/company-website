@@ -23,6 +23,16 @@ const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
+const menuUi: Record<Locale, { menu: string; close: string; home: string; intro: string; board: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", intro: "معرفی", board: "هیئت‌مدیره", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", intro: "Overview", board: "Board of Directors", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", intro: "نبذة عن الشركة", board: "مجلس الإدارة", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", intro: "О компании", board: "Совет директоров", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", intro: "Unternehmensprofil", board: "Vorstand", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", intro: "公司简介", board: "董事会", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", intro: "Présentation", board: "Conseil d’administration", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", intro: "Presentación", board: "Junta directiva", navigation: "Navegación principal" }
+};
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
@@ -38,6 +48,16 @@ const localeForOg: Record<Locale, string> = {
 };
 
 const logoUrl = origin ? new URL(webLogoUrl, origin).toString() : "";
+const brandNames: Record<Locale, string> = {
+  fa: "شرکت پیشگامان نواندیش فناورگستر کیهان",
+  en: "Pishgaman Novandish Fannavargostar Keyhan",
+  ar: "شركة بيشگامان نوانديش فناورگستر كيهان",
+  ru: "Pishgaman Novandish Fannavargostar Keyhan",
+  de: "Pishgaman Novandish Fannavargostar Keyhan",
+  zh: "Pishgaman Novandish Fannavargostar Keyhan",
+  fr: "Pishgaman Novandish Fannavargostar Keyhan",
+  es: "Pishgaman Novandish Fannavargostar Keyhan"
+};
 const legalCompanyName = "شرکت پیشگامان نواندیش فناورگستر کیهان (مسئولیت محدود)";
 const personSameAs = [
   "https://linkedin.com/in/saeed-memarzadeh-12559146",
@@ -132,18 +152,11 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
-      <a class="brand" href={route(locale)} aria-label={site.companyName}>
-        <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
-        <span class="brand-wordmark">{site.companyName}</span>
+      <a class="brand" href={route(locale)} aria-label={brandNames[locale]}>
+        <span class="brand-mark" aria-hidden="true"><BrandMark label={brandNames[locale]} /></span>
+        <span class="brand-wordmark">{brandNames[locale]}</span>
       </a>
-      <nav class="primary-nav" aria-label={site.navigation.company}>
-        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
-        <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
-        <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
-        <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
-        <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
-      </nav>
+
       <div class="header-tools">
         <label class="language-select">
           <span class="sr-only">{labels.language}</span>
@@ -156,7 +169,31 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <span data-theme-label>{labels.night}</span>
         </button>
       </div>
+      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span aria-hidden="true">☰</span>
+      </button>
     </header>
+      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav hidden>
+        <div class="nav-panel-head nav-panel-head--minimal">
+          <button class="nav-close" type="button" aria-label={menuUi[locale].close} data-menu-close>×</button>
+        </div>
+        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
+          <summary>{site.navigation.company}</summary>
+          <div class="nav-submenu">
+            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{menuUi[locale].intro}</a>
+            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].board}</a>
+          </div>
+        </details>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
+          <summary>{site.navigation.fields}</summary>
+          <div class="nav-submenu">
+            {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+          </div>
+        </details>
+        <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
+        <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
+      </nav>
     <main id="main-content"><slot /></main>
     <footer class="site-footer">
       <div class="site-shell footer-grid">
@@ -183,11 +220,42 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
+        const menu = document.querySelector("[data-primary-nav]");
+        const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
+        const menuToggle = document.querySelector("[data-menu-toggle]");
+        const menuClose = document.querySelector("[data-menu-close]");
+        const siteHeader = document.querySelector(".site-header");
+        const setMenuOpen = (open) => {
+          if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
+          menu.hidden = !open;
+          menuToggle.setAttribute("aria-expanded", String(open));
+          menuToggle.setAttribute("aria-label", open ? labels[currentLocale].close : labels[currentLocale].menu);
+          document.body.classList.toggle("menu-open", open);
+          menuGroups.forEach((group) => { group.open = false; });
+          if (open) {
+            menu.querySelector("a, summary")?.focus();
+          } else {
+            menuToggle.focus();
+          }
+        };
+        const syncHeaderHeight = () => {
+          if (siteHeader instanceof HTMLElement) {
+            root.style.setProperty("--site-header-height", siteHeader.getBoundingClientRect().height + "px");
+          }
+        };
+        syncHeaderHeight();
+        window.addEventListener("resize", syncHeaderHeight);
+        menuToggle?.addEventListener("click", () => setMenuOpen(menu?.hidden ?? true));
+        menuClose?.addEventListener("click", () => setMenuOpen(false));
         const labels = {
-          fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
-          ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
-          de: { night: "Nacht", day: "Tag" }, zh: { night: "夜间", day: "日间" },
-          fr: { night: "Nuit", day: "Jour" }, es: { night: "Noche", day: "Día" }
+          fa: { night: "شب", day: "روز", menu: "فهرست", close: "بستن فهرست" },
+          en: { night: "Night", day: "Day", menu: "Menu", close: "Close menu" },
+          ar: { night: "ليل", day: "نهار", menu: "القائمة", close: "إغلاق القائمة" },
+          ru: { night: "Ночь", day: "День", menu: "Меню", close: "Закрыть меню" },
+          de: { night: "Nacht", day: "Tag", menu: "Menü", close: "Menü schließen" },
+          zh: { night: "夜间", day: "日间", menu: "菜单", close: "关闭菜单" },
+          fr: { night: "Nuit", day: "Jour", menu: "Menu", close: "Fermer le menu" },
+          es: { night: "Noche", day: "Día", menu: "Menú", close: "Cerrar el menú" }
         };
         const currentLocale = document.documentElement.lang || "fa";
         const updateThemeUi = () => {
@@ -200,6 +268,31 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (icon) icon.textContent = isDark ? "☾" : "☀";
         };
         updateThemeUi();
+        menu?.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a")) {
+            menuGroups.forEach((group) => { group.open = false; });
+            setMenuOpen(false);
+          }
+        });
+        menuGroups.forEach((group) => group.addEventListener("toggle", () => {
+          if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
+        }));
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Escape") return;
+          const openGroup = menuGroups.find((group) => group.open);
+          if (openGroup) {
+            openGroup.open = false;
+            openGroup.querySelector("summary")?.focus();
+            return;
+          }
+          if (menu && !menu.hidden) setMenuOpen(false);
+        });
+        document.addEventListener("click", (event) => {
+          if (menu && !menu.hidden && event.target instanceof Node &&
+              !menu.contains(event.target) && !menuToggle?.contains(event.target)) {
+            setMenuOpen(false);
+          }
+        });
         toggle?.addEventListener("click", () => {
           root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
           try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}

@@ -14,7 +14,7 @@ test("the corporate source colors remain explicit design tokens", () => {
 test("the legal company name is the shared website and social identity", () => {
   assert.match(layout, /og:site_name" content=\{site\.companyName\}/);
   assert.match(layout, /"name": site\.companyName/);
-  assert.match(layout, /brand-wordmark">\{site\.companyName\}/);
+  assert.match(layout, /brand-wordmark">\{brandNames\[locale\]\}/);
   assert.doesNotMatch(layout, /ALPHA TEAM/);
 });
 

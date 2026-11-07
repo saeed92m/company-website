@@ -1,3 +1,33 @@
+## 2026-11-07 — Company submenu labels and board profile hero refinement (PR #97)
+
+- Kept the top-level Company navigation group unchanged.
+- Renamed its first submenu item to “معرفی” and the former CEO submenu item to “هیئت‌مدیره”; added equivalent labels across all eight supported locales.
+- Preserved the existing board/CEO profile route and its content for future revision.
+- Removed the oversized decorative logo from the profile hero. The shared site-header logo remains unchanged.
+- Added regression tests for localized submenu labels and the logo-free profile hero.
+- Changes remain in the PR preview branch. No Production source or deployment was changed.
+
+## 2026-11-07 — Mobile navigation layout correction (PR #97)
+
+- Hide dropdown content while its native disclosure group is closed. This prevents closed submenu content from appearing as an empty horizontal strip.
+- Restore the compact mobile header grid: brand and language/theme controls share the first row; the horizontal navigation occupies the next row and can scroll when needed.
+- Preserve RTL-aware dropdown positioning, touch targets, and the no-hamburger navigation decision.
+- Added regression checks for closed submenu visibility and mobile header structure.
+- Pending CI and visual device validation. This change is not merged or deployed to Production.
+
+## 2026-11-07 — Persistent expandable navigation (PR #97)
+
+- Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
+- Added native expandable dropdown groups for Company and the six activity domains.
+- Kept Home, Projects, and Contact as direct navigation links.
+- Kept language selection and the light/dark control visible in the header.
+- Localized the primary-navigation landmark across all eight supported locales.
+- Added Escape dismissal with focus return, outside-click dismissal, and automatic closure after link selection.
+- Added responsive dropdown styling for desktop, tablet, and mobile, with minimum 44 CSS-pixel control heights.
+- Extended Browser QA to exercise dropdown opening, six-domain link count, Escape behavior, focus return, and outside-click dismissal in Chromium, Firefox, and WebKit at mobile and desktop viewports.
+- The Contact page was not changed. Shared technology infrastructure remains planned for the KEYHAN AI domain content; no standalone infrastructure pages were added.
+- This change is under review in PR #97. It is not merged or deployed to Production.
+
 ## 2026-11-06 — Cross-page whitespace review and spacing normalization
 
 - Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.
@@ -222,3 +252,35 @@ All notable changes to this project will be documented here.
 - Added a responsive, localized skills taxonomy to the CEO profile. The groups use the supplied CV skill order and do not assign unverified proficiency scores.
 - Added localized application-area descriptions and clarified the methods, technologies, and specialist-scope heading on all six domain detail pages.
 - Removed the current-stage statement from the homepage Vision and Development Path section in all eight locales; retained the next-step statement.
+
+
+## 2026-11-07 — Mobile expandable navigation correction
+
+- Fixed mobile navigation clipping: disclosure submenus now open in normal document flow instead of inside a horizontally scrolling container.
+- Changed the mobile navigation row to wrap within the viewport. An expanded group occupies the available row width and displays its submenu below the summary.
+- Kept the desktop dropdown positioning and the persistent horizontal navigation pattern. No hamburger menu was added.
+- Added regression coverage for mobile wrapping, visible overflow, and in-flow expanded submenus.
+- Mobile browser and physical-device visual validation are required before merge.
+
+
+## 2026-11-08 — Fixed navigation overlay containing block
+
+- Removed backdrop filtering from the sticky header. A filtered ancestor can become the containing block for fixed-position descendants and clip the navigation panel to the header.
+- Kept the translucent header background and the glass blur on the menu panel itself.
+- Extended Browser QA to verify that the open panel uses viewport-fixed positioning and occupies the expected viewport height without clipping.
+- Pending CI, deployment, and physical-device validation. Preview only; no Production change.
+
+
+## 2026-11-08 — Navigation overlay moved outside sticky header
+
+- Moved the menu panel out of the sticky header in the document structure. This prevents header effects and stacking contexts from constraining fixed positioning.
+- Kept the sticky header, brand, language selector, and theme control unchanged.
+- Applied viewport-based overlay sizing and independent vertical scrolling at mobile and desktop widths.
+- Browser QA now checks that the panel is not nested inside the sticky header and that its bounds fill the available viewport.
+- Preview only. Awaiting CI, Browser QA, CodeQL, deployment, and physical-device review.
+
+
+## Unreleased
+
+- Keep the expandable mobile navigation panel free of the company logo and name.
+- Show the company logo and its short legal-name-free brand name in the sticky header on mobile and desktop; keep the wordmark on one line.
