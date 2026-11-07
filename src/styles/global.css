@@ -425,10 +425,8 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
   .mobile-nav-tools .theme-toggle { flex:1 1 50%; }
   body.mobile-nav-open { overflow:hidden; }
 }
-@media (prefers-reduced-transparency: reduce) {
-  @media (max-width:720px) {
-    .mobile-nav-panel { background:var(--page); -webkit-backdrop-filter:none; backdrop-filter:none; }
-  }
+@media (max-width:720px) and (prefers-reduced-transparency: reduce) {
+  .mobile-nav-panel { background:var(--page); -webkit-backdrop-filter:none; backdrop-filter:none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mobile-nav-panel, .mobile-nav-backdrop { transition:none; }
