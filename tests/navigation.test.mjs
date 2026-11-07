@@ -75,4 +75,5 @@ test("mobile glass overlay fills the viewport outside the sticky header filter",
   assert.match(styles, /body\.mobile-nav-open\s+\.site-header\s*\{[^}]*backdrop-filter:\s*none/);
   assert.match(styles, /\.mobile-nav-backdrop:not\(\[hidden\]\)\s*\{[^}]*display:\s*flex/);
   assert.match(styles, /\.mobile-nav-panel\s*\{[^}]*flex:\s*1\s+1\s+auto/);
+  assert.match(styles, /\.site-header\.site-shell\s*\{[^}]*position:\s*sticky;[^}]*top:\s*0;/);
 });
