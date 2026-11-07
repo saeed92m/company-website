@@ -312,3 +312,6 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 @media (prefers-reduced-motion: reduce) {
   .menu-toggle, .primary-nav, .nav-submenu { transition: none; }
 }
+
+/* Persistent header controls also meet the 44px minimum touch target. */
+.language-select select, .theme-toggle { min-height: 2.75rem; }
