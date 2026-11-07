@@ -79,9 +79,11 @@ test("CEO profile page omits the large decorative brand mark but keeps the share
 });
 
 
-test("the sticky header does not constrain the fixed navigation overlay", () => {
-  assert.match(styles, /\.site-header\s*\{[^}]*backdrop-filter:\s*none/);
-  assert.match(styles, /\.primary-nav\s*\{[\s\S]*position:fixed/);
+test("the navigation overlay is outside the sticky header and fills the viewport", () => {
+  assert.match(layout, /<\/header>\s*<nav id="primary-navigation"/);
+  assert.doesNotMatch(layout, /<header[^>]*>[\s\S]*<nav id="primary-navigation"/);
+  assert.match(styles, /\.primary-nav\s*\{[\s\S]*position:\s*fixed/);
   assert.match(styles, /\.primary-nav\s*\{[\s\S]*inset-block-end:[^;]+/);
-  assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:auto/);
+  assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:\s*auto/);
+  assert.match(styles, /\.primary-nav\[hidden\]\s*\{\s*display:\s*none !important/);
 });
