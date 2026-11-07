@@ -1,3 +1,11 @@
+## 2026-11-07 — Mobile navigation layout correction (PR #97)
+
+- Hide dropdown content while its native disclosure group is closed. This prevents closed submenu content from appearing as an empty horizontal strip.
+- Restore the compact mobile header grid: brand and language/theme controls share the first row; the horizontal navigation occupies the next row and can scroll when needed.
+- Preserve RTL-aware dropdown positioning, touch targets, and the no-hamburger navigation decision.
+- Added regression checks for closed submenu visibility and mobile header structure.
+- Pending CI and visual device validation. This change is not merged or deployed to Production.
+
 ## 2026-11-07 — Persistent expandable navigation (PR #97)
 
 - Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
