@@ -51,3 +51,16 @@ test("mobile disclosure menus are not clipped by a horizontal scroller", () => {
   assert.ok(styles.includes("position:static;"));
   assert.ok(styles.includes("width:100%;"));
 });
+
+
+test("mobile v3 uses an accessible glass drawer with language and theme controls", () => {
+  assert.match(layout, /data-mobile-nav-open/);
+  assert.match(layout, /data-mobile-nav-backdrop/);
+  assert.match(layout, /role="dialog" aria-modal="true"/);
+  assert.match(layout, /data-mobile-nav-close/);
+  assert.match(layout, /mobile-nav-tools[\s\S]*language-select[\s\S]*theme-toggle/);
+  assert.match(styles, /background:rgba\(7,17,31,\.75\)/);
+  assert.match(styles, /backdrop-filter:blur\(28px\)/);
+  assert.match(styles, /overflow-y:auto/);
+  assert.match(layout, /closeMobileMenu\(\)/);
+});
