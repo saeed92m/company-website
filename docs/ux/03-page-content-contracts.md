@@ -125,3 +125,13 @@ Source → Draft → Technical review → Language review → Approval → Publi
 **Phase 1 implementation — in review.**
 
 The Phase 1 implementation includes localized corporate copy, six domain detail routes, documented related-work references where supported by the supplied CV, application areas, homepage vision and CEO preview, grouped CEO skills, and the four-path contact gateway. Automated validation and visual review must pass before merge.
+
+
+## Mobile navigation Variant 3 — viewport and controls
+
+- The mobile full-screen overlay must occupy the complete dynamic viewport (100dvh) and must not expand the document flow.
+- The open header is the fixed overlay root. Disable its backdrop filter while open so fixed-position descendants are not constrained by the filtered header.
+- Keep the navigation list independently scrollable inside the overlay.
+- Keep language and theme controls pinned above the device bottom safe area. They must remain visible while the navigation list scrolls.
+- Reserve top and bottom padding in the navigation scroll area for the brand/close control and the pinned language/theme controls.
+- Keep Variant 2 unchanged as the fallback design until the owner selects a final mobile navigation.
