@@ -8,7 +8,8 @@ const styles = await readFile(new URL("../src/styles/global.css", import.meta.ur
 test("primary navigation remains visible and uses native expandable groups", () => {
   assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav/);
   assert.doesNotMatch(layout, /data-menu-toggle/);
-  assert.match(layout, /<details class="nav-group" data-nav-group>/);
+  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
+  assert.doesNotMatch(layout, /<details[^>]+ open=/);
   assert.match(layout, /site\.fields\.map\(\(field\)/);
   assert.doesNotMatch(layout, /role="menu"/);
   assert.match(styles, /\.nav-group\s*\{\s*position:relative/);
