@@ -240,7 +240,7 @@ jobs:
                 }
 
                 if (suffix === "" || suffix === "projects/") {
-                  const projectSection = suffix === "" ? page.locator("#projects") : page.locator(".project-grid");
+                  const projectSection = suffix === "" ? page.locator("#projects") : page.locator(".project-grid").first();
                   const projectCards = projectSection.locator(".project-card");
                   const count = await projectCards.count();
                   if (count !== 3) throw new Error(`${url}: expected 3 project cards, got ${count}`);
