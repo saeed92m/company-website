@@ -43,3 +43,10 @@ test("mobile header keeps brand and tools together above a horizontal nav row", 
   assert.match(styles, /\.primary-nav\s*\{[^}]*flex-wrap:\s*nowrap;[^}]*overflow-x:\s*auto/s);
   assert.doesNotMatch(styles, /\.header-tools\s*\{\s*order:\s*2;\s*flex:\s*1\s+1\s+100%/);
 });
+
+
+test("mobile disclosure menus are not clipped by a horizontal scroller", () => {
+  assert.match(styles, /@media \\(max-width:720px\\) \\{[\\s\\S]*?\\.primary-nav \\{[\\s\\S]*?flex-wrap:wrap;[\\s\\S]*?overflow:visible;/);
+  assert.match(styles, /\\.nav-group\\[open\\] \\{ flex:1 0 100%;/);
+  assert.match(styles, /\\.nav-submenu \\{[\\s\\S]*?position:static;[\\s\\S]*?width:100%;/);
+});
