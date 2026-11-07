@@ -255,10 +255,19 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
         }));
         document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && header?.hasAttribute("data-mobile-open")) {
-            event.preventDefault();
-            closeMobileMenu({ restoreFocus: true });
-            return;
+          if (event.key === "Escape") {
+            const openGroup = menuGroups.find((group) => group.open);
+            if (openGroup) {
+              event.preventDefault();
+              openGroup.open = false;
+              openGroup.querySelector("summary")?.focus();
+              return;
+            }
+            if (header?.hasAttribute("data-mobile-open")) {
+              event.preventDefault();
+              closeMobileMenu({ restoreFocus: true });
+              return;
+            }
           }
           if (event.key === "Tab" && header?.hasAttribute("data-mobile-open")) {
             const focusable = Array.from(header.querySelectorAll('a[href], button:not([disabled]), select, summary'));
