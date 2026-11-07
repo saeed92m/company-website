@@ -23,7 +23,7 @@ test("navigation groups close after selection, on Escape, and outside click", ()
   assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
 });
 
-test("language and theme controls remain in the persistent header", () => {
+test("language and theme controls remain available inside the navigation panel", () => {
   assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
   assert.match(layout, /aria-label=\{menuUi\[locale\]\.navigation\}/);
 });
@@ -38,7 +38,7 @@ test("closed disclosure groups do not render submenu content", () => {
   assert.match(styles, /\.nav-group:not\(\[open\]\)\s*>\s*\.nav-submenu\s*\{\s*display:\s*none;?\s*\}/);
 });
 
-test("mobile header keeps brand and tools above a wrapping navigation row", () => {
+test("mobile header keeps the brand and menu trigger in the top row", () => {
   assert.match(styles, /@media\\s*\\(max-width:\\s*720px\\)[\\s\\S]*?\\.site-header\\s*\\{\\s*display:\\s*grid;\\s*grid-template-columns:\\s*minmax\\(0,1fr\\)\\s+auto/);
   assert.doesNotMatch(styles, /\\.header-tools\\s*\\{\\s*order:\\s*2;\\s*flex:\\s*1\\s+1\\s+100%/);
 });
