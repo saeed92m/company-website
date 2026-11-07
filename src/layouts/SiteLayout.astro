@@ -48,6 +48,16 @@ const localeForOg: Record<Locale, string> = {
 };
 
 const logoUrl = origin ? new URL(webLogoUrl, origin).toString() : "";
+const brandNames: Record<Locale, string> = {
+  fa: "شرکت پیشگامان نواندیش فناورگستر کیهان",
+  en: "Pishgaman Novandish Fannavargostar Keyhan",
+  ar: "شركة بيشگامان نوانديش فناورگستر كيهان",
+  ru: "Pishgaman Novandish Fannavargostar Keyhan",
+  de: "Pishgaman Novandish Fannavargostar Keyhan",
+  zh: "Pishgaman Novandish Fannavargostar Keyhan",
+  fr: "Pishgaman Novandish Fannavargostar Keyhan",
+  es: "Pishgaman Novandish Fannavargostar Keyhan"
+};
 const legalCompanyName = "شرکت پیشگامان نواندیش فناورگستر کیهان (مسئولیت محدود)";
 const personSameAs = [
   "https://linkedin.com/in/saeed-memarzadeh-12559146",
@@ -142,9 +152,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
     <header class="site-header site-shell">
-      <a class="brand" href={route(locale)} aria-label={site.companyName}>
-        <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
-        <span class="brand-wordmark">{site.companyName}</span>
+      <a class="brand" href={route(locale)} aria-label={brandNames[locale]}>
+        <span class="brand-mark" aria-hidden="true"><BrandMark label={brandNames[locale]} /></span>
+        <span class="brand-wordmark">{brandNames[locale]}</span>
       </a>
 
       <div class="header-tools">
@@ -164,11 +174,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
       </button>
     </header>
       <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav hidden>
-        <div class="nav-panel-head">
-          <span class="nav-panel-brand">
-            <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
-            <span>{site.companyName}</span>
-          </span>
+        <div class="nav-panel-head nav-panel-head--minimal">
           <button class="nav-close" type="button" aria-label={menuUi[locale].close} data-menu-close>×</button>
         </div>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
