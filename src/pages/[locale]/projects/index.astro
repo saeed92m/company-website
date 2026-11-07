@@ -12,6 +12,7 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
+const portfolioLabels = domainPortfolioLabels[locale];
 const projectsIntro: Record<Locale, string> = {
   fa: "در این بخش، پروژه‌ها و محصولات فناورانه شرکت معرفی می‌شوند؛ پروژه‌هایی که با هدف توسعه راهکارهای نوآورانه در مرز علم، مهندسی و فناوری شکل گرفته‌اند. دامنه آن‌ها از تحلیل داده‌های نجومی و یادگیری ماشین تا زیرساخت‌های نرم‌افزاری و محیط‌های محاسباتی علمی و مهندسی را در بر می‌گیرد. در کنار محصولات نرم‌افزاری، این بخش زمینه‌های پروژه و موضوعات مهندسی شش حوزه فعالیت شرکت را نیز معرفی می‌کند.",
   en: "This section introduces the company’s technology projects and products. Their scope ranges from astronomical data analysis and machine learning to software infrastructure and scientific and engineering computing environments. The section also presents engineering project topics across the company’s six domains.",
