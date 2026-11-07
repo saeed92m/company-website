@@ -23,15 +23,15 @@ const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
-const menuUi: Record<Locale, { menu: string; close: string; home: string; ceo: string; navigation: string }> = {
-  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", ceo: "مدیرعامل", navigation: "ناوبری اصلی" },
-  en: { menu: "Menu", close: "Close menu", home: "Home", ceo: "CEO", navigation: "Main navigation" },
-  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", ceo: "الرئيس التنفيذي", navigation: "التنقل الرئيسي" },
-  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", ceo: "Генеральный директор", navigation: "Основная навигация" },
-  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", ceo: "Geschäftsführung", navigation: "Hauptnavigation" },
-  zh: { menu: "菜单", close: "关闭菜单", home: "首页", ceo: "首席执行官", navigation: "主导航" },
-  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", ceo: "Direction générale", navigation: "Navigation principale" },
-  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", ceo: "Dirección general", navigation: "Navegación principal" }
+const menuUi: Record<Locale, { menu: string; close: string; home: string; intro: string; board: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", intro: "معرفی", board: "هیئت‌مدیره", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", intro: "Overview", board: "Board of Directors", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", intro: "نبذة عن الشركة", board: "مجلس الإدارة", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", intro: "О компании", board: "Совет директоров", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", intro: "Unternehmensprofil", board: "Vorstand", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", intro: "公司简介", board: "董事会", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", intro: "Présentation", board: "Conseil d’administration", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", intro: "Presentación", board: "Junta directiva", navigation: "Navegación principal" }
 };
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
@@ -151,8 +151,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
           <summary>{site.navigation.company}</summary>
           <div class="nav-submenu">
-            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
-            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{menuUi[locale].intro}</a>
+            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].board}</a>
           </div>
         </details>
         <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
