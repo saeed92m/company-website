@@ -146,35 +146,48 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
-        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
-        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
-          <summary>{site.navigation.company}</summary>
-          <div class="nav-submenu">
-            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
-            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+      <button class="mobile-nav-trigger" type="button" aria-label={menuUi[locale].menu} aria-controls="mobile-navigation-panel" aria-expanded="false" data-mobile-nav-open>
+        <span aria-hidden="true">☰</span>
+      </button>
+      <div class="mobile-nav-backdrop" data-mobile-nav-backdrop hidden>
+        <section class="mobile-nav-panel" id="mobile-navigation-panel" role="dialog" aria-modal="true" aria-label={menuUi[locale].navigation} tabindex="-1">
+          <div class="mobile-nav-top">
+            <a class="mobile-nav-brand" href={route(locale)} aria-label={site.companyName}>
+              <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
+            </a>
+            <button class="mobile-nav-close" type="button" aria-label={menuUi[locale].close} data-mobile-nav-close>×</button>
           </div>
-        </details>
-        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
-          <summary>{site.navigation.fields}</summary>
-          <div class="nav-submenu">
-            {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+          <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
+            <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
+            <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
+              <summary>{site.navigation.company}</summary>
+              <div class="nav-submenu">
+                <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
+                <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+              </div>
+            </details>
+            <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
+              <summary>{site.navigation.fields}</summary>
+              <div class="nav-submenu">
+                {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+              </div>
+            </details>
+            <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
+            <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
+          </nav>
+          <div class="header-tools mobile-nav-tools">
+            <label class="language-select">
+              <span class="sr-only">{labels.language}</span>
+              <select aria-label={labels.language}>
+                {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+              </select>
+            </label>
+            <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+              <span aria-hidden="true">☾</span>
+              <span data-theme-label>{labels.night}</span>
+            </button>
           </div>
-        </details>
-        <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
-      </nav>
-      <div class="header-tools">
-        <label class="language-select">
-          <span class="sr-only">{labels.language}</span>
-          <select aria-label={labels.language}>
-            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
-          </select>
-        </label>
-        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
-          <span aria-hidden="true">☾</span>
-          <span data-theme-label>{labels.night}</span>
-        </button>
+        </section>
       </div>
     </header>
     <main id="main-content"><slot /></main>
@@ -205,6 +218,32 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const select = document.querySelector(".language-select select");
         const menu = document.querySelector("[data-primary-nav]");
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
+        const mobileBackdrop = document.querySelector("[data-mobile-nav-backdrop]");
+        const mobileOpen = document.querySelector("[data-mobile-nav-open]");
+        const mobileClose = document.querySelector("[data-mobile-nav-close]");
+        const mobilePanel = document.querySelector("#mobile-navigation-panel");
+        const closeMobileMenu = (restoreFocus = true) => {
+          if (!mobileBackdrop || mobileBackdrop.hidden) return;
+          mobileBackdrop.hidden = true;
+          document.body.classList.remove("mobile-nav-open");
+          mobileOpen?.setAttribute("aria-expanded", "false");
+          if (restoreFocus) mobileOpen?.focus();
+        };
+        const openMobileMenu = () => {
+          if (!mobileBackdrop) return;
+          mobileBackdrop.hidden = false;
+          document.body.classList.add("mobile-nav-open");
+          mobileOpen?.setAttribute("aria-expanded", "true");
+          mobileClose?.focus();
+        };
+        mobileOpen?.addEventListener("click", openMobileMenu);
+        mobileClose?.addEventListener("click", () => closeMobileMenu());
+        mobileBackdrop?.addEventListener("click", (event) => {
+          if (event.target === mobileBackdrop) closeMobileMenu();
+        });
+        mobilePanel?.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a")) closeMobileMenu(false);
+        });
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
@@ -232,6 +271,10 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         }));
         document.addEventListener("keydown", (event) => {
           if (event.key !== "Escape") return;
+          if (mobileBackdrop && !mobileBackdrop.hidden) {
+            closeMobileMenu();
+            return;
+          }
           const openGroup = menuGroups.find((group) => group.open);
           if (openGroup) {
             openGroup.open = false;
