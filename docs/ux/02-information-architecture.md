@@ -113,3 +113,25 @@ Must answer:
 **Phase 1 working baseline — ready for stakeholder review.**
 
 The IA should proceed to wireframing only after checking it against the approved company content and actual content volume.
+
+
+## Architecture update — 2026-11-07
+
+The localized `/platforms/` route is part of the primary navigation and sitemap.
+
+The page separates:
+1. Company-Platform as the internal corporate operating and integration system.
+2. The six independent activity domains.
+3. Five shared technology platforms.
+4. Engineering and hardware capability scope.
+5. Digital infrastructure and IT.
+6. Governance and assurance.
+7. Business and market development.
+
+Company-Platform is not listed as a public project or commercial product. It is shown only as an internal corporate system with its current status labelled In Progress.
+
+The five shared technology platforms are labelled Not started / target architecture. Engineering, IT, governance, and business capabilities are described as target scope, not evidence of current operational capacity.
+
+Each activity domain uses its approved architecture label: ASTROINTEL, AEROINTEL, GEOINTEL, KEYHAN AI, ENERGIQ, and MOTIONIQ.
+
+The mobile primary navigation uses a keyboard-operable disclosure control. It must be verified in Chromium, Firefox, WebKit, RTL, and with long translated labels.
