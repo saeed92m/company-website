@@ -752,7 +752,7 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 }
 
 /* Shared-platform architecture page and homepage preview. */
-.domain-brand-code{color:var(--rd-accent);font-size:10px;font-weight:800;letter-spacing:.14em}
+.domain-brand-code{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.14em}
 .home-platforms{padding-block:clamp(52px,7vw,88px);border-block:1px solid var(--border)}
 .home-platforms__heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.72fr);gap:clamp(20px,4vw,56px);align-items:end;margin-bottom:28px}
 .home-platforms__heading h2{margin:0;color:var(--ink);font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1.35}
@@ -812,3 +812,6 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
   .site-header .header-tools{grid-column:1/-1;grid-row:2;justify-self:end}
   .site-header .primary-nav{grid-row:3}
 }
+
+.platforms-page .new-kicker{display:flex;align-items:center;gap:10px;margin:0 0 18px;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.platforms-page[dir=rtl] .new-kicker{letter-spacing:0}
