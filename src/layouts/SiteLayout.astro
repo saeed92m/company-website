@@ -146,6 +146,9 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
+      <button class="mobile-menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label={menuUi[locale].menu} data-mobile-menu-toggle>
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
       <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
         <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
@@ -204,6 +207,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
         const menu = document.querySelector("[data-primary-nav]");
+        const menuToggle = document.querySelector("[data-mobile-menu-toggle]");
+        const header = document.querySelector(".site-header");
+        const closeMobileMenu = ({ restoreFocus = false } = {}) => {
+          header?.removeAttribute("data-mobile-open");
+          menuToggle?.setAttribute("aria-expanded", "false");
+          if (menuToggle) menuToggle.setAttribute("aria-label", labels[currentLocale].menu);
+          if (restoreFocus) menuToggle?.focus();
+        };
         const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
@@ -222,9 +233,19 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (icon) icon.textContent = isDark ? "☾" : "☀";
         };
         updateThemeUi();
+        menuToggle?.addEventListener("click", () => {
+          const isOpen = header?.hasAttribute("data-mobile-open") ?? false;
+          if (isOpen) closeMobileMenu();
+          else {
+            header?.setAttribute("data-mobile-open", "");
+            menuToggle.setAttribute("aria-expanded", "true");
+            menuToggle.setAttribute("aria-label", labels[currentLocale].close);
+          }
+        });
         menu?.addEventListener("click", (event) => {
           if (event.target instanceof Element && event.target.closest("a")) {
             menuGroups.forEach((group) => { group.open = false; });
+            closeMobileMenu();
           }
         });
         menuGroups.forEach((group) => group.addEventListener("toggle", () => {
