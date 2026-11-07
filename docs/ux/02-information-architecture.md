@@ -135,3 +135,15 @@ The five shared technology platforms are labelled Not started / target architect
 Each activity domain uses its approved architecture label: ASTROINTEL, AEROINTEL, GEOINTEL, KEYHAN AI, ENERGIQ, and MOTIONIQ.
 
 The mobile primary navigation uses a keyboard-operable disclosure control. It must be verified in Chromium, Firefox, WebKit, RTL, and with long translated labels.
+
+
+## Additional page and homepage implementation — 2026-11-07
+
+- Added localized `/engineering/`, `/how-we-work/`, and `/collaborate/` routes for all eight locales.
+- Engineering & R&D presents the target capability scope. It does not claim existing labs, equipment, software licences, or operational capacity.
+- How We Work presents the nine-stage product lifecycle with stage gates and evidence requirements. A prototype is explicitly not described as a sale-ready product.
+- Collaborate presents potential collaboration pathways only. It does not imply existing partners, contracts, or verified service capacity.
+- The homepage now follows this order: hero, company overview, six domains, shared platforms, Engineering & R&D, product lifecycle, public projects, vision, CEO, collaboration, and contact.
+- Public project cards show localized status. ZTF Classifier is associated with ASTROINTEL. No project repository links are exposed.
+- Insights remains deferred until real, maintainable articles or announcements exist.
+- Footer navigation links to the new routes. The sitemap, deployment smoke tests, and browser QA include all new routes.
