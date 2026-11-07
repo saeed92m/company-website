@@ -23,6 +23,16 @@ const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
+const menuUi: Record<Locale, { menu: string; close: string; home: string; ceo: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", ceo: "مدیرعامل", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", ceo: "CEO", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", ceo: "الرئيس التنفيذي", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", ceo: "Генеральный директор", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", ceo: "Geschäftsführung", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", ceo: "首席执行官", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", ceo: "Direction générale", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", ceo: "Dirección general", navigation: "Navegación principal" }
+};
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
@@ -136,15 +146,25 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav class="primary-nav" aria-label={site.navigation.company}>
-        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
-        <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
-        <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
+      <nav id="desktop-primary-navigation" class="primary-nav desktop-primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
+        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
+          <summary>{site.navigation.company}</summary>
+          <div class="nav-submenu">
+            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
+            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+          </div>
+        </details>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
+          <summary>{site.navigation.fields}</summary>
+          <div class="nav-submenu">
+            {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+          </div>
+        </details>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
-      <div class="header-tools">
+      <div class="header-tools desktop-header-tools">
         <label class="language-select">
           <span class="sr-only">{labels.language}</span>
           <select aria-label={labels.language}>
@@ -156,7 +176,51 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <span data-theme-label>{labels.night}</span>
         </button>
       </div>
+      <div class="header-tools mobile-header-tools">
+        <label class="language-select">
+          <span class="sr-only">{labels.language}</span>
+          <select aria-label={labels.language}>
+            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+          <span aria-hidden="true">☾</span>
+          <span data-theme-label>{labels.night}</span>
+        </button>
+      </div>
+      <button class="mobile-nav-trigger" type="button" aria-label={menuUi[locale].menu} aria-controls="mobile-navigation-panel" aria-expanded="false" data-mobile-nav-open>
+        <span aria-hidden="true">☰</span>
+      </button>
     </header>
+    <div class="mobile-nav-backdrop" data-mobile-nav-backdrop hidden>
+      <section class="mobile-nav-panel" id="mobile-navigation-panel" aria-label={menuUi[locale].navigation} tabindex="-1">
+        <div class="mobile-nav-top">
+          <a class="mobile-nav-brand" href={route(locale)} aria-label={site.companyName}>
+            <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
+          </a>
+          <button class="mobile-nav-close" type="button" aria-label={menuUi[locale].close} data-mobile-nav-close>×</button>
+        </div>
+        <nav id="mobile-primary-navigation" class="primary-nav mobile-primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
+        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
+          <summary>{site.navigation.company}</summary>
+          <div class="nav-submenu">
+            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
+            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+          </div>
+        </details>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
+          <summary>{site.navigation.fields}</summary>
+          <div class="nav-submenu">
+            {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+          </div>
+        </details>
+        <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
+        <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
+      </nav>
+
+      </section>
+    </div>
     <main id="main-content"><slot /></main>
     <footer class="site-footer">
       <div class="site-shell footer-grid">
@@ -180,34 +244,130 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         let stored = null;
         try { stored = localStorage.getItem("site-theme"); } catch {}
         if (stored === "light" || stored === "dark") root.dataset.theme = stored;
-        const toggle = document.querySelector("[data-theme-toggle]");
-        const label = document.querySelector("[data-theme-label]");
-        const select = document.querySelector(".language-select select");
+
+        const menus = Array.from(document.querySelectorAll("[data-primary-nav]"));
+        const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
+        const themeToggles = Array.from(document.querySelectorAll("[data-theme-toggle]"));
+        const languageSelects = Array.from(document.querySelectorAll(".language-select select"));
+        const mobileBackdrop = document.querySelector("[data-mobile-nav-backdrop]");
+        const mobileOpen = document.querySelector("[data-mobile-nav-open]");
+        const mobileClose = document.querySelector("[data-mobile-nav-close]");
+        const mobilePanel = document.querySelector("#mobile-navigation-panel");
+
+        const closeMobileMenu = (restoreFocus = true) => {
+          if (!mobileBackdrop || mobileBackdrop.hidden) return;
+          mobileBackdrop.hidden = true;
+          mobilePanel?.removeAttribute("role");
+          mobilePanel?.removeAttribute("aria-modal");
+          document.body.classList.remove("mobile-nav-open");
+          mobileOpen?.setAttribute("aria-expanded", "false");
+          if (restoreFocus) mobileOpen?.focus();
+        };
+        const openMobileMenu = () => {
+          if (!mobileBackdrop) return;
+          mobileBackdrop.hidden = false;
+          mobilePanel?.setAttribute("role", "dialog");
+          mobilePanel?.setAttribute("aria-modal", "true");
+          document.body.classList.add("mobile-nav-open");
+          mobileOpen?.setAttribute("aria-expanded", "true");
+          mobileClose?.focus();
+        };
+
+        mobileOpen?.addEventListener("click", openMobileMenu);
+        mobileClose?.addEventListener("click", () => closeMobileMenu());
+        mobileBackdrop?.addEventListener("click", (event) => {
+          if (event.target === mobileBackdrop) closeMobileMenu();
+        });
+        mobilePanel?.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a")) closeMobileMenu(false);
+        });
+
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
           de: { night: "Nacht", day: "Tag" }, zh: { night: "夜间", day: "日间" },
           fr: { night: "Nuit", day: "Jour" }, es: { night: "Noche", day: "Día" }
         };
-        const currentLocale = document.documentElement.lang || "fa";
+        const currentLocale = root.lang || "fa";
         const updateThemeUi = () => {
           const isDark = root.dataset.theme !== "light";
           const themeColor = document.querySelector("[data-theme-color]");
           if (themeColor) themeColor.setAttribute("content", isDark ? "#07111f" : "#f8fafc");
-          if (toggle) toggle.setAttribute("aria-pressed", String(isDark));
-          if (label) label.textContent = isDark ? labels[currentLocale].night : labels[currentLocale].day;
-          const icon = toggle?.querySelector("span[aria-hidden]");
-          if (icon) icon.textContent = isDark ? "☾" : "☀";
+          themeToggles.forEach((toggle) => {
+            toggle.setAttribute("aria-pressed", String(isDark));
+            const label = toggle.querySelector("[data-theme-label]");
+            if (label) label.textContent = isDark ? labels[currentLocale].night : labels[currentLocale].day;
+            const icon = toggle.querySelector("span[aria-hidden='true']");
+            if (icon) icon.textContent = isDark ? "☾" : "☀";
+          });
         };
         updateThemeUi();
-        toggle?.addEventListener("click", () => {
-          root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-          try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}
-          updateThemeUi();
+
+        menus.forEach((menu) => {
+          menu.addEventListener("click", (event) => {
+            if (event.target instanceof Element && event.target.closest("a")) {
+              menu.querySelectorAll("[data-nav-group]").forEach((group) => { group.open = false; });
+            }
+          });
         });
-        select?.addEventListener("change", (event) => {
-          const target = event.currentTarget;
-          if (target instanceof HTMLSelectElement && target.value) window.location.href = target.value;
+        menuGroups.forEach((group) => {
+          group.querySelector("summary")?.addEventListener("click", (event) => {
+            if (window.matchMedia("(max-width: 720px)").matches) {
+              event.preventDefault();
+              group.open = !group.open;
+            }
+          });
+          group.addEventListener("toggle", () => {
+            if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
+          });
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (mobileBackdrop && !mobileBackdrop.hidden && event.key === "Tab" && mobilePanel) {
+            const focusable = Array.from(mobilePanel.querySelectorAll('a[href], button:not([disabled]), select:not([disabled]), summary'))
+              .filter((element) => element.getClientRects().length > 0);
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last?.focus();
+              return;
+            }
+            if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first?.focus();
+              return;
+            }
+          }
+          if (event.key !== "Escape") return;
+          const openGroup = menuGroups.find((group) => group.open);
+          if (openGroup) {
+            openGroup.open = false;
+            openGroup.querySelector("summary")?.focus();
+            return;
+          }
+          if (mobileBackdrop && !mobileBackdrop.hidden) closeMobileMenu();
+        });
+
+        document.addEventListener("click", (event) => {
+          const target = event.target;
+          const insideHeader = target instanceof Node && document.querySelector(".site-header")?.contains(target);
+          const insideMobilePanel = target instanceof Node && mobilePanel?.contains(target);
+          if (!insideHeader && !insideMobilePanel) menuGroups.forEach((group) => { group.open = false; });
+        });
+
+        themeToggles.forEach((toggle) => {
+          toggle.addEventListener("click", () => {
+            root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
+            try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}
+            updateThemeUi();
+          });
+        });
+        languageSelects.forEach((select) => {
+          select.addEventListener("change", (event) => {
+            const target = event.currentTarget;
+            if (target instanceof HTMLSelectElement && target.value) window.location.href = target.value;
+          });
         });
       })();
     </script>

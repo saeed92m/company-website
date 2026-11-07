@@ -1,3 +1,35 @@
+## 2026-11-07 — Mobile glass navigation concept (Version 3)
+
+- Added a mobile-only full-screen navigation panel on a separate preview branch.
+- Used a 75% opaque glass surface with a 28px backdrop blur.
+- Added expandable Company and Fields groups inside the panel.
+- Kept language and light/dark controls in the persistent mobile header, outside the overlay.
+- Made the navigation list fill the remaining panel height and scroll independently.
+- Added close-button, backdrop-click, Escape-key, and link-selection dismissal behavior.
+- Preserved the Version 2 desktop/tablet navigation and did not change Production.
+- Validation is pending CI and browser/device review.
+
+## 2026-11-07 — Mobile navigation layout correction (PR #97)
+
+- Hide dropdown content while its native disclosure group is closed. This prevents closed submenu content from appearing as an empty horizontal strip.
+- Restore the compact mobile header grid: brand and language/theme controls share the first row; the horizontal navigation occupies the next row and can scroll when needed.
+- Preserve RTL-aware dropdown positioning, touch targets, and the no-hamburger navigation decision.
+- Added regression checks for closed submenu visibility and mobile header structure.
+- Pending CI and visual device validation. This change is not merged or deployed to Production.
+
+## 2026-11-07 — Persistent expandable navigation (PR #97)
+
+- Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
+- Added native expandable dropdown groups for Company and the six activity domains.
+- Kept Home, Projects, and Contact as direct navigation links.
+- Kept language selection and the light/dark control visible in the header.
+- Localized the primary-navigation landmark across all eight supported locales.
+- Added Escape dismissal with focus return, outside-click dismissal, and automatic closure after link selection.
+- Added responsive dropdown styling for desktop, tablet, and mobile, with minimum 44 CSS-pixel control heights.
+- Extended Browser QA to exercise dropdown opening, six-domain link count, Escape behavior, focus return, and outside-click dismissal in Chromium, Firefox, and WebKit at mobile and desktop viewports.
+- The Contact page was not changed. Shared technology infrastructure remains planned for the KEYHAN AI domain content; no standalone infrastructure pages were added.
+- This change is under review in PR #97. It is not merged or deployed to Production.
+
 ## 2026-11-06 — Cross-page whitespace review and spacing normalization
 
 - Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.
@@ -222,3 +254,37 @@ All notable changes to this project will be documented here.
 - Added a responsive, localized skills taxonomy to the CEO profile. The groups use the supplied CV skill order and do not assign unverified proficiency scores.
 - Added localized application-area descriptions and clarified the methods, technologies, and specialist-scope heading on all six domain detail pages.
 - Removed the current-stage statement from the homepage Vision and Development Path section in all eight locales; retained the next-step statement.
+
+
+## 2026-11-07 — Mobile expandable navigation correction
+
+- Fixed mobile navigation clipping: disclosure submenus now open in normal document flow instead of inside a horizontally scrolling container.
+- Changed the mobile navigation row to wrap within the viewport. An expanded group occupies the available row width and displays its submenu below the summary.
+- Kept the desktop dropdown positioning and the persistent horizontal navigation pattern. No hamburger menu was added.
+- Added regression coverage for mobile wrapping, visible overflow, and in-flow expanded submenus.
+- Mobile browser and physical-device visual validation are required before merge.
+
+
+## 2026-11-07 — Version 3 navigation rendering fixes
+
+- Restore the Version 2 navigation and language/theme controls in a dedicated desktop header layout.
+- Separate desktop navigation markup from the mobile menu markup.
+- Move the mobile overlay outside the sticky header. This prevents the header from constraining its fixed-position layout.
+- Make the mobile overlay fill the viewport and keep the navigation list scrollable between the fixed top and bottom controls.
+- Keep the header sticky with an explicit top offset and stacking order.
+
+- Apply modal dialog semantics only while the mobile panel is open. Desktop navigation remains a normal navigation region.
+- Extend Browser QA to verify mobile panel height, visible language/theme controls, independent menu scrolling, desktop controls, and sticky header position.
+- Add regression checks for desktop visibility, mobile overlay sizing, and sticky-header behavior.
+- Keep the glass panel at 75% opacity with a 28px backdrop blur.
+- Preview only. Version 2 and Production remain unchanged.
+
+
+## 2026-11-07 — Mobile navigation feedback correction
+
+- Moved language selection and light/dark controls from the overlay panel into the persistent mobile navigation header.
+- Sized the overlay to the dynamic viewport with iOS safe-area support.
+- Set the navigation list to use the remaining panel height and scroll independently.
+- Corrected the inline script closing tag in the layout.
+- Added browser checks for header control placement and viewport edge coverage.
+- Preview only. Production and the Version 2 navigation remain unchanged.

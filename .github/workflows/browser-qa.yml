@@ -178,6 +178,69 @@ jobs:
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
                 if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
 
+                if (viewport.name === "mobile") {
+                  await page.locator("[data-mobile-nav-open]").click();
+                  const panel = page.locator(".mobile-nav-panel");
+                  if (!(await panel.isVisible())) throw new Error(`${url}: mobile navigation panel did not open`);
+                  const panelBox = await panel.boundingBox();
+                  if (!panelBox || panelBox.height < viewport.height * 0.9) throw new Error(`${url}: mobile navigation panel does not fill the viewport: ${JSON.stringify(panelBox)}`);
+                  if (!(await page.locator(".mobile-nav-panel .primary-nav").isVisible())) throw new Error(`${url}: mobile navigation links are not visible`);
+                  if (!(await page.locator(".mobile-header-tools .language-select select").isVisible())) throw new Error(`${url}: mobile language selector is not visible`);
+                  if (!(await page.locator(".mobile-header-tools .theme-toggle").isVisible())) throw new Error(`${url}: mobile theme control is not visible`);
+                  if (await page.locator(".mobile-header-tools").evaluate((element) => element.closest(".mobile-nav-panel") !== null)) throw new Error(`${url}: language/theme controls must stay in the header, outside the menu panel`);
+                  const headerToolsBox = await page.locator(".mobile-header-tools").boundingBox();
+                  if (!headerToolsBox || headerToolsBox.y > 100) throw new Error(`${url}: mobile language/theme controls are not in the visible navigation bar`);
+                  if (panelBox.y > 16 || panelBox.y + panelBox.height < viewport.height - 16) throw new Error(`${url}: mobile navigation panel does not reach the viewport edges: ${JSON.stringify(panelBox)}`);
+                  const navOverflow = await page.locator(".mobile-nav-panel .primary-nav").evaluate((element) => getComputedStyle(element).overflowY);
+                  if (navOverflow !== "auto" && navOverflow !== "scroll") throw new Error(`${url}: mobile navigation list is not independently scrollable (overflow-y=${navOverflow})`);
+                } else {
+                  if (!(await page.locator("#desktop-primary-navigation").isVisible())) throw new Error(`${url} [${viewport.name}]: desktop/tablet navigation is not visible`);
+                  if (!(await page.locator(".desktop-header-tools .language-select select").isVisible())) throw new Error(`${url} [${viewport.name}]: language selector is not visible`);
+                  if (!(await page.locator(".desktop-header-tools .theme-toggle").isVisible())) throw new Error(`${url} [${viewport.name}]: theme control is not visible`);
+                  if (await page.locator("[data-mobile-nav-open]").isVisible()) throw new Error(`${url} [${viewport.name}]: mobile menu trigger must be hidden`);
+                }
+
+                const activeNavigation = page.locator(viewport.name === "mobile" ? "#mobile-primary-navigation" : "#desktop-primary-navigation");
+                const navGroups = activeNavigation.locator("details.nav-group");
+                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
+                const companyGroup = navGroups.nth(0);
+                const fieldsGroup = navGroups.nth(1);
+                if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company group is not marked as the active section`);
+                if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
+                await companyGroup.evaluate((element) => { element.open = false; });
+                await fieldsGroup.evaluate((element) => { element.open = false; });
+                if (viewport.name === "mobile") {
+                  await companyGroup.locator("summary").click();
+                } else {
+                  await companyGroup.locator("summary").focus();
+                  await page.keyboard.press("Enter");
+                }
+                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Company dropdown did not open`);
+                await page.keyboard.press("Escape");
+                if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
+                if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
+
+                if (viewport.name === "mobile") {
+                  await fieldsGroup.locator("summary").click();
+                } else {
+                  await fieldsGroup.locator("summary").focus();
+                  await page.keyboard.press("Space");
+                }
+                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: six-domain dropdown did not open`);
+                const fieldLinks = fieldsGroup.locator(".nav-submenu a");
+                if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
+                if (viewport.name === "mobile") {
+                  await page.locator("[data-mobile-nav-backdrop]").click({position:{x:2,y:2}});
+                  if (!(await page.locator("[data-mobile-nav-backdrop]").evaluate((element) => element.hidden))) throw new Error(`${url}: backdrop click did not close mobile navigation`);
+                } else {
+                  await page.locator("main#main-content").click({position:{x:12,y:12}});
+                  if (await fieldsGroup.evaluate((element) => element.open)) throw new Error(`${url}: outside click did not close domain dropdown`);
+                  await page.evaluate(() => window.scrollTo(0, 500));
+                  const headerTop = await page.locator(".site-header").evaluate((element) => element.getBoundingClientRect().top);
+                  if (Math.abs(headerTop) > 1) throw new Error(`${url} [${viewport.name}]: sticky header moved off the viewport top (${headerTop}px)`);
+                  await page.evaluate(() => window.scrollTo(0, 0));
+                }
+
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
                   if (locale === "fa" || locale === "en") {
