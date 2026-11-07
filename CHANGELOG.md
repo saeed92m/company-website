@@ -278,3 +278,9 @@ All notable changes to this project will be documented here.
 - Applied viewport-based overlay sizing and independent vertical scrolling at mobile and desktop widths.
 - Browser QA now checks that the panel is not nested inside the sticky header and that its bounds fill the available viewport.
 - Preview only. Awaiting CI, Browser QA, CodeQL, deployment, and physical-device review.
+
+
+## Unreleased
+
+- Keep the expandable mobile navigation panel free of the company logo and name.
+- Show the company logo and its short legal-name-free brand name in the sticky header on mobile and desktop; keep the wordmark on one line.
