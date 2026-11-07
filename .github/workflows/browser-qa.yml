@@ -178,6 +178,23 @@ jobs:
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
                 if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
 
+                const navGroups = page.locator("nav.primary-nav details.nav-group");
+                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
+                const companyGroup = navGroups.nth(0);
+                await companyGroup.locator("summary").click();
+                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Company dropdown did not open`);
+                await page.keyboard.press("Escape");
+                if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
+                if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
+
+                const fieldsGroup = navGroups.nth(1);
+                await fieldsGroup.locator("summary").click();
+                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: six-domain dropdown did not open`);
+                const fieldLinks = fieldsGroup.locator(".nav-submenu a");
+                if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
+                await page.locator("main#main-content").click({position:{x:12,y:12}});
+                if (await fieldsGroup.evaluate((element) => element.open)) throw new Error(`${url}: outside click did not close domain dropdown`);
+
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
                   if (locale === "fa" || locale === "en") {
