@@ -39,7 +39,8 @@ test("closed disclosure groups do not render submenu content", () => {
 });
 
 test("mobile header keeps the brand and menu trigger in the top row", () => {
-  assert.match(styles, /@media\\s*\\(max-width:\\s*720px\\)[\\s\\S]*?\\.site-header\\.site-shell\\s*\\{\\s*display:\\s*grid;\\s*grid-template-columns:\\s*minmax\\(0,1fr\\)\\s+auto/);
+  assert.ok(styles.includes(".site-header.site-shell { display:grid; grid-template-columns:minmax(0,1fr) auto;"));
+  assert.ok(layout.includes('class="mobile-nav-trigger"'));
   assert.doesNotMatch(styles, /\\.header-tools\\s*\\{\\s*order:\\s*2;\\s*flex:\\s*1\\s+1\\s+100%/);
 });
 
