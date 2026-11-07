@@ -1,3 +1,14 @@
+## 2026-11-07 — Mobile glass navigation concept (Version 3)
+
+- Added a mobile-only full-screen navigation panel on a separate preview branch.
+- Used a 75% opaque glass surface with a 28px backdrop blur.
+- Added expandable Company and Fields groups inside the panel.
+- Moved language and light/dark controls into a persistent bottom row.
+- Made the navigation list scroll independently while keeping the top and bottom controls visible.
+- Added close-button, backdrop-click, Escape-key, and link-selection dismissal behavior.
+- Preserved the Version 2 desktop/tablet navigation and did not change Production.
+- Validation is pending CI and browser/device review.
+
 ## 2026-11-07 — Mobile navigation layout correction (PR #97)
 
 - Hide dropdown content while its native disclosure group is closed. This prevents closed submenu content from appearing as an empty horizontal strip.
