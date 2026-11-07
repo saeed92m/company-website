@@ -59,6 +59,6 @@ test("mobile navigation uses a compact hamburger-controlled overlay panel", () =
   assert.match(layout, /data-mobile-open/);
   assert.match(styles, /\.primary-nav\s*\{[^}]*position:absolute/s);
   assert.match(styles, /\.site-header\[data-mobile-open\] \.primary-nav\s*\{\s*display:flex/);
-  assert.match(styles, /\.nav-submenu\s*\{[^}]*position:static/s);
+  assert.match(styles, /\/\* Mobile navigation variant 2:[\s\S]*?\.nav-submenu\s*\{[^}]*position:static/s);
   assert.match(styles, /max-height:calc\(100dvh - 6rem\)/);
 });
