@@ -35,7 +35,7 @@ test("navigation controls meet the minimum 44px touch target", () => {
 
 
 test("closed disclosure groups do not render submenu content", () => {
-  assert.match(styles, /\.nav-group:not\(\[open\]\)\s*>\s*\.nav-submenu\s*\{\s*display:\s*none\s*\}/);
+  assert.match(styles, /\.nav-group:not\(\[open\]\)\s*>\s*\.nav-submenu\s*\{\s*display:\s*none;?\s*\}/);
 });
 
 test("mobile header keeps brand and tools together above a horizontal nav row", () => {
