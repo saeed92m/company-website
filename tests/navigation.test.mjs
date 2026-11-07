@@ -41,7 +41,8 @@ test("closed disclosure groups do not render submenu content", () => {
 test("mobile header uses a compact three-column layout for brand, menu, and tools", () => {
   assert.match(styles, /\.site-header\.site-shell\s*\{[^}]*grid-template-columns:auto minmax\(0,1fr\) auto/s);
   assert.match(styles, /\.primary-nav\s*\{[^}]*display:none; position:absolute/s);
-  assert.match(styles, /\.site-header \.header-tools \{ grid-column:2; grid-row:1; justify-self:center; \}/);\n  assert.match(styles, /\.site-header \.mobile-menu-toggle \{ grid-column:3; grid-row:1; justify-self:end; \}/);
+  assert.match(styles, /\.site-header \.header-tools \{ grid-column:2; grid-row:1; justify-self:center; \}/);
+  assert.match(styles, /\.site-header \.mobile-menu-toggle \{ grid-column:3; grid-row:1; justify-self:end; \}/);
 });
 
 test("mobile disclosure menus are not clipped by a horizontal scroller", () => {
