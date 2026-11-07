@@ -268,7 +268,8 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 .nav-group { position:relative; }
 .nav-group > summary::-webkit-details-marker { display:none; }
 .nav-group > summary::after { content:"⌄"; color:var(--muted); }
-.nav-group[open] > summary::after { content:"⌃"; }
+ .nav-group[open] > summary::after { content:"⌃"; }
+.nav-group[data-current="true"] > summary { color:var(--accent); border-color:var(--border-strong); }
 .nav-submenu {
   position:absolute; z-index:40; top:calc(100% + .35rem); inset-inline-start:0;
   display:grid; gap:.25rem; min-width:min(18rem, calc(100vw - 2rem));
