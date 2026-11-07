@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 
 const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
 const styles = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
+const ceoPage = await readFile(new URL("../src/pages/[locale]/company/ceo.astro", import.meta.url), "utf8");
 
 test("primary navigation remains visible and uses native expandable groups", () => {
   assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav/);
@@ -50,4 +51,20 @@ test("mobile disclosure menus are not clipped by a horizontal scroller", () => {
   assert.ok(styles.includes(".nav-group[open] { flex:1 0 100%; min-width:0; }"));
   assert.ok(styles.includes("position:static;"));
   assert.ok(styles.includes("width:100%;"));
+});
+
+
+test("company submenu uses Overview and Board labels while keeping the Company group", () => {
+  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
+  assert.match(layout, /intro: "معرفی", board: "هیئت‌مدیره"/);
+  assert.match(layout, /menuUi\[locale\]\.intro/);
+  assert.match(layout, /menuUi\[locale\]\.board/);
+  assert.doesNotMatch(layout, /menuUi\[locale\]\.ceo/);
+});
+
+test("CEO profile page omits the large decorative brand mark but keeps the shared site header", () => {
+  assert.match(ceoPage, /hero-profile--text-only/);
+  assert.doesNotMatch(ceoPage, /BrandMark|hero-mark/);
+  assert.match(layout, /<span class="brand-mark" aria-hidden="true"><BrandMark/);
+  assert.match(styles, /\.hero-profile--text-only\{grid-template-columns:minmax\(0,1fr\);min-height:auto\}/);
 });
