@@ -136,12 +136,15 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav class="primary-nav" aria-label={site.navigation.company}>
+      <button class="mobile-nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-mobile-nav-toggle><span aria-hidden="true">☰</span><span>{({fa:"منو",en:"Menu",ar:"القائمة",ru:"Меню",de:"Menü",zh:"菜单",fr:"Menu",es:"Menú"})[locale]}</span></button>
+      <nav class="primary-nav" id="primary-navigation" aria-label={site.navigation.company} data-mobile-nav data-open="false">
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
         <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
         <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
+        <a href={route(locale,"platforms")} aria-current={path === route(locale,"platforms") ? "page" : undefined}>{({fa:"فناوری‌های مشترک",en:"Platforms",ar:"المنصات التقنية",ru:"Технологические платформы",de:"Technologieplattformen",zh:"技术平台",fr:"Plateformes",es:"Plataformas"})[locale]}</a>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
+        <a href={route(locale,"how-we-work")} aria-current={path === route(locale,"how-we-work") ? "page" : undefined}>{({fa:"روش کار",en:"How we work",ar:"منهجية العمل",ru:"Как мы работаем",de:"Unsere Arbeitsweise",zh:"工作方式",fr:"Notre méthode",es:"Cómo trabajamos"})[locale]}</a>
+        <a href={route(locale,"collaborate")} aria-current={path === route(locale,"collaborate") ? "page" : undefined}>{({fa:"همکاری",en:"Collaborate",ar:"التعاون",ru:"Сотрудничество",de:"Zusammenarbeit",zh:"合作",fr:"Collaborer",es:"Colaborar"})[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">
@@ -169,6 +172,16 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <p>{site.fields.map((field) => field.title).join(" · ")}</p>
         </div>
         <div>
+          <p class="footer-kicker">{({fa:"کاوش",en:"Explore",ar:"استكشف",ru:"Обзор",de:"Entdecken",zh:"探索",fr:"Explorer",es:"Explorar"})[locale]}</p>
+          <ul class="footer-explore-list">
+            <li><a href={route(locale,"platforms")}>{({fa:"فناوری‌های مشترک",en:"Shared platforms",ar:"المنصات المشتركة",ru:"Общие платформы",de:"Gemeinsame Plattformen",zh:"共享平台",fr:"Plateformes partagées",es:"Plataformas compartidas"})[locale]}</a></li>
+            <li><a href={route(locale,"engineering")}>{({fa:"مهندسی و تحقیق‌وتوسعه",en:"Engineering & R&D",ar:"الهندسة والبحث والتطوير",ru:"Инженерия и НИОКР",de:"Engineering und F&E",zh:"工程与研发",fr:"Ingénierie et R&D",es:"Ingeniería e I+D"})[locale]}</a></li>
+            <li><a href={route(locale,"how-we-work")}>{({fa:"روش کار",en:"How we work",ar:"منهجية العمل",ru:"Как мы работаем",de:"Unsere Arbeitsweise",zh:"工作方式",fr:"Notre méthode",es:"Cómo trabajamos"})[locale]}</a></li>
+            <li><a href={route(locale,"collaborate")}>{({fa:"همکاری",en:"Collaborate",ar:"التعاون",ru:"Сотрудничество",de:"Zusammenarbeit",zh:"合作",fr:"Collaborer",es:"Colaborar"})[locale]}</a></li>
+            <li><a href={route(locale,"company/ceo")}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a></li>
+          </ul>
+        </div>
+        <div>
           <p class="footer-kicker">{site.navigation.contact}</p>
           <p>{site.location} · {formatFounded(locale)}</p>
         </div>
@@ -183,6 +196,19 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
+        const navToggle = document.querySelector("[data-mobile-nav-toggle]");
+        const primaryNav = document.querySelector("[data-mobile-nav]");
+        const closeMobileNav = () => {
+          navToggle?.setAttribute("aria-expanded", "false");
+          primaryNav?.setAttribute("data-open", "false");
+        };
+        navToggle?.addEventListener("click", () => {
+          const expanded = navToggle.getAttribute("aria-expanded") === "true";
+          navToggle.setAttribute("aria-expanded", String(!expanded));
+          primaryNav?.setAttribute("data-open", String(!expanded));
+        });
+        primaryNav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMobileNav));
+        document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeMobileNav(); });
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },

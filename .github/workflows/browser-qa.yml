@@ -87,6 +87,10 @@ jobs:
             "fields/",
             "projects/",
             "contact/",
+            "platforms/",
+            "engineering/",
+            "how-we-work/",
+            "collaborate/",
           ];
 
           const browser = await browserType.launch({headless:true});
@@ -171,6 +175,33 @@ jobs:
                 const focused = await page.evaluate(() => document.activeElement?.matches('a.skip-link'));
                 if (!focused) throw new Error(`${url} [${viewport.name}]: skip link is not keyboard-focusable`);
 
+                if (viewport.name === "mobile") {
+                  const menuToggle = page.locator("[data-mobile-nav-toggle]");
+                  const primaryNav = page.locator("nav.primary-nav");
+                  if (await menuToggle.count() !== 1 || !(await menuToggle.isVisible())) throw new Error(url + ": mobile navigation toggle is missing");
+                  await menuToggle.click();
+                  if (await menuToggle.getAttribute("aria-expanded") !== "true" || !(await primaryNav.isVisible())) throw new Error(url + ": mobile navigation did not open");
+                  await page.keyboard.press("Escape");
+                  if (await menuToggle.getAttribute("aria-expanded") !== "false" || await primaryNav.isVisible()) throw new Error(url + ": Escape did not close mobile navigation");
+                } else if (!(await page.locator("nav.primary-nav").isVisible())) {
+                  throw new Error(url + ": desktop primary navigation is hidden");
+                }
+
+                if (suffix === "platforms/") {
+                  if (await page.locator(".shared-platform-card").count() !== 5) throw new Error(url + ": expected five shared technology platforms");
+                  if (await page.locator(".architecture-layer").count() !== 7) throw new Error(url + ": expected seven architecture layers");
+                }
+                if (suffix === "engineering/" && await page.locator(".engineering-capability-grid li").count() !== 14) {
+                  throw new Error(url + ": expected fourteen engineering capability entries");
+                }
+                if (suffix === "how-we-work/" && await page.locator(".lifecycle-card").count() !== 9) {
+                  throw new Error(url + ": expected nine product lifecycle stages");
+                }
+                if (suffix === "collaborate/") {
+                  if (await page.locator(".collaboration-card").count() !== 6) throw new Error(url + ": expected six collaboration pathways");
+                  if (await page.locator(".collaboration-process li").count() !== 5) throw new Error(url + ": expected five collaboration review steps");
+                }
+
                 if (checks.horizontalOverflow) {
                   throw new Error(`${url} [${viewport.name}]: horizontal overflow detected`);
                 }
@@ -189,14 +220,15 @@ jobs:
                   const projectSection = suffix === "" ? page.locator("#projects") : page.locator(".project-grid");
                   const projectCards = projectSection.locator(".project-card");
                   const count = await projectCards.count();
-                  if (count !== 3) throw new Error(`${url}: expected 3 project cards, got ${count}`);
+                  if (count !== 2) throw new Error(`${url}: expected 2 public project cards, got ${count}`);
                   const summaryButtons = projectSection.locator(".project-summary-trigger");
-                  if (await summaryButtons.count() !== 3) throw new Error(`${url}: expected 3 project summary buttons`);
-                  const platformCard = projectSection.locator(".project-card", { has: page.locator("h3", { hasText: "Company Platform" }) });
-                  if (await platformCard.count() !== 1) throw new Error(`${url}: Company Platform card missing`);
+                  if (await summaryButtons.count() !== 2) throw new Error(`${url}: expected 2 project summary buttons`);
+                  if (await projectSection.locator(".project-card__status").count() !== 2) throw new Error(`${url}: expected status labels on both public projects`);
+                  const internalPlatformCard = projectSection.locator(".project-card", { has: page.locator("h3", { hasText: "Company Platform" }) });
+                  if (await internalPlatformCard.count() !== 0) throw new Error(`${url}: internal Company-Platform must not appear as a public project`);
                   await summaryButtons.first().click();
                   const dialog = page.locator("dialog.project-dialog");
-                  if (await dialog.count() !== 3 || !(await dialog.first().isVisible())) throw new Error(`${url}: project summary dialog did not open`);
+                  if (await dialog.count() !== 2 || !(await dialog.first().isVisible())) throw new Error(`${url}: project summary dialog did not open`);
                   const summaryText = await dialog.first().locator(".project-dialog__description").innerText();
                   if (!summaryText.trim()) throw new Error(`${url}: project summary is empty`);
                   await page.keyboard.press("Escape");

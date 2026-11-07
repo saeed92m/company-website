@@ -1,0 +1,88 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { domainBrands, platformsPage } from "../../../content/platforms";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const site = content[locale];
+const copy = platformsPage[locale];
+---
+<SiteLayout locale={locale} title={copy.pageTitle + " — " + site.companyName} description={copy.intro}>
+  <div class="site-shell platforms-page">
+    <section class="platforms-hero" aria-labelledby="platforms-title">
+      <p class="new-kicker"><span class="kicker-rule"></span>{copy.sharedTitle}</p>
+      <h1 id="platforms-title">{copy.pageTitle}</h1>
+      <p class="lede">{copy.intro}</p>
+      <p class="platforms-notice">{copy.notice}</p>
+    </section>
+
+    <section class="platforms-section" aria-labelledby="shared-platforms-title">
+      <header>
+        <h2 id="shared-platforms-title">{copy.sharedTitle}</h2>
+        <p>{copy.sharedPlatformsDescription}</p>
+      </header>
+      <div class="shared-platform-grid">
+        {copy.platforms.map((platform, index) => (
+          <article class="shared-platform-card">
+            <span class="domain-brand-code">0{index + 1} / SHARED FOUNDATION</span>
+            <h3>{platform.name}</h3>
+            <p>{platform.summary}</p>
+            <span class="shared-platform-card__status">{copy.plannedStatus}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="platforms-section" aria-labelledby="architecture-title">
+      <header>
+        <h2 id="architecture-title">{copy.architectureTitle}</h2>
+        <p>{copy.architectureIntro}</p>
+      </header>
+      <ol class="architecture-layers" aria-label={copy.architectureTitle}>
+        <li class="architecture-layer architecture-layer--company">
+          <h3>{copy.companyPlatformTitle}</h3>
+          <p>{copy.companyPlatformDescription}</p>
+          <span class="architecture-layer__status">{copy.inProgressStatus}</span>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.domainsTitle}</h3>
+          <p>{copy.domainsDescription}</p>
+          <ul class="architecture-domain-list">
+            {site.fields.map((field) => <li><strong>{domainBrands[field.slug]}</strong> · {field.title}</li>)}
+          </ul>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.sharedTitle}</h3>
+          <p>{copy.sharedPlatformsDescription}</p>
+          <ul class="architecture-chip-list">{copy.platforms.map((platform) => <li>{platform.name}</li>)}</ul>
+          <span class="architecture-layer__status architecture-layer__status--planned">{copy.plannedStatus}</span>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.engineeringTitle}</h3>
+          <p>{copy.engineeringDescription}</p>
+          <ul class="architecture-chip-list">{copy.engineeringItems.map((item) => <li>{item}</li>)}</ul>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.digitalTitle}</h3>
+          <p>{copy.digitalDescription}</p>
+          <ul class="architecture-chip-list">{copy.digitalItems.map((item) => <li>{item}</li>)}</ul>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.governanceTitle}</h3>
+          <p>{copy.governanceDescription}</p>
+          <ul class="architecture-chip-list">{copy.governanceItems.map((item) => <li>{item}</li>)}</ul>
+        </li>
+        <li class="architecture-layer">
+          <h3>{copy.businessTitle}</h3>
+          <p>{copy.businessDescription}</p>
+          <ul class="architecture-chip-list">{copy.businessItems.map((item) => <li>{item}</li>)}</ul>
+        </li>
+      </ol>
+    </section>
+  </div>
+</SiteLayout>

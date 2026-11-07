@@ -38,7 +38,7 @@ Language switcher is a global utility, not a primary content destination.
 
 Localized routes must follow the project's localization strategy.
 
-The localized `/projects/` listing currently includes Alpha Linux, ZTF Classifier, and Company Platform. Company Platform is a listing entry only; no standalone project route or public repository link is introduced by this change.
+The localized `/projects/` listing includes Alpha Linux and ZTF Classifier. Company-Platform is described on the Platforms page as an internal corporate operating system, not a public project or commercial product.
 
 
 ## Home page information hierarchy
@@ -113,3 +113,37 @@ Must answer:
 **Phase 1 working baseline — ready for stakeholder review.**
 
 The IA should proceed to wireframing only after checking it against the approved company content and actual content volume.
+
+
+## Architecture update — 2026-11-07
+
+The localized `/platforms/` route is part of the primary navigation and sitemap.
+
+The page separates:
+1. Company-Platform as the internal corporate operating and integration system.
+2. The six independent activity domains.
+3. Five shared technology platforms.
+4. Engineering and hardware capability scope.
+5. Digital infrastructure and IT.
+6. Governance and assurance.
+7. Business and market development.
+
+Company-Platform is not listed as a public project or commercial product. It is shown only as an internal corporate system with its current status labelled In Progress.
+
+The five shared technology platforms are labelled Not started / target architecture. Engineering, IT, governance, and business capabilities are described as target scope, not evidence of current operational capacity.
+
+Each activity domain uses its approved architecture label: ASTROINTEL, AEROINTEL, GEOINTEL, KEYHAN AI, ENERGIQ, and MOTIONIQ.
+
+The mobile primary navigation uses a keyboard-operable disclosure control. It must be verified in Chromium, Firefox, WebKit, RTL, and with long translated labels.
+
+
+## Additional page and homepage implementation — 2026-11-07
+
+- Added localized `/engineering/`, `/how-we-work/`, and `/collaborate/` routes for all eight locales.
+- Engineering & R&D presents the target capability scope. It does not claim existing labs, equipment, software licences, or operational capacity.
+- How We Work presents the nine-stage product lifecycle with stage gates and evidence requirements. A prototype is explicitly not described as a sale-ready product.
+- Collaborate presents potential collaboration pathways only. It does not imply existing partners, contracts, or verified service capacity.
+- The homepage now follows this order: hero, company overview, six domains, shared platforms, Engineering & R&D, product lifecycle, public projects, vision, CEO, collaboration, and contact.
+- Public project cards show localized status. ZTF Classifier is associated with ASTROINTEL. No project repository links are exposed.
+- Insights remains deferred until real, maintainable articles or announcements exist.
+- Footer navigation links to the new routes. The sitemap, deployment smoke tests, and browser QA include all new routes.

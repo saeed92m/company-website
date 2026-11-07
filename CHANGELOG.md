@@ -1,3 +1,15 @@
+## 2026-11-07 — Shared company architecture and technology platforms
+
+- Added localized Platforms & Technology, Engineering & R&D, How We Work, and Collaborate pages for all eight supported locales.
+- Added the seven-layer company architecture and the five shared technology platforms.
+- Kept Company-Platform as an internal corporate operating system and removed it from the public Projects listing.
+- Added the six domain architecture labels to homepage cards and domain-page metadata.
+- Added a shared-platform preview to the homepage.
+- Added an accessible collapsed mobile navigation pattern and browser regression checks.
+- Added all new routes to the localized sitemap, deployment smoke tests, and browser QA.
+- Deferred Insights until real editorial content is available.
+- Validation is running in PR #95. No Production deployment or merge has been performed.
+
 ## 2026-11-06 — Cross-page whitespace review and spacing normalization
 
 - Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.

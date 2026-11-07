@@ -1,6 +1,7 @@
 ---
 import type { Locale } from "../data/locales";
 import { route } from "../data/routes";
+import { projectStatus, projectDomains } from "../content/project-status";
 
 interface Props {
   locale: Locale;
@@ -23,6 +24,8 @@ const { locale, projects, labels } = Astro.props;
     return (
       <article class="project-card">
         <h3>{project.title}</h3>
+        <p class="project-card__status">{projectStatus[locale][project.title] ?? ""}</p>
+        {projectDomains[locale][project.title] && <p class="project-card__domain">{projectDomains[locale][project.title]}</p>}
         <p>{project.summary}</p>
         <div class="card-actions">
           <button
