@@ -176,6 +176,18 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <span data-theme-label>{labels.night}</span>
         </button>
       </div>
+      <div class="header-tools mobile-header-tools">
+        <label class="language-select">
+          <span class="sr-only">{labels.language}</span>
+          <select aria-label={labels.language}>
+            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+          <span aria-hidden="true">☾</span>
+          <span data-theme-label>{labels.night}</span>
+        </button>
+      </div>
       <button class="mobile-nav-trigger" type="button" aria-label={menuUi[locale].menu} aria-controls="mobile-navigation-panel" aria-expanded="false" data-mobile-nav-open>
         <span aria-hidden="true">☰</span>
       </button>
@@ -206,18 +218,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
-        <div class="header-tools mobile-nav-tools">
-        <label class="language-select">
-          <span class="sr-only">{labels.language}</span>
-          <select aria-label={labels.language}>
-            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
-          </select>
-        </label>
-        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
-          <span aria-hidden="true">☾</span>
-          <span data-theme-label>{labels.night}</span>
-        </button>
-      </div>
+
       </section>
     </div>
     <main id="main-content"><slot /></main>
@@ -369,6 +370,6 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           });
         });
       })();
-    </script>ipt>
+    </script>
   </body>
 </html>
