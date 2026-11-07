@@ -272,15 +272,13 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         }));
         document.addEventListener("keydown", (event) => {
           if (event.key !== "Escape") return;
-          if (menu && !menu.hidden) {
-            setMenuOpen(false);
-            return;
-          }
           const openGroup = menuGroups.find((group) => group.open);
           if (openGroup) {
             openGroup.open = false;
             openGroup.querySelector("summary")?.focus();
+            return;
           }
+          if (menu && !menu.hidden) setMenuOpen(false);
         });
         document.addEventListener("click", (event) => {
           if (menu && !menu.hidden && event.target instanceof Node &&
