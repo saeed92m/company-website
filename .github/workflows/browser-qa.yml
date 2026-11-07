@@ -178,6 +178,44 @@ jobs:
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
                 if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
 
+                if (viewport.name === "mobile") {
+                  const menuToggle = page.locator("[data-mobile-menu-toggle]");
+                  if (await menuToggle.count() !== 1) throw new Error(`${url}: mobile hamburger toggle missing`);
+                  await menuToggle.click();
+                  if (await menuToggle.getAttribute("aria-expanded") !== "true") throw new Error(`${url}: hamburger did not open navigation panel`);
+                  if (!(await page.locator("nav.primary-nav").isVisible())) throw new Error(`${url}: mobile navigation panel is not visible`);
+                }
+                const navGroups = page.locator("nav.primary-nav details.nav-group");
+                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain dropdown groups`);
+                const companyGroup = navGroups.nth(0);
+                const fieldsGroup = navGroups.nth(1);
+                if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company group is not marked as the active section`);
+                if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
+                if (viewport.name === "mobile") {
+                  const header = page.locator("header.site-header");
+                  const before = await header.boundingBox();
+                  await companyGroup.locator("summary").click();
+                  const after = await header.boundingBox();
+                  if (!before || !after || Math.abs(before.height-after.height) > 1) throw new Error(`${url}: opening mobile submenu changed header height`);
+                  await companyGroup.locator("summary").click();
+                }
+                await companyGroup.evaluate((element) => { element.open = false; });
+                await fieldsGroup.evaluate((element) => { element.open = false; });
+                await companyGroup.locator("summary").focus();
+                await page.keyboard.press("Enter");
+                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Enter did not open Company dropdown`);
+                await page.keyboard.press("Escape");
+                if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
+                if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
+
+                await fieldsGroup.locator("summary").focus();
+                await page.keyboard.press("Space");
+                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: Space did not open six-domain dropdown`);
+                const fieldLinks = fieldsGroup.locator(".nav-submenu a");
+                if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
+                await page.locator("main#main-content").click({position:{x:12,y:12}});
+                if (await fieldsGroup.evaluate((element) => element.open)) throw new Error(`${url}: outside click did not close domain dropdown`);
+
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
                   if (locale === "fa" || locale === "en") {

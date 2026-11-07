@@ -1,3 +1,33 @@
+## 2026-11-07 — Mobile navigation Variant 3 viewport correction (review)
+
+- Kept Variant 2 unchanged as the preferred fallback; its hamburger placement remains at the leading edge of the mobile header.
+- Corrected Variant 3 so the open header itself owns a viewport-sized fixed layer. This avoids the header backdrop-filter containing block from constraining fixed descendants.
+- The full-screen navigation now uses the available viewport height, including mobile safe-area insets. Navigation content scrolls inside the overlay when needed.
+- Language and theme controls remain visible at the bottom of the overlay and do not scroll away with the navigation links.
+- Added regression assertions for viewport sizing, internal scrolling, and pinned controls.
+- Automated validation and the updated Cloudflare Preview are pending. No Production changes.
+
+## 2026-11-07 — Mobile navigation variants 2 and 3 (review)
+
+- Refined Variant 2: moved the hamburger control to the leading edge of the mobile header; kept the compact overlay panel.
+- Added Variant 3 as a separate preview branch. It uses a full-screen dark navigation overlay, top brand/close controls, vertically spaced links, expandable Company and six-domain groups, and language/theme controls at the bottom.
+- Desktop navigation remains horizontal in both variants. No public content, contact implementation, production configuration, or database was changed.
+- Added regression checks for the full-screen overlay, body-scroll lock, Escape dismissal, and focus containment. CI and cross-browser Browser QA are required before visual acceptance.
+- Both variants are previews only. Neither is merged or deployed to Production.
+
+## 2026-11-07 — Persistent expandable navigation (PR #97)
+
+- Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
+- Added native expandable dropdown groups for Company and the six activity domains.
+- Kept Home, Projects, and Contact as direct navigation links.
+- Kept language selection and the light/dark control visible in the header.
+- Localized the primary-navigation landmark across all eight supported locales.
+- Added Escape dismissal with focus return, outside-click dismissal, and automatic closure after link selection.
+- Added responsive dropdown styling for desktop, tablet, and mobile, with minimum 44 CSS-pixel control heights.
+- Extended Browser QA to exercise dropdown opening, six-domain link count, Escape behavior, focus return, and outside-click dismissal in Chromium, Firefox, and WebKit at mobile and desktop viewports.
+- The Contact page was not changed. Shared technology infrastructure remains planned for the KEYHAN AI domain content; no standalone infrastructure pages were added.
+- This change is under review in PR #97. It is not merged or deployed to Production.
+
 ## 2026-11-06 — Cross-page whitespace review and spacing normalization
 
 - Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.

@@ -11,6 +11,17 @@ This document defines what each initial page must accomplish before visual copyw
 - Use consistent terminology across all languages.
 - Persian is the current source language for original corporate copy unless another source is explicitly approved.
 
+## Primary navigation behavior
+
+- Desktop: preserve the horizontal primary-navigation bar. Mobile: use a compact brand header and a SpaceX-inspired full-screen navigation overlay.
+- Keep Home, Projects, and Contact as direct links.
+- Provide one expandable Company group and one expandable group containing all six activity domains.
+- Open and close groups by pointer, touch, and keyboard through native disclosure controls.
+- Keep language selection and the light/dark control available in the mobile overlay and visible in the desktop header.
+- Close the mobile overlay after link selection or Escape. Support accordion groups, focus containment, focus restoration, body-scroll locking, RTL/LTR, and reduced motion.
+- Keep the navigation landmark localized and support the active page indicator, RTL/LTR layout, visible focus, reduced motion, and minimum 44 CSS-pixel touch targets.
+- Validate the menu at mobile and desktop widths in Chromium, Firefox, and WebKit. Include keyboard and screen-reader review before Production acceptance.
+
 ## Home
 
 **Objective:** Establish identity, credibility, domains, projects, vision, and a path to contact.
@@ -114,3 +125,13 @@ Source → Draft → Technical review → Language review → Approval → Publi
 **Phase 1 implementation — in review.**
 
 The Phase 1 implementation includes localized corporate copy, six domain detail routes, documented related-work references where supported by the supplied CV, application areas, homepage vision and CEO preview, grouped CEO skills, and the four-path contact gateway. Automated validation and visual review must pass before merge.
+
+
+## Mobile navigation Variant 3 — viewport and controls
+
+- The mobile full-screen overlay must occupy the complete dynamic viewport (100dvh) and must not expand the document flow.
+- The open header is the fixed overlay root. Disable its backdrop filter while open so fixed-position descendants are not constrained by the filtered header.
+- Keep the navigation list independently scrollable inside the overlay.
+- Keep language and theme controls pinned above the device bottom safe area. They must remain visible while the navigation list scrolls.
+- Reserve top and bottom padding in the navigation scroll area for the brand/close control and the pinned language/theme controls.
+- Keep Variant 2 unchanged as the fallback design until the owner selects a final mobile navigation.
