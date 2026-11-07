@@ -387,3 +387,12 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 @media (min-width:721px) {
   .mobile-menu-toggle { display:none; }
 }
+
+
+/* Variant 2 refinement: place the hamburger at the leading edge of the RTL/LTR header. */
+@media (max-width:720px) {
+  .site-header.site-shell { grid-template-columns:auto minmax(0,1fr) auto; }
+  .site-header .brand { grid-column:1; grid-row:1; }
+  .site-header .header-tools { grid-column:2; grid-row:1; justify-self:center; }
+  .site-header .mobile-menu-toggle { grid-column:3; grid-row:1; justify-self:end; }
+}
