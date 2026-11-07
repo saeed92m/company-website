@@ -426,3 +426,80 @@ body.menu-open { overflow:hidden; }
 @media(prefers-reduced-motion:reduce) {
   .primary-nav,.nav-submenu { transition:none; }
 }
+
+
+/* Mobile header regression fix: keep all persistent controls on one row. */
+@media (max-width: 720px) {
+  .site-header.site-shell {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "brand tools menu";
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: .45rem;
+    min-height: 4.75rem;
+    padding-block: .65rem;
+  }
+
+  .site-header .brand {
+    grid-area: brand;
+    justify-self: start;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    order: initial;
+  }
+
+  .site-header .header-tools {
+    grid-area: tools;
+    justify-self: center;
+    width: auto;
+    min-width: 0;
+    margin: 0;
+    gap: .35rem;
+    order: initial;
+  }
+
+  .site-header .menu-toggle {
+    grid-area: menu;
+    justify-self: end;
+    order: initial;
+  }
+
+  .site-header .language-select select {
+    max-width: 7rem;
+    min-width: 0;
+  }
+
+  .site-header .theme-toggle,
+  .site-header .language-select select,
+  .site-header .menu-toggle {
+    min-height: 3rem;
+  }
+
+  .site-header .primary-nav {
+    position: fixed;
+    inset-inline: .5rem;
+    inset-block-start: calc(var(--site-header-height, 4.75rem) + .5rem);
+    inset-block-end: max(.5rem, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    width: auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1rem;
+  }
+
+  .site-header .primary-nav > a,
+  .site-header .primary-nav > .nav-group {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
