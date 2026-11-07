@@ -270,6 +270,21 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
         }));
         document.addEventListener("keydown", (event) => {
+          if (mobileBackdrop && !mobileBackdrop.hidden && event.key === "Tab" && mobilePanel) {
+            const focusable = Array.from(mobilePanel.querySelectorAll('a[href], button:not([disabled]), select:not([disabled]), summary'));
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+              event.preventDefault();
+              last?.focus();
+              return;
+            }
+            if (!event.shiftKey && document.activeElement === last) {
+              event.preventDefault();
+              first?.focus();
+              return;
+            }
+          }
           if (event.key !== "Escape") return;
           if (mobileBackdrop && !mobileBackdrop.hidden) {
             closeMobileMenu();
