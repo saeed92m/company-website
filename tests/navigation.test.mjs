@@ -6,7 +6,8 @@ const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.
 const styles = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
 
 test("primary navigation remains visible and uses native expandable groups", () => {
-  assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav/);
+  assert.match(layout, /id="desktop-primary-navigation"[^>]*data-primary-nav/);
+  assert.match(layout, /id="mobile-primary-navigation"[^>]*data-primary-nav/);
   assert.doesNotMatch(layout, /data-menu-toggle/);
   assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
   assert.doesNotMatch(layout, /<details[^>]+ open=/);
@@ -17,7 +18,7 @@ test("primary navigation remains visible and uses native expandable groups", () 
 });
 
 test("navigation groups close after selection, on Escape, and outside click", () => {
-  assert.match(layout, /menu\?\.addEventListener\("click"/);
+  assert.match(layout, /menus\.forEach\(\(menu\) => \{[\s\S]*menu\.addEventListener\("click"/);
   assert.match(layout, /event\.key !== "Escape"/);
   assert.match(layout, /openGroup\.querySelector\("summary"\)\?\.focus\(\)/);
   assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
@@ -65,19 +66,23 @@ test("mobile v3 uses an accessible glass drawer with language and theme controls
   assert.match(layout, /data-mobile-nav-close/);
   assert.match(layout, /mobile-nav-tools[\s\S]*language-select[\s\S]*theme-toggle/);
   assert.match(styles, /background:rgba\(7,17,31,\.75\)/);
-  assert.match(styles, /backdrop-filter:blur\(28px\)/);
-  assert.match(styles, /overflow-y:auto/);
+  assert.match(styles, /backdrop-filter:\s*blur\(28px\)/);
+  assert.match(styles, /overflow-y:\s*auto/);
   assert.match(layout, /closeMobileMenu\(\)/);
 });
 
 
-test("desktop navigation remains rendered while the mobile backdrop is closed", () => {
-  assert.match(styles, /@media\s*\(min-width:\s*721px\)\s*\{[\s\S]*?\.mobile-nav-backdrop\[hidden\]\s*\{\s*display:\s*contents\s*!important;/);
+test("desktop navigation and controls have independent header markup", () => {
+  assert.match(layout, /class="primary-nav desktop-primary-nav"/);
+  assert.match(layout, /class="header-tools desktop-header-tools"/);
+  assert.match(layout, /class="primary-nav mobile-primary-nav"/);
+  assert.match(layout, /class="header-tools mobile-nav-tools"/);
+  assert.match(styles, /\.desktop-primary-nav,[\s\S]*\.desktop-header-tools\s*\{\s*display:\s*none\s*!important;/);
 });
 
-test("mobile glass overlay fills the viewport outside the sticky header filter", () => {
-  assert.match(styles, /body\.mobile-nav-open\s+\.site-header\s*\{[^}]*backdrop-filter:\s*none/);
-  assert.match(styles, /\.mobile-nav-backdrop:not\(\[hidden\]\)\s*\{[^}]*display:\s*flex/);
+test("mobile glass overlay is a viewport-level sibling of the sticky header", () => {
+  assert.match(layout, /<\/header>\s*<div class="mobile-nav-backdrop"/);
+  assert.match(styles, /\.mobile-nav-backdrop:not\(\[hidden\]\)\s*\{[^}]*position:\s*fixed;[^}]*inset:\s*0;[^}]*display:\s*flex/);
   assert.match(styles, /\.mobile-nav-panel\s*\{[^}]*flex:\s*1\s+1\s+auto/);
   assert.match(styles, /\.site-header\.site-shell\s*\{[^}]*position:\s*sticky;[^}]*top:\s*0;/);
 });
