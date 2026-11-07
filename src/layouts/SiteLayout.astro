@@ -158,7 +158,6 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <details class="nav-group" data-nav-group>
           <summary>{site.navigation.fields}</summary>
           <div class="nav-submenu">
-            <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
             {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
           </div>
         </details>
