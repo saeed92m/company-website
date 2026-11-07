@@ -187,6 +187,25 @@ jobs:
                 }
                 await menuToggle.click();
                 if (!(await navPanel.isVisible())) throw new Error(`${url}: menu overlay did not open`);
+                const panelGeometry = await navPanel.evaluate((element) => {
+                  const rect = element.getBoundingClientRect();
+                  const style = getComputedStyle(element);
+                  return {
+                    position: style.position,
+                    top: rect.top,
+                    bottom: rect.bottom,
+                    height: rect.height,
+                    viewportHeight: window.innerHeight,
+                    width: rect.width,
+                    viewportWidth: window.innerWidth
+                  };
+                });
+                if (panelGeometry.position !== "fixed" ||
+                    panelGeometry.height < panelGeometry.viewportHeight * 0.55 ||
+                    panelGeometry.bottom > panelGeometry.viewportHeight + 1 ||
+                    panelGeometry.width > panelGeometry.viewportWidth + 1) {
+                  throw new Error(`${url} [${viewport.name}]: navigation overlay is clipped or constrained: ${JSON.stringify(panelGeometry)}`);
+                }
                 const navGroups = page.locator("nav.primary-nav details.nav-group");
                 if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain disclosure groups`);
                 const companyGroup = navGroups.nth(0);
