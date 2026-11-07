@@ -286,15 +286,13 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
             }
           }
           if (event.key !== "Escape") return;
-          if (mobileBackdrop && !mobileBackdrop.hidden) {
-            closeMobileMenu();
-            return;
-          }
           const openGroup = menuGroups.find((group) => group.open);
           if (openGroup) {
             openGroup.open = false;
             openGroup.querySelector("summary")?.focus();
+            return;
           }
+          if (mobileBackdrop && !mobileBackdrop.hidden) closeMobileMenu();
         });
         document.addEventListener("click", (event) => {
           if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
