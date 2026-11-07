@@ -63,3 +63,13 @@ test("mobile navigation uses a compact hamburger-controlled overlay panel", () =
   assert.match(styles, /\/\* Mobile navigation variant 2:[\s\S]*?\.nav-submenu\s*\{[^}]*position:static/s);
   assert.match(styles, /max-height:calc\(100dvh - 6rem\)/);
 });
+
+
+test("variant 3 opens a full-screen navigation overlay without resizing page content", () => {
+  assert.match(styles, /Mobile navigation variant 3: SpaceX-inspired full-screen navigation overlay/);
+  assert.match(styles, /\\.site-header \\.primary-nav\\s*\\{[^}]*position:fixed; inset:0/s);
+  assert.match(styles, /\\.site-header\\[data-mobile-open\\] \\.primary-nav \\{ display:flex; \\}/);
+  assert.match(layout, /document\\.body\\.style\\.overflow = "hidden"/);
+  assert.match(layout, /closeMobileMenu\\(\\{ restoreFocus: true \\}\\)/);
+  assert.match(layout, /event\\.key === "Tab"/);
+});
