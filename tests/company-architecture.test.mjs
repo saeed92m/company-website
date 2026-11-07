@@ -7,6 +7,9 @@ const platformSource = readFileSync(new URL("../src/content/platforms.ts", impor
 const homeSource = readFileSync(new URL("../src/pages/[locale]/index.astro", import.meta.url), "utf8");
 const layoutSource = readFileSync(new URL("../src/layouts/SiteLayout.astro", import.meta.url), "utf8");
 const projectStatusSource = readFileSync(new URL("../src/content/project-status.ts", import.meta.url), "utf8");
+const engineeringPageSource = readFileSync(new URL("../src/pages/[locale]/engineering/index.astro", import.meta.url), "utf8");
+const lifecyclePageSource = readFileSync(new URL("../src/pages/[locale]/how-we-work/index.astro", import.meta.url), "utf8");
+const collaborationPageSource = readFileSync(new URL("../src/pages/[locale]/collaborate/index.astro", import.meta.url), "utf8");
 
 test("Company-Platform is not presented as a public project", () => {
   assert.equal((siteSource.match(/title:"Company Platform"/g) ?? []).length, 0);
@@ -36,6 +39,13 @@ test("public project cards use localized evidence-based status labels", () => {
 test("homepage links to the shared-platform architecture", () => {
   assert.match(homeSource, /route\(locale,"platforms"\)/);
   assert.match(homeSource, /home-platforms/);
+});
+
+test("engineering, lifecycle, and collaboration routes are implemented", () => {
+  assert.match(engineeringPageSource, /engineering-capability-grid/);
+  assert.match(lifecyclePageSource, /lifecycle-grid/);
+  assert.match(collaborationPageSource, /collaboration-grid/);
+  assert.match(collaborationPageSource, /collaboration-process/);
 });
 
 test("mobile navigation exposes an accessible disclosure control", () => {
