@@ -148,14 +148,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
       </a>
       <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
         <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
-        <details class="nav-group" data-nav-group open={path.startsWith(route(locale,"company"))}>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
           <summary>{site.navigation.company}</summary>
           <div class="nav-submenu">
             <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
             <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
           </div>
         </details>
-        <details class="nav-group" data-nav-group open={path.startsWith(route(locale,"fields"))}>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
           <summary>{site.navigation.fields}</summary>
           <div class="nav-submenu">
             {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
