@@ -815,3 +815,6 @@ html[data-theme="light"] .home-redesign .new-projects .project-card p { color: #
 
 .platforms-page .new-kicker{display:flex;align-items:center;gap:10px;margin:0 0 18px;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .platforms-page[dir=rtl] .new-kicker{letter-spacing:0}
+
+.project-card__status{margin:.35rem 0 .7rem;color:var(--accent);font-size:.75rem;font-weight:800;line-height:1.6}
+.home-redesign .new-projects .project-card .project-card__status{color:var(--rd-accent);font-size:11px}
