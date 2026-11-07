@@ -89,3 +89,15 @@ test("the navigation overlay is outside the sticky header and fills the viewport
   assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:\s*auto/);
   assert.match(styles, /\.primary-nav\[hidden\]\s*\{\s*display:\s*none !important/);
 });
+
+
+test("menu panel omits the company name and logo while the sticky header retains a one-line short brand name", () => {
+  const menu = layout.match(/<nav id="primary-navigation"[\s\S]*?<\/nav>/)?.[0] ?? "";
+  const header = layout.match(/<header\b[\s\S]*?<\/header>/)?.[0] ?? "";
+  assert.doesNotMatch(menu, /nav-panel-brand|BrandMark|site\.companyName/);
+  assert.match(header, /brand-wordmark/);
+  assert.match(header, /brandNames\[locale\]/);
+  assert.match(layout, /fa: "شرکت پیشگامان نواندیش فناورگستر کیهان"/);
+  assert.match(css, /\.brand-wordmark\{[^}]*white-space:nowrap/);
+  assert.match(css, /\.site-header \.brand-wordmark \{ display:inline/);
+});
