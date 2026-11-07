@@ -261,3 +261,11 @@ All notable changes to this project will be documented here.
 - Kept the desktop dropdown positioning and the persistent horizontal navigation pattern. No hamburger menu was added.
 - Added regression coverage for mobile wrapping, visible overflow, and in-flow expanded submenus.
 - Mobile browser and physical-device visual validation are required before merge.
+
+
+## 2026-11-08 — Fixed navigation overlay containing block
+
+- Removed backdrop filtering from the sticky header. A filtered ancestor can become the containing block for fixed-position descendants and clip the navigation panel to the header.
+- Kept the translucent header background and the glass blur on the menu panel itself.
+- Extended Browser QA to verify that the open panel uses viewport-fixed positioning and occupies the expected viewport height without clipping.
+- Pending CI, deployment, and physical-device validation. Preview only; no Production change.
