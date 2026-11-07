@@ -24,11 +24,12 @@ test("navigation groups close after selection, on Escape, and outside click", ()
   assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
 });
 
-test("language and theme controls remain available inside the navigation panel", () => {
-  assert.match(layout, /<div class="header-tools mobile-nav-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>/);
-  assert.match(layout, /aria-label=\{menuUi\[locale\]\.navigation\}/);
+test("mobile language and theme controls remain in the navigation header, outside the overlay", () => {
+  assert.match(layout, /<div class="header-tools mobile-header-tools">[\\s\\S]*language-select[\\s\\S]*theme-toggle[\\s\\S]*<\\/div>/);
+  assert.doesNotMatch(layout, /mobile-nav-tools/);
+  assert.match(layout, /<header class="site-header site-shell">[\\s\\S]*mobile-header-tools[\\s\\S]*data-mobile-nav-open/);
+  assert.match(layout, /aria-label=\\{menuUi\\[locale\\]\\.navigation\\}/);
 });
-
 test("navigation controls meet the minimum 44px touch target", () => {
   assert.match(styles, /\.primary-nav > a, \.nav-group > summary[\s\S]*min-height:\s*2\.9rem/);
   assert.match(styles, /\.language-select select, \.theme-toggle \{ min-height:2\.75rem/);
@@ -76,7 +77,7 @@ test("desktop navigation and controls have independent header markup", () => {
   assert.match(layout, /class="primary-nav desktop-primary-nav"/);
   assert.match(layout, /class="header-tools desktop-header-tools"/);
   assert.match(layout, /class="primary-nav mobile-primary-nav"/);
-  assert.match(layout, /class="header-tools mobile-nav-tools"/);
+  assert.match(layout, /class="header-tools mobile-header-tools"/);
   assert.match(styles, /\.desktop-primary-nav,[\s\S]*\.desktop-header-tools\s*\{\s*display:\s*none\s*!important;/);
 });
 
