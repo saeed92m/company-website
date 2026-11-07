@@ -266,9 +266,17 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
             menuGroups.forEach((group) => { group.open = false; });
           }
         });
-        menuGroups.forEach((group) => group.addEventListener("toggle", () => {
-          if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
-        }));
+        menuGroups.forEach((group) => {
+          group.querySelector("summary")?.addEventListener("click", (event) => {
+            if (window.matchMedia("(max-width: 720px)").matches) {
+              event.preventDefault();
+              group.open = !group.open;
+            }
+          });
+          group.addEventListener("toggle", () => {
+            if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
+          });
+        });
         document.addEventListener("keydown", (event) => {
           if (mobileBackdrop && !mobileBackdrop.hidden && event.key === "Tab" && mobilePanel) {
             const focusable = Array.from(mobilePanel.querySelectorAll('a[href], button:not([disabled]), select:not([disabled]), summary'));
