@@ -58,7 +58,7 @@ const pageLabels = labels[locale];
     </section>
     <section class="domain-content-section" aria-labelledby="related-title">
       <div class="section-heading"><h2 id="related-title">{portfolioLabels.projects}</h2></div>
-      <div class="project-grid">{portfolio.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><details class="domain-project-details"><summary>{labels[locale]?.summaryProject ?? "Details"}</summary><p>{project.overview}</p></details></article>)}</div>
+      <div class="project-grid">{portfolio.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><details class="domain-project-details"><summary>{locale === "fa" ? "جزئیات" : "Details"}</summary><p>{project.overview}</p></details></article>)}</div>
     </section>
     <section class="domain-development domain-content-section" aria-labelledby="development-title">
       <div class="section-heading"><h2 id="development-title">{pageLabels.approach}</h2></div>
