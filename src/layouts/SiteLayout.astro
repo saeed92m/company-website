@@ -23,6 +23,16 @@ const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const labels = ui[locale];
+const menuUi: Record<Locale, { menu: string; close: string; home: string; ceo: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", ceo: "مدیرعامل", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", ceo: "CEO", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", ceo: "الرئيس التنفيذي", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", ceo: "Генеральный директор", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", ceo: "Geschäftsführung", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", ceo: "首席执行官", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", ceo: "Direction générale", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", ceo: "Dirección general", navigation: "Navegación principal" }
+};
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
@@ -136,12 +146,22 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={site.companyName} /></span>
         <span class="brand-wordmark">{site.companyName}</span>
       </a>
-      <nav class="primary-nav" aria-label={site.navigation.company}>
-        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{({fa:"صفحه اصلی",en:"Home",ar:"الرئيسية",ru:"Главная",de:"Startseite",zh:"首页",fr:"Accueil",es:"Inicio"})[locale]}</a>
-        <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
-        <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
+      <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav>
+        <a href={route(locale)} aria-current={path === route(locale) ? "page" : undefined}>{menuUi[locale].home}</a>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"company")) ? "true" : undefined}>
+          <summary>{site.navigation.company}</summary>
+          <div class="nav-submenu">
+            <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{site.navigation.company}</a>
+            <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].ceo}</a>
+          </div>
+        </details>
+        <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>
+          <summary>{site.navigation.fields}</summary>
+          <div class="nav-submenu">
+            {site.fields.map((field) => <a href={route(locale,"fields/"+field.slug)} aria-current={path === route(locale,"fields/"+field.slug) ? "page" : undefined}>{field.title}</a>)}
+          </div>
+        </details>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">
@@ -183,6 +203,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const toggle = document.querySelector("[data-theme-toggle]");
         const label = document.querySelector("[data-theme-label]");
         const select = document.querySelector(".language-select select");
+        const menu = document.querySelector("[data-primary-nav]");
+        const menuGroups = Array.from(document.querySelectorAll("[data-nav-group]"));
         const labels = {
           fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
           ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
@@ -200,6 +222,27 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (icon) icon.textContent = isDark ? "☾" : "☀";
         };
         updateThemeUi();
+        menu?.addEventListener("click", (event) => {
+          if (event.target instanceof Element && event.target.closest("a")) {
+            menuGroups.forEach((group) => { group.open = false; });
+          }
+        });
+        menuGroups.forEach((group) => group.addEventListener("toggle", () => {
+          if (group.open) menuGroups.forEach((other) => { if (other !== group) other.open = false; });
+        }));
+        document.addEventListener("keydown", (event) => {
+          if (event.key !== "Escape") return;
+          const openGroup = menuGroups.find((group) => group.open);
+          if (openGroup) {
+            openGroup.open = false;
+            openGroup.querySelector("summary")?.focus();
+          }
+        });
+        document.addEventListener("click", (event) => {
+          if (event.target instanceof Node && !document.querySelector(".site-header")?.contains(event.target)) {
+            menuGroups.forEach((group) => { group.open = false; });
+          }
+        });
         toggle?.addEventListener("click", () => {
           root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
           try { localStorage.setItem("site-theme", root.dataset.theme); } catch {}
