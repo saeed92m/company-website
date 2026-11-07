@@ -34,3 +34,15 @@ export const projectStatus: Record<Locale, Record<string, string>> = {
     "ZTF Classifier": "Versión 1.0.1 publicada · el desarrollo continúa"
   }
 };
+
+
+export const projectDomains: Record<Locale, Record<string, string>> = {
+  fa: { "ZTF Classifier": "ASTROINTEL · نجوم" },
+  en: { "ZTF Classifier": "ASTROINTEL · Astronomy" },
+  ar: { "ZTF Classifier": "ASTROINTEL · الفلك" },
+  ru: { "ZTF Classifier": "ASTROINTEL · Астрономия" },
+  de: { "ZTF Classifier": "ASTROINTEL · Astronomie" },
+  zh: { "ZTF Classifier": "ASTROINTEL · 天文学" },
+  fr: { "ZTF Classifier": "ASTROINTEL · Astronomie" },
+  es: { "ZTF Classifier": "ASTROINTEL · Astronomía" }
+};
