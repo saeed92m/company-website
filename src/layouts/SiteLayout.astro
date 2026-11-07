@@ -143,7 +143,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <a href={route(locale,"fields")} aria-current={path === route(locale,"fields") ? "page" : undefined}>{site.navigation.fields}</a>
         <a href={route(locale,"platforms")} aria-current={path === route(locale,"platforms") ? "page" : undefined}>{({fa:"فناوری‌های مشترک",en:"Platforms",ar:"المنصات التقنية",ru:"Технологические платформы",de:"Technologieplattformen",zh:"技术平台",fr:"Plateformes",es:"Plataformas"})[locale]}</a>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
-        <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a>
+        <a href={route(locale,"how-we-work")} aria-current={path === route(locale,"how-we-work") ? "page" : undefined}>{({fa:"روش کار",en:"How we work",ar:"منهجية العمل",ru:"Как мы работаем",de:"Unsere Arbeitsweise",zh:"工作方式",fr:"Notre méthode",es:"Cómo trabajamos"})[locale]}</a>
+        <a href={route(locale,"collaborate")} aria-current={path === route(locale,"collaborate") ? "page" : undefined}>{({fa:"همکاری",en:"Collaborate",ar:"التعاون",ru:"Сотрудничество",de:"Zusammenarbeit",zh:"合作",fr:"Collaborer",es:"Colaborar"})[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">
@@ -177,6 +178,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
             <li><a href={route(locale,"engineering")}>{({fa:"مهندسی و تحقیق‌وتوسعه",en:"Engineering & R&D",ar:"الهندسة والبحث والتطوير",ru:"Инженерия и НИОКР",de:"Engineering und F&E",zh:"工程与研发",fr:"Ingénierie et R&D",es:"Ingeniería e I+D"})[locale]}</a></li>
             <li><a href={route(locale,"how-we-work")}>{({fa:"روش کار",en:"How we work",ar:"منهجية العمل",ru:"Как мы работаем",de:"Unsere Arbeitsweise",zh:"工作方式",fr:"Notre méthode",es:"Cómo trabajamos"})[locale]}</a></li>
             <li><a href={route(locale,"collaborate")}>{({fa:"همکاری",en:"Collaborate",ar:"التعاون",ru:"Сотрудничество",de:"Zusammenarbeit",zh:"合作",fr:"Collaborer",es:"Colaborar"})[locale]}</a></li>
+            <li><a href={route(locale,"company/ceo")}>{({fa:"مدیرعامل",en:"CEO",ar:"الرئيس التنفيذي",ru:"Генеральный директор",de:"Geschäftsführung",zh:"首席执行官",fr:"Direction générale",es:"Dirección general"})[locale]}</a></li>
           </ul>
         </div>
         <div>
