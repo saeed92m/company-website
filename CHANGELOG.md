@@ -269,3 +269,12 @@ All notable changes to this project will be documented here.
 - Kept the translucent header background and the glass blur on the menu panel itself.
 - Extended Browser QA to verify that the open panel uses viewport-fixed positioning and occupies the expected viewport height without clipping.
 - Pending CI, deployment, and physical-device validation. Preview only; no Production change.
+
+
+## 2026-11-08 — Navigation overlay moved outside sticky header
+
+- Moved the menu panel out of the sticky header in the document structure. This prevents header effects and stacking contexts from constraining fixed positioning.
+- Kept the sticky header, brand, language selector, and theme control unchanged.
+- Applied viewport-based overlay sizing and independent vertical scrolling at mobile and desktop widths.
+- Browser QA now checks that the panel is not nested inside the sticky header and that its bounds fill the available viewport.
+- Preview only. Awaiting CI, Browser QA, CodeQL, deployment, and physical-device review.
