@@ -54,7 +54,7 @@ const labels: Record<Locale, Labels> = {
   fa: {
     pageTitle:"پلتفرم‌ها و فناوری‌های مشترک",
     intro:"زیرساخت‌های مشترک، محصولات مستقل شش حوزه را پشتیبانی می‌کنند. هر محصول مالکیت داده، منطق تخصصی و چرخه توسعه مستقل خود را حفظ می‌کند.",
-    notice:"این صفحه معماری هدف شرکت را نشان می‌دهد. معرفی یک قابلیت به معنی پیاده‌سازی یا ارائه تجاری آن نیست.",
+    notice:"این صفحه معماری هدف شرکت را نشان می‌دهد. معرفی یک قابلیت به معنی پیاده‌سازی یا ارائه تجاری آن نیست. نام ابزارها نیز به معنی داشتن مجوز یا یکپارچه‌سازی تکمیل‌شده نیست.",
     homeTitle:"فناوری‌های مشترک؛ زیرساخت توسعه محصولات",
     homeIntro:"پنج سکوی فناوری مشترک برای پشتیبانی از محصولات مستقل شرکت تعریف شده‌اند. این سکوها حوزه فعالیت هفتم تا یازدهم نیستند.",
     sharedTitle:"زیرساخت‌های مشترک", viewArchitecture:"مشاهده معماری کلان شرکت",
@@ -75,7 +75,7 @@ const labels: Record<Locale, Labels> = {
   en: {
     pageTitle:"Shared Platforms & Technology",
     intro:"Shared infrastructure supports the company's independent products. Each product retains its own data ownership, domain logic, and development lifecycle.",
-    notice:"This page describes the target company architecture. A listed capability is not proof of implementation or commercial availability.",
+    notice:"This page describes the target company architecture. A listed capability is not proof of implementation or commercial availability. Tool names do not confirm licences or completed integrations.",
     homeTitle:"Shared technology for independent products",
     homeIntro:"Five shared technology platforms support the company's independent products. They are not additional business domains.",
     sharedTitle:"Shared technology platforms", viewArchitecture:"Explore the company architecture",
