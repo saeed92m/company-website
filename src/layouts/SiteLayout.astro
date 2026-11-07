@@ -222,7 +222,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
           menu.hidden = !open;
           menuToggle.setAttribute("aria-expanded", String(open));
-          menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+          menuToggle.setAttribute("aria-label", open ? labels[currentLocale].close : labels[currentLocale].menu);
           document.body.classList.toggle("menu-open", open);
           if (open) {
             menuGroups.forEach((group) => { group.open = false; });
@@ -241,10 +241,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         menuToggle?.addEventListener("click", () => setMenuOpen(menu?.hidden ?? true));
         menuClose?.addEventListener("click", () => setMenuOpen(false));
         const labels = {
-          fa: { night: "شب", day: "روز" }, en: { night: "Night", day: "Day" },
-          ar: { night: "ليل", day: "نهار" }, ru: { night: "Ночь", day: "День" },
-          de: { night: "Nacht", day: "Tag" }, zh: { night: "夜间", day: "日间" },
-          fr: { night: "Nuit", day: "Jour" }, es: { night: "Noche", day: "Día" }
+          fa: { night: "شب", day: "روز", menu: "فهرست", close: "بستن فهرست" },
+          en: { night: "Night", day: "Day", menu: "Menu", close: "Close menu" },
+          ar: { night: "ليل", day: "نهار", menu: "القائمة", close: "إغلاق القائمة" },
+          ru: { night: "Ночь", day: "День", menu: "Меню", close: "Закрыть меню" },
+          de: { night: "Nacht", day: "Tag", menu: "Menü", close: "Menü schließen" },
+          zh: { night: "夜间", day: "日间", menu: "菜单", close: "关闭菜单" },
+          fr: { night: "Nuit", day: "Jour", menu: "Menu", close: "Fermer le menu" },
+          es: { night: "Noche", day: "Día", menu: "Menú", close: "Cerrar el menú" }
         };
         const currentLocale = document.documentElement.lang || "fa";
         const updateThemeUi = () => {
