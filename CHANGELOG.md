@@ -1,3 +1,16 @@
+## 2026-11-07 — Persistent expandable navigation (PR #97)
+
+- Preserved the existing horizontal primary navigation. No hamburger menu, side drawer, or full-screen navigation was introduced.
+- Added native expandable dropdown groups for Company and the six activity domains.
+- Kept Home, Projects, and Contact as direct navigation links.
+- Kept language selection and the light/dark control visible in the header.
+- Localized the primary-navigation landmark across all eight supported locales.
+- Added Escape dismissal with focus return, outside-click dismissal, and automatic closure after link selection.
+- Added responsive dropdown styling for desktop, tablet, and mobile, with minimum 44 CSS-pixel control heights.
+- Extended Browser QA to exercise dropdown opening, six-domain link count, Escape behavior, focus return, and outside-click dismissal in Chromium, Firefox, and WebKit at mobile and desktop viewports.
+- The Contact page was not changed. Shared technology infrastructure remains planned for the KEYHAN AI domain content; no standalone infrastructure pages were added.
+- This change is under review in PR #97. It is not merged or deployed to Production.
+
 ## 2026-11-06 — Cross-page whitespace review and spacing normalization
 
 - Reviewed shared section spacing and the page structures for Home, Company, CEO/Management, Projects, Contact, Fields, and the six discipline detail routes.
