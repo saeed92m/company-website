@@ -99,5 +99,5 @@ test("menu panel omits the company name and logo while the sticky header retains
   assert.match(header, /brandNames\[locale\]/);
   assert.match(layout, /fa: "شرکت پیشگامان نواندیش فناورگستر کیهان"/);
   assert.match(styles, /\.brand-wordmark\{[^}]*white-space:nowrap/);
-  assert.match(css, /\.site-header \.brand-wordmark \{ display:inline/);
+  assert.match(styles, /\.site-header \.brand-wordmark \{ display:inline/);
 });
