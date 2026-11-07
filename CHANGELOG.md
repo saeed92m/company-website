@@ -271,5 +271,8 @@ All notable changes to this project will be documented here.
 - Remove the sticky header backdrop-filter while the mobile overlay is open. This prevents the fixed overlay from being constrained by the header.
 - Make the open mobile overlay fill the viewport and keep the navigation list scrollable between the fixed top and bottom controls.
 - Keep the header sticky with an explicit top offset and stacking order.
+
+- Apply modal dialog semantics only while the mobile panel is open. Desktop navigation remains a normal navigation region.
+- Extend Browser QA to verify mobile panel height, visible language/theme controls, independent menu scrolling, desktop controls, and sticky header position.
 - Add regression checks for desktop visibility, mobile overlay sizing, and sticky-header behavior.
 - Preview only. Version 2 and Production remain unchanged.
