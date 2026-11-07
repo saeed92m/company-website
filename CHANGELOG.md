@@ -263,3 +263,13 @@ All notable changes to this project will be documented here.
 - Kept the desktop dropdown positioning and the persistent horizontal navigation pattern. No hamburger menu was added.
 - Added regression coverage for mobile wrapping, visible overflow, and in-flow expanded submenus.
 - Mobile browser and physical-device visual validation are required before merge.
+
+
+## 2026-11-07 — Version 3 navigation rendering fixes
+
+- Restore the Version 2 navigation and language/theme controls on desktop while the mobile overlay is closed.
+- Remove the sticky header backdrop-filter while the mobile overlay is open. This prevents the fixed overlay from being constrained by the header.
+- Make the open mobile overlay fill the viewport and keep the navigation list scrollable between the fixed top and bottom controls.
+- Keep the header sticky with an explicit top offset and stacking order.
+- Add regression checks for desktop visibility, mobile overlay sizing, and sticky-header behavior.
+- Preview only. Version 2 and Production remain unchanged.
