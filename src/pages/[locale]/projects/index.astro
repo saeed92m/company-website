@@ -4,6 +4,7 @@ import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { ui } from "../../../content/ui";
 import ProjectCards from "../../../components/ProjectCards.astro";
+import { domainPortfolio, domainPortfolioLabels } from "../../../content/domain-projects";
 
 export function getStaticPaths() {
   return locales.map((locale) => ({ params: { locale }, props: { locale } }));
@@ -11,15 +12,16 @@ export function getStaticPaths() {
 const { locale } = Astro.props as { locale: Locale };
 const site = content[locale];
 const labels = ui[locale];
+const portfolioLabels = domainPortfolioLabels[locale];
 const projectsIntro: Record<Locale, string> = {
-  fa: "در این بخش، پروژه‌ها و محصولات فناورانه شرکت معرفی می‌شوند؛ پروژه‌هایی که با هدف توسعه راهکارهای نوآورانه در مرز علم، مهندسی و فناوری شکل گرفته‌اند. دامنه آن‌ها از تحلیل داده‌های نجومی و یادگیری ماشین تا زیرساخت‌های نرم‌افزاری و محیط‌های محاسباتی علمی و مهندسی را در بر می‌گیرد. وضعیت هر پروژه جداگانه بیان می‌شود و پیوندهای عمومی پس از آماده‌سازی و بررسی نهایی منتشر خواهند شد.",
-  en: "This section introduces the company’s technology projects and products. Their scope ranges from astronomical data analysis and machine learning to software infrastructure and scientific and engineering computing environments. Each project is described according to its purpose and development status. Public links will be added after the relevant project is ready and reviewed.",
-  ar: "يعرض هذا القسم المشاريع والمنتجات التقنية للشركة. وتشمل مجالاتها تحليل البيانات الفلكية والتعلم الآلي والبنية التحتية البرمجية وبيئات الحوسبة العلمية والهندسية. ويُعرض كل مشروع وفق هدفه ومرحلة تطويره، ولن تُنشر الروابط العامة إلا بعد جاهزية المشروع ومراجعته.",
-  ru: "В этом разделе представлены технологические проекты и продукты компании. Их тематика охватывает анализ астрономических данных, машинное обучение, программную инфраструктуру и среды научных и инженерных вычислений. Каждый проект описывается с учётом его назначения и стадии разработки. Публичные ссылки будут добавлены после готовности и проверки соответствующего проекта.",
-  de: "Dieser Bereich stellt die Technologieprojekte und Produkte des Unternehmens vor. Das Spektrum reicht von astronomischer Datenanalyse und maschinellem Lernen bis zu Softwareinfrastruktur sowie wissenschaftlichen und technischen Rechenumgebungen. Jedes Projekt wird nach Zweck und Entwicklungsstand beschrieben. Öffentliche Links werden erst nach Fertigstellung und Prüfung ergänzt.",
-  zh: "本栏目介绍公司的技术项目与产品，涵盖天文数据分析、机器学习、软件基础设施以及科学与工程计算环境。每个项目均按其目标和开发阶段进行说明。相关项目准备就绪并完成审核后，才会发布公开链接。",
-  fr: "Cette section présente les projets et produits technologiques de l’entreprise. Leur périmètre va de l’analyse de données astronomiques et de l’apprentissage automatique aux infrastructures logicielles et aux environnements de calcul scientifique et technique. Chaque projet est décrit selon son objectif et son stade de développement. Les liens publics seront ajoutés après préparation et vérification.",
-  es: "Esta sección presenta los proyectos y productos tecnológicos de la empresa. Su alcance abarca desde el análisis de datos astronómicos y el aprendizaje automático hasta la infraestructura de software y los entornos de computación científica y de ingeniería. Cada proyecto se describe según su objetivo y etapa de desarrollo. Los enlaces públicos se añadirán después de su preparación y revisión."
+  fa: "در این بخش، پروژه‌ها و محصولات فناورانه شرکت معرفی می‌شوند؛ پروژه‌هایی که با هدف توسعه راهکارهای نوآورانه در مرز علم، مهندسی و فناوری شکل گرفته‌اند. دامنه آن‌ها از تحلیل داده‌های نجومی و یادگیری ماشین تا زیرساخت‌های نرم‌افزاری و محیط‌های محاسباتی علمی و مهندسی را در بر می‌گیرد. در کنار محصولات نرم‌افزاری، این بخش زمینه‌های پروژه و موضوعات مهندسی شش حوزه فعالیت شرکت را نیز معرفی می‌کند.",
+  en: "This section introduces the company’s technology projects and products. Their scope ranges from astronomical data analysis and machine learning to software infrastructure and scientific and engineering computing environments. The section also presents engineering project topics across the company’s six domains.",
+  ar: "يعرض هذا القسم المشاريع والمنتجات التقنية للشركة. وتشمل مجالاتها تحليل البيانات الفلكية والتعلم الآلي والبنية التحتية البرمجية وبيئات الحوسبة العلمية والهندسية. كما يعرض هذا القسم موضوعات المشاريع الهندسية ضمن مجالات الشركة الستة.",
+  ru: "В этом разделе представлены технологические проекты и продукты компании. Их тематика охватывает анализ астрономических данных, машинное обучение, программную инфраструктуру и среды научных и инженерных вычислений. Также представлены инженерные темы проектов в шести направлениях компании.",
+  de: "Dieser Bereich stellt die Technologieprojekte und Produkte des Unternehmens vor. Das Spektrum reicht von astronomischer Datenanalyse und maschinellem Lernen bis zu Softwareinfrastruktur sowie wissenschaftlichen und technischen Rechenumgebungen. Der Bereich stellt außerdem technische Projektthemen aus den sechs Unternehmensbereichen vor.",
+  zh: "本栏目介绍公司的技术项目与产品，涵盖天文数据分析、机器学习、软件基础设施以及科学与工程计算环境。本栏目还介绍公司六个业务领域中的工程项目主题。",
+  fr: "Cette section présente les projets et produits technologiques de l’entreprise. Leur périmètre va de l’analyse de données astronomiques et de l’apprentissage automatique aux infrastructures logicielles et aux environnements de calcul scientifique et technique. Cette section présente également des thèmes de projets d’ingénierie dans les six domaines de l’entreprise.",
+  es: "Esta sección presenta los proyectos y productos tecnológicos de la empresa. Su alcance abarca desde el análisis de datos astronómicos y el aprendizaje automático hasta la infraestructura de software y los entornos de computación científica y de ingeniería. La sección también presenta temas de proyectos de ingeniería en las seis áreas de la empresa."
 };
 ---
 <SiteLayout locale={locale} title={site.navigation.projects + " — " + site.companyName} description={site.projects.map((project) => project.summary).join(" ")}>
@@ -32,5 +34,28 @@ const projectsIntro: Record<Locale, string> = {
     <section aria-label={site.navigation.projects}>
       <ProjectCards locale={locale} projects={site.projects} labels={labels} />
     </section>
+    {site.fields.map((field) => {
+      const portfolio = domainPortfolio[locale][field.slug];
+      return (
+        <section class="domain-content-section portfolio-project-group" aria-labelledby={`portfolio-${field.slug}`}>
+          <div class="section-heading">
+            <h2 id={`portfolio-${field.slug}`}>{field.title}</h2>
+            <p class="lede">{portfolioLabels.projects}</p>
+          </div>
+          <div class="project-grid">
+            {portfolio.projects.map((project) => (
+              <article class="project-card">
+                <h3>{project.title}</h3>
+                <p>{project.summary}</p>
+                <details class="domain-project-details">
+                  <summary>{locale === "fa" ? "جزئیات" : "Details"}</summary>
+                  <p>{project.overview}</p>
+                </details>
+              </article>
+            ))}
+          </div>
+        </section>
+      );
+    })}
   </div>
 </SiteLayout>

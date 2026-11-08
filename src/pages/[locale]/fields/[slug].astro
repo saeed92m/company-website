@@ -3,7 +3,7 @@ import SiteLayout from "../../../layouts/SiteLayout.astro";
 import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { domainImageUrl } from "../../../data/domain-assets";
-import { ceo } from "../../../content/ceo";
+import { domainPortfolio, domainPortfolioLabels } from "../../../content/domain-projects";
 
 export function getStaticPaths() {
   return locales.flatMap((locale) => content[locale].fields.map((field) => ({
@@ -12,9 +12,8 @@ export function getStaticPaths() {
 }
 const { locale, field } = Astro.props as { locale: Locale; field: (typeof content.en.fields)[number] };
 const site = content[locale];
-const profile = ceo[locale];
-const terms: Record<string, string[]> = { astronomy: ["CBS", "APTO"], aerospace: ["CanSat", "CubeSat"], "remote-sensing": ["Remote Sensing"], energy: [], "artificial-intelligence": [], motorsport: [] };
-const related = profile.selectedProjects.filter((project) => (terms[field.slug] ?? []).some((term) => project.name.toLowerCase().includes(term.toLowerCase())));
+const portfolio = domainPortfolio[locale][field.slug];
+const portfolioLabels = domainPortfolioLabels[locale];
 const labels: Record<Locale, { scope: string; work: string; empty: string; approach: string; note: string; roadmap: string }> = {
   fa: { scope: "روش‌ها، فناوری‌ها و دامنه تخصصی", work: "سوابق و پروژه‌های مرتبط", empty: "در حال حاضر پروژه عمومی و مستندی برای نمایش در این حوزه معرفی نشده است.", approach: "رویکرد توسعه", note: "این صفحه زمینه‌های تخصصی و دامنه مورد توجه شرکت را معرفی می‌کند. ذکر یک توانمندی به‌تنهایی به معنی ارائه مستمر آن به‌عنوان خدمت تجاری یا تکمیل همه فناوری‌های مرتبط نیست. دامنه هر پروژه پس از بررسی نیاز، امکان‌سنجی فنی و منابع در دسترس تعیین می‌شود.", roadmap: "این حوزه در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به موضوع فعالیت اساسنامه در دست پیگیری است." },
   en: { scope: "Methods, technologies and specialist scope", work: "Related documented work", empty: "No public, documented project is currently listed for this domain.", approach: "Development approach", note: "This page describes the company's areas of focus and technical scope. A listed capability does not, by itself, mean that it is continuously offered as a commercial service or that every related technology is complete. Each project is scoped after requirements review, technical feasibility assessment, and resource evaluation.", roadmap: "This domain is part of the company's development roadmap. Its formal addition to the registered business scope is being pursued." },
@@ -53,9 +52,13 @@ const pageLabels = labels[locale];
       <div class="section-heading"><h2 id="applications-title">{applicationTitle[locale]}</h2></div>
       <p class="domain-applications">{applications[locale][field.slug]}</p>
     </section>
+    <section class="domain-content-section" aria-labelledby="domain-introduction-title">
+      <div class="section-heading"><h2 id="domain-introduction-title">{portfolioLabels.introduction}</h2></div>
+      <p class="domain-applications">{portfolio.introduction}</p>
+    </section>
     <section class="domain-content-section" aria-labelledby="related-title">
-      <div class="section-heading"><h2 id="related-title">{pageLabels.work}</h2></div>
-      {related.length ? <div class="project-grid">{related.map((project) => <article class="project-card"><h3>{project.name}</h3><p>{project.period}</p><p>{project.summary}</p></article>)}</div> : <p class="domain-empty-note">{pageLabels.empty}</p>}
+      <div class="section-heading"><h2 id="related-title">{portfolioLabels.projects}</h2></div>
+      <div class="project-grid">{portfolio.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><details class="domain-project-details"><summary>{locale === "fa" ? "جزئیات" : "Details"}</summary><p>{project.overview}</p></details></article>)}</div>
     </section>
     <section class="domain-development domain-content-section" aria-labelledby="development-title">
       <div class="section-heading"><h2 id="development-title">{pageLabels.approach}</h2></div>
