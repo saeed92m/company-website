@@ -181,3 +181,9 @@ Do not use older phase snapshots as proof of current production acceptance.
 - Pages WebP smoke-test correction: merged and deployed; build/deploy/smoke all pass.
 - Overall Production acceptance remains **In Progress**. Manual WCAG 2.2 AA, physical-device review, Lighthouse/Core Web Vitals, live security-header verification, GitHub security alert/settings review, backup/restore and rollback drills, and private vulnerability reporting remain open under [Issue #69](https://github.com/saeed92m/company-website/issues/69).
 - Production hosting remains GitHub Pages. Cloudflare Pages remains Preview only. No DNS, email, hosting, privacy, or backend scope changed.
+
+
+## Operations and recovery
+
+- Backup, restore, and rollback procedures: [docs/operations/backup-restore-rollback.md](../operations/backup-restore-rollback.md).
+- Automated accessibility, Lighthouse, and Git bundle validation are proposed in [PR #117](https://github.com/saeed92m/company-website/pull/117). Do not mark these gates complete until the relevant Actions runs pass.
