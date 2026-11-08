@@ -28,5 +28,6 @@ test("project pages expose a descriptive image, overview, and locale-aware navig
   assert.match(page, /import\.meta\.env\.BASE_URL/);
   assert.match(page, /fetchpriority="high"/);
   assert.match(page, /@media\(max-width:720px\)/);
+  assert.match(page, /\.project-detail__visual img \{ aspect-ratio:auto; max-height:none; object-fit:contain; \}/);
   assert.match(page, /<SiteLayout/);
 });
