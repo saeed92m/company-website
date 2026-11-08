@@ -226,7 +226,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const siteHeader = document.querySelector(".site-header");
         const setMenuOpen = (open) => {
           if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
-          if (!window.matchMedia("(max-width: 720px)").matches) return;\n          menu.hidden = !open;
+          if (!window.matchMedia("(max-width: 720px)").matches) return;
+          menu.hidden = !open;
           menuToggle.setAttribute("aria-expanded", String(open));
           menuToggle.setAttribute("aria-label", open ? labels[currentLocale].close : labels[currentLocale].menu);
           document.body.classList.toggle("menu-open", open);
