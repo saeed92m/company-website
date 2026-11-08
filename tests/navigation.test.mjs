@@ -29,6 +29,9 @@ test("mobile retains the accessible hamburger and independently scrollable overl
   assert.ok(layout.includes('aria-controls="primary-navigation"'));
   assert.ok(layout.includes("data-menu-close"));
   assert.ok(styles.includes(".site-header .primary-nav {\n    position: fixed;"));
+  assert.ok(!styles.match(/\.site-header\s*\{[^}]*backdrop-filter\s*:/s), "sticky header must not create a fixed-position containing block for the mobile overlay");
+  assert.ok(styles.includes("inset-block-end: max(.5rem, env(safe-area-inset-bottom));"));
+  assert.ok(styles.includes("overflow-y: auto;"));
   assert.ok(styles.includes("overflow-y: auto;"));
   assert.ok(styles.includes("overscroll-behavior: contain;"));
 });
