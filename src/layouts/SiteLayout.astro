@@ -156,23 +156,6 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <span class="brand-mark" aria-hidden="true"><BrandMark label={brandNames[locale]} /></span>
         <span class="brand-wordmark">{brandNames[locale]}</span>
       </a>
-
-      <div class="header-tools">
-        <label class="language-select">
-          <span class="sr-only">{labels.language}</span>
-          <select aria-label={labels.language}>
-            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
-          </select>
-        </label>
-        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
-          <span aria-hidden="true">☾</span>
-          <span data-theme-label>{labels.night}</span>
-        </button>
-      </div>
-      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
-        <span aria-hidden="true">☰</span>
-      </button>
-    </header>
       <nav id="primary-navigation" class="primary-nav" aria-label={menuUi[locale].navigation} data-primary-nav hidden>
         <div class="nav-panel-head nav-panel-head--minimal">
           <button class="nav-close" type="button" aria-label={menuUi[locale].close} data-menu-close>×</button>
@@ -194,6 +177,22 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
+      <div class="header-tools">
+        <label class="language-select">
+          <span class="sr-only">{labels.language}</span>
+          <select aria-label={labels.language}>
+            {locales.map((code) => <option value={route(code, localePath)} selected={code === locale}>{localeMeta[code].label}</option>)}
+          </select>
+        </label>
+        <button class="theme-toggle" type="button" aria-label={labels.theme} aria-pressed="true" data-theme-toggle>
+          <span aria-hidden="true">☾</span>
+          <span data-theme-label>{labels.night}</span>
+        </button>
+      </div>
+      <button class="menu-toggle" type="button" aria-label={menuUi[locale].menu} aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+        <span aria-hidden="true">☰</span>
+      </button>
+    </header>
     <main id="main-content"><slot /></main>
     <footer class="site-footer">
       <div class="site-shell footer-grid">
@@ -227,7 +226,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
         const siteHeader = document.querySelector(".site-header");
         const setMenuOpen = (open) => {
           if (!(menu instanceof HTMLElement) || !(menuToggle instanceof HTMLButtonElement)) return;
-          menu.hidden = !open;
+          if (!window.matchMedia("(max-width: 720px)").matches) return;\n          menu.hidden = !open;
           menuToggle.setAttribute("aria-expanded", String(open));
           menuToggle.setAttribute("aria-label", open ? labels[currentLocale].close : labels[currentLocale].menu);
           document.body.classList.toggle("menu-open", open);
@@ -285,10 +284,10 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
             openGroup.querySelector("summary")?.focus();
             return;
           }
-          if (menu && !menu.hidden) setMenuOpen(false);
+          if (window.matchMedia("(max-width: 720px)").matches && menu && !menu.hidden) setMenuOpen(false);
         });
         document.addEventListener("click", (event) => {
-          if (menu && !menu.hidden && event.target instanceof Node &&
+          if (window.matchMedia("(max-width: 720px)").matches && menu && !menu.hidden && event.target instanceof Node &&
               !menu.contains(event.target) && !menuToggle?.contains(event.target)) {
             setMenuOpen(false);
           }
