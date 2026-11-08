@@ -22,6 +22,8 @@ test("desktop restores horizontal v2 navigation without hamburger or overlay", (
   assert.ok(styles.includes("position:static; inset:auto; z-index:auto; display:flex !important;"));
   assert.ok(styles.includes("width:max-content; min-width:max-content;"));
   assert.ok(styles.includes(".site-header .nav-group { position:relative;"));
+  assert.ok(styles.includes(".site-header .primary-nav > .nav-group,\n  .site-header .primary-nav > a {\n    width:auto !important;"));
+  assert.ok(styles.includes(".site-header .primary-nav { overflow:visible; }"));
   assert.ok(styles.includes(".site-header .primary-nav { order:2; }"));
   assert.ok(styles.includes(".site-header .header-tools { flex:0 0 auto; gap:.45rem; order:3; }"));
   assert.ok(styles.includes(".site-header .primary-nav > a:first-of-type { display:none; }"));
