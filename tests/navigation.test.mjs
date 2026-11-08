@@ -47,6 +47,7 @@ test("menu open/close logic is limited to mobile viewports", () => {
   assert.ok(layout.includes('if (!window.matchMedia("(max-width: 720px)").matches) return;'));
   assert.ok(layout.includes("menu.hidden = mobile && menuToggle?.getAttribute(\"aria-expanded\") !== \"true\";"));
   assert.ok(layout.includes('window.matchMedia("(max-width: 720px)").matches'));
+  assert.ok(layout.includes('!event.target.closest("[data-nav-group]")'), "desktop dropdown must close on outside click");
 });
 
 test("all eight locales retain translated labels and route-aware active states", () => {
