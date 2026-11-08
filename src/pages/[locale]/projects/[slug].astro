@@ -95,7 +95,7 @@ const description = `${project.summary} ${project.overview}`;
   .project-detail__footer { display:flex; justify-content:flex-start; padding-top:2rem; }
   @media(max-width:720px) {
     .project-detail__content { grid-template-columns:1fr; gap:.5rem; }
-    .project-detail__visual img { aspect-ratio:4 / 3; max-height:none; }
+    .project-detail__visual img { aspect-ratio:auto; max-height:none; object-fit:contain; }
     .project-detail__footer .button { width:100%; }
   }
 </style>
