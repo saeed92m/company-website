@@ -43,10 +43,14 @@ jobs:
             contact) suffix="contact/" ;;
           esac
           url="https://saeed92m.github.io/company-website/$LOCALE/$suffix"
+          lighthouse_args=()
+          if [[ "$STRATEGY" == "desktop" ]]; then
+            lighthouse_args+=(--preset=desktop)
+          fi
           npx --yes lighthouse@12.8.2 "$url" \
             --quiet \
             --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
-            --preset="$STRATEGY" \
+            "${lighthouse_args[@]}" \
             --output=json \
             --output-path=/tmp/lighthouse.json
           node --input-type=module <<'NODE'
