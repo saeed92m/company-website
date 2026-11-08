@@ -201,6 +201,8 @@ jobs:
                   if (geometry.position !== "fixed" || geometry.height < geometry.viewportHeight*.55 || geometry.bottom > geometry.viewportHeight+1) {
                     throw new Error(`${url}: invalid mobile overlay geometry: ${JSON.stringify(geometry)}`);
                   }
+                  await menuToggle.click();
+                  if (await navPanel.isVisible()) throw new Error(`${url}: mobile overlay did not close from hamburger toggle`);
                 } else {
                   if (await page.locator("[data-menu-toggle]:visible").count() !== 0) throw new Error(`${url}: desktop hamburger is visible`);
                   if (!(await navPanel.isVisible())) throw new Error(`${url}: desktop horizontal navigation is hidden`);
@@ -226,10 +228,7 @@ jobs:
                 if (await fieldsGroup.locator(".nav-submenu a").count() !== 6) throw new Error(`${url}: six domain links missing`);
                 await page.locator("main#main-content").click({position:{x:12,y:12}});
                 if (await fieldsGroup.evaluate((el)=>el.open)) throw new Error(`${url}: outside click did not close dropdown`);
-                if (viewport.name === "mobile") {
-                  await page.locator("[data-menu-toggle]").click();
-                  if (await navPanel.isVisible()) throw new Error(`${url}: mobile overlay did not close`);
-                }
+}
                 
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
