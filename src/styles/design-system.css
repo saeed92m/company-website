@@ -153,6 +153,8 @@ html[data-theme="light"] .home-redesign {
 }
 .home-redesign .new-button:hover { transform: translateY(-2px); }
 .home-redesign .new-button-primary { color: #fff; background: #003c91; }
+.home-redesign .new-button-company { color: #07101c; background: #A8A8A8; border-color: #A8A8A8; }
+.home-redesign .new-button-company:hover { color: #07101c; background: #969696; border-color: #969696; }
 .home-redesign .new-text-link {
   display: inline-flex;
   align-items: center;
