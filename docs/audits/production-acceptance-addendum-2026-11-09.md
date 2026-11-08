@@ -182,6 +182,18 @@ The repository has no localized Privacy Policy, Terms, or Cookie Policy route.
 
 No email account, form backend, or personal contact detail was created or published.
 
+## Rollback dry-run — 2026-11-09
+
+A local revert rehearsal was performed from the independently restored bundle:
+
+- Reverted PR #122 merge commit `17d395c7398d7dcc855de003293943d9af658b99`.
+- Local revert commit: `c12458bbc0669e06cb05ef679255ac4537a3bc71`.
+- The five affected files match their pre-PR #122 versions at `85ab9e553a35d272cc535819ec02a4c9ae39addc`.
+- `git diff --check` and `git fsck --full` passed.
+- The revert commit was not pushed.
+
+This validates the Git revert operation only. It does not validate a build, Preview deployment, or Production rollback. The full rollback drill remains open.
+
 ## 11. Remaining acceptance gates
 
 | Gate | Status | Required evidence or action |
@@ -197,7 +209,7 @@ No email account, form backend, or personal contact detail was created or publis
 | Cloudflare account MFA | Awaiting owner action | Enable MFA; review second administrator |
 | GitHub security settings | Not Verified | Owner-side Settings review |
 | Off-platform backup | Awaiting owner action | Save encrypted backup and verify checksum |
-| Rollback drill | Not Tested | Run a controlled rollback rehearsal; no Production rollback without approval |
+| Rollback drill | Partial | Local Git revert dry-run passed and matched pre-PR #122 file versions. Build, Preview, and Production rollback were not tested. Do not run a Production rollback without explicit approval. |
 | Manual accessibility | Not Tested | Keyboard, focus, VoiceOver/NVDA, zoom, form/error review |
 | Physical-device QA | Not Tested | iOS Safari, Android Chrome, Windows browsers, tablet |
 | Human translation review | Not Tested | Review all eight languages with qualified reviewers |
