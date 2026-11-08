@@ -4,13 +4,12 @@ import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { route } from "../../../data/routes";
 
-const projectDefinitions = [
-  { title: "Alpha Linux", slug: "alpha-linux", image: "Alpha-Linux.webp" },
-  { title: "Company Platform", slug: "company-platform", image: "Company-Platform.webp" },
-  { title: "ZTF Classifier", slug: "ztf-classifier", image: "ZTF-Classifier.webp" }
-] as const;
-
 export function getStaticPaths() {
+  const projectDefinitions = [
+    { title: "Alpha Linux", slug: "alpha-linux", image: "Alpha-Linux.webp" },
+    { title: "Company Platform", slug: "company-platform", image: "Company-Platform.webp" },
+    { title: "ZTF Classifier", slug: "ztf-classifier", image: "ZTF-Classifier.webp" }
+  ] as const;
   return locales.flatMap((locale) =>
     projectDefinitions.map((definition) => {
       const project = content[locale].projects.find((item) => item.title === definition.title);
