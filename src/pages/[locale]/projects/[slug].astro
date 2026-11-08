@@ -1,0 +1,101 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { content } from "../../../content/site";
+import { route } from "../../../data/routes";
+
+export function getStaticPaths() {
+  const projectDefinitions = [
+    { title: "Alpha Linux", slug: "alpha-linux", image: "Alpha-Linux.webp" },
+    { title: "Company Platform", slug: "company-platform", image: "Company-Platform.webp" },
+    { title: "ZTF Classifier", slug: "ztf-classifier", image: "ZTF-Classifier.webp" }
+  ] as const;
+  return locales.flatMap((locale) =>
+    projectDefinitions.map((definition) => {
+      const project = content[locale].projects.find((item) => item.title === definition.title);
+      if (!project) throw new Error(`Missing ${definition.title} content for locale ${locale}`);
+      return {
+        params: { locale, slug: definition.slug },
+        props: { locale, project, image: definition.image }
+      };
+    })
+  );
+}
+
+const { locale, project, image } = Astro.props as {
+  locale: Locale;
+  project: { title: string; summary: string; overview: string };
+  image: string;
+};
+
+const labels: Record<Locale, { eyebrow: string; overview: string; back: string; imageAlt: string }> = {
+  fa: { eyebrow: "معرفی محصول و پروژه", overview: "درباره پروژه", back: "بازگشت به پروژه‌ها", imageAlt: "تصویر معرفی" },
+  en: { eyebrow: "PRODUCT & PROJECT", overview: "Project overview", back: "Back to projects", imageAlt: "Project artwork" },
+  ar: { eyebrow: "تعريف المنتج والمشروع", overview: "نبذة عن المشروع", back: "العودة إلى المشاريع", imageAlt: "الصورة التعريفية للمشروع" },
+  ru: { eyebrow: "ПРОДУКТ И ПРОЕКТ", overview: "О проекте", back: "К списку проектов", imageAlt: "Иллюстрация проекта" },
+  de: { eyebrow: "PRODUKT & PROJEKT", overview: "Projektübersicht", back: "Zurück zu den Projekten", imageAlt: "Projektgrafik" },
+  zh: { eyebrow: "产品与项目", overview: "项目概述", back: "返回项目列表", imageAlt: "项目展示图" },
+  fr: { eyebrow: "PRODUIT ET PROJET", overview: "Présentation du projet", back: "Retour aux projets", imageAlt: "Visuel du projet" },
+  es: { eyebrow: "PRODUCTO Y PROYECTO", overview: "Descripción del proyecto", back: "Volver a proyectos", imageAlt: "Imagen del proyecto" }
+};
+const copy = labels[locale];
+const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const imageSrc = `${assetBase}/assets/domains/${image}`;
+const description = `${project.summary} ${project.overview}`;
+---
+
+<SiteLayout locale={locale} title={project.title + " — " + content[locale].navigation.projects} description={description}>
+  <div class="site-shell project-detail">
+    <nav class="project-detail__breadcrumb" aria-label={locale === "fa" ? "مسیر صفحه" : "Breadcrumb"}>
+      <a href={route(locale, "projects")}>{copy.back}</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{project.title}</span>
+    </nav>
+
+    <header class="project-detail__header">
+      <p class="eyebrow">{copy.eyebrow}</p>
+      <h1>{project.title}</h1>
+      <p class="lede">{project.summary}</p>
+    </header>
+
+    <figure class="project-detail__visual">
+      <img src={imageSrc} alt={`${project.title} — ${copy.imageAlt}`} fetchpriority="high" decoding="async" />
+    </figure>
+
+    <section class="project-detail__content" aria-labelledby="project-overview-title">
+      <div class="project-detail__section-label">
+        <p class="eyebrow">01 / {copy.overview}</p>
+        <h2 id="project-overview-title">{copy.overview}</h2>
+      </div>
+      <div class="project-detail__prose">
+        <p>{project.overview}</p>
+      </div>
+    </section>
+
+    <div class="project-detail__footer">
+      <a class="button button-secondary" href={route(locale, "projects")}>{copy.back}</a>
+    </div>
+  </div>
+</SiteLayout>
+
+<style>
+  .project-detail { padding-bottom: clamp(3rem, 7vw, 6rem); }
+  .project-detail__breadcrumb { display:flex; flex-wrap:wrap; align-items:center; gap:.65rem; padding-top:1.5rem; color:var(--muted); font-size:.88rem; }
+  .project-detail__breadcrumb a { color:var(--link); text-decoration:none; }
+  .project-detail__breadcrumb a:hover { text-decoration:underline; }
+  .project-detail__header { max-width:900px; padding:clamp(3rem,7vw,6rem) 0 clamp(2rem,4vw,3rem); }
+  .project-detail__header h1 { margin-bottom:1rem; font-size:clamp(2.7rem,6vw,5.5rem); }
+  .project-detail__header .lede { max-width:70ch; margin:0; line-height:1.8; }
+  .project-detail__visual { margin:0; overflow:hidden; border:1px solid var(--border); border-radius:calc(var(--radius) * 1.2); background:var(--surface-2); box-shadow:0 24px 70px rgba(0,0,0,.18); }
+  .project-detail__visual img { display:block; width:100%; height:auto; max-height: min(68vw, 720px); aspect-ratio:16 / 9; object-fit:cover; object-position:center; }
+  .project-detail__content { display:grid; grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr); gap:clamp(2rem,7vw,7rem); padding:clamp(3rem,7vw,6rem) 0; border-bottom:1px solid var(--border); }
+  .project-detail__section-label h2 { font-size:clamp(1.8rem,3.5vw,2.7rem); }
+  .project-detail__prose { max-width:76ch; color:var(--muted); font-size:clamp(1.05rem,1.6vw,1.2rem); line-height:2; }
+  .project-detail__prose p { margin:0; }
+  .project-detail__footer { display:flex; justify-content:flex-start; padding-top:2rem; }
+  @media(max-width:720px) {
+    .project-detail__content { grid-template-columns:1fr; gap:.5rem; }
+    .project-detail__visual img { aspect-ratio:4 / 3; max-height:none; }
+    .project-detail__footer .button { width:100%; }
+  }
+</style>

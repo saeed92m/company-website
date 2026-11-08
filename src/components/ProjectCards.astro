@@ -13,12 +13,16 @@ interface Props {
 }
 
 const { locale, projects, labels } = Astro.props;
-const projectArtwork: Record<string, string> = {
-  "Alpha Linux": "Alpha-Linux.webp",
-  "Company Platform": "Company-Platform.webp",
-  "ZTF Classifier": "ZTF-Classifier.webp"
+const projectArtwork: Record<string, { slug: string; filename: string }> = {
+  "Alpha Linux": { slug: "alpha-linux", filename: "Alpha-Linux.webp" },
+  "Company Platform": { slug: "company-platform", filename: "Company-Platform.webp" },
+  "ZTF Classifier": { slug: "ztf-classifier", filename: "ZTF-Classifier.webp" }
 };
 const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
+const projectPageLabel: Record<Locale, string> = {
+  fa: "صفحه پروژه", en: "Project page", ar: "صفحة المشروع", ru: "Страница проекта",
+  de: "Projektseite", zh: "项目页面", fr: "Page du projet", es: "Página del proyecto"
+};
 ---
 
 <div class="project-grid">
@@ -27,30 +31,20 @@ const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
     const titleId = `project-summary-title-${index}`;
     const descriptionId = `project-summary-description-${index}`;
     const artwork = projectArtwork[project.title];
-    const imageSrc = artwork ? `${assetBase}/assets/domains/${artwork}` : undefined;
+    const imageSrc = artwork ? `${assetBase}/assets/domains/${artwork.filename}` : undefined;
+    const detailHref = artwork ? route(locale, `projects/${artwork.slug}`) : route(locale, "projects");
     return (
       <article class="project-card">
         {imageSrc && (
-          <img
-            class="project-card__image"
-            src={imageSrc}
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
+          <img class="project-card__image" src={imageSrc} alt="" loading="lazy" decoding="async" />
         )}
         <h3>{project.title}</h3>
         <p>{project.summary}</p>
         <div class="card-actions">
-          <button
-            class="button button-secondary project-summary-trigger"
-            type="button"
-            data-project-dialog={dialogId}
-            aria-haspopup="dialog"
-            aria-controls={dialogId}
-          >
+          <button class="button button-secondary project-summary-trigger" type="button" data-project-dialog={dialogId} aria-haspopup="dialog" aria-controls={dialogId}>
             {labels.summaryProject}
           </button>
+          <a class="button button-secondary" href={detailHref}>{projectPageLabel[locale]}</a>
         </div>
         <dialog class="project-dialog" id={dialogId} aria-labelledby={titleId} aria-describedby={descriptionId}>
           <div class="project-dialog__panel">
