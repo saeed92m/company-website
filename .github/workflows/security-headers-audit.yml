@@ -1,0 +1,89 @@
+name: GitHub Pages Security Headers Audit
+
+on:
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
+  schedule:
+    - cron: "47 7 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  inspect-headers:
+    name: Inspect deployed HTTPS response headers
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Capture response headers
+        shell: bash
+        env:
+          BASE_URL: https://saeed92m.github.io/company-website
+        run: |
+          set -euo pipefail
+
+          inspect() {
+            local label="$1"
+            local url="$2"
+            local headers_file
+            local status
+            local final_headers
+            headers_file="$(mktemp)"
+
+            status="$(curl --silent --show-error --location \
+              --proto '=https' --proto-redir '=https' \
+              --retry 3 --retry-delay 2 --max-time 30 \
+              --dump-header "$headers_file" --output /dev/null \
+              --write-out '%{http_code}' "$url")"
+
+            final_headers="$(awk '
+              /^HTTP\// { for (key in values) delete values; status=$0; next }
+              index($0, ":") > 0 {
+                key=tolower(substr($0, 1, index($0, ":") - 1))
+                value=substr($0, index($0, ":") + 1)
+                sub(/^[ \t]+/, "", value)
+                values[key]=value
+              }
+              END {
+                print status
+                for (key in values) print key ": " values[key]
+              }
+            ' "$headers_file")"
+
+            {
+              echo "## $label"
+              echo
+              echo "- URL: $url"
+              echo "- Final HTTP status: $status"
+              for header in \
+                strict-transport-security \
+                content-security-policy \
+                x-content-type-options \
+                referrer-policy \
+                permissions-policy \
+                x-frame-options; do
+                value="$(printf '%s\n' "$final_headers" | awk -F': ' -v key="$header" 'tolower($1)==key {value=$0; sub(/^[^:]+:[[:space:]]*/, "", value)} END {print value}')"
+                if [ -n "$value" ]; then
+                  echo "- `$header`: $value"
+                else
+                  echo "- `$header`: MISSING"
+                fi
+              done
+              echo
+            } | tee -a "$GITHUB_STEP_SUMMARY"
+
+            if [ "$status" != "200" ]; then
+              echo "FAIL: $label returned HTTP $status"
+              rm -f "$headers_file"
+              return 1
+            fi
+            rm -f "$headers_file"
+          }
+
+          inspect "Persian homepage" "$BASE_URL/fa/"
+          inspect "English homepage" "$BASE_URL/en/"
+          inspect "Static image asset" "$BASE_URL/assets/domains/astronomy.webp"
+          inspect "Sitemap" "$BASE_URL/sitemap.xml"
+
+          echo "Header presence is reported for owner review. This diagnostic workflow does not claim that missing headers are configured or enforced."
