@@ -11,7 +11,8 @@ const artwork = [
 
 test("each standalone project card maps to its dedicated artwork", () => {
   for (const [title, filename] of artwork) {
-    assert.ok(component.includes(`"${title}": "${filename}"`), `${title} must map to ${filename}`);
+    const slug = filename.replace(/\.webp$/i, "").toLowerCase();
+    assert.ok(component.includes(`"${title}": { slug: "${slug}", filename: "${filename}" }`), `${title} must map to ${filename}`);
   }
   assert.match(component, /import\.meta\.env\.BASE_URL/);
   assert.match(component, /loading="lazy"/);
