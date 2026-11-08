@@ -39,7 +39,7 @@ jobs:
           bundle="$RUNNER_TEMP/company-website-${GITHUB_SHA}.bundle"
           git bundle create "$bundle" --all
           git bundle verify "$bundle"
-          mkdir "$RUNNER_TEMP/restore-check/repository"
+          mkdir -p "$RUNNER_TEMP/restore-check/repository"
           git -C "$RUNNER_TEMP/restore-check/repository" init
           git -C "$RUNNER_TEMP/restore-check/repository" fetch "$bundle" '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
           git -C "$RUNNER_TEMP/restore-check/repository" fsck --full
