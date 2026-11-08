@@ -20,6 +20,7 @@ test("Fields overview provides localized alternative text for all supported loca
     assert.ok(page.includes(`  ${locale}: "`), `missing ${locale} alternative text`);
   }
   assert.match(page, /alt={fieldsOverviewAlt\[locale\]}/);
+  assert.match(page, /BASE_URL\.endsWith\("\/"\)/);
 });
 
 test("Fields overview image is a valid WebP asset", () => {
