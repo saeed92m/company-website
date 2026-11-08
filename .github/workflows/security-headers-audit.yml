@@ -23,12 +23,49 @@ jobs:
         run: |
           set -euo pipefail
 
+          header_value() {
+            local wanted="$1"
+            local headers_file="$2"
+            awk -v wanted="$wanted" '
+              /^HTTP\// { value=""; found=0; next }
+              {
+                colon=index($0, ":")
+                if (colon > 0) {
+                  name=tolower(substr($0, 1, colon - 1))
+                  if (name == wanted) {
+                    value=substr($0, colon + 1)
+                    sub(/^[ \t]+/, "", value)
+                    sub(/\r$/, "", value)
+                    found=1
+                  }
+                }
+              }
+              END { if (found) print value }
+            ' "$headers_file"
+          }
+
+          # Verify that redirects do not cause headers from an earlier response
+          # to be reported as headers from the final response.
+          fixture="$(mktemp)"
+          cat > "$fixture" <<'EOF'
+          HTTP/2 301
+          strict-transport-security: old-value
+          location: https://example.invalid/final
+
+          HTTP/2 200
+          strict-transport-security: max-age=31536000; includeSubDomains
+          x-content-type-options: nosniff
+          EOF
+          test "$(header_value strict-transport-security "$fixture")" = "max-age=31536000; includeSubDomains"
+          test "$(header_value x-content-type-options "$fixture")" = "nosniff"
+          test -z "$(header_value content-security-policy "$fixture")"
+          rm -f "$fixture"
+
           inspect() {
             local label="$1"
             local url="$2"
             local headers_file
             local status
-            local final_headers
             headers_file="$(mktemp)"
 
             status="$(curl --silent --show-error --location \
@@ -36,20 +73,6 @@ jobs:
               --retry 3 --retry-delay 2 --max-time 30 \
               --dump-header "$headers_file" --output /dev/null \
               --write-out '%{http_code}' "$url")"
-
-            final_headers="$(awk '
-              /^HTTP\// { for (key in values) delete values; status=$0; next }
-              index($0, ":") > 0 {
-                key=tolower(substr($0, 1, index($0, ":") - 1))
-                value=substr($0, index($0, ":") + 1)
-                sub(/^[ \t]+/, "", value)
-                values[key]=value
-              }
-              END {
-                print status
-                for (key in values) print key ": " values[key]
-              }
-            ' "$headers_file")"
 
             {
               echo "## $label"
@@ -63,22 +86,21 @@ jobs:
                 referrer-policy \
                 permissions-policy \
                 x-frame-options; do
-                value="$(printf '%s\n' "$final_headers" | awk -F': ' -v key="$header" 'tolower($1)==key {value=$0; sub(/^[^:]+:[[:space:]]*/, "", value)} END {print value}')"
+                value="$(header_value "$header" "$headers_file")"
                 if [ -n "$value" ]; then
-                  echo "- `$header`: $value"
+                  printf -- '- %s: %s\n' "$header" "$value"
                 else
-                  echo "- `$header`: MISSING"
+                  printf -- '- %s: MISSING\n' "$header"
                 fi
               done
               echo
             } | tee -a "$GITHUB_STEP_SUMMARY"
 
+            rm -f "$headers_file"
             if [ "$status" != "200" ]; then
               echo "FAIL: $label returned HTTP $status"
-              rm -f "$headers_file"
               return 1
             fi
-            rm -f "$headers_file"
           }
 
           inspect "Persian homepage" "$BASE_URL/fa/"
