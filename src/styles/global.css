@@ -504,3 +504,47 @@ body.menu-open { overflow:hidden; }
   }
 }
 
+
+
+/* Desktop navigation follows the original v2 horizontal header pattern. */
+@media (min-width: 721px) {
+  .site-header { display:flex; flex-wrap:nowrap; align-items:center; gap:clamp(.75rem,1.5vw,1.5rem); }
+  .site-header .brand { flex:0 0 auto; }
+  .site-header .primary-nav,
+  .site-header .primary-nav[hidden] {
+    position:static; inset:auto; z-index:auto; display:flex !important;
+    flex:1 1 auto; flex-direction:row; flex-wrap:nowrap; align-items:center;
+    justify-content:center; gap:clamp(.65rem,1.15vw,1.25rem);
+    width:auto; height:auto; min-height:0; max-height:none; overflow:visible;
+    overscroll-behavior:auto; padding:0; border:0; border-radius:0;
+    background:transparent; box-shadow:none; -webkit-backdrop-filter:none; backdrop-filter:none;
+  }
+  .site-header .nav-panel-head, .site-header .menu-toggle { display:none !important; }
+  .site-header .primary-nav > a, .site-header .nav-group > summary {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:2.5rem; padding:.45rem .15rem; border:0; border-radius:0;
+    background:transparent; color:var(--muted); white-space:nowrap;
+    font-size:clamp(.72rem,.78vw,.84rem); font-weight:650; text-decoration:none; cursor:pointer;
+  }
+  .site-header .nav-group > summary::after { content:"⌄"; margin-inline-start:.3rem; }
+  .site-header .nav-group[open] > summary::after { content:"⌃"; }
+  .site-header .nav-group[data-current="true"] > summary,
+  .site-header .primary-nav a[aria-current="page"] { color:var(--ink); font-weight:800; }
+  .site-header .nav-group { position:relative; flex:0 0 auto; }
+  .site-header .nav-submenu {
+    position:absolute; z-index:40; inset-block-start:calc(100% + .35rem); inset-inline-start:0;
+    display:grid; gap:.2rem; width:max-content; min-width:max-content;
+    max-width:min(24rem,80vw); max-height:min(70vh,32rem); overflow:auto;
+    margin:0; padding:.45rem; border:1px solid var(--border-strong);
+    border-radius:.85rem; background:var(--surface); box-shadow:0 18px 45px rgba(0,0,0,.24);
+  }
+  .site-header .nav-group:not([open]) > .nav-submenu { display:none; }
+  .site-header .nav-submenu a {
+    min-height:2.35rem; padding:.5rem .8rem; border-radius:.55rem;
+    color:var(--muted); font-size:.82rem; white-space:nowrap;
+  }
+  .site-header .nav-submenu a:hover,
+  .site-header .nav-submenu a:focus-visible,
+  .site-header .nav-submenu a[aria-current="page"] { background:var(--surface-2); color:var(--ink); }
+  .site-header .header-tools { flex:0 0 auto; gap:.45rem; }
+}
