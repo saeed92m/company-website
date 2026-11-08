@@ -12,22 +12,20 @@ interface Props {
   };
 }
 
-const { locale, projects, labels } = Astro.props;
-const projectArtwork: Record<string, string> = {
-  "Alpha Linux": "Alpha-Linux.webp",
-  "Company Platform": "Company-Platform.webp",
-  "ZTF Classifier": "ZTF-Classifier.webp"
+const { locale, projects } = Astro.props;
+const projectArtwork: Record<string, { slug: string; filename: string }> = {
+  "Alpha Linux": { slug: "alpha-linux", filename: "Alpha-Linux.webp" },
+  "Company Platform": { slug: "company-platform", filename: "Company-Platform.webp" },
+  "ZTF Classifier": { slug: "ztf-classifier", filename: "ZTF-Classifier.webp" }
 };
 const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
 
 <div class="project-grid">
-  {projects.map((project, index) => {
-    const dialogId = `project-summary-${index}`;
-    const titleId = `project-summary-title-${index}`;
-    const descriptionId = `project-summary-description-${index}`;
+  {projects.map((project) => {
     const artwork = projectArtwork[project.title];
-    const imageSrc = artwork ? `${assetBase}/assets/domains/${artwork}` : undefined;
+    const imageSrc = artwork ? `${assetBase}/assets/domains/${artwork.filename}` : undefined;
+    const detailHref = artwork ? route(locale, `projects/${artwork.slug}`) : route(locale, "projects");
     return (
       <article class="project-card">
         {imageSrc && (
@@ -42,44 +40,11 @@ const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
         <h3>{project.title}</h3>
         <p>{project.summary}</p>
         <div class="card-actions">
-          <button
-            class="button button-secondary project-summary-trigger"
-            type="button"
-            data-project-dialog={dialogId}
-            aria-haspopup="dialog"
-            aria-controls={dialogId}
-          >
-            {labels.summaryProject}
-          </button>
+          <a class="button button-secondary" href={detailHref}>
+            {locale === "fa" ? "صفحه پروژه" : locale === "ar" ? "صفحة المشروع" : locale === "ru" ? "Страница проекта" : locale === "de" ? "Projektseite" : locale === "zh" ? "项目页面" : locale === "fr" ? "Page du projet" : locale === "es" ? "Página del proyecto" : "Project page"}
+          </a>
         </div>
-        <dialog class="project-dialog" id={dialogId} aria-labelledby={titleId} aria-describedby={descriptionId}>
-          <div class="project-dialog__panel">
-            <form method="dialog">
-              <button class="project-dialog__close" type="submit" aria-label={labels.close}>×</button>
-            </form>
-            <h2 id={titleId} class="project-dialog__title">{project.title}</h2>
-            <p class="project-dialog__label">{labels.summaryProject}</p>
-            <p id={descriptionId} class="project-dialog__description">{project.overview}</p>
-            <a class="button button-primary project-dialog__action" href={route(locale, "contact")}>{labels.collaborateProject}</a>
-          </div>
-        </dialog>
       </article>
     );
   })}
 </div>
-
-<script>
-  document.querySelectorAll<HTMLButtonElement>("[data-project-dialog]").forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const id = trigger.dataset.projectDialog;
-      const dialog = id ? document.getElementById(id) : null;
-      if (dialog instanceof HTMLDialogElement && !dialog.open) dialog.showModal();
-    });
-  });
-
-  document.querySelectorAll<HTMLDialogElement>(".project-dialog").forEach((dialog) => {
-    dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) dialog.close();
-    });
-  });
-</script>
