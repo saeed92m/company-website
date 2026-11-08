@@ -12,6 +12,8 @@ test("navigation is inside the header between brand and persistent tools", () =>
   assert.ok(header.indexOf('<nav id="primary-navigation"') > header.indexOf("brand-wordmark"));
   assert.ok(header.indexOf("header-tools") > header.indexOf('<nav id="primary-navigation"'));
   assert.ok(header.includes("data-menu-toggle"));
+  assert.ok(header.includes('class="desktop-management-link"'));
+  assert.ok(header.includes('managementNavLabel[locale]'));
 });
 
 test("desktop restores horizontal v2 navigation without hamburger or overlay", () => {
@@ -20,8 +22,11 @@ test("desktop restores horizontal v2 navigation without hamburger or overlay", (
   assert.ok(styles.includes("position:static; inset:auto; z-index:auto; display:flex !important;"));
   assert.ok(styles.includes("width:max-content; min-width:max-content;"));
   assert.ok(styles.includes(".site-header .nav-group { position:relative;"));
-  assert.ok(styles.includes(".site-header .header-tools { flex:0 0 auto; gap:.45rem; order:2; }"));
-  assert.ok(styles.includes(".site-header .primary-nav { order:3; }"));
+  assert.ok(styles.includes(".site-header .primary-nav { order:2; }"));
+  assert.ok(styles.includes(".site-header .header-tools { flex:0 0 auto; gap:.45rem; order:3; }"));
+  assert.ok(styles.includes(".site-header .primary-nav > a:first-of-type { display:none; }"));
+  assert.ok(styles.includes(".site-header .primary-nav > .desktop-management-link { display:inline-flex; }"));
+  assert.ok(styles.includes(".desktop-management-link { display:none; }"));
 });
 
 test("mobile retains the accessible hamburger and independently scrollable overlay", () => {
