@@ -125,3 +125,33 @@ Source → Draft → Technical review → Language review → Approval → Publi
 **Phase 1 implementation — in review.**
 
 The Phase 1 implementation includes localized corporate copy, six domain detail routes, documented related-work references where supported by the supplied CV, application areas, homepage vision and CEO preview, grouped CEO skills, and the four-path contact gateway. Automated validation and visual review must pass before merge.
+
+
+## Six-domain deep-content contract — review preview
+
+Each domain detail page now follows a shared scientific and engineering structure:
+- problem statement and domain mission
+- scientific and engineering foundations
+- grouped technical capabilities
+- engineering workflow
+- validation and quality-control approach
+- limitations and interpretation cautions
+- interdisciplinary links
+- documented work separated from technical focus areas
+- public-disclosure boundary
+
+The six pages use original conceptual SVG diagrams. These diagrams explain concepts only; they are not company test results, validated simulations, customer deliverables or operational system evidence.
+
+Project-status and disclosure rules:
+- Use the supplied company profile and CV as the source for documented work.
+- Label historical work as historical experience.
+- Label future or general capability topics as technical focus areas.
+- Do not imply commercial availability, certification, production readiness or operational deployment without evidence.
+- Keep private implementation details, customer data, drawings, source code, model internals and sensitive operating parameters out of public copy.
+- Do not publish Alpha Linux or ZTF Classifier repository links without explicit approval.
+
+Locale status:
+- Persian and English contain detailed domain copy in this review branch.
+- Arabic, Russian, German, Chinese, French and Spanish currently use English detail copy with localized section labels. This is a preview fallback, not completed localisation. Professional translation and technical review are required before multilingual acceptance.
+
+The review branch is not approved for Production. Owner review is required before merge.
