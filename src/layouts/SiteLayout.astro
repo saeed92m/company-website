@@ -243,8 +243,17 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
             root.style.setProperty("--site-header-height", siteHeader.getBoundingClientRect().height + "px");
           }
         };
-        syncHeaderHeight();
-        window.addEventListener("resize", syncHeaderHeight);
+        const syncNavigationMode = () => {
+          const mobile = window.matchMedia("(max-width: 720px)").matches;
+          if (menu instanceof HTMLElement) menu.hidden = mobile && menuToggle?.getAttribute("aria-expanded") !== "true";
+          if (!mobile) {
+            document.body.classList.remove("menu-open");
+            menuGroups.forEach((group) => { group.open = false; });
+          }
+          syncHeaderHeight();
+        };
+        syncNavigationMode();
+        window.addEventListener("resize", syncNavigationMode);
         menuToggle?.addEventListener("click", () => setMenuOpen(menu?.hidden ?? true));
         menuClose?.addEventListener("click", () => setMenuOpen(false));
         const labels = {
