@@ -1,3 +1,9 @@
+# Current production acceptance status — 2026-11-09
+
+**Status: In Progress.** The historical acceptance statements below do not represent the current state.
+
+See [Production acceptance addendum — 2026-11-09](../audits/production-acceptance-addendum-2026-11-09.md) for the verified main commit, post-deploy CI evidence, performance results, security-header findings, backup status, and remaining owner actions.
+
 # Phase 7 — Production QA and release closeout
 
 Date: 2026-10-04
