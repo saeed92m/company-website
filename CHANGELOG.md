@@ -1,3 +1,10 @@
+## 2026-11-08 — Mobile project artwork fit and Pages smoke-test repair
+
+- Updated mobile project-page artwork to use intrinsic sizing and `object-fit: contain`; desktop behavior remains unchanged (PR #114).
+- Fixed the Pages smoke test to validate the six current WebP domain assets and their `image/webp` MIME type (PR #115).
+- Both PRs are merged. Post-merge CI, CodeQL, dependency audit, Pages build/deploy, and deployed smoke test passed on `3ea71856cae18245c55efc8ef7014a65cff59826`.
+- No manual physical-device visual review was performed. Overall Production acceptance remains In Progress.
+
 ## 2026-11-08 — Homepage Company CTA brand colour
 
 - Changed the homepage Company link into a secondary button.
