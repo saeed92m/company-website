@@ -39,13 +39,14 @@ jobs:
           bundle="$RUNNER_TEMP/company-website-${GITHUB_SHA}.bundle"
           git bundle create "$bundle" --all
           git bundle verify "$bundle"
-          mkdir "$RUNNER_TEMP/restore-check"
-          git clone "$bundle" "$RUNNER_TEMP/restore-check/repository"
+          mkdir "$RUNNER_TEMP/restore-check/repository"
+          git -C "$RUNNER_TEMP/restore-check/repository" init
+          git -C "$RUNNER_TEMP/restore-check/repository" fetch "$bundle" '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
           git -C "$RUNNER_TEMP/restore-check/repository" fsck --full
           source_refs="$(git for-each-ref --format='%(refname) %(objectname)' refs/heads refs/tags | sort)"
           restored_refs="$(git -C "$RUNNER_TEMP/restore-check/repository" for-each-ref --format='%(refname) %(objectname)' refs/heads refs/tags | sort)"
           diff -u <(printf '%s\n' "$source_refs") <(printf '%s\n' "$restored_refs")
-          test "$(git -C "$RUNNER_TEMP/restore-check/repository" rev-parse HEAD)" = "$GITHUB_SHA"
+          git -C "$RUNNER_TEMP/restore-check/repository" cat-file -e "$GITHUB_SHA^{commit}"
           echo "PASS: Git bundle verified, cloned, fsck-clean, and all branch/tag refs match."
           echo "BUNDLE_PATH=$bundle" >> "$GITHUB_ENV"
 
