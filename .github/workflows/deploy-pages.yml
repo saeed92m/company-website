@@ -162,7 +162,7 @@ jobs:
           done
           echo "PASS /en/: production stylesheet loaded with expected UI markers"
 
-          # Validate every homepage domain-card image URL, not just that the raw SVG files exist.
+          # Validate every homepage domain-card image URL, not just that the raw WebP files exist.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
           for asset in \
             "/assets/domains/astronomy.webp" \
