@@ -14,7 +14,7 @@ test("three dedicated project routes use the matching project content and artwor
   for (const [title, slug, image] of definitions) {
     assert.ok(page.includes(`title: "${title}", slug: "${slug}", image: "${image}"`));
     assert.ok(cards.includes(`"${title}": { slug: "${slug}", filename: "${image}" }`));
-    assert.ok(cards.includes(`projects/${artwork.slug}`));
+    assert.match(cards, /projects\/\$\{artwork\.slug\}/);
   }
   assert.match(page, /locales\.flatMap/);
   assert.match(page, /content\[locale\]\.projects\.find/);
