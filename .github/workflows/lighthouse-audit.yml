@@ -65,6 +65,23 @@ jobs:
             ["SEO", score("seo")],
           ];
           const metric = id => audits[id]?.displayValue ?? "not available";
+          const diagnosticIds = [
+            "largest-contentful-paint-element",
+            "layout-shift-elements",
+            "lcp-discovery-insight",
+            "image-delivery-insight",
+            "font-display",
+            "render-blocking-resources",
+          ];
+          const diagnostics = diagnosticIds
+            .filter(id => audits[id])
+            .map(id => ({
+              id,
+              title: audits[id].title,
+              displayValue: audits[id].displayValue ?? null,
+              score: audits[id].score ?? null,
+              details: (audits[id].details?.items ?? []).slice(0, 5),
+            }));
           const summary = [
             `## Lighthouse — ${process.env.LOCALE} / ${process.env.ROUTE} / ${process.env.STRATEGY}`,
             "",
@@ -74,10 +91,23 @@ jobs:
             "",
             `- LCP: ${metric("largest-contentful-paint")}`,
             `- CLS: ${metric("cumulative-layout-shift")}`,
-            `- INP/TBT proxy: ${metric("total-blocking-time")}`,
+            `- TBT: ${metric("total-blocking-time")}`,
             `- FCP: ${metric("first-contentful-paint")}`,
             `- Speed Index: ${metric("speed-index")}`,
+            "",
+            "### Diagnostic audits",
+            "```json",
+            JSON.stringify(diagnostics, null, 2),
+            "```",
           ].join("\n");
           fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + "\n\n");
           console.log(summary);
           NODE
+
+      - name: Upload Lighthouse JSON report
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: lighthouse-${{ matrix.strategy }}-${{ matrix.locale }}-${{ matrix.route }}-${{ github.sha }}
+          path: /tmp/lighthouse.json
+          if-no-files-found: error
+          retention-days: 14
