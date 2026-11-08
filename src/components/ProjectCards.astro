@@ -13,6 +13,12 @@ interface Props {
 }
 
 const { locale, projects, labels } = Astro.props;
+const projectArtwork: Record<string, string> = {
+  "Alpha Linux": "Alpha-Linux.webp",
+  "Company Platform": "Company-Platform.webp",
+  "ZTF Classifier": "ZTF-Classifier.webp"
+};
+const assetBase = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
 
 <div class="project-grid">
@@ -20,8 +26,19 @@ const { locale, projects, labels } = Astro.props;
     const dialogId = `project-summary-${index}`;
     const titleId = `project-summary-title-${index}`;
     const descriptionId = `project-summary-description-${index}`;
+    const artwork = projectArtwork[project.title];
+    const imageSrc = artwork ? `${assetBase}/assets/domains/${artwork}` : undefined;
     return (
       <article class="project-card">
+        {imageSrc && (
+          <img
+            class="project-card__image"
+            src={imageSrc}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <h3>{project.title}</h3>
         <p>{project.summary}</p>
         <div class="card-actions">
