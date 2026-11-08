@@ -36,6 +36,9 @@ jobs:
           PUBLIC_BASE_PATH: /company-website
         run: npm run build
 
+      - name: Optimize static WebP assets
+        run: node scripts/optimize-static-webp.mjs dist/assets/domains
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
