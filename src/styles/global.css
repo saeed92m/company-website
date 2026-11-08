@@ -572,3 +572,15 @@ body.menu-open { overflow:hidden; }
   .site-header .primary-nav > a:first-of-type { display:none; }
   .site-header .primary-nav > .desktop-management-link { display:inline-flex; }
 }
+
+
+/* Project-specific artwork; images remain lazy-loaded and crop consistently. */
+.project-card__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * .7);
+  margin: 0 0 1rem;
+}
