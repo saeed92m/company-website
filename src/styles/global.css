@@ -572,3 +572,51 @@ body.menu-open { overflow:hidden; }
   .site-header .primary-nav > a:first-of-type { display:none; }
   .site-header .primary-nav > .desktop-management-link { display:inline-flex; }
 }
+
+/* Six-domain scientific content preview */
+.domain-detail-page--deep{padding-bottom:clamp(4rem,8vw,7rem)}
+.domain-hero--deep{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);align-items:center;gap:clamp(2rem,5vw,4rem);padding:clamp(3.5rem,7vw,6.5rem) 0;border-radius:0 0 2rem 2rem}
+.domain-hero-copy{position:relative;z-index:2;min-width:0}
+.domain-hero--deep:after{background:linear-gradient(90deg,rgba(5,11,19,.97),rgba(5,11,19,.78) 54%,rgba(5,11,19,.45))}
+.domain-kicker{color:var(--accent);font-size:clamp(1rem,1.5vw,1.25rem);font-weight:700;margin:0 0 1rem}
+.domain-technical-figure{position:relative;z-index:2;margin:0;min-width:0;padding:.6rem;border:1px solid rgba(155,190,225,.22);border-radius:1.2rem;background:rgba(3,12,24,.42);box-shadow:0 22px 70px rgba(0,0,0,.24)}
+.domain-technical-figure img{display:block;width:100%;height:auto;aspect-ratio:900/560;object-fit:cover;border-radius:.8rem}
+.domain-technical-figure figcaption{padding:.7rem .5rem .2rem;color:#b7c9dc;font-size:.78rem;line-height:1.7}
+.domain-deep-section{padding:clamp(3rem,6vw,5.5rem) 0;border-bottom:1px solid var(--border)}
+.domain-section-heading{max-width:820px;margin-bottom:1.8rem}
+.domain-section-heading .eyebrow{margin-bottom:.7rem}
+.domain-section-heading h2,.domain-validation-grid h2,.domain-disclosure h2{font-size:clamp(1.65rem,3.4vw,2.7rem);line-height:1.25;margin:0}
+.domain-lead-copy{max-width:940px;color:var(--muted);font-size:clamp(1.05rem,1.6vw,1.22rem);line-height:2.05}
+.domain-knowledge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.domain-knowledge-card,.domain-work-card{position:relative;padding:1.4rem;border:1px solid var(--border);border-radius:1rem;background:var(--surface)}
+.domain-card-index{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;margin-bottom:.8rem;border-radius:.55rem;background:rgba(0,60,145,.15);color:var(--accent);font-size:.78rem;font-weight:800;letter-spacing:.04em}
+.domain-knowledge-card h3,.domain-capability-item h3,.domain-work-card h3,.domain-workflow h3{margin:.15rem 0 .65rem;font-size:1.12rem;line-height:1.5}
+.domain-knowledge-card p,.domain-capability-item p,.domain-work-card p,.domain-workflow p,.domain-validation-grid p{margin:0;color:var(--muted);line-height:1.95}
+.domain-capability-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem 2rem}
+.domain-capability-item{display:grid;grid-template-columns:14px minmax(0,1fr);gap:1rem;align-items:start}
+.domain-capability-mark{width:10px;height:10px;margin-top:.65rem;border-radius:2px;background:var(--accent);box-shadow:0 0 0 5px rgba(0,60,145,.12)}
+.domain-workflow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;list-style:none;padding:0;margin:0;counter-reset:workflow}
+.domain-workflow li{position:relative;min-width:0;padding:1.25rem;border-top:2px solid var(--accent);border-radius:.6rem;background:var(--surface);counter-increment:workflow}
+.domain-workflow li:before{content:counter(workflow,decimal-leading-zero);display:block;margin-bottom:1.1rem;color:var(--accent);font-size:.8rem;font-weight:800;letter-spacing:.08em}
+.domain-validation-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,5vw,4rem)}
+.domain-validation-grid article{min-width:0}
+.domain-validation-grid .eyebrow{margin-bottom:.75rem}
+.domain-validation-grid h2{margin-bottom:1rem}
+.domain-link-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem 1.5rem;padding:0;list-style:none}
+.domain-link-list li{position:relative;padding-inline-start:1.3rem;color:var(--muted);line-height:1.8}
+.domain-link-list li:before{content:"";position:absolute;inset-inline-start:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.domain-work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.domain-work-kind{display:inline-flex;margin-bottom:.9rem;padding:.3rem .6rem;border-radius:999px;font-size:.72rem;font-weight:800}
+.domain-work-kind.is-documented{background:rgba(33,130,95,.13);color:#48a984}
+.domain-work-kind.is-focus{background:rgba(0,60,145,.13);color:var(--accent)}
+.domain-work-status{margin-top:1rem!important;padding-top:.8rem;border-top:1px solid var(--border);font-size:.82rem}
+.domain-disclosure{display:grid;grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);gap:2rem;align-items:center;margin-top:3rem;padding:clamp(1.4rem,3vw,2.3rem);border:1px solid rgba(0,60,145,.28);border-radius:1.1rem;background:linear-gradient(135deg,rgba(0,60,145,.10),var(--surface))}
+.domain-disclosure .eyebrow{margin-bottom:.6rem}
+.domain-disclosure p:last-child{margin:0;color:var(--muted);line-height:2}
+.domain-content-note{margin-top:1.5rem;padding-inline-start:1rem;border-inline-start:3px solid var(--accent);color:var(--muted);font-size:.88rem;line-height:1.9}
+.domain-content-note p{margin:0}
+html[data-theme="light"] .domain-hero--deep:after{background:linear-gradient(90deg,rgba(248,250,252,.98),rgba(248,250,252,.88) 54%,rgba(248,250,252,.58))}
+html[data-theme="light"] .domain-technical-figure{background:rgba(255,255,255,.72);border-color:rgba(10,40,80,.16)}
+html[data-theme="light"] .domain-technical-figure figcaption{color:#42556b}
+@media(max-width:1050px){.domain-hero--deep{grid-template-columns:1fr}.domain-technical-figure{max-width:760px}.domain-work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.domain-workflow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.domain-hero--deep{padding:3rem 0;gap:1.5rem}.domain-hero-copy h1{font-size:clamp(2.4rem,10vw,3.5rem)}.domain-knowledge-grid,.domain-capability-grid,.domain-validation-grid,.domain-link-list,.domain-work-grid,.domain-workflow,.domain-disclosure{grid-template-columns:1fr}.domain-disclosure{gap:1rem}.domain-technical-figure{padding:.35rem}.domain-technical-figure figcaption{font-size:.72rem}}
