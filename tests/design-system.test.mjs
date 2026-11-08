@@ -113,6 +113,12 @@ test("homepage has no vanity metrics and registration details live on the Compan
 });
 
 
+test("homepage company CTA uses the approved corporate grey", () => {
+  assert.match(home, /class="new-button new-button-company" href=\{route\(locale,"company"\)\}/);
+  assert.match(css, /\.home-redesign \.new-button-company \{ color: #07101c; background: #A8A8A8; border-color: #A8A8A8; \}/);
+  assert.match(css, /\.home-redesign \.new-button-primary \{ color: #fff; background: #003c91; \}/);
+});
+
 test("mobile header stays compact and homepage hero is content-first", () => {
   assert.match(css, /\.site-header \.brand-wordmark \{ display: none; \}/);
   assert.match(css, /\.home-redesign \.new-hero \{ padding-block: 42px 64px; \}/);
