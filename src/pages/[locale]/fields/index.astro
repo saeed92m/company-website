@@ -27,7 +27,8 @@ const fieldsOverviewAlt: Record<Locale, string> = {
   fr: "Une composition illustrant les six domaines de l’entreprise : astronomie, aérospatiale, télédétection, énergie, intelligence artificielle et sport automobile.",
   es: "Una composición de las seis áreas de la empresa: astronomía, aeroespacial, teledetección, energía, inteligencia artificial y motorsport."
 };
-const fieldsOverviewSrc = `${import.meta.env.BASE_URL.replace(/\\/+$/, "")}/assets/fields/six-domains-overview.webp`;
+const fieldsBase = import.meta.env.BASE_URL.endsWith("/") ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const fieldsOverviewSrc = `${fieldsBase}assets/fields/six-domains-overview.webp`;
 
 ---
 <SiteLayout locale={locale} title={site.navigation.fields + " — " + site.companyName} description={site.intro}>
