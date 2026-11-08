@@ -1,12 +1,12 @@
 import type { Field } from "../content/site";
 
 export const domainImageBySlug: Record<Field["slug"], string> = {
-  astronomy: "assets/domains/astronomy.svg",
-  aerospace: "assets/domains/aerospace.svg",
-  "remote-sensing": "assets/domains/remote-sensing.svg",
-  energy: "assets/domains/energy.svg",
-  "artificial-intelligence": "assets/domains/artificial-intelligence.svg",
-  motorsport: "assets/domains/motorsport.svg"
+  astronomy: "assets/domains/astronomy.webp",
+  aerospace: "assets/domains/aerospace.webp",
+  "remote-sensing": "assets/domains/remote-sensing.webp",
+  energy: "assets/domains/energy.webp",
+  "artificial-intelligence": "assets/domains/artificial-intelligence.webp",
+  motorsport: "assets/domains/motorsports.webp"
 };
 
 /** Build a domain-art URL that remains valid with or without a trailing base-path slash. */
