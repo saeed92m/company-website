@@ -1,0 +1,79 @@
+name: Lighthouse Audit
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "13 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-audit-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lighthouse:
+    name: Lighthouse mobile and desktop
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        strategy: [mobile, desktop]
+        locale: [fa, en]
+        route: [home, projects, contact]
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "22.23.4"
+
+      - name: Run Lighthouse
+        env:
+          STRATEGY: ${{ matrix.strategy }}
+          LOCALE: ${{ matrix.locale }}
+          ROUTE: ${{ matrix.route }}
+        run: |
+          set -euo pipefail
+          case "$ROUTE" in
+            home) suffix="" ;;
+            projects) suffix="projects/" ;;
+            contact) suffix="contact/" ;;
+          esac
+          url="https://saeed92m.github.io/company-website/$LOCALE/$suffix"
+          npx --yes lighthouse@12.8.2 "$url" \
+            --quiet \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --preset="$STRATEGY" \
+            --output=json \
+            --output-path=/tmp/lighthouse.json
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          const report = JSON.parse(fs.readFileSync("/tmp/lighthouse.json","utf8"));
+          const score = id => Math.round((report.categories[id]?.score ?? 0) * 100);
+          const audits = report.audits;
+          const rows = [
+            ["Performance", score("performance")],
+            ["Accessibility", score("accessibility")],
+            ["Best Practices", score("best-practices")],
+            ["SEO", score("seo")],
+          ];
+          const metric = id => audits[id]?.displayValue ?? "not available";
+          const summary = [
+            `## Lighthouse — ${process.env.LOCALE} / ${process.env.ROUTE} / ${process.env.STRATEGY}`,
+            "",
+            "| Category | Score |",
+            "|---|---:|",
+            ...rows.map(([name,value])=>`| ${name} | ${value} |`),
+            "",
+            `- LCP: ${metric("largest-contentful-paint")}`,
+            `- CLS: ${metric("cumulative-layout-shift")}`,
+            `- INP/TBT proxy: ${metric("total-blocking-time")}`,
+            `- FCP: ${metric("first-contentful-paint")}`,
+            `- Speed Index: ${metric("speed-index")}`,
+          ].join("\n");
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary + "\n\n");
+          console.log(summary);
+          NODE
