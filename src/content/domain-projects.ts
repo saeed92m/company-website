@@ -99,8 +99,8 @@ export const domainPortfolio: Record<Locale, Record<string, DomainPortfolio>> = 
 };
 
 export const domainPortfolioLabels: Record<Locale, { introduction: string; projects: string }> = {
-  fa: { introduction: "معرفی تخصصی حوزه", projects: "پروژه‌ها و زمینه‌های مهندسی" },
-  en: { introduction: "Domain overview", projects: "Projects and engineering topics" },
+  fa: { introduction: "معرفی تخصصی حوزه", projects: "پروژه‌ها و زمینه‌های مهندسی مرتبط" },
+  en: { introduction: "Domain overview", projects: "Related projects and engineering topics" },
   ar: { introduction: "نظرة عامة على المجال", projects: "المشاريع والموضوعات الهندسية" },
   ru: { introduction: "Обзор направления", projects: "Проекты и инженерные направления" },
   de: { introduction: "Fachlicher Überblick", projects: "Projekte und technische Themen" },
