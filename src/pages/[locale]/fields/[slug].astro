@@ -4,6 +4,7 @@ import { locales, type Locale } from "../../../data/locales";
 import { content } from "../../../content/site";
 import { domainImageUrl } from "../../../data/domain-assets";
 import { domainPortfolio, domainPortfolioLabels } from "../../../content/domain-projects";
+import { domainDeepDiveFa } from "../../../content/domain-deep-dive.fa";
 
 export function getStaticPaths() {
   return locales.flatMap((locale) => content[locale].fields.map((field) => ({
@@ -14,6 +15,7 @@ const { locale, field } = Astro.props as { locale: Locale; field: (typeof conten
 const site = content[locale];
 const portfolio = domainPortfolio[locale][field.slug];
 const portfolioLabels = domainPortfolioLabels[locale];
+const deepDive = locale === "fa" ? domainDeepDiveFa[field.slug] : undefined;
 const labels: Record<Locale, { scope: string; work: string; empty: string; approach: string; note: string; roadmap: string }> = {
   fa: { scope: "روش‌ها، فناوری‌ها و دامنه تخصصی", work: "سوابق و پروژه‌های مرتبط", empty: "در حال حاضر پروژه عمومی و مستندی برای نمایش در این حوزه معرفی نشده است.", approach: "رویکرد توسعه", note: "این صفحه زمینه‌های تخصصی و دامنه مورد توجه شرکت را معرفی می‌کند. ذکر یک توانمندی به‌تنهایی به معنی ارائه مستمر آن به‌عنوان خدمت تجاری یا تکمیل همه فناوری‌های مرتبط نیست. دامنه هر پروژه پس از بررسی نیاز، امکان‌سنجی فنی و منابع در دسترس تعیین می‌شود.", roadmap: "این حوزه در نقشه راه توسعه شرکت قرار دارد و افزودن رسمی آن به موضوع فعالیت اساسنامه در دست پیگیری است." },
   en: { scope: "Methods, technologies and specialist scope", work: "Related documented work", empty: "No public, documented project is currently listed for this domain.", approach: "Development approach", note: "This page describes the company's areas of focus and technical scope. A listed capability does not, by itself, mean that it is continuously offered as a commercial service or that every related technology is complete. Each project is scoped after requirements review, technical feasibility assessment, and resource evaluation.", roadmap: "This domain is part of the company's development roadmap. Its formal addition to the registered business scope is being pursued." },
@@ -56,6 +58,28 @@ const pageLabels = labels[locale];
       <div class="section-heading"><h2 id="domain-introduction-title">{portfolioLabels.introduction}</h2></div>
       <p class="domain-applications">{portfolio.introduction}</p>
     </section>
+    {deepDive && <section class="domain-deep-dive" aria-labelledby="deep-dive-title">
+      <div class="section-heading"><div><p class="eyebrow">ENGINEERING PERSPECTIVE</p><h2 id="deep-dive-title">نگاه علمی و مهندسی</h2></div><p class="lede">از مبانی علمی تا فرایند تحلیل، اعتبارسنجی و محدودیت‌های فنی</p></div>
+      <p class="domain-deep-lead">{deepDive.lead}</p>
+      <div class="domain-science-grid">
+        {deepDive.science.map((item, index) => <article class="domain-science-card">
+          <span class="domain-science-index">{String(index + 1).padStart(2, "0")}</span>
+          <h3>{item.title}</h3><p>{item.body}</p>
+        </article>)}
+      </div>
+      <div class="domain-workflow">
+        <div><p class="eyebrow">ENGINEERING WORKFLOW</p><h3>چرخه کار مهندسی</h3></div>
+        <ol>{deepDive.workflow.map((step) => <li>{step}</li>)}</ol>
+      </div>
+      <div class="domain-review-grid">
+        <article><h3>اعتبارسنجی و کنترل کیفیت</h3><p>{deepDive.validation}</p></article>
+        <article><h3>مرز اطلاعات عمومی</h3><p>{deepDive.boundaries}</p></article>
+      </div>
+      <div class="domain-visual-brief">
+        <div><p class="eyebrow">VISUAL CONTENT PLAN</p><h3>تصاویر و نمودارهای پیشنهادی</h3></div>
+        <div class="domain-visual-grid">{deepDive.visualBrief.map((item, index) => <article><span>{String(index + 1).padStart(2, "0")}</span><div><h4>{item.title}</h4><p>{item.description}</p></div></article>)}</div>
+      </div>
+    </section>}
     <section class="domain-content-section" aria-labelledby="related-title">
       <div class="section-heading"><h2 id="related-title">{portfolioLabels.projects}</h2></div>
       <div class="project-grid">{portfolio.projects.map((project) => <article class="project-card"><h3>{project.title}</h3><p>{project.summary}</p><details class="domain-project-details"><summary>{locale === "fa" ? "جزئیات" : "Details"}</summary><p>{project.overview}</p></details></article>)}</div>
@@ -66,4 +90,26 @@ const pageLabels = labels[locale];
       {field.slug === "motorsport" && <p class="domain-roadmap-note">{pageLabels.roadmap}</p>}
     </section>
   </div>
+  <style>
+    .domain-deep-dive{padding:clamp(2.5rem,6vw,5rem) 0;border-top:1px solid var(--border)}
+    .domain-deep-dive .section-heading{align-items:end}
+    .domain-deep-dive .section-heading h2{font-size:clamp(1.8rem,3.5vw,3rem);margin:0}
+    .domain-deep-dive .eyebrow{font-size:.68rem}
+    .domain-deep-lead{max-width:88ch;margin:0 0 2rem;font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:2.15;color:var(--ink)}
+    .domain-science-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .domain-science-card,.domain-review-grid article{padding:1.5rem;border:1px solid var(--border);border-radius:1rem;background:var(--surface-2)}
+    .domain-science-index,.domain-visual-grid article>span{font-size:.72rem;font-weight:850;letter-spacing:.12em;color:var(--accent)}
+    .domain-science-card h3,.domain-review-grid h3,.domain-workflow h3,.domain-visual-brief h3{margin:.6rem 0 1rem;font-size:1.18rem;line-height:1.5}
+    .domain-science-card p,.domain-review-grid p,.domain-visual-grid p{margin:0;color:var(--muted);line-height:2}
+    .domain-workflow{display:grid;grid-template-columns:.65fr 1.35fr;gap:2rem;margin:2rem 0;padding:2rem;border:1px solid var(--border);border-radius:1rem;background:linear-gradient(135deg,var(--surface-2),var(--surface))}
+    .domain-workflow h3,.domain-visual-brief h3{margin-top:0}
+    .domain-workflow ol{display:grid;gap:.65rem;margin:0;padding-inline-start:1.5rem}
+    .domain-workflow li{padding:.35rem .25rem;line-height:1.8}
+    .domain-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .domain-visual-brief{margin-top:2rem;padding:2rem;border:1px solid var(--border);border-radius:1rem}
+    .domain-visual-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .domain-visual-grid article{display:flex;gap:.85rem;align-items:flex-start;padding-top:1rem;border-top:1px solid var(--border)}
+    .domain-visual-grid h4{margin:0 0 .45rem;font-size:1rem;line-height:1.5}
+    @media(max-width:760px){.domain-science-grid,.domain-review-grid,.domain-visual-grid{grid-template-columns:1fr}.domain-workflow{grid-template-columns:1fr;gap:.5rem;padding:1.25rem}.domain-visual-brief{padding:1.25rem}.domain-science-card{padding:1.25rem}}
+  </style>
 </SiteLayout>
