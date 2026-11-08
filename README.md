@@ -35,7 +35,7 @@ This repository is **public by project decision**. The repository contains only 
 
 ## Status
 
-**Production acceptance: In Progress.** The latest application-source change is PR #88 at `3dad024ea6c4261dc6153db0bbcca9f04f3d45c2`. PRs #89 and #91 are documentation-only follow-ups. Their merge commits and validation records are listed in the production acceptance addendum. Use the repository's [main branch](https://github.com/saeed92m/company-website/tree/main) for the live branch head; this README does not pin a moving branch head to a static SHA.
+**Production acceptance: In Progress.** The latest application-source change is recorded in the current `main` history. The mobile project-artwork fit correction (PR #114) and the Pages WebP smoke-test repair (PR #115) are merged. Post-merge CI, CodeQL, dependency audit, Pages build/deploy, and deployed smoke checks passed on `3ea71856cae18245c55efc8ef7014a65cff59826`. Manual physical-device review and the remaining acceptance gates are still open. See [the 2026-11-08 evidence record](docs/audits/production-acceptance-addendum-2026-11-08.md) and [Issue #69](https://github.com/saeed92m/company-website/issues/69). Use the repository's [main branch](https://github.com/saeed92m/company-website/tree/main) for the live branch head; this README does not pin a moving branch head to a static SHA.
 
 ### Verified workflow evidence
 
