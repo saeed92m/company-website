@@ -9,6 +9,12 @@ import { resolveSiteUrl } from "../utils/site-url.mjs";
 import { webLogoUrl } from "../data/brand";
 import { formatFounded } from "../utils/date-format";
 import BrandMark from "../components/BrandMark.astro";
+import vazirmatnArabic from "../assets/fonts/vazirmatn-arabic-wght-normal.woff2";
+import vazirmatnLatin from "../assets/fonts/vazirmatn-latin-wght-normal.woff2";
+import ibmPlexLatin from "../assets/fonts/ibm-plex-sans-latin-wght-normal.woff2";
+import ibmPlexLatinExt from "../assets/fonts/ibm-plex-sans-latin-ext-wght-normal.woff2";
+import ibmPlexCyrillic from "../assets/fonts/ibm-plex-sans-cyrillic-wght-normal.woff2";
+import ibmPlexCyrillicExt from "../assets/fonts/ibm-plex-sans-cyrillic-ext-wght-normal.woff2";
 import "../styles/global.css";
 import "../styles/design-system.css";
 import "../styles/screenshot-review.css";
@@ -22,6 +28,16 @@ interface Props {
 const { locale, title, description } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
+const fontPreloads = {
+  fa: [vazirmatnArabic, vazirmatnLatin, ibmPlexCyrillic],
+  ar: [vazirmatnArabic, vazirmatnLatin],
+  en: [ibmPlexLatin],
+  ru: [ibmPlexLatin, ibmPlexCyrillic, ibmPlexCyrillicExt],
+  de: [ibmPlexLatin, ibmPlexLatinExt],
+  zh: [],
+  fr: [ibmPlexLatin, ibmPlexLatinExt],
+  es: [ibmPlexLatin, ibmPlexLatinExt]
+}[locale];
 const labels = ui[locale];
 const menuUi: Record<Locale, { menu: string; close: string; home: string; intro: string; board: string; navigation: string }> = {
   fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", intro: "معرفی", board: "هیئت‌مدیره", navigation: "ناوبری اصلی" },
@@ -128,6 +144,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
 <html lang={locale} dir={meta.dir} data-theme="dark">
   <head>
     <meta charset="UTF-8" />
+    {fontPreloads.map((fontUrl) => <link rel="preload" href={fontUrl} as="font" type="font/woff2" crossorigin />)}
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title ?? site.companyName}</title>
     <meta name="theme-color" content="#07111f" data-theme-color />
