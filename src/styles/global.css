@@ -293,6 +293,7 @@ html[data-theme="light"] .project-dialog__close{background:#f8fafc;color:#14243a
 .menu-toggle:hover,.menu-toggle:focus-visible,.nav-close:hover,.nav-close:focus-visible {
   border-color:var(--focus);
 }
+.desktop-management-link { display:none; }
 .primary-nav[hidden] { display:none !important; }
 .primary-nav {
   position:fixed;
@@ -552,6 +553,9 @@ body.menu-open { overflow:hidden; }
   .site-header .nav-submenu a:hover,
   .site-header .nav-submenu a:focus-visible,
   .site-header .nav-submenu a[aria-current="page"] { background:var(--surface-2); color:var(--ink); }
-  .site-header .header-tools { flex:0 0 auto; gap:.45rem; order:2; }
-  .site-header .primary-nav { order:3; }
+  /* RTL desktop order: brand → navigation → language/theme controls. */
+  .site-header .primary-nav { order:2; }
+  .site-header .header-tools { flex:0 0 auto; gap:.45rem; order:3; }
+  .site-header .primary-nav > a:first-of-type { display:none; }
+  .site-header .primary-nav > .desktop-management-link { display:inline-flex; }
 }
