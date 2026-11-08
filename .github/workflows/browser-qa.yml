@@ -215,19 +215,23 @@ jobs:
                   if (width>420) throw new Error(`${url}: desktop submenu exceeds content width: ${width}px`);
                   await page.keyboard.press("Escape");
                 }
-                await companyGroup.evaluate((el)=>{el.open=false;});
-                await fieldsGroup.evaluate((el)=>{el.open=false;});
-                await companyGroup.locator("summary").focus();
-                await page.keyboard.press("Enter");
-                if (!(await companyGroup.evaluate((el)=>el.open))) throw new Error(`${url}: Company dropdown keyboard activation failed`);
-                await page.keyboard.press("Escape");
-                if (await companyGroup.evaluate((el)=>el.open)) throw new Error(`${url}: Escape did not close dropdown`);
-                await fieldsGroup.locator("summary").focus();
-                await page.keyboard.press("Space");
-                if (!(await fieldsGroup.evaluate((el)=>el.open))) throw new Error(`${url}: domain dropdown keyboard activation failed`);
-                if (await fieldsGroup.locator(".nav-submenu a").count() !== 6) throw new Error(`${url}: six domain links missing`);
-                await page.locator("main#main-content").click({position:{x:12,y:12}});
-                if (await fieldsGroup.evaluate((el)=>el.open)) throw new Error(`${url}: outside click did not close dropdown`);
+                // Desktop-only keyboard checks: on mobile the nav is intentionally hidden
+                // after the overlay-close assertion above, so hidden summaries cannot receive focus.
+                if (viewport.name === "desktop") {
+                  await companyGroup.evaluate((el)=>{el.open=false;});
+                  await fieldsGroup.evaluate((el)=>{el.open=false;});
+                  await companyGroup.locator("summary").focus();
+                  await page.keyboard.press("Enter");
+                  if (!(await companyGroup.evaluate((el)=>el.open))) throw new Error(`${url}: Company dropdown keyboard activation failed`);
+                  await page.keyboard.press("Escape");
+                  if (await companyGroup.evaluate((el)=>el.open)) throw new Error(`${url}: Escape did not close dropdown`);
+                  await fieldsGroup.locator("summary").focus();
+                  await page.keyboard.press("Space");
+                  if (!(await fieldsGroup.evaluate((el)=>el.open))) throw new Error(`${url}: domain dropdown keyboard activation failed`);
+                  if (await fieldsGroup.locator(".nav-submenu a").count() !== 6) throw new Error(`${url}: six domain links missing`);
+                  await page.locator("main#main-content").click({position:{x:12,y:12}});
+                  if (await fieldsGroup.evaluate((el)=>el.open)) throw new Error(`${url}: outside click did not close dropdown`);
+                }
 
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });
