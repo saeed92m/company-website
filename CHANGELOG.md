@@ -1,3 +1,16 @@
+## 2026-11-09 — Production performance and audit hardening
+
+- PR #119 added retained Lighthouse JSON artifacts for mobile and desktop reports.
+- PR #121 added a read-only GitHub Pages response-header audit.
+- PR #122 added build-time WebP optimization and locale-specific WOFF2 preloads. Ten images are 87.1% smaller in the deployed build; dimensions and URLs are unchanged.
+- PR #123 made Lighthouse, axe, and response-header audits run after a successful Pages deployment. It also preserves axe incomplete-check details and adds browser checks for dialog references and icon contrast.
+- Post-deploy Browser QA passed 288/288 checks across Chromium, Firefox, and WebKit.
+- Post-deploy axe scanned 48 route/viewport combinations and found zero violations. Manual screen-reader and physical-device review remain open.
+- Post-deploy Lighthouse reports show 2.15 MB home pages and 726–736 KB projects pages. One mobile English contact run recorded 1,780 ms TBT; repeat before treating it as a stable defect.
+- Security-header audit found HSTS present; CSP, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, and X-Frame-Options are missing from GitHub Pages responses.
+- Updated Git bundle restore validation passed on main. Owner-controlled encrypted off-platform storage remains pending.
+- Production acceptance remains **In Progress**. See `docs/audits/production-acceptance-addendum-2026-11-09.md` and [Issue #69](https://github.com/saeed92m/company-website).
+
 ## 2026-11-08 — Mobile project artwork fit and Pages smoke-test repair
 
 - Updated mobile project-page artwork to use intrinsic sizing and `object-fit: contain`; desktop behavior remains unchanged (PR #114).
