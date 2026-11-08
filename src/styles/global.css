@@ -540,6 +540,16 @@ body.menu-open { overflow:hidden; }
   .site-header .nav-group[open] > summary::after { content:"⌃"; }
   .site-header .nav-group[data-current="true"] > summary,
   .site-header .primary-nav a[aria-current="page"] { color:var(--ink); font-weight:800; }
+  /* design-system.css defines full-width stacked mobile items globally.
+     Reset those item widths only at desktop breakpoints. */
+  .site-header .primary-nav > .nav-group,
+  .site-header .primary-nav > a {
+    width:auto !important;
+    min-width:max-content;
+    flex:0 0 auto;
+  }
+  .site-header .primary-nav > .nav-group { display:block !important; }
+  .site-header .primary-nav { overflow:visible; }
   .site-header .nav-group { position:relative; flex:0 0 auto; }
   .site-header .nav-submenu {
     position:absolute; z-index:40; inset-block-start:calc(100% + .35rem); inset-inline-start:0;
