@@ -33,6 +33,10 @@ const menuUi: Record<Locale, { menu: string; close: string; home: string; intro:
   fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", intro: "Présentation", board: "Conseil d’administration", navigation: "Navigation principale" },
   es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", intro: "Presentación", board: "Junta directiva", navigation: "Navegación principal" }
 };
+const managementNavLabel: Record<Locale, string> = {
+  fa: "مدیریت", en: "Management", ar: "الإدارة", ru: "Руководство",
+  de: "Management", zh: "管理", fr: "Direction", es: "Dirección"
+};
 const profile = ceo[locale];
 const origin = Astro.site?.toString().replace(/\/$/, "") ?? "";
 const path = Astro.url.pathname;
@@ -175,6 +179,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           </div>
         </details>
         <a href={route(locale,"projects")} aria-current={path === route(locale,"projects") ? "page" : undefined}>{site.navigation.projects}</a>
+        <a class="desktop-management-link" href={route(locale,"company/ceo")} aria-current={isCeoProfilePage ? "page" : undefined}>{managementNavLabel[locale]}</a>
         <a href={route(locale,"contact")} aria-current={path === route(locale,"contact") ? "page" : undefined}>{site.navigation.contact}</a>
       </nav>
       <div class="header-tools">
