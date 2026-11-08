@@ -165,12 +165,12 @@ jobs:
           # Validate every homepage domain-card image URL, not just that the raw SVG files exist.
           html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/")"
           for asset in \
-            "/assets/domains/astronomy.svg" \
-            "/assets/domains/aerospace.svg" \
-            "/assets/domains/remote-sensing.svg" \
-            "/assets/domains/energy.svg" \
-            "/assets/domains/artificial-intelligence.svg" \
-            "/assets/domains/motorsport.svg"; do
+            "/assets/domains/astronomy.webp" \
+            "/assets/domains/aerospace.webp" \
+            "/assets/domains/remote-sensing.webp" \
+            "/assets/domains/energy.webp" \
+            "/assets/domains/artificial-intelligence.webp" \
+            "/assets/domains/motorsports.webp"; do
             expected="/company-website${asset}"
             if ! grep -Fq "${expected}" <<< "$html"; then
               echo "FAIL /en/: domain image URL missing or malformed: ${expected}"
@@ -184,7 +184,7 @@ jobs:
           fi
 
           field_html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}/en/fields/astronomy/")"
-          if ! grep -Fq '/company-website/assets/domains/astronomy.svg' <<< "$field_html"; then
+          if ! grep -Fq '/company-website/assets/domains/astronomy.webp' <<< "$field_html"; then
             echo "FAIL /en/fields/astronomy/: domain hero image URL missing or malformed"
             exit 1
           fi
@@ -203,16 +203,16 @@ jobs:
           done
 
           for asset in \
-            "/assets/domains/astronomy.svg" \
-            "/assets/domains/aerospace.svg" \
-            "/assets/domains/remote-sensing.svg" \
-            "/assets/domains/energy.svg" \
-            "/assets/domains/artificial-intelligence.svg" \
-            "/assets/domains/motorsport.svg"; do
+            "/assets/domains/astronomy.webp" \
+            "/assets/domains/aerospace.webp" \
+            "/assets/domains/remote-sensing.webp" \
+            "/assets/domains/energy.webp" \
+            "/assets/domains/artificial-intelligence.webp" \
+            "/assets/domains/motorsports.webp"; do
             code="$(curl -L -sS -o /tmp/site-asset -w "%{http_code}" --retry 3 --retry-delay 2 "${base}${asset}")"
-            if [ "$code" != "200" ] || ! grep -q "<svg" /tmp/site-asset; then
-              echo "FAIL asset ${asset}: HTTP $code or invalid SVG payload"
+            if [ "$code" != "200" ] || [ "$(file -b --mime-type /tmp/site-asset)" != "image/webp" ]; then
+              echo "FAIL asset ${asset}: HTTP $code or invalid WebP payload"
               exit 1
             fi
-            echo "PASS asset ${asset}: HTTP 200 + SVG"
+            echo "PASS asset ${asset}: HTTP 200 + WebP"
           done
