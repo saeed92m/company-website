@@ -196,3 +196,12 @@ Keep Issue [#69](https://github.com/saeed92m/company-website/issues/69) open. Pr
 - Pages WebP smoke-test correction: merged and deployed; build/deploy/smoke all pass.
 - Overall Production acceptance remains **In Progress**. Manual WCAG 2.2 AA, physical-device review, Lighthouse/Core Web Vitals, live security-header verification, GitHub security alert/settings review, backup/restore and rollback drills, and private vulnerability reporting remain open under [Issue #69](https://github.com/saeed92m/company-website/issues/69).
 - Production hosting remains GitHub Pages. Cloudflare Pages remains Preview only. No DNS, email, hosting, privacy, or backend scope changed.
+
+
+## 2026-11-08 — Acceptance automation and recovery controls (PR #117)
+
+- Added an axe-core workflow for WCAG 2.0/2.1/2.2 A/AA scans across eight locales, three representative route families, and mobile/desktop viewports. Results are pending; automated scans do not replace manual assistive-technology review.
+- Added Lighthouse mobile/desktop measurements for Persian and English home, projects, and contact routes. First scores are pending; lab metrics are not field Core Web Vitals.
+- Added a Git bundle backup/restore validation workflow and a runbook for off-platform backups, restore checks, and safe PR-based rollback. The initial restore workflow exposed a refs/workspace issue; fixes are included in the latest PR head. No successful backup artifact is claimed until the current run passes.
+- Owner confirmed mobile project artwork displays correctly. This closes the image-fit defect only.
+- PR #117 checks must pass before merge. See [PR #117](https://github.com/saeed92m/company-website/pull/117) and [Issue #69](https://github.com/saeed92m/company-website/issues/69).

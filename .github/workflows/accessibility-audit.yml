@@ -1,0 +1,119 @@
+name: Accessibility Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, 'feat/**', 'design/**', 'fix/**', 'qa/**']
+  schedule:
+    - cron: "41 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: accessibility-audit-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  axe:
+    name: WCAG 2.2 AA automated scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "22.23.4"
+
+      - name: Install locked dependencies and axe
+        run: |
+          npm ci --no-audit --no-fund
+          npm install --no-save --no-package-lock --ignore-scripts --no-audit --no-fund @axe-core/playwright@4.10.2
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build pull request preview
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_BASE_PATH: /company-website
+        run: npm run build
+
+      - name: Start pull request static preview
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/company-website-preview
+          ln -s "$GITHUB_WORKSPACE/dist" /tmp/company-website-preview/company-website
+          python3 -m http.server 4321 --bind 127.0.0.1 --directory /tmp/company-website-preview >/tmp/company-website-preview.log 2>&1 &
+          echo "$!" > /tmp/company-website-preview.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --max-time 5 http://127.0.0.1:4321/company-website/fa/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/company-website-preview.log
+          exit 1
+
+      - name: Scan representative localized routes
+        env:
+          BASE_URL: ${{ github.event_name == 'pull_request' && 'http://127.0.0.1:4321/company-website' || 'https://saeed92m.github.io/company-website' }}
+        run: |
+          cat > accessibility-audit.mjs <<'EOF'
+          import { chromium } from "playwright";
+          import AxeBuilder from "@axe-core/playwright";
+
+          const base = process.env.BASE_URL;
+          const locales = ["fa","en","ar","ru","de","zh","fr","es"];
+          const routes = ["", "projects/", "contact/"];
+          const browser = await chromium.launch({ headless: true });
+          const results = [];
+          let violations = 0;
+
+          for (const viewport of [
+            { name: "mobile", width: 390, height: 844 },
+            { name: "desktop", width: 1440, height: 900 },
+          ]) {
+            const context = await browser.newContext({ viewport });
+            for (const locale of locales) {
+              for (const route of routes) {
+                const url = `${base}/${locale}/${route}`;
+                const page = await context.newPage();
+                const response = await page.goto(url, { waitUntil: "networkidle", timeout: 45000 });
+                if (!response?.ok()) throw new Error(`${url}: HTTP ${response?.status() ?? "no response"}`);
+                const report = await new AxeBuilder({ page })
+                  .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"])
+                  .analyze();
+                results.push({ locale, route: route || "/", viewport: viewport.name, violations: report.violations.length, passes: report.passes.length, incomplete: report.incomplete.length });
+                violations += report.violations.length;
+                for (const item of report.violations) {
+                  console.error(`VIOLATION ${url} [${viewport.name}] ${item.id} impact=${item.impact}: ${item.help}`);
+                  for (const node of item.nodes.slice(0, 5)) console.error(`  ${node.target.join(", ")} — ${node.failureSummary?.replace(/\s+/g," ").slice(0,240)}`);
+                }
+                await page.close();
+              }
+            }
+            await context.close();
+          }
+          await browser.close();
+
+          const summary = [
+            "# Automated accessibility audit",
+            "",
+            `- URL mode: ${base.startsWith("http://127.0.0.1") ? "pull request build" : "deployed production"}`,
+            `- Route/viewport scans: ${results.length}`,
+            `- Axe violations: ${violations}`,
+            "",
+            "| Locale | Route | Viewport | Violations | Passes | Incomplete |",
+            "|---|---|---:|---:|---:|---:|",
+            ...results.map(x => `| ${x.locale} | /${x.route} | ${x.viewport} | ${x.violations} | ${x.passes} | ${x.incomplete} |`),
+          ].join("\n");
+          await import("node:fs/promises").then(fs => fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\n"));
+          console.log(summary);
+          if (violations > 0) process.exit(1);
+          EOF
+          node accessibility-audit.mjs
