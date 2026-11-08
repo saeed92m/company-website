@@ -302,9 +302,14 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           if (window.matchMedia("(max-width: 720px)").matches && menu && !menu.hidden) setMenuOpen(false);
         });
         document.addEventListener("click", (event) => {
-          if (window.matchMedia("(max-width: 720px)").matches && menu && !menu.hidden && event.target instanceof Node &&
+          const mobile = window.matchMedia("(max-width: 720px)").matches;
+          if (mobile && menu && !menu.hidden && event.target instanceof Node &&
               !menu.contains(event.target) && !menuToggle?.contains(event.target)) {
             setMenuOpen(false);
+            return;
+          }
+          if (!mobile && event.target instanceof Element && !event.target.closest("[data-nav-group]")) {
+            menuGroups.forEach((group) => { group.open = false; });
           }
         });
         toggle?.addEventListener("click", () => {
