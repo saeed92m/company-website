@@ -17,12 +17,46 @@ const fieldsIntro: Record<Locale, string> = {
   es: "La empresa se centra en seis áreas especializadas. Su enfoque conecta la investigación, el diseño y el desarrollo de ingeniería en astronomía, aeroespacial, teledetección, energía, inteligencia artificial y motorsport. Estas áreas forman un marco interdisciplinario para convertir el conocimiento científico y las necesidades definidas en soluciones prácticas y escalables."
 };
 const fieldsHeading: Record<Locale, string> = { fa: "شش حوزه تخصصی ما", en: "Our six specialist areas", ar: "مجالاتنا التخصصية الستة", ru: "Шесть специализированных направлений", de: "Unsere sechs Fachbereiche", zh: "六大专业领域", fr: "Nos six domaines spécialisés", es: "Nuestras seis áreas especializadas" };
+const fieldsOverviewAlt: Record<Locale, string> = {
+  fa: "نمایی ترکیبی از شش حوزه فعالیت شرکت: نجوم، هوافضا، سنجش از دور، انرژی، هوش مصنوعی و موتوراسپرت.",
+  en: "A composite view of the company’s six fields: astronomy, aerospace, remote sensing, energy, artificial intelligence and motorsport.",
+  ar: "عرض مركب لمجالات الشركة الستة: علم الفلك والطيران والفضاء والاستشعار عن بُعد والطاقة والذكاء الاصطناعي ورياضة المحركات.",
+  ru: "Коллаж из шести направлений компании: астрономия, аэрокосмические технологии, дистанционное зондирование, энергетика, искусственный интеллект и автоспорт.",
+  de: "Eine Bildübersicht der sechs Unternehmensbereiche: Astronomie, Luft- und Raumfahrt, Fernerkundung, Energie, künstliche Intelligenz und Motorsport.",
+  zh: "公司六大业务领域的组合图：天文学、航空航天、遥感、能源、人工智能和赛车运动。",
+  fr: "Une composition illustrant les six domaines de l’entreprise : astronomie, aérospatiale, télédétection, énergie, intelligence artificielle et sport automobile.",
+  es: "Una composición de las seis áreas de la empresa: astronomía, aeroespacial, teledetección, energía, inteligencia artificial y motorsport."
+};
+const fieldsOverviewSrc = `${import.meta.env.BASE_URL.replace(/\\/+$/, "")}/assets/fields/six-domains-overview.webp`;
+
 ---
 <SiteLayout locale={locale} title={site.navigation.fields + " — " + site.companyName} description={site.intro}>
   <div class="site-shell">
     <section class="hero" aria-labelledby="fields-title"><p class="eyebrow">{site.navigation.fields}</p><h1 id="fields-title">{site.navigation.fields}</h1><p class="lede">{fieldsIntro[locale]}</p></section>
+    <figure class="fields-overview">
+      <img src={fieldsOverviewSrc} alt={fieldsOverviewAlt[locale]} width="480" height="270" loading="lazy" decoding="async" />
+    </figure>
     <section aria-labelledby="field-list-title"><div class="section-heading"><h2 id="field-list-title">{fieldsHeading[locale]}</h2></div>
       <div class="domain-grid">{site.fields.map((field) => <a class="domain-card" href={route(locale,"fields/"+field.slug)} style={`--domain-image: url(${domainImageUrl(field.slug)})`}><span><strong>{field.title}</strong><span class="card-summary">{field.summary}</span></span><span aria-hidden="true">↗</span></a>)}</div>
     </section>
   </div>
 </SiteLayout>
+
+<style>
+  .fields-overview {
+    width: 100%;
+    margin: clamp(2rem, 5vw, 4rem) 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: clamp(1rem, 2vw, 1.5rem);
+    background: var(--surface-2);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .18);
+  }
+  .fields-overview img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+</style>

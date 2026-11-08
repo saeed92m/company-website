@@ -1,3 +1,11 @@
+## 2026-11-08 — Six-domain overview image (PR)
+
+- Added the owner-supplied six-domain composite image to the Fields overview page, between the introduction and the domain cards.
+- Stored the image as a responsive WebP asset under `public/assets/fields/`; added localized alternative text for all eight supported locales.
+- Preserved the existing six-card navigation and domain detail routes.
+- Added regression coverage for image placement, localized alternative text, and the WebP asset signature.
+- Changes are under review in PR #98. No Production source or deployment was changed.
+
 ## 2026-11-08 — Homepage Company CTA brand colour
 
 - Changed the homepage Company link into a secondary button.
