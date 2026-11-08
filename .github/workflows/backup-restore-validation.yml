@@ -1,0 +1,52 @@
+name: Repository Backup and Restore Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main, 'feat/**', 'design/**', 'fix/**', 'qa/**']
+  schedule:
+    - cron: "29 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-backup-validation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backup-restore:
+    name: Create and restore Git bundle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full repository history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+
+      - name: Create and verify backup bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$RUNNER_TEMP/company-website-${GITHUB_SHA}.bundle"
+          git bundle create "$bundle" --all
+          git bundle verify "$bundle"
+          mkdir "$RUNNER_TEMP/restore-check"
+          git clone "$bundle" "$RUNNER_TEMP/restore-check/repository"
+          git -C "$RUNNER_TEMP/restore-check/repository" fsck --full
+          source_refs="$(git for-each-ref --format='%(refname) %(objectname)' | sort)"
+          restored_refs="$(git -C "$RUNNER_TEMP/restore-check/repository" for-each-ref --format='%(refname) %(objectname)' | sort)"
+          diff -u <(printf '%s\n' "$source_refs") <(printf '%s\n' "$restored_refs")
+          test "$(git -C "$RUNNER_TEMP/restore-check/repository" rev-parse HEAD)" = "$GITHUB_SHA"
+          echo "PASS: Git bundle verified, cloned, fsck-clean, and all refs match."
+          echo "BUNDLE_PATH=$bundle" >> "$GITHUB_ENV"
+
+      - name: Upload validated backup artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: company-website-git-bundle-${{ github.sha }}
+          path: ${{ env.BUNDLE_PATH }}
+          if-no-files-found: error
+          retention-days: 30
