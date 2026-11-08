@@ -504,6 +504,9 @@ body.menu-open { overflow:hidden; }
     padding: 1rem;
   }
 
+  /* Preserve the mobile menu's native closed state after the panel layout rule. */
+  .site-header .primary-nav[hidden] { display:none !important; }
+
   .site-header .primary-nav > a,
   .site-header .primary-nav > .nav-group {
     flex: 0 0 auto;
