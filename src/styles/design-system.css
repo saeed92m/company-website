@@ -85,13 +85,37 @@ html[data-theme="light"] .home-redesign {
 .home-redesign .new-hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
   min-height: auto;
   padding-block: clamp(72px, 10vw, 128px) clamp(64px, 8vw, 104px);
 }
 .home-redesign .new-hero:before { content: none; }
 .home-redesign .new-hero-copy { position: relative; z-index: 2; max-width: 860px; }
+.home-redesign .new-hero-visual {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--rd-line);
+  border-radius: clamp(18px, 2vw, 28px);
+  background: var(--rd-panel);
+  box-shadow: 0 28px 72px rgba(0, 20, 48, .24);
+}
+.home-redesign .new-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(145deg, rgba(0, 60, 145, .10), transparent 58%);
+}
+.home-redesign .new-hero-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .home-redesign .new-kicker {
   display: flex;
   align-items: center;
