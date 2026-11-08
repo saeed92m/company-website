@@ -1,3 +1,11 @@
+## 2026-11-08 — Homepage Company CTA brand colour
+
+- Changed the homepage Company link into a secondary button.
+- Applied the approved corporate grey `#A8A8A8`; preserved the primary activity button in brand blue `#003C91`.
+- Kept the change limited to the homepage hero CTA and shared design-system styles.
+- Added a regression test for both brand colours.
+- Pending CI and visual preview validation. No Production deployment was changed.
+
 ## 2026-11-07 — Company submenu labels and board profile hero refinement (PR #97)
 
 - Kept the top-level Company navigation group unchanged.
