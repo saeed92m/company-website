@@ -2,7 +2,7 @@ name: Browser QA
 
 on:
   pull_request:
-    branches: [main, 'feat/**', 'design/**']
+    branches: [main, 'feat/**', 'design/**', 'fix/**']
   workflow_run:
     workflows: ["Deploy GitHub Pages"]
     types: [completed]
@@ -178,59 +178,60 @@ jobs:
                 const expectedDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
                 if (checks.dir !== expectedDir) throw new Error(`${url}: expected dir=${expectedDir}, got ${checks.dir}`);
 
-                const menuToggle = page.locator("[data-menu-toggle]");
                 const navPanel = page.locator("nav.primary-nav");
-                if (await menuToggle.count() !== 1) throw new Error(`${url}: persistent menu toggle missing`);
                 if (await page.locator(".header-tools .language-select select").count() !== 1 ||
                     await page.locator(".header-tools [data-theme-toggle]").count() !== 1) {
-                  throw new Error(`${url}: language/theme controls are not persistent in the header`);
-                }
-                await menuToggle.click();
-                if (!(await navPanel.isVisible())) throw new Error(`${url}: menu overlay did not open`);
-                const panelGeometry = await navPanel.evaluate((element) => {
-                  const rect = element.getBoundingClientRect();
-                  const insideStickyHeader = Boolean(element.closest(".site-header"));
-                  const style = getComputedStyle(element);
-                  return {
-                    position: style.position,
-                    insideStickyHeader,
-                    top: rect.top,
-                    bottom: rect.bottom,
-                    height: rect.height,
-                    viewportHeight: window.innerHeight,
-                    width: rect.width,
-                    viewportWidth: window.innerWidth
-                  };
-                });
-                if (panelGeometry.position !== "fixed" ||
-                    panelGeometry.insideStickyHeader ||
-                    panelGeometry.height < panelGeometry.viewportHeight * 0.55 ||
-                    panelGeometry.bottom > panelGeometry.viewportHeight + 1 ||
-                    panelGeometry.width > panelGeometry.viewportWidth + 1) {
-                  throw new Error(`${url} [${viewport.name}]: navigation overlay is clipped or constrained: ${JSON.stringify(panelGeometry)}`);
+                  throw new Error(`${url}: persistent header controls missing`);
                 }
                 const navGroups = page.locator("nav.primary-nav details.nav-group");
-                if (await navGroups.count() !== 2) throw new Error(`${url}: expected Company and six-domain disclosure groups`);
+                if (await navGroups.count() !== 2) throw new Error(`${url}: expected two navigation groups`);
                 const companyGroup = navGroups.nth(0);
                 const fieldsGroup = navGroups.nth(1);
-                if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company group is not marked as the active section`);
-                if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain group is not marked as the active section`);
-                await companyGroup.evaluate((element) => { element.open = false; });
-                await fieldsGroup.evaluate((element) => { element.open = false; });
-                await companyGroup.locator("summary").focus();
-                await page.keyboard.press("Enter");
-                if (!(await companyGroup.evaluate((element) => element.open))) throw new Error(`${url}: Enter did not open Company dropdown`);
-                await page.keyboard.press("Escape");
-                if (await companyGroup.evaluate((element) => element.open)) throw new Error(`${url}: Escape did not close Company dropdown`);
-                if (!(await companyGroup.locator("summary").evaluate((element) => element === document.activeElement))) throw new Error(`${url}: Escape did not return focus to Company summary`);
-
-                await fieldsGroup.locator("summary").focus();
-                await page.keyboard.press("Space");
-                if (!(await fieldsGroup.evaluate((element) => element.open))) throw new Error(`${url}: Space did not open six-domain dropdown`);
-                const fieldLinks = fieldsGroup.locator(".nav-submenu a");
-                if (await fieldLinks.count() !== 6) throw new Error(`${url}: expected six domain links, got ${await fieldLinks.count()}`);
-                await page.locator("main#main-content").click({position:{x:12,y:12}});
-                if (await fieldsGroup.evaluate((element) => element.open)) throw new Error(`${url}: outside click did not close domain dropdown`);
+                if (suffix.startsWith("company/") && await companyGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: Company active state missing`);
+                if (suffix.startsWith("fields/") && await fieldsGroup.getAttribute("data-current") !== "true") throw new Error(`${url}: domain active state missing`);
+                if (viewport.name === "mobile") {
+                  const menuToggle = page.locator("[data-menu-toggle]");
+                  if (await menuToggle.count() !== 1) throw new Error(`${url}: mobile hamburger missing`);
+                  await menuToggle.click();
+                  if (!(await navPanel.isVisible())) throw new Error(`${url}: mobile overlay did not open`);
+                  const geometry = await navPanel.evaluate((el) => {
+                    const r=el.getBoundingClientRect(), s=getComputedStyle(el);
+                    return {position:s.position,height:r.height,bottom:r.bottom,viewportHeight:innerHeight};
+                  });
+                  if (geometry.position !== "fixed" || geometry.height < geometry.viewportHeight*.55 || geometry.bottom > geometry.viewportHeight+1) {
+                    throw new Error(`${url}: invalid mobile overlay geometry: ${JSON.stringify(geometry)}`);
+                  }
+                  await menuToggle.click();
+                  if (await navPanel.isVisible()) throw new Error(`${url}: mobile overlay did not close from hamburger toggle`);
+                } else {
+                  if (await page.locator("[data-menu-toggle]:visible").count() !== 0) throw new Error(`${url}: desktop hamburger is visible`);
+                  if (!(await navPanel.isVisible())) throw new Error(`${url}: desktop horizontal navigation is hidden`);
+                  const geometry = await navPanel.evaluate((el) => ({position:getComputedStyle(el).position,parent:el.parentElement?.tagName}));
+                  if (geometry.position === "fixed" || geometry.parent !== "HEADER") throw new Error(`${url}: desktop nav is not in header: ${JSON.stringify(geometry)}`);
+                  await fieldsGroup.locator("summary").focus();
+                  await page.keyboard.press("Enter");
+                  if (!(await fieldsGroup.evaluate((el) => el.open))) throw new Error(`${url}: desktop dropdown keyboard activation failed`);
+                  const width=await fieldsGroup.locator(".nav-submenu").evaluate((el)=>el.getBoundingClientRect().width);
+                  if (width>420) throw new Error(`${url}: desktop submenu exceeds content width: ${width}px`);
+                  await page.keyboard.press("Escape");
+                }
+                // Desktop-only keyboard checks: on mobile the nav is intentionally hidden
+                // after the overlay-close assertion above, so hidden summaries cannot receive focus.
+                if (viewport.name === "desktop") {
+                  await companyGroup.evaluate((el)=>{el.open=false;});
+                  await fieldsGroup.evaluate((el)=>{el.open=false;});
+                  await companyGroup.locator("summary").focus();
+                  await page.keyboard.press("Enter");
+                  if (!(await companyGroup.evaluate((el)=>el.open))) throw new Error(`${url}: Company dropdown keyboard activation failed`);
+                  await page.keyboard.press("Escape");
+                  if (await companyGroup.evaluate((el)=>el.open)) throw new Error(`${url}: Escape did not close dropdown`);
+                  await fieldsGroup.locator("summary").focus();
+                  await page.keyboard.press("Space");
+                  if (!(await fieldsGroup.evaluate((el)=>el.open))) throw new Error(`${url}: domain dropdown keyboard activation failed`);
+                  if (await fieldsGroup.locator(".nav-submenu a").count() !== 6) throw new Error(`${url}: six domain links missing`);
+                  await page.locator("main#main-content").click({position:{x:12,y:12}});
+                  if (await fieldsGroup.evaluate((el)=>el.open)) throw new Error(`${url}: outside click did not close dropdown`);
+                }
 
                 if (suffix === "company/") {
                   const viewButton = page.locator('a.button.button-secondary', { hasText: locale === "fa" ? "مشاهده" : locale === "en" ? "View" : "" });

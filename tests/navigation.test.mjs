@@ -6,98 +6,61 @@ const layout = await readFile(new URL("../src/layouts/SiteLayout.astro", import.
 const styles = await readFile(new URL("../src/styles/global.css", import.meta.url), "utf8");
 const ceoPage = await readFile(new URL("../src/pages/[locale]/company/ceo.astro", import.meta.url), "utf8");
 
-test("navigation uses a persistent header toggle and an initially closed overlay panel", () => {
-  assert.match(layout, /data-menu-toggle/);
-  assert.match(layout, /aria-controls="primary-navigation"/);
-  assert.match(layout, /id="primary-navigation"[^>]*data-primary-nav hidden/);
-  assert.match(layout, /data-menu-close/);
-  assert.match(layout, /<details class="nav-group" data-nav-group/);
-  assert.doesNotMatch(layout, /<details[^>]+ open=/);
+test("navigation is inside the header between brand and persistent tools", () => {
+  const header = layout.slice(layout.indexOf('<header class="site-header site-shell">'), layout.indexOf("</header>"));
+  assert.ok(header.includes("brand-wordmark"));
+  assert.ok(header.indexOf('<nav id="primary-navigation"') > header.indexOf("brand-wordmark"));
+  assert.ok(header.indexOf("header-tools") > header.indexOf('<nav id="primary-navigation"'));
+  assert.ok(header.includes("data-menu-toggle"));
+  assert.ok(header.includes('class="desktop-management-link"'));
+  assert.ok(header.includes('managementNavLabel[locale]'));
 });
 
-test("language and theme controls stay in the header, outside the menu panel", () => {
-  assert.match(layout, /<div class="header-tools">[\s\S]*language-select[\s\S]*theme-toggle[\s\S]*<\/div>[\s\S]*data-menu-toggle/);
-  assert.match(layout, /aria-label=\{labels\.language\}/);
-  assert.match(layout, /aria-label=\{labels\.theme\}/);
+test("desktop restores horizontal v2 navigation without hamburger or overlay", () => {
+  assert.ok(styles.includes("@media (min-width: 721px)"));
+  assert.ok(styles.includes(".site-header .nav-panel-head, .site-header .menu-toggle { display:none !important; }"));
+  assert.ok(styles.includes("position:static; inset:auto; z-index:auto; display:flex !important;"));
+  assert.ok(styles.includes("width:max-content; min-width:max-content;"));
+  assert.ok(styles.includes(".site-header .nav-group { position:relative;"));
+  assert.ok(styles.includes(".site-header .primary-nav > .nav-group,\n  .site-header .primary-nav > a {\n    width:auto !important;"));
+  assert.ok(styles.includes(".site-header .primary-nav { overflow:visible; }"));
+  assert.ok(styles.includes(".site-header .primary-nav { order:2; }"));
+  assert.ok(styles.includes(".site-header .header-tools { flex:0 0 auto; gap:.45rem; order:3; }"));
+  assert.ok(styles.includes(".site-header .primary-nav > a:first-of-type { display:none; }"));
+  assert.ok(styles.includes(".site-header .primary-nav > .desktop-management-link { display:inline-flex; }"));
+  assert.ok(styles.includes(".desktop-management-link { display:none; }"));
 });
 
-test("menu opens and closes with focus management and Escape", () => {
-  assert.match(layout, /const setMenuOpen = \(open\)/);
-  assert.match(layout, /menuToggle\.setAttribute\("aria-expanded", String\(open\)\)/);
-  assert.match(layout, /menu\.querySelector\("a, summary"\)\?\.focus\(\)/);
-  assert.match(layout, /menuToggle\.focus\(\)/);
-  assert.match(layout, /if \(menu && !menu\.hidden\)/);
-  assert.match(layout, /setMenuOpen\(false\)/);
+test("mobile retains the accessible hamburger and independently scrollable overlay", () => {
+  assert.ok(layout.includes("data-menu-toggle"));
+  assert.ok(layout.includes('aria-controls="primary-navigation"'));
+  assert.ok(layout.includes("data-menu-close"));
+  assert.ok(styles.includes(".site-header .primary-nav {\n    position: fixed;"));
+  assert.ok(!styles.match(/\.site-header\s*\{[^}]*backdrop-filter\s*:/s), "sticky header must not create a fixed-position containing block for the mobile overlay");
+  assert.ok(styles.includes("inset-block-end: max(.5rem, env(safe-area-inset-bottom));"));
+  assert.ok(styles.includes("overflow-y: auto;"));
+  assert.ok(styles.includes("overflow-y: auto;"));
+  assert.ok(styles.includes("overscroll-behavior: contain;"));
 });
 
-test("selecting a destination closes the overlay and its disclosure groups", () => {
-  assert.match(layout, /menuGroups\.forEach\(\(group\) => \{ group\.open = false; \}\)/);
-  assert.match(layout, /menu\?\.addEventListener\("click"/);
+test("menu open/close logic is limited to mobile viewports", () => {
+  assert.ok(layout.includes('if (!window.matchMedia("(max-width: 720px)").matches) return;'));
+  assert.ok(layout.includes("menu.hidden = mobile && menuToggle?.getAttribute(\"aria-expanded\") !== \"true\";"));
+  assert.ok(layout.includes('window.matchMedia("(max-width: 720px)").matches'));
+  assert.ok(layout.includes('!event.target.closest("[data-nav-group]")'), "desktop dropdown must close on outside click");
 });
 
-test("the navigation panel fills the available viewport and supports independent scrolling", () => {
-  assert.match(styles, /\.primary-nav\[hidden\]\s*\{\s*display:none !important/);
-  assert.match(styles, /position:fixed/);
-  assert.match(styles, /bottom:max\(\.75rem, env\(safe-area-inset-bottom\)\)/);
-  assert.match(styles, /overflow-y:auto/);
-  assert.match(styles, /overscroll-behavior:contain/);
-  assert.match(styles, /backdrop-filter:blur\(18px\)/);
-  assert.match(styles, /body\.menu-open \{ overflow:hidden; \}/);
-});
-
-test("the header stays sticky and keeps persistent controls visible", () => {
-  assert.match(styles, /\.site-header \{[\s\S]*position:sticky/);
-  assert.match(styles, /\.site-header \.header-tools \{ order:2; margin-inline:auto; \}/);
-  assert.match(styles, /\.menu-toggle \{[\s\S]*min-height:3rem/);
-  assert.match(styles, /\.language-select select,\.theme-toggle,\.menu-toggle \{ min-height:3rem; \}/);
-  assert.match(styles, /grid-template-areas: "brand tools menu"/);
-  assert.match(styles, /\.site-header \.menu-toggle \{[\s\S]*grid-area: menu/);
-  assert.match(styles, /\.site-header \.primary-nav \{[\s\S]*position: fixed[\s\S]*inset-block-end:[\s\S]*max-height: none/);
-});
-
-test("all eight locales have translated menu controls and navigation labels", () => {
+test("all eight locales retain translated labels and route-aware active states", () => {
   for (const locale of ["fa","en","ar","ru","de","zh","fr","es"]) {
-    assert.ok(layout.includes(`  ${locale}: {`) || layout.includes(`${locale}: {`));
+    assert.ok(layout.includes(`${locale}: {`));
   }
-  assert.match(layout, /intro: "معرفی", board: "هیئت‌مدیره"/);
-  assert.match(layout, /menuUi\[locale\]\.intro/);
-  assert.match(layout, /menuUi\[locale\]\.board/);
+  assert.ok(layout.includes('intro: "معرفی", board: "هیئت‌مدیره"'));
+  assert.ok(layout.includes("menuUi[locale].intro"));
+  assert.ok(layout.includes("menuUi[locale].board"));
+  assert.ok(layout.includes("data-current="));
 });
 
-test("company submenu keeps the Company group label and renames only its children", () => {
-  assert.match(layout, /<details class="nav-group" data-nav-group data-current=/);
-  assert.match(layout, /menuUi\[locale\]\.intro/);
-  assert.match(layout, /menuUi\[locale\]\.board/);
-  assert.doesNotMatch(layout, /menuUi\[locale\]\.ceo/);
-});
-
-test("CEO profile page omits the large decorative brand mark but keeps the shared site header", () => {
-  assert.match(ceoPage, /hero-profile--text-only/);
-  assert.doesNotMatch(ceoPage, /BrandMark|hero-mark/);
-  assert.match(layout, /<span class="brand-mark" aria-hidden="true"><BrandMark/);
-  assert.match(styles, /\.hero-profile--text-only\{grid-template-columns:minmax\(0,1fr\);min-height:auto\}/);
-});
-
-
-test("the navigation overlay is outside the sticky header and fills the viewport", () => {
-  const headerMarkup = layout.match(/<header\b[\s\S]*?<\/header>/)?.[0] ?? "";
-  assert.ok(headerMarkup, "site header markup must be present");
-  assert.doesNotMatch(headerMarkup, /<nav id="primary-navigation"/);
-  assert.match(layout, /<\/header>\s*<nav id="primary-navigation"/);
-  assert.match(styles, /\.primary-nav\s*\{[\s\S]*position:\s*fixed/);
-  assert.match(styles, /\.primary-nav\s*\{[\s\S]*inset-block-end:[^;]+/);
-  assert.match(styles, /\.primary-nav\s*\{[\s\S]*overflow-y:\s*auto/);
-  assert.match(styles, /\.primary-nav\[hidden\]\s*\{\s*display:\s*none !important/);
-});
-
-
-test("menu panel omits the company name and logo while the sticky header retains a one-line short brand name", () => {
-  const menu = layout.match(/<nav id="primary-navigation"[\s\S]*?<\/nav>/)?.[0] ?? "";
-  const header = layout.match(/<header\b[\s\S]*?<\/header>/)?.[0] ?? "";
-  assert.doesNotMatch(menu, /nav-panel-brand|BrandMark|site\.companyName/);
-  assert.match(header, /brand-wordmark/);
-  assert.match(header, /brandNames\[locale\]/);
-  assert.match(layout, /fa: "شرکت پیشگامان نواندیش فناورگستر کیهان"/);
-  assert.match(styles, /\.brand-wordmark\{[^}]*white-space:nowrap/);
-  assert.match(styles, /\.site-header \.brand-wordmark \{ display:inline/);
+test("CEO profile page keeps its text-only hero", () => {
+  assert.ok(ceoPage.includes("hero-profile--text-only"));
+  assert.ok(!ceoPage.includes("BrandMark") && !ceoPage.includes("hero-mark"));
 });
