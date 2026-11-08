@@ -31,6 +31,17 @@ const visualLabels: Record<Locale, { explore: string; focus: string; overview: s
   es: { explore: "Explorar área", focus: "INVESTIGACIÓN · INGENIERÍA · DESARROLLO", overview: "De la investigación científica a las soluciones de ingeniería" }
 };
 const copy = visualLabels[locale];
+const heroImageAlt: Record<Locale, string> = {
+  fa: "نمایی از شش حوزه فعالیت شرکت: نجوم، هوافضا، سنجش از دور، انرژی، هوش مصنوعی و موتوراسپرت",
+  en: "Visual overview of the company's six activity domains: astronomy, aerospace, remote sensing, energy, artificial intelligence, and motorsport",
+  ar: "عرض مرئي لمجالات الشركة الستة: علم الفلك، والفضاء، والاستشعار عن بُعد، والطاقة، والذكاء الاصطناعي، ورياضة المحركات",
+  ru: "Обзор шести направлений компании: астрономия, аэрокосмическая отрасль, дистанционное зондирование, энергетика, искусственный интеллект и автоспорт",
+  de: "Überblick über die sechs Tätigkeitsbereiche des Unternehmens: Astronomie, Luft- und Raumfahrt, Fernerkundung, Energie, künstliche Intelligenz und Motorsport",
+  zh: "公司六大业务领域概览：天文学、航空航天、遥感、能源、人工智能和赛车运动",
+  fr: "Vue d’ensemble des six domaines d’activité : astronomie, aérospatiale, télédétection, énergie, intelligence artificielle et sport automobile",
+  es: "Vista general de las seis áreas de actividad: astronomía, aeroespacial, teledetección, energía, inteligencia artificial y automovilismo"
+};
+const overviewImageUrl = `${import.meta.env.BASE_URL.replace(/\/+$/, "")}/assets/domains/six-domains-overview.webp`;
 
 const homeSections: Record<Locale, { vision: string; roadmap: string; ceo: string; ceoCta: string; visionTitle: string }> = {
   fa: { vision: "چشم‌انداز شرکت، توسعه مرحله‌ای فناوری و ایجاد پیوند میان پژوهش، مهندسی و کاربردهای صنعتی است. در بلندمدت، شرکت به‌دنبال ساختاری است که هر حوزه تخصصی بتواند مسیر توسعه و فعالیت مستقل خود را داشته باشد.", roadmap: "گام بعدی: پیگیری ورود به پارک علم و فناوری استان آذربایجان شرقی یا پارک علم و فناوری دانشگاه تبریز.", ceo: "بنیانگذار و مدیرعامل شرکت، دارای کارشناسی ارشد مهندسی هوافضا و کارشناسی مهندسی مکانیک از دانشگاه تبریز است. سوابق علمی و اجرایی او شامل پروژه‌های هوافضایی، نجوم و سنجش از دور است.", ceoCta: "مشاهده سوابق مدیرعامل", visionTitle: "چشم‌انداز و مسیر توسعه" },
@@ -59,9 +70,17 @@ const baseDir = locale === "fa" || locale === "ar" ? "rtl" : "ltr";
           <a class="new-button new-button-company" href={route(locale,"company")}>{site.navigation.company}<span aria-hidden="true">→</span></a>
         </div>
       </div>
-
-
-
+      <div class="new-hero-visual">
+        <img
+          src={overviewImageUrl}
+          alt={heroImageAlt[locale]}
+          width="1536"
+          height="1024"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
     </section>
 
     <section class="new-domains" id="fields" aria-labelledby="fields-title">
