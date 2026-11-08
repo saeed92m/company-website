@@ -160,8 +160,8 @@ jobs:
             "| Axe rule | Occurrences |",
             "|---|---:|",
             ...[...incompleteCounts.entries()].sort((a,b)=>b[1]-a[1]).map(([id,count])=>`| ${id} | ${count} |`),
-          ].join("\\n");
-          await import("node:fs/promises").then(fs => fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\\n"));
+          ].join("\n");
+          await import("node:fs/promises").then(fs => fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\n"));
           console.log(summary);
           if (violations > 0) process.exit(1);
           EOF
