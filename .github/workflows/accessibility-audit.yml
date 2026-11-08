@@ -1,8 +1,9 @@
 name: Accessibility Audit
 
 on:
-  push:
-    branches: [main]
+  workflow_run:
+    workflows: ["Deploy GitHub Pages"]
+    types: [completed]
   pull_request:
     branches: [main, 'feat/**', 'design/**', 'fix/**', 'qa/**']
   schedule:
@@ -19,6 +20,7 @@ concurrency:
 jobs:
   axe:
     name: WCAG 2.2 AA automated scan
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -62,6 +64,7 @@ jobs:
       - name: Scan representative localized routes
         env:
           BASE_URL: ${{ github.event_name == 'pull_request' && 'http://127.0.0.1:4321/company-website' || 'https://saeed92m.github.io/company-website' }}
+          AUDIT_SHA: ${{ github.event.pull_request.head.sha || github.event.workflow_run.head_sha || github.sha }}
         run: |
           cat > accessibility-audit.mjs <<'EOF'
           import { chromium } from "playwright";
@@ -88,7 +91,30 @@ jobs:
                 const report = await new AxeBuilder({ page })
                   .withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa","wcag22aa"])
                   .analyze();
-                results.push({ locale, route: route || "/", viewport: viewport.name, violations: report.violations.length, passes: report.passes.length, incomplete: report.incomplete.length });
+                const toDetails = (item) => ({
+                  id: item.id,
+                  impact: item.impact,
+                  help: item.help,
+                  description: item.description,
+                  nodes: item.nodes.map(node => ({
+                    target: node.target,
+                    html: node.html,
+                    any: (node.any ?? []).map(check => ({ id: check.id, impact: check.impact, message: check.message, data: check.data })),
+                    all: (node.all ?? []).map(check => ({ id: check.id, impact: check.impact, message: check.message, data: check.data })),
+                    none: (node.none ?? []).map(check => ({ id: check.id, impact: check.impact, message: check.message, data: check.data })),
+                  })),
+                });
+                results.push({
+                  locale,
+                  route: route || "/",
+                  viewport: viewport.name,
+                  url,
+                  violations: report.violations.length,
+                  violationDetails: report.violations.map(toDetails),
+                  passes: report.passes.length,
+                  incomplete: report.incomplete.length,
+                  incompleteDetails: report.incomplete.map(toDetails),
+                });
                 violations += report.violations.length;
                 for (const item of report.violations) {
                   console.error(`VIOLATION ${url} [${viewport.name}] ${item.id} impact=${item.impact}: ${item.help}`);
@@ -101,19 +127,51 @@ jobs:
           }
           await browser.close();
 
+          const incompleteCounts = new Map();
+          for (const result of results) {
+            for (const item of result.incompleteDetails) {
+              incompleteCounts.set(item.id, (incompleteCounts.get(item.id) ?? 0) + 1);
+            }
+          }
+
+          const auditReport = {
+            auditSha: process.env.AUDIT_SHA,
+            mode: base.startsWith("http://127.0.0.1") ? "pull-request-build" : "deployed-production",
+            scans: results,
+          };
+          await import("node:fs/promises").then(fs =>
+            fs.writeFile("axe-audit-results.json", JSON.stringify(auditReport, null, 2))
+          );
+
           const summary = [
             "# Automated accessibility audit",
             "",
-            `- URL mode: ${base.startsWith("http://127.0.0.1") ? "pull request build" : "deployed production"}`,
+            `- Audited commit: ${process.env.AUDIT_SHA}`,
+            `- URL mode: ${auditReport.mode}`,
             `- Route/viewport scans: ${results.length}`,
             `- Axe violations: ${violations}`,
             "",
             "| Locale | Route | Viewport | Violations | Passes | Incomplete |",
             "|---|---|---:|---:|---:|---:|",
             ...results.map(x => `| ${x.locale} | /${x.route} | ${x.viewport} | ${x.violations} | ${x.passes} | ${x.incomplete} |`),
-          ].join("\n");
-          await import("node:fs/promises").then(fs => fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\n"));
+            "",
+            "## Incomplete checks requiring human review",
+            "",
+            "| Axe rule | Occurrences |",
+            "|---|---:|",
+            ...[...incompleteCounts.entries()].sort((a,b)=>b[1]-a[1]).map(([id,count])=>`| ${id} | ${count} |`),
+          ].join("\\n");
+          await import("node:fs/promises").then(fs => fs.appendFile(process.env.GITHUB_STEP_SUMMARY, summary + "\\n"));
           console.log(summary);
           if (violations > 0) process.exit(1);
           EOF
           node accessibility-audit.mjs
+
+      - name: Upload axe audit report
+        if: always() && hashFiles('axe-audit-results.json') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: axe-audit-${{ github.event.pull_request.head.sha || github.event.workflow_run.head_sha || github.sha }}
+          path: axe-audit-results.json
+          if-no-files-found: error
+          retention-days: 14
