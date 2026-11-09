@@ -15,6 +15,11 @@ from urllib.parse import urlparse
 
 LOCALES = ("fa", "en", "ar", "ru", "de", "zh", "fr", "es")
 EXPECTED_URLS_PER_LOCALE = 12
+EXPECTED_PATHS = {
+    "", "company", "company/ceo", "contact", "fields", "projects",
+    "fields/aerospace", "fields/artificial-intelligence", "fields/astronomy",
+    "fields/energy", "fields/motorsport", "fields/remote-sensing",
+}
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 XHTML_NS = "{http://www.w3.org/1999/xhtml}link"
 
@@ -100,6 +105,17 @@ def main() -> None:
         fail(f"expected {expected_total} URLs, found {len(entries)}")
 
     for locale in LOCALES:
+        actual_paths = {
+            localized_path
+            for (entry_locale, localized_path) in urls_by_locale_path
+            if entry_locale == locale
+        }
+        if actual_paths != EXPECTED_PATHS:
+            fail(
+                f"route set mismatch for {locale}: missing "
+                f"{sorted(EXPECTED_PATHS - actual_paths)}, unexpected "
+                f"{sorted(actual_paths - EXPECTED_PATHS)}"
+            )
         if locale_counts[locale] != EXPECTED_URLS_PER_LOCALE:
             fail(
                 f"expected {EXPECTED_URLS_PER_LOCALE} URLs for {locale}, "
