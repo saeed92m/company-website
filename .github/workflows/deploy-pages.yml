@@ -63,7 +63,8 @@ jobs:
 
   smoke:
     needs: deploy
-    permissions: {}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout validation scripts
@@ -130,7 +131,7 @@ jobs:
             exit 1
           fi
           python3 scripts/validate-sitemap.py --sitemap /tmp/sitemap.xml --base-url "$base"
-          echo "PASS sitemap.xml: Googlebot HTTP 200, XML Content-Type, valid XML, 104 localized URLs and complete hreflang mapping"
+          echo "PASS sitemap.xml: Googlebot HTTP 200, XML Content-Type, valid XML, 96 localized URLs and complete hreflang mapping"
 
           for route in "/fa/" "/en/" "/fa/company/ceo/" "/en/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
