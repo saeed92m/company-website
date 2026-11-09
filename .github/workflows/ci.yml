@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, 'feat/**', 'design/**', 'qa/**']
+    branches: [main, 'feat/**', 'fix/**', 'design/**', 'qa/**']
 
 permissions:
   contents: read
@@ -44,7 +44,13 @@ jobs:
         run: npm run check
 
       - name: Production build
+        env:
+          PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_BASE_PATH: /company-website
         run: npm run build
+
+      - name: Validate generated multilingual sitemap
+        run: python3 scripts/validate-sitemap.py --sitemap dist/sitemap.xml --base-url https://saeed92m.github.io/company-website
 
       - name: Optimize static WebP assets
         run: node scripts/optimize-static-webp.mjs dist/assets/domains
