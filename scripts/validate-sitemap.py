@@ -14,7 +14,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 LOCALES = ("fa", "en", "ar", "ru", "de", "zh", "fr", "es")
-EXPECTED_URLS_PER_LOCALE = 13
+EXPECTED_URLS_PER_LOCALE = 12
 SITEMAP_NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 XHTML_NS = "{http://www.w3.org/1999/xhtml}link"
 
