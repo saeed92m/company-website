@@ -36,6 +36,9 @@ jobs:
           PUBLIC_BASE_PATH: /company-website
         run: npm run build
 
+      - name: Validate generated multilingual sitemap
+        run: python3 scripts/validate-sitemap.py --sitemap dist/sitemap.xml --base-url https://saeed92m.github.io/company-website
+
       - name: Optimize static WebP assets
         run: node scripts/optimize-static-webp.mjs dist/assets/domains
 
@@ -63,6 +66,9 @@ jobs:
     permissions: {}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout validation scripts
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
       - name: Smoke-test deployed Pages routes
         shell: bash
         run: |
@@ -106,12 +112,25 @@ jobs:
           grep -Fq "Sitemap: ${base}/sitemap.xml" <<< "$robots"
           echo "PASS robots.txt: crawler policy and sitemap reference present"
 
-          sitemap="$(curl -L -sS --retry 3 --retry-delay 2 "$base/sitemap.xml")"
-          grep -Fq "<urlset" <<< "$sitemap"
-          grep -Fq "<xhtml:link" <<< "$sitemap"
-          grep -Fq "${base}/fa/" <<< "$sitemap"
-          grep -Fq "${base}/en/" <<< "$sitemap"
-          echo "PASS sitemap.xml: localized URLs and hreflang alternates present"
+          # Fetch as Googlebot and validate the real deployed HTTP response.
+          sitemap_code="$(curl -L -sS -A 'Googlebot' -D /tmp/sitemap.headers -o /tmp/sitemap.xml -w "%{http_code}" --retry 3 --retry-delay 2 "$base/sitemap.xml")"
+          sitemap_url="$(curl -L -sS -A 'Googlebot' -o /dev/null -w "%{url_effective}" --retry 3 --retry-delay 2 "$base/sitemap.xml")"
+          if [ "$sitemap_code" != "200" ]; then
+            echo "FAIL sitemap.xml: Googlebot HTTP $sitemap_code"
+            cat /tmp/sitemap.headers
+            exit 1
+          fi
+          if [ "$sitemap_url" != "$base/sitemap.xml" ]; then
+            echo "FAIL sitemap.xml: unexpected final URL $sitemap_url"
+            exit 1
+          fi
+          if ! grep -Eiq '^content-type:[[:space:]]*(application|text)/xml([;[:space:]]|$)' /tmp/sitemap.headers; then
+            echo "FAIL sitemap.xml: response Content-Type is not XML"
+            cat /tmp/sitemap.headers
+            exit 1
+          fi
+          python3 scripts/validate-sitemap.py --sitemap /tmp/sitemap.xml --base-url "$base"
+          echo "PASS sitemap.xml: Googlebot HTTP 200, XML Content-Type, valid XML, 104 localized URLs and complete hreflang mapping"
 
           for route in "/fa/" "/en/" "/fa/company/ceo/" "/en/company/ceo/"; do
             html="$(curl -L -sS --retry 3 --retry-delay 2 "${base}${route}")"
