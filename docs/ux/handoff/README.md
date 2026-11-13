@@ -33,3 +33,10 @@ Use the existing project instructions and environment variables. Do not commit s
 
 ## Important distinction
 This is a complete source-and-documentation handoff snapshot. It is not a claim that every UX decision, every translation, every accessibility requirement, contact/privacy flow, or production acceptance gate is complete. The UI/UX team must verify the live deployment and record findings before finalizing design.
+
+
+## Complete project transfer (not UI/UX only)
+
+The UI/UX brief is one workstream within the broader transfer. The complete package is indexed at [docs/transfer/README.md](../../transfer/README.md). It includes the system and repository inventory, content/data catalog, operations/security/deployment guide, and completeness/acceptance matrix.
+
+The receiving team must use the complete transfer package and the full repository snapshot. Do not treat this UI/UX folder as the full website deliverable.
