@@ -39,7 +39,7 @@ See the inventory documents for exact paths and caveats.
 
 A ZIP of the repository does not include Git history, non-default branches, tags unless specifically archived, GitHub Issues and PR conversations, review comments, Actions logs/artifacts, repository rules/settings, Pages configuration, secrets, environment variables, DNS registrar state, email-provider configuration, external Notion handbook, external Dropbox source files, or private credentials. Export or transfer these separately through their approved owners and controls.
 
-A ZIP is a source snapshot. For a history-preserving engineering transfer, use a Git clone or mirror and verify refs. For a complete organizational transfer, also export the GitHub metadata and external project records listed in this package.
+A ZIP is a source snapshot. To download it, open the repository, select branch `docs/uiux-handoff-package-v1`, select **Code → Download ZIP**. Alternatively, use the GitHub branch archive endpoint: https://github.com/saeed92m/company-website/archive/refs/heads/docs/uiux-handoff-package-v1.zip. For a history-preserving engineering transfer, use a Git clone or mirror and verify refs. For a complete organizational transfer, also export the GitHub metadata and external project records listed in this package.
 
 ## Safety and publication rules
 
