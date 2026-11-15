@@ -1,3 +1,10 @@
+## 2026-11-15 — Astro dependency security remediation
+
+- Upgraded the pinned Astro dependency from 7.4.2 to 7.4.11.
+- Regenerated the npm lockfile.
+- Verified clean installation, full and production dependency audits, 46 tests, Astro diagnostics, and static build.
+- No Production hosting or database configuration changed.
+
 ## 2026-11-15 — Company User Portal and Admin Panel entry
 
 - Added localized User Portal and Admin Panel links after Board of Directors in the Company submenu.
