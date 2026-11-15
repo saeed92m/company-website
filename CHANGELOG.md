@@ -1,3 +1,20 @@
+## 2026-11-15 — Astro dependency security remediation
+
+- Upgraded the pinned Astro dependency from 7.4.2 to 7.4.11.
+- Regenerated the npm lockfile.
+- Verified clean installation, full and production dependency audits, 46 tests, Astro diagnostics, and static build.
+- No Production hosting or database configuration changed.
+
+## 2026-11-15 — Company User Portal and Admin Panel entry
+
+- Added localized User Portal and Admin Panel links after Board of Directors in the Company submenu.
+- Added eight-locale sign-in entry pages with username/password fields for the user portal and username-or-email/password fields for administrators.
+- Kept sign-in disabled until secure server-side authentication and authorization are configured. The pages do not submit or store credentials.
+- Added noindex metadata and excluded both entry routes from the sitemap.
+- Added browser and deployment smoke coverage.
+- Documented the authentication boundary and backend prerequisites in ADR-0009.
+- No production database, Auth settings, secrets, DNS, or hosting settings were changed.
+
 ## 2026-11-09 — Production performance and audit hardening
 
 - PR #119 added retained Lighthouse JSON artifacts for mobile and desktop reports.

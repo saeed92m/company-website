@@ -187,3 +187,41 @@ Do not use older phase snapshots as proof of current production acceptance.
 
 - Backup, restore, and rollback procedures: [docs/operations/backup-restore-rollback.md](../operations/backup-restore-rollback.md).
 - Automated accessibility, Lighthouse, and Git bundle validation are proposed in [PR #117](https://github.com/saeed92m/company-website/pull/117). Do not mark these gates complete until the relevant Actions runs pass.
+
+
+## 2026-11-15 — User Portal and Admin Panel entry
+
+- Added a feature-branch implementation for the User Portal and Admin Panel under the Company submenu. The links follow Board of Directors.
+- Added localized entry pages for all eight locales. The user portal has username and password fields. The admin portal has username-or-email and password fields.
+- Sign-in remains disabled. No authentication request, credential storage, or database change is part of this phase.
+- Both entry pages use `noindex,nofollow,noarchive` and remain outside the sitemap.
+- The current hosting model is Astro static output on GitHub Pages. Real authentication and a complete administration system require a protected backend.
+- Supabase Auth does not accept a username as the standard password sign-in identifier. Administrator username resolution must run on a protected server endpoint.
+- The Supabase project status is reported as `ACTIVE_HEALTHY`, and the Edge Function inventory returned no functions. Live database table/migration inspection failed with PostgreSQL `28P01`; no live schema claim is made from this attempt.
+- See [ADR-0009](../adr/0009-company-portal-and-administrative-access-boundary.md) and [portal entry audit](../audits/portal-entry-implementation-2026-11-15.md).
+- Production `main` remains unchanged. The implementation requires PR review and successful CI before merge.
+
+
+### PR #135 verification update — 2026-11-15
+
+- CI passed: 46 tests, `astro check` with 0 warnings, and a build of 138 pages.
+- CodeQL passed.
+- Browser QA passed in Chromium, Firefox, and WebKit: 128 route/viewport checks per engine.
+- Automated axe scan passed with 0 violations.
+- Repository backup/restore validation passed.
+- Dependency Security Audit failed on the existing pinned `astro@7.4.2` dependency. The audit reports two moderate Astro advisories. The proposed fix is outside the current pinned version. Do not force an upgrade without compatibility review.
+- The production deployment workflow has not run. PR #135 remains unmerged. No Production changes were made.
+- Detailed run IDs and advisory references are recorded in [the portal implementation audit](../audits/portal-entry-implementation-2026-11-15.md).
+
+
+### PR #135 dependency remediation update — 2026-11-15
+
+- Replaced the vulnerable Astro pin with `astro@7.4.11`.
+- Updated the npm lockfile and verified a clean installation.
+- Full dependency audit passed.
+- Production dependency audit passed with no reported vulnerabilities.
+- CI remediation verification passed: 46 tests, Astro diagnostics with 0 warnings, and static build.
+- The temporary remediation workflow was removed after it committed the verified dependency update.
+- The standard PR workflows are being re-run on the final documentation commit. Do not merge until all required checks pass.
+- The PR remains unmerged. No Production deployment or database change has occurred.
+- Evidence: [portal implementation audit](../audits/portal-entry-implementation-2026-11-15.md).

@@ -87,6 +87,8 @@ jobs:
               "/${locale}/"
               "/${locale}/company/"
               "/${locale}/company/ceo/"
+              "/${locale}/company/user-panel/"
+              "/${locale}/company/admin-panel/"
               "/${locale}/fields/"
               "/${locale}/projects/"
               "/${locale}/contact/"
@@ -106,6 +108,17 @@ jobs:
               exit 1
             fi
             echo "PASS ${route}: HTTP 200"
+          done
+
+          for locale in "${locales[@]}"; do
+            for page in user-panel admin-panel; do
+              html="$(curl -L -sS --retry 3 --retry-delay 2 "$base/${locale}/company/${page}/")"
+              if ! grep -Fq 'name="robots" content="noindex,nofollow,noarchive"' <<< "$html"; then
+                echo "FAIL /${locale}/company/${page}/: noindex policy missing"
+                exit 1
+              fi
+              echo "PASS /${locale}/company/${page}/: noindex policy present"
+            done
           done
 
           robots="$(curl -L -sS --retry 3 --retry-delay 2 "$base/robots.txt")"
