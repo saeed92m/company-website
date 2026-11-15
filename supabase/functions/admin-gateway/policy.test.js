@@ -5,6 +5,7 @@ import {
   hasVerifiedTotpAal2,
   isAllowedMethod,
   isAllowedOrigin,
+  resolvePublishableKey,
 } from "./policy.js";
 
 const origins = new Set([
@@ -88,4 +89,19 @@ test("rejects assurance lookup errors and malformed responses", () => {
   assert.equal(hasVerifiedTotpAal2(assurance, new Error("lookup failed")), false);
   assert.equal(hasVerifiedTotpAal2(null, null), false);
   assert.equal(hasVerifiedTotpAal2({}, null), false);
+});
+
+test("prefers the modern publishable key over the legacy anon key", () => {
+  assert.equal(resolvePublishableKey('{"default":"sb_publishable_example"}', "legacy-anon"), "sb_publishable_example");
+});
+
+test("uses the legacy anon key only as a compatibility fallback", () => {
+  assert.equal(resolvePublishableKey(null, "legacy-anon"), "legacy-anon");
+  assert.equal(resolvePublishableKey('{"other":"named-key"}', "legacy-anon"), "legacy-anon");
+});
+
+test("rejects missing or malformed publishable key configuration", () => {
+  assert.equal(resolvePublishableKey(null, null), null);
+  assert.equal(resolvePublishableKey("{not-json", null), null);
+  assert.equal(resolvePublishableKey('{"default":""}', ""), null);
 });
