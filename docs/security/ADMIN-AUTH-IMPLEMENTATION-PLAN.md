@@ -119,3 +119,10 @@ Automated regression coverage now checks:
 - Rejection of AAL1, non-TOTP second factors, missing/malformed assurance data, and assurance lookup errors.
 
 These tests validate the pure authorization policy. They do not replace integration tests against real Supabase Auth sessions, Edge Function runtime tests, revoked-session tests, or end-to-end browser tests. Production activation remains blocked.
+
+
+## API key compatibility update — 2026-11-16
+
+The gateway now prefers Supabase's named publishable key from SUPABASE_PUBLISHABLE_KEYS and uses the legacy anon key only as a compatibility fallback. It never reads or uses SUPABASE_SECRET_KEYS or SUPABASE_SERVICE_ROLE_KEY. Regression tests cover modern-key preference, legacy fallback, and malformed or missing configuration.
+
+This is an implementation-level compatibility choice. The Edge Function remains undeployed until the runtime configuration and all release gates are verified.
