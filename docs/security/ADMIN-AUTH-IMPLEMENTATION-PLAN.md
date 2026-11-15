@@ -32,7 +32,7 @@
 ## Implemented in this phase
 
 - Added a source-controlled `admin-gateway` Edge Function.
-- The gateway accepts only GET (plus CORS preflight), validates the bearer JWT with Supabase Auth, checks trusted `app_metadata.roles` for `admin` or `owner`, and requires AAL2.
+- The gateway accepts only GET (plus CORS preflight), validates the bearer JWT with Supabase Auth, checks trusted `app_metadata.roles` for `admin` or `owner`, requires AAL2, and confirms the authentication-method claim includes `totp` (not merely any second factor).
 - Platform JWT verification is required at deployment.
 - The function uses only a publishable/legacy anon key and never uses a service-role key.
 - The gateway returns no administrative data and performs no mutation. It is a protected authorization gate only.
