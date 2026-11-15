@@ -1,4 +1,10 @@
 import { createClient } from "npm:@supabase/supabase-js@2.119.0";
+import {
+  hasAdminRole,
+  hasVerifiedTotpAal2,
+  isAllowedMethod,
+  isAllowedOrigin,
+} from "./policy.js";
 
 const allowedOrigins = new Set([
   "https://saeed92m.github.io",
@@ -13,7 +19,7 @@ function corsHeaders(origin: string | null): HeadersInit {
     "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-client-info",
     "Access-Control-Max-Age": "600",
   };
-  if (origin && allowedOrigins.has(origin)) {
+  if (origin && isAllowedOrigin(origin, allowedOrigins)) {
     headers["Access-Control-Allow-Origin"] = origin;
   }
   return headers;
@@ -46,17 +52,17 @@ Deno.serve(async (request: Request) => {
   const headers = corsHeaders(origin);
 
   if (request.method === "OPTIONS") {
-    if (origin && !allowedOrigins.has(origin)) {
+    if (!isAllowedOrigin(origin, allowedOrigins)) {
       return json({ error: "Origin not allowed." }, 403, headers);
     }
     return new Response(null, { status: 204, headers });
   }
 
-  if (origin && !allowedOrigins.has(origin)) {
+  if (!isAllowedOrigin(origin, allowedOrigins)) {
     return json({ error: "Origin not allowed." }, 403, headers);
   }
 
-  if (request.method !== "GET") {
+  if (!isAllowedMethod(request.method)) {
     return json({ error: "Method not allowed." }, 405, headers);
   }
 
@@ -84,21 +90,14 @@ Deno.serve(async (request: Request) => {
       return json({ error: "Unauthorized." }, 401, headers);
     }
 
-    const metadata = userData.user.app_metadata ?? {};
-    const roles = Array.isArray(metadata.roles) ? metadata.roles : [];
-    const hasAdminRole = roles.includes("admin") || roles.includes("owner");
-
-    if (!hasAdminRole) {
+    if (!hasAdminRole(userData.user.app_metadata)) {
       return json({ error: "Forbidden." }, 403, headers);
     }
 
     const { data: assurance, error: assuranceError } =
       await supabase.auth.mfa.getAuthenticatorAssuranceLevel(accessToken);
 
-    const methods = assurance?.currentAuthenticationMethods;
-    const usedTotp = Array.isArray(methods) && methods.some((entry) => entry.method === "totp");
-
-    if (assuranceError || assurance?.currentLevel !== "aal2" || !usedTotp) {
+    if (!hasVerifiedTotpAal2(assurance, assuranceError)) {
       return json({ error: "Additional authentication required." }, 403, headers);
     }
 
