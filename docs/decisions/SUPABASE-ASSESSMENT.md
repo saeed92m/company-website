@@ -57,3 +57,10 @@ A named feature requirement, cost/architecture comparison, security and privacy 
 - 2026-10-14: Replaced the stale “no projects” statement with the observed connected project state. Confirmed the project is provisioned but intentionally not integrated; read-only schema inventory and both Supabase advisor checks completed.
 - 2026-10-14: Verified the remote migration SQL and current function ACL match. Documented the repository provenance gap without adding an unreviewed migration or changing the database.
 - 2026-10-12: Added initial assessment; no website code or hosting changes.
+
+
+## Administrative authentication decision — 2026-11-16
+
+The Product Owner accepted a phased Supabase Auth + Edge Functions architecture for the company administration portal. The detailed policy, account intent, security gates, and implementation status are recorded in [ADMIN-AUTH-IMPLEMENTATION-PLAN.md](../security/ADMIN-AUTH-IMPLEMENTATION-PLAN.md).
+
+The source-controlled `admin-gateway` function is a protected authorization gate only. It has not been deployed. No database tables, RLS policies, Auth settings, accounts, roles, or production resources were changed. The website login remains inactive. A canonical migration baseline and a tested provisioning workflow are required before database or identity changes.
