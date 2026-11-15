@@ -20,3 +20,16 @@ export function hasVerifiedTotpAal2(assurance, assuranceError) {
     (entry) => entry !== null && typeof entry === "object" && entry.method === "totp",
   );
 }
+
+export function resolvePublishableKey(encodedKeys, legacyAnonKey) {
+  if (typeof encodedKeys === "string" && encodedKeys.length > 0) {
+    try {
+      const keys = JSON.parse(encodedKeys);
+      const defaultKey = keys && typeof keys === "object" ? keys.default : null;
+      if (typeof defaultKey === "string" && defaultKey.length > 0) return defaultKey;
+    } catch {
+      // Fall back to the legacy anon key when the optional JSON value is malformed.
+    }
+  }
+  return typeof legacyAnonKey === "string" && legacyAnonKey.length > 0 ? legacyAnonKey : null;
+}
