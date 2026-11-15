@@ -200,3 +200,15 @@ Do not use older phase snapshots as proof of current production acceptance.
 - The Supabase project status is reported as `ACTIVE_HEALTHY`, and the Edge Function inventory returned no functions. Live database table/migration inspection failed with PostgreSQL `28P01`; no live schema claim is made from this attempt.
 - See [ADR-0009](../adr/0009-company-portal-and-administrative-access-boundary.md) and [portal entry audit](../audits/portal-entry-implementation-2026-11-15.md).
 - Production `main` remains unchanged. The implementation requires PR review and successful CI before merge.
+
+
+### PR #135 verification update — 2026-11-15
+
+- CI passed: 46 tests, `astro check` with 0 warnings, and a build of 138 pages.
+- CodeQL passed.
+- Browser QA passed in Chromium, Firefox, and WebKit: 128 route/viewport checks per engine.
+- Automated axe scan passed with 0 violations.
+- Repository backup/restore validation passed.
+- Dependency Security Audit failed on the existing pinned `astro@7.4.2` dependency. The audit reports two moderate Astro advisories. The proposed fix is outside the current pinned version. Do not force an upgrade without compatibility review.
+- The production deployment workflow has not run. PR #135 remains unmerged. No Production changes were made.
+- Detailed run IDs and advisory references are recorded in [the portal implementation audit](../audits/portal-entry-implementation-2026-11-15.md).
