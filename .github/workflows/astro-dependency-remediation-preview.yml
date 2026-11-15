@@ -9,7 +9,7 @@ on:
       - ".github/workflows/astro-dependency-remediation-preview.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: astro-remediation-preview-${{ github.event.pull_request.number }}
@@ -19,8 +19,11 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout pull request
+      - name: Checkout pull request head
+        if: ${{ github.event.pull_request.number == 135 && github.event.pull_request.user.login == 'saeed92m' && github.event.pull_request.head.repo.full_name == github.repository }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
@@ -52,12 +55,16 @@ jobs:
           PUBLIC_BASE_PATH: /company-website
         run: npm run build
 
-      - name: Upload verified dependency files
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        with:
-          name: astro-7.4.11-verified-lockfiles
-          path: |
-            package.json
-            package-lock.json
-          if-no-files-found: error
-          retention-days: 2
+      - name: Commit verified dependency update and remove temporary workflow
+        if: ${{ github.event.pull_request.number == 135 && github.event.pull_request.user.login == 'saeed92m' && github.event.pull_request.head.repo.full_name == github.repository }}
+        shell: bash
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git rm .github/workflows/astro-dependency-remediation-preview.yml
+          git commit -m "fix(deps): upgrade Astro to patched 7.4.11"
+          git push origin "HEAD:refs/heads/$BRANCH"
