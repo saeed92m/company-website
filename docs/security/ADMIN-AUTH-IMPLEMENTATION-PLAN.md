@@ -105,3 +105,17 @@ Scores are qualitative (1 = weak, 5 = strong), based on the current static-hosti
 | Static site + client-side role lookup | 1 | 5 | 2 | Reject |
 
 The selected design is not yet a production security certification. Its current gateway is a no-data authorization check. The remaining controls above are release blockers for any administrative data or mutation.
+
+
+## Authorization policy regression tests — 2026-11-16
+
+The gateway authorization decisions are extracted into a dependency-free policy module so the same logic can run in the repository's Node test suite and in the Deno Edge Function runtime.
+
+Automated regression coverage now checks:
+- Exact Origin allowlisting, including lookalike-origin rejection and requests without an Origin header.
+- GET-only method policy.
+- admin and owner role acceptance, with ordinary and malformed role data rejected.
+- Mandatory AAL2 plus an explicit totp authentication method.
+- Rejection of AAL1, non-TOTP second factors, missing/malformed assurance data, and assurance lookup errors.
+
+These tests validate the pure authorization policy. They do not replace integration tests against real Supabase Auth sessions, Edge Function runtime tests, revoked-session tests, or end-to-end browser tests. Production activation remains blocked.
