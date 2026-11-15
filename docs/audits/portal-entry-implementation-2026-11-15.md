@@ -98,3 +98,27 @@ All three browser engines passed the new access-page checks. The tests verify th
 The GitHub Pages deployment/smoke workflow is configured for the new routes but has not run against Production. It runs on the production deployment workflow after merge. No production deployment has occurred.
 
 **Merge status:** Do not merge while the required Dependency Security Audit is failing. The branch and PR remain open. Production `main` is unchanged.
+
+
+## Dependency remediation — 2026-11-15
+
+The earlier dependency failure is resolved on the PR branch.
+
+- Pinned `astro` to `7.4.11` in `package.json`.
+- Regenerated `package-lock.json` with npm 10.9.9 on Node.js 22.23.4.
+- Verified the lockfile root dependency and resolved package both equal `7.4.11`.
+- Ran a clean `npm ci --ignore-scripts --no-audit --no-fund`.
+- `npm audit --audit-level=high`: passed.
+- `npm audit --omit=dev --audit-level=low`: passed with no remaining reported vulnerabilities.
+- `npm test`: passed (46 tests).
+- `npm run check`: passed with 0 warnings.
+- `npm run build`: passed; the static build completed.
+
+The official Astro release notes identify `7.4.7` as the patch for the case-sensitive output-path issue. The dynamic-tag XSS issue was fixed in `7.4.5`. Version `7.4.11` is a later stable patch release. References:
+- https://github.com/withastro/astro/blob/main/packages/astro/CHANGELOG.md
+- https://github.com/advisories/GHSA-mh32-jxcr-mh9f
+- https://github.com/advisories/GHSA-r3h5-4585-7x3w
+
+The remediation verification ran in GitHub Actions run [43711651694](https://github.com/saeed92m/company-website/actions/runs/43711651694). That workflow committed the verified manifest and lockfile update to the feature branch, then removed itself. The resulting dependency commit is `0bb592385d9a0857e3a815699e5aec525612cc5b`.
+
+The standard PR workflows must pass on the final documentation commit before merge. The production Pages deployment and smoke workflow has not run. Production `main` remains unchanged.
