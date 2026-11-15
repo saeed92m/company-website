@@ -1,0 +1,63 @@
+name: Temporary Astro dependency remediation preview
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/astro-dependency-remediation-preview.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astro-remediation-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "22.23.4"
+          cache: npm
+
+      - name: Update Astro to the verified patched release
+        run: npm install --save-exact astro@7.4.11 --ignore-scripts --no-audit --no-fund
+
+      - name: Verify clean lockfile installation
+        run: npm ci --ignore-scripts --no-audit --no-fund
+
+      - name: Audit full dependency graph
+        run: npm audit --audit-level=high
+
+      - name: Audit production dependency graph
+        run: npm audit --omit=dev --audit-level=low
+
+      - name: Run tests
+        run: npm test
+
+      - name: Run Astro diagnostics
+        run: npm run check
+
+      - name: Build static site
+        env:
+          PUBLIC_SITE_URL: https://saeed92m.github.io/company-website
+          PUBLIC_BASE_PATH: /company-website
+        run: npm run build
+
+      - name: Upload verified dependency files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: astro-7.4.11-verified-lockfiles
+          path: |
+            package.json
+            package-lock.json
+          if-no-files-found: error
+          retention-days: 2
