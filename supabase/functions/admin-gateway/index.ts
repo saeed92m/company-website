@@ -95,7 +95,10 @@ Deno.serve(async (request: Request) => {
     const { data: assurance, error: assuranceError } =
       await supabase.auth.mfa.getAuthenticatorAssuranceLevel(accessToken);
 
-    if (assuranceError || assurance.currentLevel !== "aal2") {
+    const usedTotp = Array.isArray(assurance.currentAuthenticationMethods) &&
+      assurance.currentAuthenticationMethods.some((entry) => entry.method === "totp");
+
+    if (assuranceError || assurance.currentLevel !== "aal2" || !usedTotp) {
       return json({ error: "Additional authentication required." }, 403, headers);
     }
 
