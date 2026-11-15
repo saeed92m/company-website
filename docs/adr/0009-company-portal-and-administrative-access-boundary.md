@@ -99,7 +99,7 @@ Approved account intent:
 The approved policy sets a 12-character minimum for privileged passwords (16+ random characters recommended), mandatory TOTP MFA for administrators, trusted server-managed roles, verified email-based provisioning, and secure account recovery. Passwords, MFA codes, and recovery codes must never be shared in chat.
 
 Implementation is deliberately staged:
-- A source-controlled Edge Function authorization gate has been added. It validates the JWT, requires `admin` or `owner` in trusted `app_metadata.roles`, and requires AAL2.
+- A source-controlled Edge Function authorization gate has been added. It validates the JWT, requires `admin` or `owner` in trusted `app_metadata.roles`, and requires AAL2 and verifies that TOTP was the second factor.
 - The function is not yet deployed to production.
 - No Auth configuration, user account, role, database schema, migration, or production setting has been changed.
 - Initial sign-in will use email. Username resolution remains deferred until a private server-side resolver can be implemented without account enumeration.
