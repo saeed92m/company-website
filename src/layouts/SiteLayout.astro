@@ -23,9 +23,10 @@ interface Props {
   locale: Locale;
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { locale, title, description } = Astro.props;
+const { locale, title, description, noindex = false } = Astro.props;
 const site = content[locale];
 const meta = localeMeta[locale];
 const fontPreloads = {
@@ -39,15 +40,15 @@ const fontPreloads = {
   es: [ibmPlexLatin, ibmPlexLatinExt]
 }[locale];
 const labels = ui[locale];
-const menuUi: Record<Locale, { menu: string; close: string; home: string; intro: string; board: string; navigation: string }> = {
-  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", intro: "معرفی", board: "هیئت‌مدیره", navigation: "ناوبری اصلی" },
-  en: { menu: "Menu", close: "Close menu", home: "Home", intro: "Overview", board: "Board of Directors", navigation: "Main navigation" },
-  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", intro: "نبذة عن الشركة", board: "مجلس الإدارة", navigation: "التنقل الرئيسي" },
-  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", intro: "О компании", board: "Совет директоров", navigation: "Основная навигация" },
-  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", intro: "Unternehmensprofil", board: "Vorstand", navigation: "Hauptnavigation" },
-  zh: { menu: "菜单", close: "关闭菜单", home: "首页", intro: "公司简介", board: "董事会", navigation: "主导航" },
-  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", intro: "Présentation", board: "Conseil d’administration", navigation: "Navigation principale" },
-  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", intro: "Presentación", board: "Junta directiva", navigation: "Navegación principal" }
+const menuUi: Record<Locale, { menu: string; close: string; home: string; intro: string; board: string; userPanel: string; adminPanel: string; navigation: string }> = {
+  fa: { menu: "فهرست", close: "بستن فهرست", home: "صفحه اصلی", intro: "معرفی", board: "هیئت‌مدیره", userPanel: "پنل کاربری", adminPanel: "پنل مدیریت", navigation: "ناوبری اصلی" },
+  en: { menu: "Menu", close: "Close menu", home: "Home", intro: "Overview", board: "Board of Directors", userPanel: "User Portal", adminPanel: "Admin Panel", navigation: "Main navigation" },
+  ar: { menu: "القائمة", close: "إغلاق القائمة", home: "الرئيسية", intro: "نبذة عن الشركة", board: "مجلس الإدارة", userPanel: "بوابة المستخدم", adminPanel: "لوحة الإدارة", navigation: "التنقل الرئيسي" },
+  ru: { menu: "Меню", close: "Закрыть меню", home: "Главная", intro: "О компании", board: "Совет директоров", userPanel: "Личный кабинет", adminPanel: "Панель управления", navigation: "Основная навигация" },
+  de: { menu: "Menü", close: "Menü schließen", home: "Startseite", intro: "Unternehmensprofil", board: "Vorstand", userPanel: "Benutzerportal", adminPanel: "Administrationsbereich", navigation: "Hauptnavigation" },
+  zh: { menu: "菜单", close: "关闭菜单", home: "首页", intro: "公司简介", board: "董事会", userPanel: "用户中心", adminPanel: "管理面板", navigation: "主导航" },
+  fr: { menu: "Menu", close: "Fermer le menu", home: "Accueil", intro: "Présentation", board: "Conseil d’administration", userPanel: "Espace utilisateur", adminPanel: "Panneau d’administration", navigation: "Navigation principale" },
+  es: { menu: "Menú", close: "Cerrar menú", home: "Inicio", intro: "Presentación", board: "Junta directiva", userPanel: "Portal de usuario", adminPanel: "Panel de administración", navigation: "Navegación principal" }
 };
 const managementNavLabel: Record<Locale, string> = {
   fa: "مدیریت", en: "Management", ar: "الإدارة", ru: "Руководство",
@@ -151,7 +152,7 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     <meta name="author" content={profile.name} />
     <link rel="icon" type="image/svg+xml" href={webLogoUrl} />
     <meta name="description" content={description ?? site.intro} />
-    <meta name="robots" content={isNotFoundPage ? "noindex,follow" : "index,follow"} />
+    <meta name="robots" content={noindex ? "noindex,nofollow,noarchive" : isNotFoundPage ? "noindex,follow" : "index,follow"} />
     <meta name="google-site-verification" content="kTQUPwNOP6x5RNqDWtHOSG-KstdG9cWiKPrl3jWcQUE" />
     <meta property="og:site_name" content={site.companyName} />
     <meta property="og:locale" content={localeForOg[locale]} />
@@ -167,8 +168,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
     {logoUrl && !isNotFoundPage && <meta name="twitter:image" content={logoUrl} />}
     {origin && !isNotFoundPage && <link rel="canonical" href={new URL(path, origin)} />}
     {structuredData && <script type="application/ld+json" set:html={structuredData} />}
-    {origin && isLocalizedPage && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
-    {origin && isLocalizedPage && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
+    {origin && isLocalizedPage && !noindex && locales.map((code) => <link rel="alternate" hreflang={code} href={new URL(route(code, base), origin)} />)}
+    {origin && isLocalizedPage && !noindex && <link rel="alternate" hreflang="x-default" href={new URL(route("en", base), origin)} />}
   </head>
   <body>
     <a class="skip-link" href="#main-content">{labels.skipToContent}</a>
@@ -187,6 +188,8 @@ import { serializeJsonLd } from "../utils/serialize-jsonld.mjs";
           <div class="nav-submenu">
             <a href={route(locale,"company")} aria-current={path === route(locale,"company") ? "page" : undefined}>{menuUi[locale].intro}</a>
             <a href={route(locale,"company/ceo")} aria-current={path === route(locale,"company/ceo") ? "page" : undefined}>{menuUi[locale].board}</a>
+            <a href={route(locale,"company/user-panel")} aria-current={path === route(locale,"company/user-panel") ? "page" : undefined}>{menuUi[locale].userPanel}</a>
+            <a href={route(locale,"company/admin-panel")} aria-current={path === route(locale,"company/admin-panel") ? "page" : undefined}>{menuUi[locale].adminPanel}</a>
           </div>
         </details>
         <details class="nav-group" data-nav-group data-current={path.startsWith(route(locale,"fields")) ? "true" : undefined}>

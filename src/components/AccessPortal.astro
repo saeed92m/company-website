@@ -1,0 +1,101 @@
+---
+import type { Locale } from "../data/locales";
+import { accessCopy } from "../content/access";
+import { route } from "../data/routes";
+
+interface Props {
+  locale: Locale;
+  mode: "user" | "admin";
+}
+
+const { locale, mode } = Astro.props;
+const copy = accessCopy[locale];
+const isAdmin = mode === "admin";
+const title = isAdmin ? copy.adminTitle : copy.userTitle;
+const description = isAdmin ? copy.adminDescription : copy.userDescription;
+const identifierLabel = isAdmin ? copy.adminIdentifier : copy.userIdentifier;
+const identifierPlaceholder = isAdmin ? copy.adminPlaceholder : copy.userPlaceholder;
+const inactiveMessage = isAdmin ? copy.adminInactive : copy.userInactive;
+const scopeMessage = isAdmin ? copy.adminScope : copy.userScope;
+const identifierId = `${mode}-access-identifier`;
+const passwordId = `${mode}-access-password`;
+---
+
+<section class="access-page" aria-labelledby="access-title">
+  <div class="access-shell">
+    <p class="access-eyebrow">{copy.eyebrow}</p>
+    <h1 id="access-title">{title}</h1>
+    <p class="access-intro">{description}</p>
+
+    <section class="access-card" aria-label={title}>
+      <div class="access-card-mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="42" height="42" fill="none">
+          <path d="M24 4.5 40 10v12.3c0 10-6.8 17-16 21.2C14.8 39.3 8 32.3 8 22.3V10l16-5.5Z" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M17.5 23.5 22 28l9-10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <fieldset class="access-fields">
+        <legend class="sr-only">{title}</legend>
+        <label for={identifierId}>{identifierLabel}</label>
+        <input
+          id={identifierId}
+          name={isAdmin ? "username_or_email" : "username"}
+          type="text"
+          placeholder={identifierPlaceholder}
+          autocomplete="username"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-required="true"
+        />
+
+        <label for={passwordId}>{copy.password}</label>
+        <input
+          id={passwordId}
+          name="password"
+          type="password"
+          placeholder={copy.passwordPlaceholder}
+          autocomplete="current-password"
+          aria-required="true"
+        />
+      </fieldset>
+
+      <button class="button button-primary access-submit" type="button" data-auth-inactive disabled>
+        {copy.signIn}
+      </button>
+
+      <p class="access-status" role="status">
+        <strong>{inactiveMessage}</strong>
+        <span>{copy.noTransfer}</span>
+      </p>
+      <p class="access-scope">{scopeMessage}</p>
+    </section>
+
+    <a class="access-back" href={route(locale, "company")}>← <span>{copy.backToCompany}</span></a>
+  </div>
+</section>
+
+<style>
+  .access-page { min-height: min(76vh, 760px); padding: clamp(3.5rem, 8vw, 7rem) 0; }
+  .access-shell { width: min(100% - 2rem, 54rem); margin-inline: auto; }
+  .access-eyebrow { margin: 0 0 .75rem; color: var(--accent); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+  :global(html[dir="rtl"]) .access-eyebrow { letter-spacing: 0; }
+  .access-page h1 { max-width: 24ch; margin: 0; color: var(--ink); font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.25; text-wrap: balance; }
+  .access-intro { max-width: 62ch; margin: 1rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.9; }
+  .access-card { width: min(100%, 31rem); margin: clamp(2rem, 5vw, 3rem) auto 0; padding: clamp(1.35rem, 4vw, 2.25rem); border: 1px solid var(--border-strong); border-radius: var(--radius); background: linear-gradient(145deg, var(--surface-2), var(--surface)); box-shadow: 0 24px 70px rgba(0, 0, 0, .16); }
+  .access-card-mark { display: grid; place-items: center; width: 3.5rem; height: 3.5rem; margin: 0 0 1.5rem; border: 1px solid var(--border-strong); border-radius: 1rem; color: var(--accent); background: var(--surface-3); }
+  .access-fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: .6rem; min-width: 0; margin: 0; padding: 0; border: 0; }
+  .access-fields label { margin-top: .75rem; color: var(--ink); font-size: .9rem; font-weight: 750; }
+  .access-fields input { width: 100%; min-height: 3.2rem; padding: .75rem .95rem; border: 1px solid var(--border-strong); border-radius: .75rem; color: var(--ink); background: var(--surface); font: inherit; }
+  .access-fields input::placeholder { color: var(--muted); opacity: .8; }
+  .access-fields input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .access-submit { width: 100%; margin-top: 1.4rem; opacity: .62; cursor: not-allowed; }
+  .access-submit:disabled { transform: none; }
+  .access-status { display: grid; gap: .25rem; margin: 1.25rem 0 0; padding: .9rem 1rem; border-inline-start: 3px solid var(--brand-bright); border-radius: .4rem; color: var(--ink); background: var(--surface-3); font-size: .85rem; line-height: 1.7; }
+  .access-status span, .access-scope { color: var(--muted); }
+  .access-scope { margin: 1rem 0 0; font-size: .85rem; line-height: 1.8; }
+  .access-back { display: inline-flex; align-items: center; gap: .55rem; min-height: 2.75rem; margin-top: 1.75rem; color: var(--muted); font-size: .9rem; font-weight: 700; text-decoration: none; }
+  .access-back:hover { color: var(--accent); text-decoration: underline; }
+  .access-back:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: .25rem; }
+  @media (max-width: 520px) { .access-page { padding-block: 3rem; } .access-card { border-radius: .9rem; } }
+</style>

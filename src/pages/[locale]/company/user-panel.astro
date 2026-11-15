@@ -1,0 +1,17 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import AccessPortal from "../../../components/AccessPortal.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { accessCopy } from "../../../content/access";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const copy = accessCopy[locale];
+---
+
+<SiteLayout locale={locale} title={copy.userTitle} description={copy.userDescription} noindex>
+  <AccessPortal locale={locale} mode="user" />
+</SiteLayout>

@@ -187,3 +187,16 @@ Do not use older phase snapshots as proof of current production acceptance.
 
 - Backup, restore, and rollback procedures: [docs/operations/backup-restore-rollback.md](../operations/backup-restore-rollback.md).
 - Automated accessibility, Lighthouse, and Git bundle validation are proposed in [PR #117](https://github.com/saeed92m/company-website/pull/117). Do not mark these gates complete until the relevant Actions runs pass.
+
+
+## 2026-11-15 — User Portal and Admin Panel entry
+
+- Added a feature-branch implementation for the User Portal and Admin Panel under the Company submenu. The links follow Board of Directors.
+- Added localized entry pages for all eight locales. The user portal has username and password fields. The admin portal has username-or-email and password fields.
+- Sign-in remains disabled. No authentication request, credential storage, or database change is part of this phase.
+- Both entry pages use `noindex,nofollow,noarchive` and remain outside the sitemap.
+- The current hosting model is Astro static output on GitHub Pages. Real authentication and a complete administration system require a protected backend.
+- Supabase Auth does not accept a username as the standard password sign-in identifier. Administrator username resolution must run on a protected server endpoint.
+- The Supabase project status is reported as `ACTIVE_HEALTHY`, and the Edge Function inventory returned no functions. Live database table/migration inspection failed with PostgreSQL `28P01`; no live schema claim is made from this attempt.
+- See [ADR-0009](../adr/0009-company-portal-and-administrative-access-boundary.md) and [portal entry audit](../audits/portal-entry-implementation-2026-11-15.md).
+- Production `main` remains unchanged. The implementation requires PR review and successful CI before merge.

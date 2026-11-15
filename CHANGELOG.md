@@ -1,3 +1,13 @@
+## 2026-11-15 — Company User Portal and Admin Panel entry
+
+- Added localized User Portal and Admin Panel links after Board of Directors in the Company submenu.
+- Added eight-locale sign-in entry pages with username/password fields for the user portal and username-or-email/password fields for administrators.
+- Kept sign-in disabled until secure server-side authentication and authorization are configured. The pages do not submit or store credentials.
+- Added noindex metadata and excluded both entry routes from the sitemap.
+- Added browser and deployment smoke coverage.
+- Documented the authentication boundary and backend prerequisites in ADR-0009.
+- No production database, Auth settings, secrets, DNS, or hosting settings were changed.
+
 ## 2026-11-09 — Production performance and audit hardening
 
 - PR #119 added retained Lighthouse JSON artifacts for mobile and desktop reports.
