@@ -4,6 +4,7 @@ import {
   hasVerifiedTotpAal2,
   isAllowedMethod,
   isAllowedOrigin,
+  resolvePublishableKey,
 } from "./policy.js";
 
 const allowedOrigins = new Set([
@@ -33,18 +34,10 @@ function json(body: Record<string, unknown>, status: number, headers: HeadersIni
 }
 
 function getPublishableKey(): string | null {
-  const direct = Deno.env.get("SUPABASE_ANON_KEY");
-  if (direct) return direct;
-
-  const encodedKeys = Deno.env.get("SUPABASE_PUBLISHABLE_KEYS");
-  if (!encodedKeys) return null;
-
-  try {
-    const keys = JSON.parse(encodedKeys) as Record<string, string>;
-    return keys.default ?? null;
-  } catch {
-    return null;
-  }
+  return resolvePublishableKey(
+    Deno.env.get("SUPABASE_PUBLISHABLE_KEYS"),
+    Deno.env.get("SUPABASE_ANON_KEY"),
+  );
 }
 
 Deno.serve(async (request: Request) => {
