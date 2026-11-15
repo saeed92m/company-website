@@ -1,6 +1,6 @@
 # ADR-0009 — Company Portal and Administrative Access Boundary
 
-- **Status:** Proposed. The public entry-page scope is implemented on a feature branch. Authentication and administration are not enabled.
+- **Status:** Accepted for phased implementation. The public entry-page scope is implemented. Authentication and administration remain disabled until the release gates pass.
 - **Date:** 2026-11-15
 - **Decision owner:** CEO / Product Owner
 - **Scope:** User portal entry, administrator entry, authentication, authorization, and website administration.
@@ -86,3 +86,23 @@ This is a target scope. It does not mean these modules exist today.
 ## Reconsideration triggers
 
 Revisit this decision if the website moves from static hosting to a server-rendered platform or if a concrete CMS/API requirement changes the integration boundary.
+
+
+## Decision record — 2026-11-16
+
+The Product Owner accepted the staged security model documented in [Administrative Authentication — Security Implementation Plan](../security/ADMIN-AUTH-IMPLEMENTATION-PLAN.md).
+
+Approved account intent:
+- `saeed.m92x@gmail.com`: `owner`, `admin`, and `user`.
+- `Alphateamstartup@gmail.com`: `admin`.
+
+The approved policy sets a 12-character minimum for privileged passwords (16+ random characters recommended), mandatory TOTP MFA for administrators, trusted server-managed roles, verified email-based provisioning, and secure account recovery. Passwords, MFA codes, and recovery codes must never be shared in chat.
+
+Implementation is deliberately staged:
+- A source-controlled Edge Function authorization gate has been added. It validates the JWT, requires `admin` or `owner` in trusted `app_metadata.roles`, and requires AAL2.
+- The function is not yet deployed to production.
+- No Auth configuration, user account, role, database schema, migration, or production setting has been changed.
+- Initial sign-in will use email. Username resolution remains deferred until a private server-side resolver can be implemented without account enumeration.
+- The login UI remains disabled. Do not expose protected data or actions until the activation blockers in the implementation plan pass.
+
+This amendment accepts the architecture. It does not certify the system as production-ready.
