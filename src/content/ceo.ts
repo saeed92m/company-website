@@ -24,7 +24,7 @@ export const ceo: Record<Locale, CEOContent> = {
     selectedProjects:[
       {name:"CanSat",period:"2024",summary:"مشارکت تیم Alpha Team در پروژه طراحی و ساخت CanSat با مأموریت سنجشی-ارتباطی."},
       {name:"CubeSat",period:"2023",summary:"مشارکت تیم Alpha Team در طراحی و ساخت CubeSat نوع 1U برای مأموریت سنجشی-ارتباطی."},
-      {name:"CBS",period:"2020",summary:"هدایت تحلیل و زمان‌سنجی ستارگان دوتایی که به انتشار مقاله بین‌المللی انجامید."},
+      {name:"CBS",period:"2020",summary:"رهبری تیم Team Alpha در پروژه CBS که به انتشار مقاله بین‌المللی انجامید."},
       {name:"Remote Sensing Projects",period:"2019",summary:"اجرای پروژه‌های تحلیلی با تصاویر ماهواره‌ای Landsat 8 و Sentinel-1/2."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"تحلیل فوران‌های جرم تاجی خورشیدی (CME) و راهکارهای حفاظت از ماهواره‌ها و زیرساخت‌های فضایی."},
       {name:"APTO",period:"۲۰۱۹",summary:"همکاری با رصدخانه خواجه نصیرالدین طوسی دانشگاه تبریز در تحلیل داده‌های کلیدی اختفاهای قمری (Occultation)."}
@@ -36,7 +36,7 @@ export const ceo: Record<Locale, CEOContent> = {
     education:[{degree:"B.Sc. Mechanical Engineering",field:"Thermal & Fluids",institution:"University of Tabriz",years:"2012–2017"},{degree:"M.Sc. Aerospace Engineering",field:"Space Engineering",institution:"University of Tabriz",years:"2018–2020"}],
     expertise:["Research & development","Aerospace and space systems","Astronomy","Remote sensing","Artificial intelligence and programming","Solar power engineering","Motorsport and performance components","Project management and entrepreneurship"],
     experience:[{role:"Founder & CEO",organization:"Pishgaman Novandish Fannavargostar Keyhan",period:"Aug 2023–present",summary:"Technical and executive leadership across six business areas; leading project-based teams; building relationships with investors and public/private institutions; and overseeing product development and business operations."},{role:"Board Member & Content Director",organization:"Rahpouyan Atlas Aseman",period:"2018–2019",summary:"Produced astronomy education content and taught amateur astronomy and radar remote sensing in specialized workshops."}],
-    selectedProjects:[{name:"CanSat",period:"2024",summary:"Alpha Team participation in a CanSat project with a sensing-communications mission."},{name:"CubeSat",period:"2023",summary:"Alpha Team participation in a 1U CubeSat sensing-communications project."},{name:"CBS",period:"2020",summary:"Leadership of a binary-star timing and analysis project resulting in an international publication."},{name:"Remote Sensing Projects",period:"2019",summary:"Analytical projects using Landsat 8 and Sentinel-1/2 satellite imagery."},
+    selectedProjects:[{name:"CanSat",period:"2024",summary:"Alpha Team participation in a CanSat project with a sensing-communications mission."},{name:"CubeSat",period:"2023",summary:"Alpha Team participation in a 1U CubeSat sensing-communications project."},{name:"CBS",period:"2020",summary:"Led Team Alpha in the CBS project, which resulted in an international publication."},{name:"Remote Sensing Projects",period:"2019",summary:"Analytical projects using Landsat 8 and Sentinel-1/2 satellite imagery."},
       {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"CME analysis and satellite-protection strategies for space-radiation and Earth-shielding research."},
       {name:"APTO",period:"2019",summary:"Collaboration with Khajeh Nasireddin Tusi Observatory, University of Tabriz, on lunar occultation analysis."}
     ]
