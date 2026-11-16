@@ -1,6 +1,6 @@
 # Company Website — Think Tank Charter
 
-**Document status:** Proposed / awaiting Product Owner approval  
+**Document status:** Owner-authorized working governance charter  
 **Version:** 1.0.0  
 **Prepared:** 2026-11-13  
 **Repository:** `saeed92m/company-website`  
@@ -264,12 +264,52 @@ The first working session must not start with unconstrained brainstorming.
 6. Identify the five highest-impact product risks and five highest-value opportunities.
 7. Agree on the first decision backlog and evidence required for each decision.
 
-## 14. Approval
+## 14. Owner authorization
 
-This charter is a proposal for review. It does not authorize production changes, publication of sensitive information, hiring, expenditure, or changes to accepted architecture.
+On 2026-11-16, the CEO / Product Owner instructed the project team to continue the website work using the recommendations of this role-based think tank and to perform the necessary safe, authorized work.
 
-**Approval required from:** CEO / Product Owner  
-**Approval status:** Awaiting user decision
+This authorizes use of the charter as the working review and governance framework. It does not authorize production deployment, publication of sensitive information, hiring, expenditure, or changes to accepted architecture without the required evidence and separate controls.
+
+**Decision owner:** CEO / Product Owner  
+**Authorization date:** 2026-11-16  
+**Status:** Authorized for project use
+
+## 15. Initial role-based review record — 2026-11-16
+
+**Review type:** AI-assisted role simulation against repository evidence and supplied company sources.  
+**Independence limitation:** No external human specialists were recruited or consulted. This record is not a human expert sign-off, legal opinion, penetration test, or formal WCAG conformance assessment.
+
+### Accepted working decisions
+
+1. Keep the registered company identity as the primary corporate identity. Treat Alpha Team only as a secondary team or project reference, consistent with ADR-0008.
+2. Preserve the current Astro static-site architecture and GitHub Pages production hosting. Do not introduce a CMS or WordPress into the initial scope.
+3. Keep the eight-locale architecture and correct RTL/LTR behavior as mandatory requirements.
+4. Present the six company domains as one company's activity areas. Do not present the company as a current holding company.
+5. Use the supplied company profile and CEO résumé as the source for corporate and professional claims. Label planned capabilities and projects by their actual maturity.
+6. Keep Alpha Linux and ZTF Classifier repository links unpublished. Descriptive project pages may remain.
+7. Keep future CMS, API, CRM, and customer-portal integration possible through clear boundaries. Do not implement those systems as part of this website phase.
+8. Keep business email independent from website hosting.
+9. Keep the admin sign-in disabled. PR #137 is a source-only security foundation and is not production authorization.
+10. Do not choose between competing mobile-navigation variants or merge overlapping content proposals until their differences, user tasks, accessibility, and regression evidence have been reviewed.
+
+### Initial repository triage
+
+- PR #137: keep open. Automated checks pass, but manual contrast review and real authentication/MFA release gates remain.
+- PR #134: keep as a draft handoff package until its contents are checked against the current Handbook and repository state.
+- PR #133: this charter; owner authorization is recorded above.
+- PR #95: hold. GitHub reports it is not mergeable. Reconcile its architecture and information-architecture changes with accepted ADRs before further action.
+- PRs #104 and #105: treat as overlapping scientific-content work. Reconcile them into one evidence-reviewed content direction; do not merge both blindly.
+- PRs #98, #99, and #100: treat as competing mobile-navigation proposals. Select one only after comparative UX and accessibility review.
+- PR #101: review its content rationale before merge. Its patch removes the roadmap callout from the homepage.
+- Dependabot PRs: merge only after all required checks pass. Do not merge CodeQL action updates with a failed CodeQL workflow.
+
+### Next review priorities
+
+1. Complete manual visual contrast verification and record repeatable evidence.
+2. Reconcile the open content and navigation proposals.
+3. Complete human UX research and device-based usability checks.
+4. Complete the production security and operational acceptance gates.
+5. Update the repository Handbook and decision log when a material decision is accepted.
 
 ---
 
