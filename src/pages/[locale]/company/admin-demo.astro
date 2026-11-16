@@ -1,0 +1,121 @@
+---
+import SiteLayout from "../../../layouts/SiteLayout.astro";
+import { locales, type Locale } from "../../../data/locales";
+import { accessCopy } from "../../../content/access";
+import { route } from "../../../data/routes";
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale }, props: { locale } }));
+}
+
+const { locale } = Astro.props as { locale: Locale };
+const copy = accessCopy[locale];
+const labels: Record<Locale, Record<string, string>> = {
+  fa: { eyebrow: "محیط نمایشی", title: "پیش‌نمایش پنل مدیریت", intro: "این محیط فقط برای بررسی ظاهر و تجربه کاربری است. هیچ داده واقعی یا عملیات مدیریتی در دسترس نیست.", user: "نام کاربری نمایشی", pass: "رمز نمایشی", login: "ورود به پیش‌نمایش", credentials: "اطلاعات ورود نمایشی", demoUser: "demo", demoPass: "keyhan-demo", warning: "نسخه نمایشی؛ احراز هویت واقعی نیست", dashboard: "داشبورد مدیریت", overview: "نمای کلی", projects: "پروژه‌ها", content: "مدیریت محتوا", users: "کاربران", security: "امنیت", settings: "تنظیمات", signout: "خروج از پیش‌نمایش", metric1: "حوزه‌های فعالیت", metric2: "پروژه‌های نمایشی", metric3: "زبان‌های سایت", metric4: "وضعیت سامانه", active: "نمایشی", fields: "شش حوزه شرکت", recent: "فعالیت‌های اخیر", item1: "بازبینی محتوای صفحات شرکت", item2: "بررسی وضعیت پروژه‌ها", item3: "بازبینی ترجمه‌های چندزبانه", note: "تمام اطلاعات این صفحه ساختگی است. هیچ تغییری ذخیره یا ارسال نمی‌شود." },
+  en: { eyebrow: "DEMO ENVIRONMENT", title: "Admin panel preview", intro: "This environment is for UI review only. It has no real data or administrative operations.", user: "Demo username", pass: "Demo password", login: "Open preview", credentials: "Demo access", demoUser: "demo", demoPass: "keyhan-demo", warning: "DEMO ONLY · NOT REAL AUTHENTICATION", dashboard: "Admin dashboard", overview: "Overview", projects: "Projects", content: "Content", users: "Users", security: "Security", settings: "Settings", signout: "Exit preview", metric1: "Business domains", metric2: "Demo projects", metric3: "Website locales", metric4: "System status", active: "Demo", fields: "Six company domains", recent: "Recent activity", item1: "Company page content review", item2: "Project status review", item3: "Multilingual copy review", note: "All data is fictional. Nothing is saved or sent." },
+  ar: { eyebrow: "بيئة تجريبية", title: "معاينة لوحة الإدارة", intro: "هذه البيئة لمراجعة الواجهة فقط. لا تحتوي على بيانات حقيقية أو عمليات إدارية.", user: "اسم المستخدم التجريبي", pass: "كلمة المرور التجريبية", login: "فتح المعاينة", credentials: "بيانات الدخول التجريبية", demoUser: "demo", demoPass: "keyhan-demo", warning: "عرض تجريبي فقط · ليس مصادقة حقيقية", dashboard: "لوحة الإدارة", overview: "نظرة عامة", projects: "المشاريع", content: "المحتوى", users: "المستخدمون", security: "الأمان", settings: "الإعدادات", signout: "إنهاء المعاينة", metric1: "مجالات العمل", metric2: "مشاريع تجريبية", metric3: "لغات الموقع", metric4: "حالة النظام", active: "تجريبي", fields: "مجالات الشركة الستة", recent: "النشاط الأخير", item1: "مراجعة محتوى الشركة", item2: "مراجعة حالة المشاريع", item3: "مراجعة الترجمات", note: "جميع البيانات وهمية. لا يتم حفظ أي تغيير أو إرساله." },
+  ru: { eyebrow: "ДЕМО-СРЕДА", title: "Предпросмотр панели администратора", intro: "Среда предназначена только для проверки интерфейса. Реальных данных и административных операций нет.", user: "Демо-имя пользователя", pass: "Демо-пароль", login: "Открыть предпросмотр", credentials: "Демо-доступ", demoUser: "demo", demoPass: "keyhan-demo", warning: "ТОЛЬКО ДЕМО · НЕ РЕАЛЬНАЯ АУТЕНТИФИКАЦИЯ", dashboard: "Панель администратора", overview: "Обзор", projects: "Проекты", content: "Контент", users: "Пользователи", security: "Безопасность", settings: "Настройки", signout: "Выйти из предпросмотра", metric1: "Направления", metric2: "Демо-проекты", metric3: "Языки сайта", metric4: "Состояние", active: "Демо", fields: "Шесть направлений компании", recent: "Последние действия", item1: "Проверка страниц компании", item2: "Проверка статусов проектов", item3: "Проверка переводов", note: "Все данные вымышлены. Ничего не сохраняется и не отправляется." },
+  de: { eyebrow: "DEMO-UMGEBUNG", title: "Vorschau des Adminbereichs", intro: "Diese Umgebung dient nur zur Prüfung der Benutzeroberfläche. Sie enthält keine echten Daten oder Verwaltungsfunktionen.", user: "Demo-Benutzername", pass: "Demo-Passwort", login: "Vorschau öffnen", credentials: "Demo-Zugang", demoUser: "demo", demoPass: "keyhan-demo", warning: "NUR DEMO · KEINE ECHTE AUTHENTIFIZIERUNG", dashboard: "Admin-Dashboard", overview: "Übersicht", projects: "Projekte", content: "Inhalte", users: "Benutzer", security: "Sicherheit", settings: "Einstellungen", signout: "Vorschau beenden", metric1: "Geschäftsbereiche", metric2: "Demo-Projekte", metric3: "Website-Sprachen", metric4: "Systemstatus", active: "Demo", fields: "Sechs Unternehmensbereiche", recent: "Letzte Aktivitäten", item1: "Inhalte der Unternehmensseite prüfen", item2: "Projektstatus prüfen", item3: "Mehrsprachige Texte prüfen", note: "Alle Daten sind fiktiv. Es wird nichts gespeichert oder gesendet." },
+  zh: { eyebrow: "演示环境", title: "管理面板预览", intro: "此环境仅用于界面审查，不包含真实数据或管理操作。", user: "演示用户名", pass: "演示密码", login: "打开预览", credentials: "演示登录信息", demoUser: "demo", demoPass: "keyhan-demo", warning: "仅供演示 · 非真实身份验证", dashboard: "管理仪表板", overview: "概览", projects: "项目", content: "内容", users: "用户", security: "安全", settings: "设置", signout: "退出预览", metric1: "业务领域", metric2: "演示项目", metric3: "网站语言", metric4: "系统状态", active: "演示", fields: "公司六大领域", recent: "近期活动", item1: "审查公司页面内容", item2: "检查项目状态", item3: "审查多语言文本", note: "所有数据均为虚构，不会保存或发送任何内容。" },
+  fr: { eyebrow: "ENVIRONNEMENT DE DÉMO", title: "Aperçu du panneau d’administration", intro: "Cet environnement sert uniquement à examiner l’interface. Il ne contient aucune donnée réelle ni opération administrative.", user: "Identifiant de démonstration", pass: "Mot de passe de démonstration", login: "Ouvrir l’aperçu", credentials: "Accès de démonstration", demoUser: "demo", demoPass: "keyhan-demo", warning: "DÉMO UNIQUEMENT · PAS UNE AUTHENTIFICATION RÉELLE", dashboard: "Tableau de bord", overview: "Vue d’ensemble", projects: "Projets", content: "Contenu", users: "Utilisateurs", security: "Sécurité", settings: "Paramètres", signout: "Quitter l’aperçu", metric1: "Domaines", metric2: "Projets de démo", metric3: "Langues du site", metric4: "État du système", active: "Démo", fields: "Six domaines de l’entreprise", recent: "Activité récente", item1: "Revue du contenu de l’entreprise", item2: "Revue des projets", item3: "Revue des traductions", note: "Toutes les données sont fictives. Rien n’est enregistré ni envoyé." },
+  es: { eyebrow: "ENTORNO DE DEMOSTRACIÓN", title: "Vista previa del panel de administración", intro: "Este entorno solo sirve para revisar la interfaz. No contiene datos reales ni operaciones administrativas.", user: "Usuario de demostración", pass: "Contraseña de demostración", login: "Abrir vista previa", credentials: "Acceso de demostración", demoUser: "demo", demoPass: "keyhan-demo", warning: "SOLO DEMO · NO ES AUTENTICACIÓN REAL", dashboard: "Panel de administración", overview: "Resumen", projects: "Proyectos", content: "Contenido", users: "Usuarios", security: "Seguridad", settings: "Ajustes", signout: "Salir de la vista previa", metric1: "Áreas de actividad", metric2: "Proyectos demo", metric3: "Idiomas del sitio", metric4: "Estado del sistema", active: "Demo", fields: "Seis áreas de la empresa", recent: "Actividad reciente", item1: "Revisión del contenido corporativo", item2: "Revisión del estado de proyectos", item3: "Revisión de traducciones", note: "Todos los datos son ficticios. No se guarda ni se envía nada." }
+};
+const t = labels[locale];
+const domains = ["Astronomy", "Aerospace", "Remote Sensing", "Energy", "Artificial Intelligence", "Motorsport"];
+---
+<SiteLayout locale={locale} title={t.title} description={t.intro} noindex>
+  <section class="demo-wrap" aria-labelledby="demo-title">
+    <div class="demo-top"><span class="demo-mark" aria-hidden="true">K</span><span class="demo-pill">{t.eyebrow}</span></div>
+    <div class="demo-login" data-demo-login>
+      <h1 id="demo-title">{t.title}</h1>
+      <p class="demo-intro">{t.intro}</p>
+      <div class="demo-credentials"><strong>{t.credentials}</strong><p><code>{t.demoUser}</code><span aria-hidden="true"> / </span><code>{t.demoPass}</code></p></div>
+      <form data-demo-form>
+        <label for="demo-user">{t.user}</label><input id="demo-user" name="username" autocomplete="username" required />
+        <label for="demo-pass">{t.pass}</label><input id="demo-pass" name="password" type="password" autocomplete="current-password" required />
+        <button class="demo-button" type="submit">{t.login}</button>
+        <p class="demo-error" role="alert" hidden>نام کاربری یا رمز نمایشی درست نیست.</p>
+      </form>
+      <p class="demo-warning">{t.warning}</p>
+    </div>
+    <div class="demo-dashboard" data-demo-dashboard hidden>
+      <aside class="demo-sidebar">
+        <div class="demo-brand"><span class="demo-mark">K</span><strong>KEYHAN</strong></div>
+        <nav aria-label="Admin demo navigation">
+          <a class="selected" href="#demo-overview">▦ <span>{t.overview}</span></a>
+          <a href="#demo-projects">◇ <span>{t.projects}</span></a>
+          <a href="#demo-content">▤ <span>{t.content}</span></a>
+          <a href="#demo-users">◎ <span>{t.users}</span></a>
+          <a href="#demo-security">⌑ <span>{t.security}</span></a>
+          <a href="#demo-settings">⚙ <span>{t.settings}</span></a>
+        </nav>
+        <button type="button" class="demo-logout" data-demo-logout>{t.signout}</button>
+      </aside>
+      <div class="demo-main">
+        <header class="demo-header"><div><span class="demo-pill">{t.warning}</span><h1>{t.dashboard}</h1></div><span class="demo-avatar">SM</span></header>
+        <section class="demo-metrics" id="demo-overview" aria-label={t.overview}>
+          <article><span>{t.metric1}</span><strong>06</strong><small>{t.active}</small></article>
+          <article><span>{t.metric2}</span><strong>02</strong><small>{t.active}</small></article>
+          <article><span>{t.metric3}</span><strong>08</strong><small>{t.active}</small></article>
+          <article><span>{t.metric4}</span><strong class="demo-status">●</strong><small>{t.active}</small></article>
+        </section>
+        <section class="demo-grid">
+          <article class="demo-panel" id="demo-projects"><h2>{t.fields}</h2><div class="demo-domain-list">{domains.map((domain, i) => <div><span class="demo-domain-icon">{["✧","⌁","◉","ϟ","⌘","◇"][i]}</span><strong>{domain}</strong><span class="demo-tag">{t.active}</span></div>)}</div></article>
+          <article class="demo-panel" id="demo-content"><h2>{t.recent}</h2><ul class="demo-activity"><li><span>01</span>{t.item1}</li><li><span>02</span>{t.item2}</li><li><span>03</span>{t.item3}</li></ul><p class="demo-note">{t.note}</p></article>
+        </section>
+      </div>
+    </div>
+    <a class="demo-back" href={route(locale, "company")}>← {copy.backToCompany}</a>
+  </section>
+</SiteLayout>
+
+<style>
+  .demo-wrap{width:min(100% - 2rem,78rem);margin:0 auto;padding:clamp(2rem,5vw,4.5rem) 0 3rem;color:var(--ink)}
+  .demo-top{display:flex;align-items:center;gap:.8rem;margin-bottom:2rem}.demo-mark{display:grid;place-items:center;width:2.7rem;height:2.7rem;border:1px solid var(--border-strong);border-radius:.8rem;color:#8bb8ff;background:#142a47;font-weight:900}
+  .demo-pill{display:inline-flex;padding:.35rem .65rem;border:1px solid var(--border-strong);border-radius:99px;color:var(--accent);font-size:.7rem;font-weight:800;letter-spacing:.06em}
+  .demo-login{max-width:36rem;margin:2rem auto 3rem;padding:clamp(1.3rem,4vw,2.4rem);border:1px solid var(--border-strong);border-radius:1.2rem;background:linear-gradient(145deg,var(--surface-2),var(--surface));box-shadow:0 22px 60px #0002}
+  .demo-login h1,.demo-header h1{margin:0;font-size:clamp(1.7rem,4vw,2.5rem)}.demo-intro{color:var(--muted);line-height:1.8}
+  .demo-credentials{margin:1.4rem 0;padding:1rem;border-inline-start:3px solid var(--accent);border-radius:.5rem;background:var(--surface-3)}.demo-credentials p{margin:.5rem 0 0;display:flex;gap:.4rem;align-items:center}.demo-credentials code{padding:.2rem .4rem;border-radius:.3rem;background:var(--surface);font-weight:800}
+  .demo-login form{display:grid;gap:.65rem}.demo-login label{margin-top:.6rem;font-weight:750}.demo-login input{min-height:3rem;padding:.7rem .85rem;border:1px solid var(--border-strong);border-radius:.6rem;background:var(--surface);color:var(--ink);font:inherit}.demo-login input:focus-visible,.demo-button:focus-visible,.demo-logout:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+  .demo-button{min-height:3.1rem;margin-top:.6rem;border:0;border-radius:.65rem;background:linear-gradient(110deg,#245da2,#0b3472);color:white;font:inherit;font-weight:800;cursor:pointer}.demo-error{color:#ef7777}.demo-warning{margin:1rem 0 0;color:var(--muted);font-size:.75rem;text-align:center}
+  .demo-dashboard{display:grid;grid-template-columns:14rem minmax(0,1fr);min-height:38rem;overflow:hidden;border:1px solid var(--border-strong);border-radius:1.1rem;background:var(--surface)}
+  .demo-sidebar{display:flex;flex-direction:column;gap:2rem;padding:1.3rem;background:#0b1728;color:#dbe7f8}.demo-brand{display:flex;align-items:center;gap:.7rem;letter-spacing:.12em}.demo-sidebar nav{display:grid;gap:.45rem}.demo-sidebar nav a{display:flex;gap:.7rem;align-items:center;padding:.75rem .8rem;border-radius:.5rem;color:#b8c7dc;text-decoration:none}.demo-sidebar nav a.selected,.demo-sidebar nav a:hover{background:#19345a;color:white}.demo-logout{margin-top:auto;padding:.7rem;border:1px solid #52647d;border-radius:.5rem;background:transparent;color:#dbe7f8;font:inherit;cursor:pointer}
+  .demo-main{min-width:0;padding:clamp(1rem,3vw,2rem)}.demo-header{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem}.demo-header h1{margin-top:.65rem}.demo-avatar{display:grid;place-items:center;width:2.8rem;height:2.8rem;border-radius:50%;background:#244d7d;color:white;font-weight:800}
+  .demo-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem}.demo-metrics article,.demo-panel{padding:1rem;border:1px solid var(--border-strong);border-radius:.8rem;background:var(--surface-2)}.demo-metrics article{display:grid;gap:.5rem}.demo-metrics article span,.demo-metrics small{color:var(--muted);font-size:.78rem}.demo-metrics strong{font-size:2rem}.demo-status{color:#42b883}
+  .demo-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:.9rem;margin-top:1rem}.demo-panel h2{margin:0 0 1rem;font-size:1.05rem}.demo-domain-list{display:grid;gap:.2rem}.demo-domain-list>div{display:flex;align-items:center;gap:.65rem;padding:.7rem 0;border-bottom:1px solid var(--border)}.demo-domain-icon{width:1.8rem;color:var(--accent);font-size:1.2rem}.demo-tag{margin-inline-start:auto;padding:.2rem .45rem;border-radius:99px;background:#244d7d22;color:var(--accent);font-size:.68rem}.demo-activity{display:grid;gap:1rem;margin:0;padding:0;list-style:none}.demo-activity li{display:flex;gap:.7rem;align-items:flex-start;font-size:.88rem;line-height:1.6}.demo-activity li span{color:var(--accent);font-weight:800}.demo-note{margin-top:1.3rem;color:var(--muted);font-size:.76rem;line-height:1.7}.demo-back{display:inline-flex;margin-top:1.5rem;color:var(--muted);text-decoration:none}
+  [hidden]{display:none!important}
+  @media(max-width:800px){.demo-dashboard{grid-template-columns:1fr}.demo-sidebar{gap:1rem}.demo-sidebar nav{grid-template-columns:repeat(3,minmax(0,1fr))}.demo-logout{margin-top:0}.demo-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-grid{grid-template-columns:1fr}}
+  @media(max-width:480px){.demo-sidebar nav{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-header{align-items:flex-start}.demo-pill{font-size:.6rem}}
+</style>
+
+<script>
+  const login = document.querySelector<HTMLElement>("[data-demo-login]");
+  const dashboard = document.querySelector<HTMLElement>("[data-demo-dashboard]");
+  const form = document.querySelector<HTMLFormElement>("[data-demo-form]");
+  const error = document.querySelector<HTMLElement>(".demo-error");
+  const logout = document.querySelector<HTMLButtonElement>("[data-demo-logout]");
+  const showLogin = () => {
+    if (login) login.hidden = false;
+    if (dashboard) dashboard.hidden = true;
+    form?.reset();
+  };
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const username = String(data.get("username") ?? "").trim();
+    const password = String(data.get("password") ?? "");
+    const expectedUser = document.querySelector("[data-demo-form]")?.closest(".demo-login")?.querySelector(".demo-credentials code");
+    const codes = document.querySelectorAll(".demo-credentials code");
+    const valid = username === (codes[0]?.textContent ?? "demo") && password === (codes[1]?.textContent ?? "keyhan-demo");
+    if (!valid) {
+      if (error) error.hidden = false;
+      return;
+    }
+    if (error) error.hidden = true;
+    if (login) login.hidden = true;
+    if (dashboard) dashboard.hidden = false;
+    dashboard?.scrollIntoView({ behavior: "smooth", block: "start" });
+    void expectedUser;
+  });
+  logout?.addEventListener("click", showLogin);
+</script>
