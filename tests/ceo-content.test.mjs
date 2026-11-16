@@ -15,6 +15,6 @@ test("all eight locales include the six CV project records", () => {
   assert.equal(count(/name:"CBS",period:"2020"/g), 8);
   assert.equal(count(/name:"Remote Sensing Projects",period:"2019"/g), 8);
   assert.equal(count(/name:"Space Radiation & Earth Shielding Study",period:"2020–2021"/g), 8);
-  assert.equal(count(/name:"APTO",period:"2019"/g), 8);
+  assert.equal(count(/name:"APTO",period:"2019"/g) + count(/name:"APTO",period:"۲۰۱۹"/g), 8);
   assert.equal(count(/period:"2024–2025"/g), 0);
 });
