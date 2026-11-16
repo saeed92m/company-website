@@ -77,7 +77,9 @@ export const ceo: Record<Locale, CEOContent> = {
     expertise:["研发","航空航天与空间系统","天文学","遥感","人工智能与编程","太阳能工程","赛车运动","项目管理与创业"],
     experience:[{role:"创始人兼首席执行官",organization:"Pishgaman Novandish Fannavargostar Keyhan",period:"2023年8月至今",summary:"负责公司六个业务领域的技术与执行管理，带领项目团队，与投资者及公共和私营机构建立联系，并统筹产品开发和业务运营。"},{role:"董事会成员兼内容制作经理",organization:"Rahpouyan Atlas Aseman",period:"2018–2019",summary:"制作天文学科普教育内容，并在专题工作坊中教授业余天文学和雷达遥感。"}],
     selectedProjects:[{name:"CanSat",period:"2024",summary:"Alpha Team 参与面向遥感与通信任务的 CanSat 项目。"},{name:"CubeSat",period:"2023",summary:"Alpha Team 参与 1U CubeSat 遥感通信项目。"},
-      {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",{name:"CBS",period:"2020",summary:"领导 Alpha Team 参与 CBS 项目，该项目促成了一篇国际学术论文。"},{name:"Remote Sensing Projects",period:"2019",summary:"为伊朗航天局开展遥感分析项目，使用 Landsat 8 和 Sentinel-1/2 卫星影像。"},{name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"开展CME分析及卫星防护策略研究，聚焦空间辐射与地球屏蔽。"} },
+      {name:"CBS",period:"2020",summary:"领导 Alpha Team 参与 CBS 项目，该项目促成了一篇国际学术论文。"},
+      {name:"Remote Sensing Projects",period:"2019",summary:"为伊朗航天局开展遥感分析项目，使用 Landsat 8 和 Sentinel-1/2 卫星影像。"},
+      {name:"Space Radiation & Earth Shielding Study",period:"2020–2021",summary:"开展CME分析及卫星防护策略研究，聚焦空间辐射与地球屏蔽。"},
       {name:"APTO",period:"2019",summary:"与大不里士大学 Khajeh Nasireddin Tusi 天文台合作开展月掩星分析。" }
     ]
   },
